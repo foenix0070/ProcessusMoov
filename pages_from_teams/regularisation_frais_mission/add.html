@@ -1,0 +1,134 @@
+
+
+<form action="" method="" class="form" id="form">
+  <div class="elts">
+
+    <fieldset class="form-elts">
+      <legend>DEMANDEUR</legend>
+
+      <div class="mb-3">
+        <label  class="form-label">Matricule :</label>
+          <input type="text"  id="TxtMatricule" class="  form-control" value="" placeholder="" />
+      </div>
+      <div class="mb-3">
+        <label  class="form-label"> Nom & Prenoms :</label>
+          <input type="text" id="TxtNom"  class="  form-control" name="" placeholder="" />
+      </div>
+      <div class="mb-3">
+        <label  class="form-label">Catégorie :</label>
+          <input type="text" id="TxtCategorie"  class="  form-control" name="" placeholder="" />
+      </div>
+
+      <div class="mb-3">
+        <label  class="form-label">Direction :</label>
+          <input type="text" id="TxtDirection"  class="  form-control" name="" placeholder="" />
+      </div>
+
+      <div class="mb-3">
+        <label  class="form-label">Division :</label>
+          <input type="text" id="TxtDivision"  class="  form-control" name="" placeholder="" />
+      </div>
+
+      <div class="mb-3">
+        <label  class="form-label">Service :</label>
+          <input type="text" id="TxtService"  class="  form-control" name="" placeholder="" />
+      </div>
+
+    </fieldset>
+    <fieldset class="form-elts">
+      <legend>REGULATION DE LA MISSION</legend>
+
+      <h4>CERTIFICATION DE LA MISSION</h4>
+
+      <input type="radio" name="success" value="Succes" id="RadSucces">
+      <label for="RadSucces">La mission a été effectuée</label><br>
+      <input type="radio" name="echec" value="Echecs" id="RadEchecs">
+      <label for="RadEchecs">La mission n'a pas été effectuée</label><br>
+
+      <h4>REMBOURSEMENT DES FRAIS COMPLEMENTAIRES</h4>
+      <table>
+      <tr>
+        <td>
+          <label for="">Avance N:</label>
+        </td>
+        <td>
+          <input type="text">
+        </td>
+        <td>
+          <label for=""> du :</label>
+        </td>
+        <td>
+          <input type="date">
+        </td>
+      </tr>
+    </table>
+      <table>
+        <tr>
+          <th>Libellé</th>
+          <th>Date de début</th>
+          <th>Date de fin</th>
+          <th>Nombre</th>
+          <th>Forfait</th>
+          <th>Total</th>
+        </tr>
+        <tr>
+         <td><label for="">Hotel/Nuits</label></td>
+         <td><input type="date"></td>
+         <td><input type="date"></td>
+         <td><input type="text"></td>
+         <td><input type="text"></td>
+         <td><input type="text"></td>
+     
+        </tr>
+        <tr>
+          <td><label for="">Repas/Jours</label></td>
+          <td><input type="date"></td>
+          <td><input type="date"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+       
+         </tr>
+         <tr>
+          <td><label for="">Frais de transport</label></td>
+          <td><input type="date"></td>
+          <td><input type="date"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+        
+         </tr>
+         <tr>
+          <td><label for="">Autre frais a justifier</label></td>
+          <td><input type="date"></td>
+          <td><input type="date"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+        
+         </tr>
+         <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><label for="">Total :</label></td>
+          <td><input type="text"></td>
+        
+         </tr>
+      </table>
+    </fieldset>
+
+     
+
+  </div>
+
+  <div class="input-optn">
+      <button class="Submit" id="BtnSave" type="button"> Valider </button>
+  </div>
+</form>
+
+
+<script type="text/javascript">
+  appHelper.loadJSWithNameSpace("appConge", 'appConge', "controller/conge/add.js");
+</script>
