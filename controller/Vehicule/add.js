@@ -50,8 +50,11 @@ appVehicule.InitializePage = function () {
   });
 
   BtnSave.addEventListener("click", function () {
+    alert("test et pret à effectuer le add");
     appVehicule.Add (function(){
+
       location.reload();
+
     });
   });
 
