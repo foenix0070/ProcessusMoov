@@ -1,26 +1,26 @@
-var ListConge = ListConge || {};
+var ListGadget = ListGadget || {};
 var clientContext;
-ListConge.clientContext;
+ListGadget.clientContext;
 
-ListConge.InitializePage = function () {
-  ListConge.clientContext = SP.ClientContext.get_current();
+ListGadget.InitializePage = function () {
+  ListGadget.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
 
   let T =  appHelper.GetQueryStringFromAjaxQuery('t');
   let x = document.getElementById('h2Titre');
   switch(T){
-    case 'E' :  ListConge.ListConge('ENCOURS');
-                x.innerHTML = " Listes des demandes de congés en cours";
+    case 'E' :  ListGadget.ListGadget('ENCOURS');
+                x.innerHTML = " Listes des demandes de gadget en cours";
     break;
-    case 'V' :  ListConge.ListConge('VALIDEE');
-    x.innerHTML = " Listes des demandes de congés validées";
+    case 'V' :  ListGadget.ListGadget('VALIDEE');
+    x.innerHTML = " Listes des demandes de gadget validées";
     break;
-    case 'R' :  ListConge.ListConge('REJETEE');
-    x.innerHTML = " Listes des demandes de congés rejétées";
+    case 'R' :  ListGadget.ListGadget('REJETEE');
+    x.innerHTML = " Listes des demandes de gadget rejétées";
     break;
-    default : ListConge.ListConge('ENCOURS');
-    x.innerHTML = " Listes des demandes de congés en cours";
+    default : ListGadget.ListGadget('ENCOURS');
+    x.innerHTML = " Listes des demandes de gadget en cours";
     break;
   }
 
@@ -31,11 +31,11 @@ ListConge.InitializePage = function () {
 
 
 
-ListConge.ListConge = function (T) {
-  let oList = ListConge.clientContext
+ListGadget.ListGadget = function (T) {
+  let oList = ListGadget.clientContext
     .get_web()
     .get_lists()
-    .getByTitle(appHelper.ListName.Conge);
+    .getByTitle(appHelper.ListName.Gadget);
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(
     "<View><Query><Where>" +
@@ -46,15 +46,15 @@ ListConge.ListConge = function (T) {
       "</Where></Query></View>"
   );
   let collListItem = oList.getItems(camlQuery);
-  ListConge.clientContext.load(collListItem);
-  ListConge.clientContext.executeQueryAsync(function (sender, args) {
+  ListGadget.clientContext.load(collListItem);
+  ListGadget.clientContext.executeQueryAsync(function (sender, args) {
     if (collListItem.get_count() > 0) {
       var listItemEnumerator = collListItem.getEnumerator();
       let view = {};
-      view.conges = [];
+      view.gadgets = [];
       while (listItemEnumerator.moveNext()) {
         var oListItem = listItemEnumerator.get_current();
-        view.conges.push({
+        view.gadgets.push({
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Title"),
           startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
@@ -64,7 +64,7 @@ ListConge.ListConge = function (T) {
         });
       }
 
-      appHelper.renderTemplate("tmpl_table_conge", "DivCongeTableShow", view);
+      appHelper.renderTemplate("tmpl_table_gadget", "DivgadgetTableShow", view);
 
    //   appHelper.listenNavigationLink ('linkMainNavigation');
       const linkClick = document.getElementsByClassName('click');
@@ -97,6 +97,6 @@ ListConge.ListConge = function (T) {
 
 // document.addEventListener("DOMContentLoaded", () => {
 //   ExecuteOrDelayUntilScriptLoaded(function(){
-  SP.SOD.executeFunc('sp.js', 'SP.ClientContext', ListConge.InitializePage);
+  SP.SOD.executeFunc('sp.js', 'SP.ClientContext', ListGadget.InitializePage);
   //   }, "SP.ClientContext");
   // });
