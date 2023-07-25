@@ -9,7 +9,7 @@
                 <input type="text" class="form-control" name="TxtObjet" id="TxtObjet" placeholder="" />
             </div>
 
-            <div class="mb-3">
+            <!--<div class="mb-3">
                 <label class="form-label"> Nature de la demande</label>
                 <input type="text" class="form-control" name="TxtObjet" id="TxtNature" placeholder="" />
             </div>
@@ -23,7 +23,7 @@
             <div class="mb-3">
                 <label class="form-label"> Date de depart souhait&eacute;</label>
                 <input type="date" name="TxtDateDepart" class="date form-control" id="TxtDateDepart" placeholder="" />
-            </div>
+            </div>-->
 
             <div class="mb-3">
                 <label class="form-label"> Description</label>
@@ -38,6 +38,7 @@
         <button class="Submit" id="BtnSave" type="button"> Valider </button>
     </div>
 </form>
+<<<<<<< HEAD
 
 
 <script type="text/javascript">
@@ -70,4 +71,9 @@
     };
 
     loadJSWithNameSpace("appVehicule", 'appVehicule', "controller/Vehicule/add.js");
+=======
+<script src="http://ci08vmmitest/tools1/controller/Vehicule/add.js"></script>
+<script type="text/javascript">
+    appHelper.loadJSWithNameSpace("appVehicule", 'appVehicule', "controller/Vehicule/add.js");
+>>>>>>> a1a7d8d485de187a2f98c48667134e1b76c589a8
 </script>
