@@ -1,25 +1,25 @@
-var ListVoiture = ListVoiture || {};
+var ListVehicule = ListVehicule || {};
 var clientContext;
-ListVoiture.clientContext;
+ListVehicule.clientContext;
 
-ListVoiture.InitializePage = function () {
-  ListVoiture.clientContext = SP.ClientContext.get_current();
+ListVehicule.InitializePage = function () {
+  ListVehicule.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
 
   let T =  appHelper.GetQueryStringFromAjaxQuery('t');
   let x = document.getElementById('h2Titre');
   switch(T){
-    case 'E' :  ListVoiture.ListVoiture('ENCOURS');
+    case 'E' :  ListVehicule.ListVehicule('ENCOURS');
                 x.innerHTML = " Listes des demandes de vehicule en cours";
     break;
-    case 'V' :  ListVoiture.ListVoiture('VALIDEE');
+    case 'V' :  ListVehicule.ListVehicule('VALIDEE');
     x.innerHTML = " Listes des demandes de vehicule validées";
     break;
-    case 'R' :  ListVoiture.ListVoiture('REJETEE');
+    case 'R' :  ListVehicule.ListVehicule('REJETEE');
     x.innerHTML = " Listes des demandes de vehicule rejétées";
     break;
-    default : ListVoiture.ListVoiture('ENCOURS');
+    default : ListVehicule.ListVehicule('ENCOURS');
     x.innerHTML = " Listes des demandes de vehicule en cours";
     break;
   }
@@ -28,11 +28,11 @@ ListVoiture.InitializePage = function () {
 };
 
 
-ListVoiture.ListVoiture = function (T) {
-  let oList = ListVoiture.clientContext
+ListVehicule.ListVehicule = function (T) {
+  let oList = ListVehicule.clientContext
     .get_web()
     .get_lists()
-    .getByTitle(appHelper.ListName.Voiture);
+    .getByTitle(appHelper.ListName.Vehicule);
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(
     "<View><Query><Where>" +
@@ -43,15 +43,15 @@ ListVoiture.ListVoiture = function (T) {
       "</Where></Query></View>"
   );
   let collListItem = oList.getItems(camlQuery);
-  ListVoiture.clientContext.load(collListItem);
-  ListVoiture.clientContext.executeQueryAsync(function (sender, args) {
+  ListVehicule.clientContext.load(collListItem);
+  ListVehicule.clientContext.executeQueryAsync(function (sender, args) {
     if (collListItem.get_count() > 0) {
       var listItemEnumerator = collListItem.getEnumerator();
       let view = {};
-      view.voiture = [];
+      view.vehicule = [];
       while (listItemEnumerator.moveNext()) {
         var oListItem = listItemEnumerator.get_current();
-        view.voiture.push({
+        view.vehicule.push({
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Title"),
           startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
@@ -61,7 +61,7 @@ ListVoiture.ListVoiture = function (T) {
         });
       }
 
-      appHelper.renderTemplate("tmpl_table_Voiture", "DivVoitureTableShow", view);
+      appHelper.renderTemplate("tmpl_table_Vehicule", "DivVehiculeTableShow", view);
 
    //   appHelper.listenNavigationLink ('linkMainNavigation');
       const linkClick = document.getElementsByClassName('click');
