@@ -7,15 +7,13 @@ showGadget.InitializePage = function () {
   showGadget.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
-  let tacheId =  appHelper.GetQueryStringFromAjaxQuery('tacheid');
-  let Id =  appHelper.GetQueryStringFromAjaxQuery('id');
+  let tacheId =  appHelper.getQueryStringParameter('tacheid');
+  let Id =  appHelper.getQueryStringParameter('id');
 
-  appSpHelper.CheckAttachmentFolder(showGadget.clientContext, Id, appHelper.ListName.Conge, null);
+  appSpHelper.CheckAttachmentFolder(showGadget.clientContext, Id, appHelper.ListName.Gadget, null);
 
   appSpHelper.GetMyProperties(function () {
-
-    console.log(tacheId, Id);
-  showGadget.ShowDetails (Id);
+    showGadget.ShowDetails (Id);
   showGadget.ShowFichierJoint(Id);
   showGadget.ShowValidation(Id);
   if(tacheId){
@@ -25,7 +23,6 @@ showGadget.InitializePage = function () {
 }
 
 showGadget.TestShowForm = function(tacheId, demandeid){
-  console.log(tacheId, demandeid);
   let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Validation);
   let It = oList .getItemById(tacheId);
   clientContext.load(It);
@@ -41,17 +38,17 @@ showGadget.ShowForm = function(tacheId, demandeid){
   let view = {};
   view.did = demandeid;
   view.tid = tacheId;
-  view.process = appHelper.AppCode.CONGE;
+  view.process = appHelper.AppCode.GADGET;
   appHelper.renderTemplate("tmpl_form_validation", "SectionValidation", view);
 
   const TxtCommentaire = document.getElementById("TxtCommentaire");
   const BtnMod = document.getElementById("BtnValidationModification");
   const BtnOK = document.getElementById("BtnValidationOK");
   const BtnNOK = document.getElementById("BtnValidationNOK");
-  const WF  =  new WFManager(appHelper.AppCode.CONGE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+  const WF  =  new WFManager(appHelper.AppCode.GADGET,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
 
   BtnOK.addEventListener("click", function () {
-    WF.goToNextTask(showGadget.clientContext ,tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToNextTask(showGadget.clientContext ,tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
       showGadget.UpDateItemStatus (nextTask, demandeid, function(){
         location.reload();
@@ -60,7 +57,7 @@ showGadget.ShowForm = function(tacheId, demandeid){
   });
 
   BtnNOK.addEventListener("click", function () {
-    WF.goToRefusedTask(showGadget.clientContext ,tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToRefusedTask(showGadget.clientContext ,tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
       showGadget.UpDateItemStatusRejet (true, demandeid, function(){
         location.reload();
@@ -69,7 +66,7 @@ showGadget.ShowForm = function(tacheId, demandeid){
   });
 
   BtnMod.addEventListener("click", function () {
-    WF.goToRefusedTask(showGadget.clientContext ,tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToRefusedTask(showGadget.clientContext ,tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
       showGadget.UpDateItemStatusRejet (false, demandeid, function(){
         location.reload();
@@ -80,7 +77,7 @@ showGadget.ShowForm = function(tacheId, demandeid){
 
 showGadget.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Conge);
+  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Gadget);
   let It = oList .getItemById(demandeid);
 
   if(isRejet){
@@ -101,7 +98,7 @@ showGadget.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 }
 
 showGadget.UpDateItemStatus = function(nextTask, demandeid, callBack){
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Conge);
+  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Gadget);
   let It = oList .getItemById(demandeid);
 
   if(nextTask){
@@ -126,7 +123,7 @@ showGadget.ShowFichierJoint = function(demandeid) {
 
   let view = {};
 
-  let appName = appHelper.ListName.Conge;
+  let appName = appHelper.ListName.Gadget;
   let id = demandeid;
   let folderPath = `/Lists/${appName}/Attachments/${id}/`;
   console.log(folderPath);
@@ -187,8 +184,8 @@ showGadget.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
       //Get Client Context and Web object.
       var oWeb = clientContext.get_web();
       //Get list and Attachment folder where the attachment of a particular list item is stored.
-      var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Conge);
-      var urlToAttach = '/Lists/'+ appHelper.ListName.Conge +'/Attachments/'+ demandeid + '/'
+      var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Gadget);
+      var urlToAttach = '/Lists/'+ appHelper.ListName.Gadget +'/Attachments/'+ demandeid + '/'
       var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
       console.log(attachmentFolder);
       //Convert the file contents into base64 data
@@ -223,7 +220,7 @@ showGadget.ShowValidation = function(demandeid) {
      '<Where>' +
       '<And>' +
       '<And>' +
-      '<Eq><FieldRef Name="Parent" /><Value Type="Text">'+ appHelper.AppCode.CONGE +'</Value></Eq>' +
+      '<Eq><FieldRef Name="Parent" /><Value Type="Text">'+ appHelper.AppCode.GADGET +'</Value></Eq>' +
       '<Eq><FieldRef Name="ParentID0" /><Value Type="Text">'+ demandeid +'</Value></Eq>' +
       '</And>' +
       '<Eq><FieldRef Name="Status" /><Value Type="Choice">Terminé</Value></Eq>' +
@@ -265,41 +262,27 @@ showGadget.ShowValidation = function(demandeid) {
 
 showGadget.ShowDetails = function (demandeid){
 
-  let oList = showGadget.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.Conge);
+  let oList = showGadget.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.Gadget);
   let It = oList .getItemById(demandeid);
 
   showGadget.clientContext.load(It);
   showGadget.clientContext.executeQueryAsync(function () {
   if(It){
-    // showGadget.isSoldeImpact = (It.get_item('TypeGadgetID') != null ? It.get_item('TypeGadgetID') : 0)
   let view = {
-    
-    article: It.get_item('TxtArticle') != null ?  It.get_item('TxtArticle') : '',
-    quantite: It.get_item('TxtQuantite') != null ?  It.get_item('TxtQuantite') : '',
-    description: It.get_item('TxtMotif') != null ?  It.get_item('TxtMotif') : '',
+    typeconge : It.get_item('Title') != null ?  It.get_item('Title') : '',
+    nbrejour: It.get_item('NombreJourAccorde') != null ?  It.get_item('NombreJourAccorde') : '',
+    datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
+    interimaire: It.get_item('Demandeur') != null ?  It.get_item('Demandeur').get_lookupValue() : '',
+    motif: It.get_item('Motif') != null ?  It.get_item('Motif') : ''
   };
-
   appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
-
-
-  const addfile = document.getElementById("addfile");
-  addfile.addEventListener("click", function () {
-
-    OpenFileUpload('FpUploadAttachement');
-   });
-
 
   }
 }, appSpHelper.writeError);
 }
 
-function OpenFileUpload(str_select){
-  let transElt = document.getElementById(str_select);
-  transElt.click();
-}
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   ExecuteOrDelayUntilScriptLoaded(function(){
+document.addEventListener("DOMContentLoaded", () => {
+  ExecuteOrDelayUntilScriptLoaded(function(){
     SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showGadget.InitializePage);
-//   }, "SP.ClientContext");
-// });
+  }, "SP.ClientContext");
+});
