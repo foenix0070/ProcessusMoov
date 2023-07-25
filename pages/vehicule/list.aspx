@@ -39,7 +39,7 @@
           <td>{{motif}}</td>
           <td><span class="{{classe}}">{{status}}</span></td>
         </tr>
-        {{/Vehicule}}
+        {{/vehicule}}
       </tbody>
     </table>
   </div>
