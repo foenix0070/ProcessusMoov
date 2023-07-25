@@ -39,21 +39,21 @@ appGadget.InitializePage = function () {
     );
   });
 
-  const BtnAdd = document.querySelector("#demande");
+  // const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
 
 
 
-  BtnAdd.addEventListener("click", function () {
-    // setTimeout(function () {
-    //   appSpHelper.InitializePeoplePicker(
-    //     "plePickerInterimaireDiv",
-    //     false,
-    //     "350px"
-    //   );
-    // }, 2000);
+  // BtnAdd.addEventListener("click", function () {
+  //   // setTimeout(function () {
+  //   //   appSpHelper.InitializePeoplePicker(
+  //   //     "plePickerInterimaireDiv",
+  //   //     false,
+  //   //     "350px"
+  //   //   );
+  //   // }, 2000);
 
-  });
+  // });
 
   BtnSave.addEventListener("click", function () {
     appGadget.Add (function(){
@@ -67,7 +67,7 @@ function getRating (str){
   document.getElementById('TxtNature').value = str;
 }
 
-appGadget.initCmbTypeConge = function (callBack) {
+appGadget.initCmbTypeGadget = function (callBack) {
   ListerMotif(function(){
     let cmb = document.getElementById("cmbTypeConge");
     let txtColor = document.getElementById("TxtTypeCongeColeur");
