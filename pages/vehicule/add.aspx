@@ -16,15 +16,13 @@
 
             <div class="mb-3">
                 <label class="form-label">Nombre de Jours</label>
-                <input type="number" id="TxtNbreJour" class="numeric form-control"
-                    name="TxtNbreJour" placeholder="" />
+                <input type="number" id="TxtNbreJour" class="numeric form-control" name="TxtNbreJour" placeholder="" />
             </div>
 
 
             <div class="mb-3">
                 <label class="form-label"> Date de depart souhait&eacute;</label>
-                <input type="date" name="TxtDateDepart" class="date form-control"
-                    id="TxtDateDepart" placeholder="" />
+                <input type="date" name="TxtDateDepart" class="date form-control" id="TxtDateDepart" placeholder="" />
             </div>
 
             <div class="mb-3">
@@ -43,7 +41,8 @@
         <button class="Submit" id="BtnSave" type="button"> Valider </button>
     </div>
 </form>
+<script src="http://ci08vmmitest/tools1/controller/Vehicule/add.js"></script>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
     appHelper.loadJSWithNameSpace("appVehicule", 'appVehicule', "controller/Vehicule/add.js");
-</script>
+</script>-->
