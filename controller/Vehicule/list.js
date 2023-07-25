@@ -11,16 +11,16 @@ ListVoiture.InitializePage = function () {
   let x = document.getElementById('h2Titre');
   switch(T){
     case 'E' :  ListVoiture.ListVoiture('ENCOURS');
-                x.innerHTML = " Listes des demandes de congés en cours";
+                x.innerHTML = " Listes des demandes de vehicule en cours";
     break;
     case 'V' :  ListVoiture.ListVoiture('VALIDEE');
-    x.innerHTML = " Listes des demandes de congés validées";
+    x.innerHTML = " Listes des demandes de vehicule validées";
     break;
     case 'R' :  ListVoiture.ListVoiture('REJETEE');
-    x.innerHTML = " Listes des demandes de congés rejétées";
+    x.innerHTML = " Listes des demandes de vehicule rejétées";
     break;
     default : ListVoiture.ListVoiture('ENCOURS');
-    x.innerHTML = " Listes des demandes de congés en cours";
+    x.innerHTML = " Listes des demandes de vehicule en cours";
     break;
   }
 
@@ -28,7 +28,7 @@ ListVoiture.InitializePage = function () {
 };
 
 
-ListConge.ListVoiture = function (T) {
+ListVoiture.ListVoiture = function (T) {
   let oList = ListVoiture.clientContext
     .get_web()
     .get_lists()
