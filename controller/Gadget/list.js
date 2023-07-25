@@ -51,10 +51,10 @@ ListGadget.ListGadget = function (T) {
     if (collListItem.get_count() > 0) {
       var listItemEnumerator = collListItem.getEnumerator();
       let view = {};
-      view.gadgets = [];
+      view.gadget = [];
       while (listItemEnumerator.moveNext()) {
         var oListItem = listItemEnumerator.get_current();
-        view.gadgets.push({
+        view.gadget.push({
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Title"),
           startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
