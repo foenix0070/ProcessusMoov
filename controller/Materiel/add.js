@@ -282,8 +282,8 @@ const appUrl = '/tools/materiel/show.aspx?ID=' + oListItem.get_id();
 };
 
 
-document.addEventListener("DOMContentLoaded", () => {
-  ExecuteOrDelayUntilScriptLoaded(function(){
+//document.addEventListener("DOMContentLoaded", () => {
+//  ExecuteOrDelayUntilScriptLoaded(function(){
     SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appMateriel.InitializePage);
-  }, "SP.ClientContext");
-});
+ // }, "SP.ClientContext");
+//});
