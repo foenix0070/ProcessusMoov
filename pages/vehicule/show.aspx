@@ -13,39 +13,39 @@
 
 
 
-                    <div class="row">
+              <div class="row">
 
 
-<div class="col-6">
-  <section  id="SectionDetails"> </section>
-</div>
+                <div class="col-6">
+                  <section id="SectionDetails"> </section>
+                </div>
 
-<div class="col-6">
-  <section class="sect1" id="SectionDocumentsJoint"> </section>
-</div>
-<div class="col-12">
+                <div class="col-6">
+                  <section class="sect1" id="SectionDocumentsJoint"> </section>
+                </div>
+                <div class="col-12">
 
-  <br><br>
+                  <br><br>
 
-  <section class="sect1" id="SectionHistoriqueValidation">
+                  <section class="sect1" id="SectionHistoriqueValidation">
 
-  </section>
-
-
-</div>
-
-<div class="col-12">
-  <br><br>
-  <section class="sect2" id="SectionValidation">
-
-  </section>
-</div>
+                  </section>
 
 
-                    </div>
+                </div>
+
+                <div class="col-12">
+                  <br><br>
+                  <section class="sect2" id="SectionValidation">
+
+                  </section>
+                </div>
 
 
-                <script id="tmpl_form_fichiers_attaches" type="x-tmpl-mustache">
+              </div>
+
+
+              <script id="tmpl_form_fichiers_attaches" type="x-tmpl-mustache">
 
                   <div class="head-titre">
                     <h2>
@@ -74,7 +74,7 @@
                   </div>
                 </script>
 
-                <script id="tmpl_form_historique_validation" type="x-tmpl-mustache">
+              <script id="tmpl_form_historique_validation" type="x-tmpl-mustache">
 
 
                   <div class="head-titre">
@@ -96,7 +96,7 @@
                   </div>
                 </script>
 
-                <script id="tmpl_form_validation" type="x-tmpl-mustache">
+              <script id="tmpl_form_validation" type="x-tmpl-mustache">
 <br/>
                   <div class="head-titre">
                     <h2>
@@ -114,7 +114,7 @@
                   </form>
                 </script>
 
-                <script id="tmpl_form_details" type="x-tmpl-mustache">
+              <script id="tmpl_form_details" type="x-tmpl-mustache">
 
                   <div class="head-titre">
                     <h2>
@@ -134,7 +134,7 @@
 
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="200px">Nombre de jours</td>
-                        <td style="text-align:left;">{{nbrejour}}</td>
+                        <td style="text-align:left;">{{motif}}</td>
                       </tr>
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="200px">Int&eacute;rimaire</td>
@@ -143,18 +143,18 @@
                   </table>
                 </script>
 
-                <script type="text/javascript">
-                  appHelper.loadJSWithNameSpace("showVehicule", 'showVehicule', "controller/Vehicule/show.js");
-                </script>
-<script type="text/javascript">
+              <script type="text/javascript">
+                appHelper.loadJSWithNameSpace("showVehicule", 'showVehicule', "controller/Vehicule/show.js");
+              </script>
+              <script type="text/javascript">
 
-function OpenFileUpload(str_select){
-  let transElt = document.getElementById(str_select);
-  transElt.click();
-}
-</script>
+                function OpenFileUpload(str_select) {
+                  let transElt = document.getElementById(str_select);
+                  transElt.click();
+                }
+              </script>
 
-<!--
+              <!--
 
 <%@ Assembly Name="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 

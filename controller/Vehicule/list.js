@@ -56,6 +56,7 @@ ListVehicule.ListVehicule = function (T) {
           title: oListItem.get_item("Title"),
           startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
           nbre: oListItem.get_item("NombreJours"),
+          motif: oListItem.get_item("Motif"),
           status: oListItem.get_item("StatutLibelle"),
           classe: appHelper.Status.GetClass(oListItem.get_item("Statut")),
         });
