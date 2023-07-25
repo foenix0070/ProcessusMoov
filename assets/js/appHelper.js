@@ -20,8 +20,8 @@ Materiel : 'ListeMateriel',
 Absence : 'ListeAbsence',
 Employe : 'ListeEmploye',
 TypeConge : 'ListeTypeConge',
-Validation : 'TachesValidation'
-
+Validation : 'TachesValidation',
+Notification : 'ListeNotification'
 };
 
 appHelper.Status = {
@@ -53,6 +53,10 @@ appHelper.AppCode = {
   GADGET : 'GADGET',
   CONGE : 'CONGE',
   ABSENCE : 'ABSENCE'
+}
+
+appHelper. isArray = function(myArray) {
+  return myArray.constructor.toString().indexOf("Array") > -1;
 }
 
 appHelper.GetQueryStringFromAjaxQuery = function (param) {

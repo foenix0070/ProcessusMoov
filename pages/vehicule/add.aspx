@@ -32,15 +32,13 @@
             </div>
 
         </fieldset>
-
-
-
     </div>
 
     <div class="input-optn mt-3">
         <button class="Submit" id="BtnSave" type="button"> Valider </button>
     </div>
 </form>
+
 
 <script type="text/javascript">
 
@@ -49,7 +47,7 @@
         SiteUrl: 'http://ci08vmmitest/',
         SiteJsUrl: 'http://ci08vmmitest/tools1/'
     }
-    
+
     nameSpaceExists = function (namespace) {
         var tokens = namespace.split('.');
         return tokens.reduce(function (prev, curr) {

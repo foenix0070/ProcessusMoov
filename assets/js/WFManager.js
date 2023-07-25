@@ -169,6 +169,8 @@
               oListItem.update();
                       ctx.load(oListItem);
                       ctx.executeQueryAsync(function () {
+                        appSpHelper.SendNotificationTask(ctx,oListItem );
+
                           if(callBack){
                             callBack(oListItem)}
                       }, appSpHelper.writeError);
@@ -227,8 +229,6 @@
         }, appSpHelper.writeError);
 
   }
-
-
 
 
   }

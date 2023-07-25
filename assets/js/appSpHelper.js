@@ -1,9 +1,7 @@
 var appSpHelper = appSpHelper || {};
 
 appSpHelper.writeError = function(sender, args){
-
   console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
-
 }
 
 appSpHelper.GetPeoplePickerVal = function (peoplePickerId) {
@@ -146,7 +144,6 @@ appSpHelper.InitializePeoplePicker = function(peoplePickerElementId,mutipleSelec
   // picker properties.
   SPClientPeoplePicker_InitStandaloneControlWrapper(peoplePickerElementId, null, schema);
 }
-
 
 appSpHelper. PeoplePickerOnChangeEvent = function(peoplePickerElementId, callback) {
   var ppId = peoplePickerElementId + "_TopSpan";
@@ -292,7 +289,7 @@ appSpHelper. GetEmploye = function(listeName, login , callBack){
     login = login.split('\\')[1];
     login = login.trim();
   }
-console.log(login);
+
   let q = '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + login + '</Value></Eq></Where></Query></View>';
   camlQuery.set_viewXml(q);
   let collListItemInfo = targetList.getItems(camlQuery);
@@ -474,7 +471,6 @@ appSpHelper. GetEmployeeManagerLogin = function(niveau,  manager , callBack) {
   }
 }
 
-
 appSpHelper.CheckAttachmentFolder = function(ctx, id, listName, callBack){
 
   let oWeb = ctx.get_web();
@@ -510,3 +506,275 @@ appSpHelper.CheckAttachmentFolder = function(ctx, id, listName, callBack){
   }, appSpHelper.writeError);
 }, appSpHelper.writeError);
 }
+
+appSpHelper.SaveNotification = function(ctx, objNotification ){
+
+  let oList =ctx
+  .get_web()
+  .get_lists()
+  .getByTitle(appHelper.ListName.Notification);
+  let itemCreateInfo = new window.SP.ListItemCreationInformation();
+  let oListItem = oList.addItem(itemCreateInfo);
+
+  oListItem.set_item("Title", "NOTIFICATION");
+  oListItem.set_item("Statut", 0);
+  oListItem.set_item("DestinataireEmail", objNotification.to);
+  oListItem.set_item("DestinaireNumero",  objNotification.numero);
+  oListItem.set_item("MessageBody", objNotification.body);
+  oListItem.set_item("MessageObjet", objNotification.objet);
+
+  oListItem.update();
+  clientContext.load(oListItem);
+  clientContext.executeQueryAsync(function () {
+
+  }, appSpHelper.writeError);
+
+}
+
+appSpHelper.getGroupMembersEmail = function(groupName) {
+  var ctx = new SP.ClientContext.get_current();
+  var web = ctx.get_web();
+  var group = web.get_siteGroups().getByName(groupName);
+  var users = group.get_users();
+  ctx.load(users);
+  return new Promise(function (resolve, reject) {
+    ctx.executeQueryAsync(
+      function () {
+        var emailAddresses = [];
+        var userEnumerator = users.getEnumerator();
+        while (userEnumerator.moveNext()) {
+          var user = userEnumerator.get_current();
+          emailAddresses.push(user.get_email());
+        }
+        resolve(emailAddresses);
+      },
+      function (sender, args) {
+        reject(args.get_message());
+      }
+    );
+  });
+}
+
+appSpHelper.getGroupMembersLoginNames = function(groupName) {
+  var ctx = new SP.ClientContext.get_current();
+  var web = ctx.get_web();
+  var group = web.get_siteGroups().getByName(groupName);
+  var users = group.get_users();
+  ctx.load(users);
+
+  return new Promise(function (resolve, reject) {
+    ctx.executeQueryAsync(
+      function () {
+        var loginNames = [];
+        var userEnumerator = users.getEnumerator();
+        while (userEnumerator.moveNext()) {
+          var user = userEnumerator.get_current();
+          loginNames.push(user.get_loginName().replace('i:0#.w|', ''));
+        }
+        resolve(loginNames);
+      },
+      function (sender, args) {
+        reject(args.get_message());
+      }
+    );
+  });
+}
+
+appSpHelper.getAssignedToEmail = function(taskId) {
+  var listName = appHelper.ListName.Validation;
+  var assignedToColumnName = "AssignedTo";
+
+  var ctx = new SP.ClientContext.get_current();
+  var web = ctx.get_web();
+  var list = web.get_lists().getByTitle(listName);
+
+  var listItem = list.getItemById(taskId);
+  ctx.load(listItem, assignedToColumnName);
+
+  return new Promise(function (resolve, reject) {
+    ctx.executeQueryAsync(
+      function () {
+        var assignedToField = listItem.get_item(assignedToColumnName);
+        if (assignedToField) {
+          var userId = assignedToField[0].get_lookupId(); // Get the ID of the user from the "Assigned To" field
+          var user = web.get_siteUsers().getById(userId); // Get the user object using the user ID
+          ctx.load(user);
+          ctx.executeQueryAsync(
+            function () {
+              var assignedToEmail = user.get_email(); // Get the email property from the user object
+              resolve(assignedToEmail);
+            },
+            function (sender, args) {
+              reject(args.get_message());
+            }
+          );
+        } else {
+          resolve(null); // Assigned To field is empty or not properly configured
+        }
+      },
+      function (sender, args) {
+        reject(args.get_message());
+      }
+    );
+  });
+
+
+}
+
+
+appSpHelper.queryEmployeesByLoginNames = function( arrLoginNames) {
+  var ctx = new SP.ClientContext.get_current();
+  var web = ctx.get_web();
+  var list = web.get_lists().getByTitle(appHelper.ListName.Employe);
+
+  var camlQuery = new SP.CamlQuery();
+  camlQuery.set_viewXml(
+    `<View>
+      <Query>
+        <Where>
+          <In>
+            <FieldRef Name='EmpLogin' />
+            <Values>
+              ${arrLoginNames.map(name => `<Value Type='Text'>${name}</Value>`).join('')}
+            </Values>
+          </In>
+        </Where>
+      </Query>
+    </View>`
+  );
+
+  var items = list.getItems(camlQuery);
+  ctx.load(items);
+
+  return new Promise(function (resolve, reject) {
+    ctx.executeQueryAsync(
+      function () {
+        var filteredItems = [];
+        var itemEnumerator = items.getEnumerator();
+        while (itemEnumerator.moveNext()) {
+          var listItem = itemEnumerator.get_current();
+          filteredItems.push(listItem); // Replace 'YourLoginFieldName' with the actual field name containing login names
+        }
+        resolve(filteredItems);
+      },
+      function (sender, args) {
+        reject(args.get_message());
+      }
+    );
+  });
+}
+
+
+
+appSpHelper.SendNotificationTask = function (ctx , taskItem) {
+ let obj = {};
+  obj.to = "";
+  obj.numero = "";
+  obj.body = "";
+  obj.objet = "";
+
+
+  let WriteObject = function(t) {
+
+    const _titre = 'MOOVINSIDE - TACHE DE VALIDATION ';
+    switch((t['Parent']!= null ? t['Parent'].toString(): "")){
+      case appHelper.AppCode.VEHICULE :
+        return _titre;
+      break;
+      case appHelper.AppCode.MATERIEL :
+        return _titre;
+      break;
+      case appHelper.AppCode.GADGET :
+        return _titre;
+      break;
+      case appHelper.AppCode.CONGE :
+        return _titre;
+      break;
+      case appHelper.AppCode.ABSENCE :
+        return _titre;
+      break;
+      default : return _titre;
+      break;
+    }
+
+
+  }
+
+let WriteBody = function (t){
+  let titre = 'Bonjour, ';
+  titre += '<br><br>';
+  titre  += 'Une ' + (t['Parent']!= null ? t['Parent'].toString(): "").trim().toLowerCase() + ' vous a été soumis pour approbation';
+  titre += '<br>';
+  titre  += '<a href="'+ appHelper.AppConstante.SiteJsUrl +'/index.aspx"> Suivez ce lien pour accéder au centre d\'application. </a>';
+  titre += '<br><br>';
+  titre += 'Cordialement,';
+  titre += '<br>';
+  titre += '<b>Equipe Moov Inside</b>';
+  titre += '<br><br>';
+ return titre;
+
+}
+
+let GetAssignAdress = function (t,callBack) {
+  let arrAdresse = [];
+  appSpHelper
+    .getAssignedToEmail(t.get_item("ID"))
+    .then(function (assignedToEmail) {
+      if (assignedToEmail) {
+        arrAdresse.push(assignedToEmail);
+        callBack(arrAdresse.concat());
+      } else {
+        callBack('');
+      }
+    })
+    .catch(function (error) {
+      console.error("Error: " + error);
+      let grp =
+        t.get_item("AssignedTo") != null ? t.get_item("AssignedTo")[0].get_lookupValue() : "";
+      appSpHelper
+        .getGroupMembersLoginNames(grp)
+        .then(function (arrUserLogin) {
+          appSpHelper
+            .queryEmployeesByLoginNames(arrUserLogin)
+            .then(function (empUsers) {
+              empUsers.forEach (function(empUser, idx){
+              let EmpMail =
+                empUser.get_item("EmpMail") != null
+                  ? empUser.get_item("EmpMail").toString().trim()
+                  : "";
+              if (EmpMail) {
+                arrAdresse.push(EmpMail);
+              }
+            });
+
+            console.log(arrAdresse);
+            callBack(arrAdresse.concat());
+            })
+            .catch(function (error) { console.error("Error: " + error);});
+        })
+        .catch(function (error) {  console.error("Error: " + error);});
+    });
+};
+
+
+
+
+ GetAssignAdress(taskItem, function(a){
+  obj.objet = WriteObject(taskItem);
+  obj.body = WriteBody(taskItem);
+  obj.to = a;
+  obj.to = obj.to.toString();
+
+  console.log(obj);
+  appSpHelper.SaveNotification(ctx,obj );
+
+ });
+
+
+
+
+
+
+
+
+};
