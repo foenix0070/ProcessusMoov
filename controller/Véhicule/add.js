@@ -1,20 +1,11 @@
-var appSortieCaisse = appConge || {};
+var appVehicule = appVehicule || {};
 var clientContext;
-appSortieCaisse.clientContext;
+appVehicule.clientContext;
 
-appSortieCaisse.InitializePage = function () {
-  appSortieCaisse.clientContext = SP.ClientContext.get_current();
+appVehicule.InitializePage = function () {
+  appVehicule.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
   
-  appSortieCaisse.GetInterimData= function(login){
-    appSpHelper. GetEmploye(appHelper.ListName.Employe, login, function(it){
-      document.getElementById("TxtIntName").value = it.get_item('EmpPrenom') + ' ' + it.get_item('EmpNom');
-      document.getElementById("TxtIntMatricule").value =  it.get_item('EmpMatricule');
-      document.getElementById("TxtIntEmail").value = it.get_item('EmpMail');
-    });
-  }
-
-
   const BtnSave = document.querySelector("#BtnSave");
   const TxtIntName = document.querySelector("#TxtIntName");
 
@@ -25,51 +16,52 @@ appSortieCaisse.InitializePage = function () {
    });
 
   BtnSave.addEventListener("click", function () {
-    appSortieCaisse.Add (function(){
+    appVehicule.Add (function(){
       location.reload();
     });
   });
 
 };
 
-appappSortieCaisse.Add = function ( callBack) {
-  let oList = appappSortieCaisse.clientContext
+appVehicule.Add = function ( callBack) {
+  let oList = appVehicule.clientContext
     .get_web()
     .get_lists()
-    .getByTitle(appHelper.ListName.Conge);
+    .getByTitle(appHelper.ListName.Vehicule);
   let itemCreateInfo = new window.SP.ListItemCreationInformation();
   let oListItem = oList.addItem(itemCreateInfo);
 
+  let startDate = new Date(
+    document.getElementById("TxtDateDepart").value
+  );
+  let endDate = startDate.addDays(
+    parseInt(document.getElementById("TxtNbreJour").value)
+  );
+
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
-  oListItem.set_item("StatutLibelle", "Validation du supérieur hiérarchique");
+
+  oListItem.set_item("DateDepart", startDate);
+  oListItem.set_item("DateRetour", endDate);
+  oListItem.set_item("DateReprise", endDate);
+  
   oListItem.set_item(
-    "Montant",
-    parseInt(document.getElementById("TxtMontant").value)
-  );
-  oListItem.set_item(
-    "ModePaiement",
-    parseInt(document.getElementById("TxtModePaiement").value)
-  );
-  oListItem.set_item(
-    "PayerA",
-    parseInt(document.getElementById("TxtPayerA").value)
-  );
-  oListItem.set_item(
-    "CaissePaiement",
-    document.getElementById("TxtCaissePaiement").value
-  );
-  oListItem.set_item(
-    "ObjetReglement",
-    document.getElementById("TxtObjetReglement").value
-  );
-  oListItem.set_item(
-    "DocJustificatifs",
-    document.getElementById("FileDoc").value
+    "Title",
+    document.getElementById("TxtObjet").value
   );
 
   oListItem.set_item(
-    "Demandeur",
-    SP.FieldUserValue.fromUser(document.getElementById("TxtCurrentUserLogin").value)
+    "Nature",
+    document.getElementById("TxtNature").value
+  );
+
+  oListItem.set_item(
+    "NombreJours",
+    parseInt(document.getElementById("TxtNbreJour").value)
+  );
+
+  oListItem.set_item(
+    "Motif",
+    parseInt(document.getElementById("TxtMotif").value)
   );
 
   oListItem.set_item(
@@ -102,10 +94,10 @@ appappSortieCaisse.Add = function ( callBack) {
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
-//const appUrl = '/tools1/pages/conge/show.aspx?ID=' + oListItem.get_id();
-const appUrl = '/pages/SortieCaisse/show.aspx?ID=' + oListItem.get_id();
-      let WF = new WFManager(appHelper.AppCode.SortieCisse,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.SortieCisse, oListItem.get_id(), document.getElementById("TxtSpManagerN1Login").value,document.getElementById("TxtSpManagerN2Login").value, function(){}   )
+//const appUrl = '/tools1/pages/Vehicule/show.aspx?ID=' + oListItem.get_id();
+const appUrl = '/pages/Vehicule/show.aspx?ID=' + oListItem.get_id();
+      let WF = new WFManager(appHelper.AppCode.Vehicule,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.Vehicule, oListItem.get_id(), document.getElementById("TxtSpManagerN1Login").value,document.getElementById("TxtSpManagerN2Login").value, function(){}   )
       if(callBack){
         callBack(oListItem);
       }
@@ -115,6 +107,6 @@ const appUrl = '/pages/SortieCaisse/show.aspx?ID=' + oListItem.get_id();
 
 // document.addEventListener("DOMContentLoaded", () => {
 //   ExecuteOrDelayUntilScriptLoaded(function(){
-    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appSortieCaisse.InitializePage);
+    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appVehicule.InitializePage);
 //   }, "SP.ClientContext");
 // });
