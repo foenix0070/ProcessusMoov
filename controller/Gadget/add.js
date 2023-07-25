@@ -214,10 +214,7 @@ appGadget.Add = function ( callBack) {
     "DemandeurEmail",
     document.getElementById("TxtCurrentUserEmail").value
   );
-
- // oListItem.set_item("Historique", "#"); 
  
-
   oListItem.set_item(
     "Demandeur",
     SP.FieldUserValue.fromUser(document.getElementById("TxtCurrentUserLogin").value)
