@@ -7,14 +7,12 @@ showMateriel.InitializePage = function () {
   showMateriel.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
-  let tacheId =  appHelper.GetQueryStringFromAjaxQuery('tacheid');
-  let Id =  appHelper.GetQueryStringFromAjaxQuery('id');
+  let tacheId =  appHelper.getQueryStringParameter('tacheid');
+  let Id =  appHelper.getQueryStringParameter('id');
 
   appSpHelper.CheckAttachmentFolder(showMateriel.clientContext, Id, appHelper.ListName.Materiel, null);
 
   appSpHelper.GetMyProperties(function () {
-
-    console.log(tacheId, Id);
   showMateriel.ShowDetails (Id);
   showMateriel.ShowFichierJoint(Id);
   showMateriel.ShowValidation(Id);
@@ -25,7 +23,6 @@ showMateriel.InitializePage = function () {
 }
 
 showMateriel.TestShowForm = function(tacheId, demandeid){
-  console.log(tacheId, demandeid);
   let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Validation);
   let It = oList .getItemById(tacheId);
   clientContext.load(It);
@@ -271,34 +268,23 @@ showMateriel.ShowDetails = function (demandeid){
   showMateriel.clientContext.load(It);
   showMateriel.clientContext.executeQueryAsync(function () {
   if(It){
-    //showMateriel.isSoldeImpact = (It.get_item('TypeCongeID') != null ? It.get_item('TypeCongeID') : 0)
   let view = {
-    materiel : It.get_item('Materiel') != null ?  It.get_item('Materiel') : '',
-    quantite: It.get_item('Quantite') != null ?  It.get_item('Quantite') : '',
-    personne: It.get_item('Description') != null ?  It.get_item('Description') : '',
+    typeconge : It.get_item('Title') != null ?  It.get_item('Title') : '',
+    nbrejour: It.get_item('NombreJourAccorde') != null ?  It.get_item('NombreJourAccorde') : '',
+    datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
+    interimaire: It.get_item('Demandeur') != null ?  It.get_item('Demandeur').get_lookupValue() : '',
+    motif: It.get_item('Motif') != null ?  It.get_item('Motif') : '',
+
+    quantite: It.get_item('Quantite') != null ?  It.get_item('Quantite') : ''
   };
-
   appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
-
-
-  const addfile = document.getElementById("addfile");
-  addfile.addEventListener("click", function () {
-
-    OpenFileUpload('FpUploadAttachement');
-   });
-
 
   }
 }, appSpHelper.writeError);
 }
 
-function OpenFileUpload(str_select){
-  let transElt = document.getElementById(str_select);
-  transElt.click();
-}
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   ExecuteOrDelayUntilScriptLoaded(function(){
+document.addEventListener("DOMContentLoaded", () => {
+  ExecuteOrDelayUntilScriptLoaded(function(){
     SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showMateriel.InitializePage);
-//   }, "SP.ClientContext");
-// });
+  }, "SP.ClientContext");
+});
