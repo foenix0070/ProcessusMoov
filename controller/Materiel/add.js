@@ -32,11 +32,12 @@ appMateriel.InitializePage = function () {
     );
   });
 
-  const BtnAdd = document.querySelector("#demande");
+  //const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
 
 
 
+  /*
   BtnAdd.addEventListener("click", function () {
     // setTimeout(function () {
     //   appSpHelper.InitializePeoplePicker(
@@ -47,6 +48,7 @@ appMateriel.InitializePage = function () {
     // }, 2000);
 
   });
+  */
 
   BtnSave.addEventListener("click", function () {
     appMateriel.Add (function(){
