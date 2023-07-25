@@ -178,7 +178,12 @@
                   <table>
                       <tr>
                         <td style="text-align:left;" width="200px" >Article </td>
-                        <td style="text-align:left;">{{typeconge}}</td>
+                        <td style="text-align:left;">{{title}}</td>
+                      </tr>
+
+                      <tr>
+                        <td style="text-align:left;" width="200px">Demandeur</td>
+                        <td style="text-align:left;">{{Nature}}</td>
                       </tr>
 
                       <tr>
@@ -188,16 +193,6 @@
                       <tr>
                         <td style="text-align:left;" width="200px">Date de la demande </td>
                         <td style="text-align:left;">{{datedepart}}</td>
-                      </tr>
-
-                      <tr>
-                        <td style="text-align:left;" width="200px">Demandeur</td>
-                        <td style="text-align:left;">{{interimaire}}</td>
-                      </tr>
-
-                      <tr>
-                        <td style="text-align:left;" width="200px">Description </td>
-                        <td style="text-align:left;"> {{motif}}  </td>
                       </tr>
                   </table>
                 </script>

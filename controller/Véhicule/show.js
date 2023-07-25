@@ -41,7 +41,7 @@ showVehicule.ShowForm = function(tacheId, demandeid){
   let view = {};
   view.did = demandeid;
   view.tid = tacheId;
-  view.process = appHelper.AppCode.VEHICULE;
+  view.process = appHelper.AppCode.CONGE;
   appHelper.renderTemplate("tmpl_form_validation", "SectionValidation", view);
 
   const TxtCommentaire = document.getElementById("TxtCommentaire");
@@ -78,9 +78,9 @@ showVehicule.ShowForm = function(tacheId, demandeid){
   });
 }
 
-showVehicule.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
+showConge.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Vehicule);
+  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Conge);
   let It = oList .getItemById(demandeid);
 
   if(isRejet){
@@ -100,8 +100,8 @@ showVehicule.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 
 }
 
-showVehicule.UpDateItemStatus = function(nextTask, demandeid, callBack){
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Vehicule);
+showConge.UpDateItemStatus = function(nextTask, demandeid, callBack){
+  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Conge);
   let It = oList .getItemById(demandeid);
 
   if(nextTask){
@@ -122,11 +122,11 @@ showVehicule.UpDateItemStatus = function(nextTask, demandeid, callBack){
 
 
 
-showVehicule.ShowFichierJoint = function(demandeid) {
+showConge.ShowFichierJoint = function(demandeid) {
 
   let view = {};
 
-  let appName = appHelper.ListName.Vehicule;
+  let appName = appHelper.ListName.Conge;
   let id = demandeid;
   let folderPath = `/Lists/${appName}/Attachments/${id}/`;
   console.log(folderPath);
@@ -148,22 +148,22 @@ showVehicule.ShowFichierJoint = function(demandeid) {
               url : appHelper.AppConstante.SiteUrl + '/'+  attachmentFiles.itemAt(i).get_serverRelativeUrl()
             });
           }
-          showVehicule.ShowUploadForm (demandeid, view);
+        showConge.ShowUploadForm (demandeid, view);
 
         }else{
           view.fichiers = [];
-          showVehicule.ShowUploadForm (demandeid, view);
+          showConge.ShowUploadForm (demandeid, view);
         }
       }
   },
 
   function(){
     view.fichiers = [];
-    showVehicule.ShowUploadForm (demandeid, view);
+    showConge.ShowUploadForm (demandeid, view);
   });
 }
 
-showVehicule.ShowUploadForm = function(demandeid, view){
+showConge.ShowUploadForm = function(demandeid, view){
   appHelper.renderTemplate("tmpl_form_fichiers_attaches", "SectionDocumentsJoint", view);
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
   FpUploadAttachement.addEventListener('change', (e) => {
@@ -171,7 +171,7 @@ showVehicule.ShowUploadForm = function(demandeid, view){
    for (const file of files) {
       let reader = new FileReader();
       reader.onload = function(e) {
-        showVehicule.AttachFile (demandeid,  e.target.result, file.name)
+          showConge.AttachFile (demandeid,  e.target.result, file.name)
       }
       reader.onerror = function(e)
       {
@@ -182,13 +182,13 @@ showVehicule.ShowUploadForm = function(demandeid, view){
     });
 }
 
-showVehicule.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
+showConge.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
 
       //Get Client Context and Web object.
       var oWeb = clientContext.get_web();
       //Get list and Attachment folder where the attachment of a particular list item is stored.
-      var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Vehicule);
-      var urlToAttach = '/Lists/'+ appHelper.ListName.Vehicule +'/Attachments/'+ demandeid + '/'
+      var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Conge);
+      var urlToAttach = '/Lists/'+ appHelper.ListName.Conge +'/Attachments/'+ demandeid + '/'
       var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
       console.log(attachmentFolder);
       //Convert the file contents into base64 data
@@ -209,15 +209,15 @@ showVehicule.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
       clientContext.load(oList);
       clientContext.load(attachmentFiles);
       clientContext.executeQueryAsync(function(){
-        showVehicule.ShowFichierJoint(demandeid);
+        showConge.ShowFichierJoint(demandeid);
       }, appSpHelper.writeError);
 
 };
 
-showVehicule.ShowValidation = function(demandeid) {
+showConge.ShowValidation = function(demandeid) {
   let view = {};
 
-  let oList = showVehicule.clientContext  .get_web()  .get_lists()  .getByTitle(appHelper.ListName.Validation);
+  let oList = showConge.clientContext  .get_web()  .get_lists()  .getByTitle(appHelper.ListName.Validation);
   var QryGetNextOne = '<View>' +
   '<Query>' +
      '<Where>' +
@@ -249,7 +249,7 @@ showVehicule.ShowValidation = function(demandeid) {
             auteur : '',
             dateaction : '',
             decision : '',
-            commentaire : oListItem.get_item('Motif') != null ? oListItem.get_item('Motif').toString() : ''
+            commentaire : oListItem.get_item('_Comment') != null ? oListItem.get_item('_Comment').toString() : ''
             });
       }
       appHelper.renderTemplate("tmpl_form_historique_validation", "SectionHistoriqueValidation", view);
@@ -263,20 +263,23 @@ showVehicule.ShowValidation = function(demandeid) {
 
 }
 
-showVehicule.ShowDetails = function (demandeid){
+showConge.ShowDetails = function (demandeid){
 
-  let oList = showVehicule.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.Vehicule);
+  let oList = showConge.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.Conge);
   let It = oList .getItemById(demandeid);
 
-  showVehicule.clientContext.load(It);
-  showVehicule.clientContext.executeQueryAsync(function () {
+  showConge.clientContext.load(It);
+  showConge.clientContext.executeQueryAsync(function () {
   if(It){
-    //showVehicule.isSoldeImpact = (It.get_item('TypeCongeID') != null ? It.get_item('TypeCongeID') : 0)
+    showConge.isSoldeImpact = (It.get_item('TypeCongeID') != null ? It.get_item('TypeCongeID') : 0)
   let view = {
-    Title : It.get_item('Title') != null ?  It.get_item('Title') : '',
-    Nature: It.get_item('Nature') != null ?  It.get_item('Nature').get_lookupValue() : '',
+    typeconge : It.get_item('TypeCongeLibelle') != null ?  It.get_item('TypeCongeLibelle') : '',
     nbrejour: It.get_item('NombreJours') != null ?  It.get_item('NombreJours') : '',
     datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
+    interimaire: It.get_item('Interimaire') != null ?  It.get_item('Interimaire').get_lookupValue() : '',
+    domicile: It.get_item('DomicileConge') != null ?  It.get_item('DomicileConge') : '',
+    telephone: It.get_item('CongeTelephone') != null ?  It.get_item('CongeTelephone') : '',
+    personne: It.get_item('CongeContact') != null ?  It.get_item('CongeContact') : '',
   };
 
   appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
@@ -300,6 +303,6 @@ function OpenFileUpload(str_select){
 
 // document.addEventListener("DOMContentLoaded", () => {
 //   ExecuteOrDelayUntilScriptLoaded(function(){
-    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showVehicule.InitializePage);
+    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showConge.InitializePage);
 //   }, "SP.ClientContext");
 // });
