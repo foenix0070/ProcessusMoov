@@ -86,9 +86,9 @@ appGadget.Add = function ( callBack) {
   clientContext.executeQueryAsync(function () {
 
 //const appUrl = '/tools1/pages/conge/show.aspx?ID=' + oListItem.get_id();
-const appUrl = '/pages/SortieCaisse/show.aspx?ID=' + oListItem.get_id();
-      let WF = new WFManager(appHelper.AppCode.SortieCisse,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.SortieCisse, oListItem.get_id(), document.getElementById("TxtSpManagerN1Login").value,document.getElementById("TxtSpManagerN2Login").value, function(){}   )
+const appUrl = '/pages/Gadget/show.aspx?ID=' + oListItem.get_id();
+      let WF = new WFManager(appHelper.AppCode.Gadget,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.Gadget, oListItem.get_id(), document.getElementById("TxtSpManagerN1Login").value,document.getElementById("TxtSpManagerN2Login").value, function(){}   )
       if(callBack){
         callBack(oListItem);
       }
