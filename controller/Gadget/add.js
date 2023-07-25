@@ -215,7 +215,8 @@ appGadget.Add = function ( callBack) {
     document.getElementById("TxtCurrentUserEmail").value
   );
 
- // oListItem.set_item("Historique", "#");
+ // oListItem.set_item("Historique", "#"); 
+ 
 
   oListItem.set_item(
     "Demandeur",
