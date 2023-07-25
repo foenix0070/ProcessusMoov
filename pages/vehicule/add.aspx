@@ -38,42 +38,7 @@
         <button class="Submit" id="BtnSave" type="button"> Valider </button>
     </div>
 </form>
-<<<<<<< HEAD
-
-
-<script type="text/javascript">
-
-    AppConstante = {
-
-        SiteUrl: 'http://ci08vmmitest/',
-        SiteJsUrl: 'http://ci08vmmitest/tools1/'
-    }
-
-    nameSpaceExists = function (namespace) {
-        var tokens = namespace.split('.');
-        return tokens.reduce(function (prev, curr) {
-            return (typeof prev == "undefined") ? prev : prev[curr];
-        }, window);
-    };
-
-    loadJSWithNameSpace = function (scriptName, namespace, scriptUrl) {
-        let _NameSpace = nameSpaceExists(namespace)
-        if (_NameSpace) {
-            _NameSpace.InitializePage();
-        } else {
-            var head = document.getElementsByTagName('head').item(0);
-            var js = document.getElementById(scriptName);
-            js = document.createElement('script');
-            js.id = scriptName;
-            js.src = AppConstante.SiteJsUrl + scriptUrl + "?time=" + new Date().getTime();
-            document.getElementsByTagName('head')[0].appendChild(js);
-        }
-    };
-
-    loadJSWithNameSpace("appVehicule", 'appVehicule', "controller/Vehicule/add.js");
-=======
 <script src="http://ci08vmmitest/tools1/controller/Vehicule/add.js"></script>
 <script type="text/javascript">
     appHelper.loadJSWithNameSpace("appVehicule", 'appVehicule', "controller/Vehicule/add.js");
->>>>>>> a1a7d8d485de187a2f98c48667134e1b76c589a8
 </script>
