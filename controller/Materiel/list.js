@@ -51,10 +51,10 @@ ListMateriel.ListMateriel = function (T) {
     if (collListItem.get_count() > 0) {
       var listItemEnumerator = collListItem.getEnumerator();
       let view = {};
-      view.Materiel = [];
+      view.materiel = [];
       while (listItemEnumerator.moveNext()) {
         var oListItem = listItemEnumerator.get_current();
-        view.Materiel.push({
+        view.materiel.push({
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Title"),
           startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
