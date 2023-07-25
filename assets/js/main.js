@@ -20,8 +20,7 @@ var arrMenu = [
         link: {
           id: "dmd_conge_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/conge/ici.html",
-         // url: "/pages/conge/ici.html",
+          url: "tools1/pages/conge/list.aspx?t=E", 
           target: "DivMainPageContainer",
         },
       },
@@ -30,7 +29,7 @@ var arrMenu = [
         link: {
           id: "dmd_conge_list_validee",
           title: "Demandes validées",
-          //url: "#",
+          url: "tools1/pages/conge/list.aspx?t=V",
           target: "DivMainPageContainer",
         },
       },
@@ -40,7 +39,7 @@ var arrMenu = [
         link: {
           id: "dmd_conge_list_rejetee",
           title: "Demandes réjetées",
-          //url: "#",
+          url: "tools1/pages/conge/list.aspx?t=R",
           target: "DivMainPageContainer",
         },
       },
@@ -304,8 +303,7 @@ var arrMenu = [
         link: {
           id: "dmd_gadget_list_en_cours",
           title: "Demande en cours",
-          // url: "/pages/gadget/ici.html",
-          url: "tools1/pages/gadget/ici.html",
+          url: "tools1/pages/gadget/list.aspx?t=E",
 
           target: "DivMainPageContainer",
         },
@@ -315,7 +313,8 @@ var arrMenu = [
         link: {
           id: "dmd_gadget_list_validee",
           title: "Demandes validées",
-          url: "#",
+          url: "tools1/pages/gadget/list.aspx?t=V",
+
           target: "DivMainPageContainer",
         },
       },
@@ -325,7 +324,8 @@ var arrMenu = [
         link: {
           id: "dmd_gadget_list_rejetee",
           title: "Demandes réjetées",
-          //url: "#",
+          url: "tools1/pages/gadget/list.aspx?t=R",
+          
           target: "DivMainPageContainer",
         },
       },
@@ -354,8 +354,7 @@ var arrMenu = [
         link: {
           id: "dmd_materiel_list_en_cours",
           title: "Demande en cours",
-          // url: "/pages/materiel/ici.html",
-          url: "tools1/pages/materiel/ici.html",
+          url: "tools1/pages/materiel/list.aspx?t=E",
 
           target: "DivMainPageContainer",
         },
@@ -365,7 +364,8 @@ var arrMenu = [
         link: {
           id: "dmd_materiel_list_validee",
           title: "Demandes validées",
-          //url: "#",
+          url: "tools1/pages/materiel/list.aspx?t=V",
+          
           target: "DivMainPageContainer",
         },
       },
@@ -375,7 +375,8 @@ var arrMenu = [
         link: {
           id: "dmd_materiel_list_rejetee",
           title: "Demandes réjetées",
-          //url: "#",
+          url: "tools1/pages/materiel/list.aspx?t=R",
+          
           target: "DivMainPageContainer",
         },
       },
@@ -392,7 +393,7 @@ var arrMenu = [
           id: "dmd_vehicule_new",
           title: "Effectuer une demande",
           url: "tools1/pages/vehicule/add.aspx",
-         // url: "/pages/vehicule/add.html",
+         
           target: "ffcMainFormContainer",
         },
         link: false,
@@ -403,8 +404,7 @@ var arrMenu = [
         link: {
           id: "dmd_vehicule_list_en_cours",
           title: "Demande en cours",
-          // url: "/pages/vehicule/ici.html",
-          url: "tools1/pages/vehicule/ici.html",
+          url: "tools1/pages/vehicule/list.aspx?t=E",
 
           target: "DivMainPageContainer",
         },
@@ -414,7 +414,8 @@ var arrMenu = [
         link: {
           id: "dmd_vehicule_list_validee",
           title: "Demandes validées",
-          //url: "#",
+          url: "tools1/pages/vehicule/list.aspx?t=V",
+
           target: "DivMainPageContainer",
         },
       },
@@ -424,7 +425,8 @@ var arrMenu = [
         link: {
           id: "dmd_vehicule_list_rejetee",
           title: "Demandes réjetées",
-          //url: "#",
+          url: "tools1/pages/vehicule/list.aspx?t=R",
+
           target: "DivMainPageContainer",
         },
       },
