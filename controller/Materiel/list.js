@@ -11,16 +11,16 @@ ListMateriel.InitializePage = function () {
   let x = document.getElementById('h2Titre');
   switch(T){
     case 'E' :  ListMateriel.ListMateriel('ENCOURS');
-                x.innerHTML = " Listes des demandes de congés en cours";
+                x.innerHTML = " Listes des demandes de materiel en cours";
     break;
     case 'V' :  ListMateriel.ListMateriel('VALIDEE');
-    x.innerHTML = " Listes des demandes de congés validées";
+    x.innerHTML = " Listes des demandes de materiel validées";
     break;
     case 'R' :  ListMateriel.ListMateriel('REJETEE');
-    x.innerHTML = " Listes des demandes de congés rejétées";
+    x.innerHTML = " Listes des demandes de materiel rejétées";
     break;
     default : ListMateriel.ListMateriel('ENCOURS');
-    x.innerHTML = " Listes des demandes de congés en cours";
+    x.innerHTML = " Listes des demandes de materiel en cours";
     break;
   }
 
@@ -69,7 +69,7 @@ ListMateriel.ListMateriel = function (T) {
       }
 
       //appHelper.renderTemplate("tmpl_table_conge", "DivCongeTableShow", view);
-      appHelper.renderTemplate("tmpl_table_materiel", "DivmaterielTableShow", view);
+      appHelper.renderTemplate("tmpl_table_materiel", "DivMaterielTableShow", view);
 
 
    //   appHelper.listenNavigationLink ('linkMainNavigation');

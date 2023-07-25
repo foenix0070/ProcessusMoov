@@ -149,7 +149,7 @@ appMateriel.List = function () {
         });
       }
 
-      appHelper.renderTemplate("tmpl_table_materiel", "DivmaterielTableShow", view);
+      appHelper.renderTemplate("tmpl_table_materiel", "DivMaterielTableShow", view);
 
       const linkClick = document.getElementsByClassName('click');
       for (var i = 0; i < linkClick.length; i++) {

@@ -7,7 +7,7 @@
   </div>
 
 <!-- <Table /> -->
-<div id="DivCongeTableShow">
+<div id="DivVehiculeTableShow">
   <div style="padding: 10px 0 10px 2px;"
       class="w3-panel w3-pale-yellow w3-border">
       <p>Aucun &eacute;l&eacute;ment &agrave; afficher ici.</p>
@@ -17,10 +17,10 @@
 
 
 <script type="text/javascript">
-  appHelper.loadJSWithNameSpace("ListConge", 'ListConge', "controller/conge/list.js");
+  appHelper.loadJSWithNameSpace("ListVehicule", 'ListVehicule', "controller/Vehicule/list.js");
 </script>
 
-<script id="tmpl_table_conge" type="x-tmpl-mustache">
+<script id="tmpl_table_vehicule" type="x-tmpl-mustache">
   <div class="table-container">
     <table class="table table-bordered table-responsive table-striped">
       <thead>
@@ -40,7 +40,7 @@
           <td><a href="tools1/pages/Vehicule/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/Vehicule/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
           <td><span class="{{classe}}">{{status}}</span></td>
         </tr>
-        {{/conges}}
+        {{/Vehicule}}
       </tbody>
     </table>
   </div>

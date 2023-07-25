@@ -61,7 +61,7 @@ ListVoiture.ListVoiture = function (T) {
         });
       }
 
-      appHelper.renderTemplate("tmpl_table_Voiture", "DivVoitureTableShow", view);
+      appHelper.renderTemplate("tmpl_table_Vehicule", "DivVehiculeTableShow", view);
 
    //   appHelper.listenNavigationLink ('linkMainNavigation');
       const linkClick = document.getElementsByClassName('click');

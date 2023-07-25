@@ -147,7 +147,7 @@ appVehicule.List = function () {
         });
       }
 
-      appHelper.renderTemplate("tmpl_table_vehicule", "DivvehiculeTableShow", view);
+      appHelper.renderTemplate("tmpl_table_vehicule", "DivVehiculeTableShow", view);
 
       const linkClick = document.getElementsByClassName('click');
       for (var i = 0; i < linkClick.length; i++) {

@@ -64,7 +64,7 @@ ListGadget.ListGadget = function (T) {
         });
       }
 
-      appHelper.renderTemplate("tmpl_table_gadget", "DivgadgetTableShow", view);
+      appHelper.renderTemplate("tmpl_table_gadget", "DivGadgetTableShow", view);
 
    //   appHelper.listenNavigationLink ('linkMainNavigation');
       const linkClick = document.getElementsByClassName('click');
