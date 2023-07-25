@@ -1,12 +1,12 @@
-var appSortieCaisse = appConge || {};
+var appMateriel = appConge || {};
 var clientContext;
-appSortieCaisse.clientContext;
+appMateriel.clientContext;
 
-appSortieCaisse.InitializePage = function () {
-  appSortieCaisse.clientContext = SP.ClientContext.get_current();
+appMateriel.InitializePage = function () {
+  appMateriel.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
   
-  /*appSortieCaisse.GetInterimData= function(login){
+  /*appMateriel.GetInterimData= function(login){
     appSpHelper. GetEmploye(appHelper.ListName.Employe, login, function(it){
       document.getElementById("TxtIntName").value = it.get_item('EmpPrenom') + ' ' + it.get_item('EmpNom');
       document.getElementById("TxtIntMatricule").value =  it.get_item('EmpMatricule');
@@ -16,24 +16,26 @@ appSortieCaisse.InitializePage = function () {
 
 
   const BtnSave = document.querySelector("#BtnSave");
-  const TxtIntName = document.querySelector("#TxtIntName");
 
+  /*
+  const TxtIntName = document.querySelector("#TxtIntName");
   TxtIntName.addEventListener("click", function () {
 
-   // document.querySelector("#TxtIntName").value = 'Consultant INOVA';
+   document.querySelector("#TxtIntName").value = 'Consultant INOVA';
 
    });
+   */
 
   BtnSave.addEventListener("click", function () {
-    appSortieCaisse.Add (function(){
+    appMateriel.Add (function(){
       location.reload();
     });
   });
 
 };
 
-appappSortieCaisse.Add = function ( callBack) {
-  let oList = appappSortieCaisse.clientContext
+appappMateriel.Add = function ( callBack) {
+  let oList = appappMateriel.clientContext
     .get_web()
     .get_lists()
     .getByTitle(appHelper.ListName.Conge);
@@ -44,7 +46,7 @@ appappSortieCaisse.Add = function ( callBack) {
   oListItem.set_item("StatutLibelle", "Validation du supérieur hiérarchique");
   oListItem.set_item(
     "Materiel",
-    parseInt(document.getElementById("TxtMateriel").value)
+    document.getElementById("TxtMateriel").value
   );
   oListItem.set_item(
     "Quantite",
@@ -52,7 +54,7 @@ appappSortieCaisse.Add = function ( callBack) {
   );
   oListItem.set_item(
     "Description",
-    parseInt(document.getElementById("TxtMotif").value)
+    document.getElementById("TxtMotif").value
   );
 
   oListItem.set_item(
@@ -86,7 +88,7 @@ appappSortieCaisse.Add = function ( callBack) {
   clientContext.executeQueryAsync(function () {
 
 //const appUrl = '/tools1/pages/conge/show.aspx?ID=' + oListItem.get_id();
-const appUrl = '/pages/SortieCaisse/show.aspx?ID=' + oListItem.get_id();
+const appUrl = '/pages/Materiel/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.SortieCisse,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
       WF.createWFTask(clientContext,appUrl, appHelper.AppCode.SortieCisse, oListItem.get_id(), document.getElementById("TxtSpManagerN1Login").value,document.getElementById("TxtSpManagerN2Login").value, function(){}   )
       if(callBack){
@@ -98,6 +100,6 @@ const appUrl = '/pages/SortieCaisse/show.aspx?ID=' + oListItem.get_id();
 
 // document.addEventListener("DOMContentLoaded", () => {
 //   ExecuteOrDelayUntilScriptLoaded(function(){
-    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appSortieCaisse.InitializePage);
+    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appMateriel.InitializePage);
 //   }, "SP.ClientContext");
 // });

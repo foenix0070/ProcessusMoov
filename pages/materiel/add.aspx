@@ -11,7 +11,7 @@
 
             <div class="mb-3">
                 <label  class="form-label">  Quantité</label>
-                <input type="text" class="form-control" name="TxtQuantite"  id="TxtQuantite"  placeholder="" />
+                <input type="number" class="form-control" name="TxtQuantite"  id="TxtQuantite"  placeholder="" />
             </div>
 
             <div class="mb-3">
@@ -55,5 +55,5 @@
 
 
 <script type="text/javascript">
-    appHelper.loadJSWithNameSpace("appMarteriel", 'appMarteriel', "controller/marteriel/add.js");
+    appHelper.loadJSWithNameSpace("appMateriel", 'appMateriel', "controller/Materiel/add.js");
 </script>
