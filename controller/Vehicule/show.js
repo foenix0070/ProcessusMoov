@@ -269,7 +269,7 @@ showVehicule.ShowDetails = function (demandeid){
   showVehicule.clientContext.executeQueryAsync(function () {
   if(It){
   let view = {
-    typeconge : It.get_item('Title') != null ?  It.get_item('Title') : '',
+    title : It.get_item('Title') != null ?  It.get_item('Title') : '',
     //nbrejour: It.get_item('NombreJourAccorde') != null ?  It.get_item('NombreJourAccorde') : '',
     datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
     //interimaire: It.get_item('Demandeur') != null ?  It.get_item('Demandeur').get_lookupValue() : '',

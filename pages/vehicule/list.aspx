@@ -20,7 +20,7 @@
   appHelper.loadJSWithNameSpace("ListVehicule", 'ListVehicule', "controller/Vehicule/list.js");
 </script>
 
-<script id="tmpl_table_vehicule" type="x-tmpl-mustache">
+<script id="tmpl_table_Vehicule" type="x-tmpl-mustache">
   <div class="table-container">
     <table class="table table-bordered table-responsive table-striped">
       <thead>
