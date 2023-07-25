@@ -28,9 +28,6 @@ ListVoiture.InitializePage = function () {
 };
 
 
-
-
-
 ListConge.ListVoiture = function (T) {
   let oList = ListVoiture.clientContext
     .get_web()

@@ -33,12 +33,12 @@ appVehicule.InitializePage = function () {
     );
   });
 
-  const BtnAdd = document.querySelector("#demande");
+  //const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
 
 
 
-  BtnAdd.addEventListener("click", function () {
+  /*BtnAdd.addEventListener("click", function () {
     // setTimeout(function () {
     //   appSpHelper.InitializePeoplePicker(
     //     "plePickerInterimaireDiv",
@@ -47,7 +47,7 @@ appVehicule.InitializePage = function () {
     //   );
     // }, 2000);
 
-  });
+  });*/
 
   BtnSave.addEventListener("click", function () {
     alert("test et pret à effectuer le add");
