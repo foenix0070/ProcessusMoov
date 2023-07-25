@@ -304,7 +304,9 @@ var arrMenu = [
         link: {
           id: "dmd_gadget_list_en_cours",
           title: "Demande en cours",
-          url: "/pages/gadget/ici.html",
+          // url: "/pages/gadget/ici.html",
+          url: "tools1/pages/gadget/ici.html",
+
           target: "DivMainPageContainer",
         },
       },
@@ -352,7 +354,9 @@ var arrMenu = [
         link: {
           id: "dmd_materiel_list_en_cours",
           title: "Demande en cours",
-          url: "/pages/materiel/ici.html",
+          // url: "/pages/materiel/ici.html",
+          url: "tools1/pages/materiel/ici.html",
+
           target: "DivMainPageContainer",
         },
       },
@@ -399,7 +403,9 @@ var arrMenu = [
         link: {
           id: "dmd_vehicule_list_en_cours",
           title: "Demande en cours",
-          url: "/pages/vehicule/ici.html",
+          // url: "/pages/vehicule/ici.html",
+          url: "tools1/pages/vehicule/ici.html",
+
           target: "DivMainPageContainer",
         },
       },
