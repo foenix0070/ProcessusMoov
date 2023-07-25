@@ -6,7 +6,7 @@
 
             <div class="mb-3">
                 <label  class="form-label"> Gadget</label>
-                <input type="text" class="form-control" name="TxtArticle"  id="TxtMateriel"  placeholder="ex: Ordinateur portable" />
+                <input type="text" class="form-control" name="TxtArticle"  id="TxtArticle"  placeholder="ex: Ordinateur portable" />
             </div>
 
             <div class="mb-3">

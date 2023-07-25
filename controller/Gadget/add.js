@@ -203,6 +203,11 @@ appGadget.Add = function ( callBack) {
   );
 
   oListItem.set_item(
+    "Quantite",
+    parseInt(document.getElementById("TxtQuantite").value)
+  );
+
+  oListItem.set_item(
     "NombreJours",
     parseInt(document.getElementById("TxtQuantite").value)
   );
