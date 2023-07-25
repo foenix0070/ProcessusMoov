@@ -261,9 +261,9 @@ const appUrl = '/tools/gadget/show.aspx?ID=' + oListItem.get_id();
   }, appSpHelper.writeError);
 };
 
-
-document.addEventListener("DOMContentLoaded", () => {
-  ExecuteOrDelayUntilScriptLoaded(function(){
-    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appGadget.InitializePage);
-  }, "SP.ClientContext");
-});
+SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appGadget.InitializePage);
+// document.addEventListener("DOMContentLoaded", () => {
+//   ExecuteOrDelayUntilScriptLoaded(function(){
+    
+//   }, "SP.ClientContext");
+// });

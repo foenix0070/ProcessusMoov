@@ -281,8 +281,4 @@ showGadget.ShowDetails = function (demandeid){
 }, appSpHelper.writeError);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  ExecuteOrDelayUntilScriptLoaded(function(){
-    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showGadget.InitializePage);
-  }, "SP.ClientContext");
-});
+SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appGadget.InitializePage);
