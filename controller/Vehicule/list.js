@@ -1,25 +1,25 @@
-var ListConge = ListConge || {};
+var ListVoiture = ListVoiture || {};
 var clientContext;
-ListConge.clientContext;
+ListVoiture.clientContext;
 
-ListConge.InitializePage = function () {
-  ListConge.clientContext = SP.ClientContext.get_current();
+ListVoiture.InitializePage = function () {
+  ListVoiture.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
 
   let T =  appHelper.GetQueryStringFromAjaxQuery('t');
   let x = document.getElementById('h2Titre');
   switch(T){
-    case 'E' :  ListConge.ListConge('ENCOURS');
+    case 'E' :  ListVoiture.ListVoiture('ENCOURS');
                 x.innerHTML = " Listes des demandes de congés en cours";
     break;
-    case 'V' :  ListConge.ListConge('VALIDEE');
+    case 'V' :  ListVoiture.ListVoiture('VALIDEE');
     x.innerHTML = " Listes des demandes de congés validées";
     break;
-    case 'R' :  ListConge.ListConge('REJETEE');
+    case 'R' :  ListVoiture.ListVoiture('REJETEE');
     x.innerHTML = " Listes des demandes de congés rejétées";
     break;
-    default : ListConge.ListConge('ENCOURS');
+    default : ListVoiture.ListVoiture('ENCOURS');
     x.innerHTML = " Listes des demandes de congés en cours";
     break;
   }
@@ -31,11 +31,11 @@ ListConge.InitializePage = function () {
 
 
 
-ListConge.ListConge = function (T) {
-  let oList = ListConge.clientContext
+ListConge.ListVoiture = function (T) {
+  let oList = ListVoiture.clientContext
     .get_web()
     .get_lists()
-    .getByTitle(appHelper.ListName.Conge);
+    .getByTitle(appHelper.ListName.Voiture);
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(
     "<View><Query><Where>" +
@@ -46,15 +46,15 @@ ListConge.ListConge = function (T) {
       "</Where></Query></View>"
   );
   let collListItem = oList.getItems(camlQuery);
-  ListConge.clientContext.load(collListItem);
-  ListConge.clientContext.executeQueryAsync(function (sender, args) {
+  ListVoiture.clientContext.load(collListItem);
+  ListVoiture.clientContext.executeQueryAsync(function (sender, args) {
     if (collListItem.get_count() > 0) {
       var listItemEnumerator = collListItem.getEnumerator();
       let view = {};
-      view.conges = [];
+      view.voiture = [];
       while (listItemEnumerator.moveNext()) {
         var oListItem = listItemEnumerator.get_current();
-        view.conges.push({
+        view.voiture.push({
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Title"),
           startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
@@ -64,7 +64,7 @@ ListConge.ListConge = function (T) {
         });
       }
 
-      appHelper.renderTemplate("tmpl_table_conge", "DivCongeTableShow", view);
+      appHelper.renderTemplate("tmpl_table_Voiture", "DivVoitureTableShow", view);
 
    //   appHelper.listenNavigationLink ('linkMainNavigation');
       const linkClick = document.getElementsByClassName('click');

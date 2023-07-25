@@ -259,13 +259,13 @@ const appUrl = '/tools/vehicule/show.aspx?ID=' + oListItem.get_id();
 };
 
 
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("test lister");
-  ExecuteOrDelayUntilScriptLoaded(function(){
-    console.log("test dcriptLoaded");
+//document.addEventListener("DOMContentLoaded", () => {
+  //console.log("test lister");
+  //ExecuteOrDelayUntilScriptLoaded(function(){
+    //console.log("test dcriptLoaded");
     SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appVehicule.InitializePage);
-  }, "SP.ClientContext");
-});
+  //}, "SP.ClientContext");
+//});
 
 
 
