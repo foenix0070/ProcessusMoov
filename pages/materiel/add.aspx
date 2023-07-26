@@ -10,7 +10,7 @@
             </div>
 
             <div class="mb-3">
-                <label  class="form-label">  Quantité</label>
+                <label  class="form-label">  Quantit&eacute</label>
                 <input type="number" class="form-control" name="TxtQuantite"  id="TxtQuantite"  placeholder="" />
             </div>
 
