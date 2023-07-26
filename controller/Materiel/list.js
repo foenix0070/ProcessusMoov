@@ -62,13 +62,14 @@ ListMateriel.ListMateriel = function (T) {
           status: oListItem.get_item("StatutLibelle"),
           classe: appHelper.Status.GetClass(oListItem.get_item("Statut")),
 
+          /*
           quantite: oListItem.get_item("Quantite"),
           motif: oListItem.get_item("Motif"),
+          */
 
         });
       }
 
-      //appHelper.renderTemplate("tmpl_table_conge", "DivCongeTableShow", view);
       appHelper.renderTemplate("tmpl_table_materiel", "DivMaterielTableShow", view);
 
 
