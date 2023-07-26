@@ -202,7 +202,7 @@
 
                 
                 <script type="text/javascript">
-                  appHelper.loadJSWithNameSpace("showMateriel", 'showMateriel', "controller/Vehicule/show.js");
+                  appHelper.loadJSWithNameSpace("showMateriel", 'showMateriel', "controller/materiel/show.js");
                 </script>
               </body>
               <script type="text/javascript">
