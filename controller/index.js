@@ -39,6 +39,13 @@ MoovTools.InitializePage = function () {
 };
 
 
+MoovTools.hidePopup = function () {
+  document.getElementById("popup").style.display = "none";
+};
+
+MoovTools.hidePopup();
+
+
 MoovTools.ListConge = function () {
   let oList = MoovTools.clientContext
     .get_web()

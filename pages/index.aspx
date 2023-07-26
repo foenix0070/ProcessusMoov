@@ -1,3 +1,8 @@
+<div class="popup" id="popup" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #f9f9f9; border: 1px solid #ccc; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 9999;">
+  <h2>Information</h2>
+  <p>Veillez contacter votre administrateur afin qu'il termine votre configuration</p>
+</div>
+
 
 <div class="row mt-4" id="section">
 
