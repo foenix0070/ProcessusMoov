@@ -178,35 +178,39 @@
                   <table>
                       <tr>
                         <td style="text-align:left;" width="200px" >Materiel </td>
-                        <td style="text-align:left;">{{typeconge}}</td>
+                        <td style="text-align:left;">{{title}}</td>
                       </tr>
 
-                      <tr>
-                        <td style="text-align:left;" width="200px">Nombre</td>
-                        <td style="text-align:left;">{{nbrejour}}</td>
-                      </tr>
+                      
                       <tr>
                         <td style="text-align:left;" width="200px">Date de la demande </td>
                         <td style="text-align:left;">{{datedepart}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;" width="200px">Demandeur</td>
-                        <td style="text-align:left;">{{interimaire}}</td>
+                        <td style="text-align:left;" width="200px">Nombre</td>
+                        <td style="text-align:left;">{{motif}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;" width="200px">Description </td>
-                        <td style="text-align:left;"> {{motif}}  </td>
+                        <td style="text-align:left;" width="200px">Nombre</td>
+                        <td style="text-align:left;">{{status}}</td>
                       </tr>
                   </table>
                 </script>
 
 
-                <script src="/tools/materiel/show.js"></script>
+                
                 <script type="text/javascript">
-                  appHelper.loadJSWithNameSpace("showMateriel", 'showMateriel', "show.js");
+                  appHelper.loadJSWithNameSpace("showMateriel", 'showMateriel', "controller/Vehicule/show.js");
                 </script>
               </body>
+              <script type="text/javascript">
+
+                function OpenFileUpload(str_select) {
+                  let transElt = document.getElementById(str_select);
+                  transElt.click();
+                }
+              </script>
 
               </html>
