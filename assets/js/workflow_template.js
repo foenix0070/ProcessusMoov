@@ -8,8 +8,8 @@ const ACTIV_WORKFLOW = {
           "value": "Validation du supérieur hiérarchique ",
           "actors": [
             {
-              "type": "GROUP",
-              "value": "GroupGAP"
+              "type": "USER",
+              "value": "#N1"
             }
           ],
           "copies": [],
@@ -39,8 +39,8 @@ const ACTIV_WORKFLOW = {
           "value": "Validation du supérieur directeur ",
           "actors": [
             {
-              "type": "GROUP",
-              "value": "GroupGAP"
+              "type": "USER",
+              "value": "#DIRECTEUR"
             }
           ],
           "copies": [],
@@ -137,8 +137,8 @@ const ACTIV_WORKFLOW = {
           "value": "Validation du supérieur hiérarchique ",
           "actors": [
             {
-              "type": "GROUP",
-              "value": "GroupGAP"
+              "type": "USER",
+              "value": "#N1"
             }
           ],
           "copies": [],
@@ -168,8 +168,8 @@ const ACTIV_WORKFLOW = {
           "value": "Validation du supérieur directeur ",
           "actors": [
             {
-              "type": "GROUP",
-              "value": "GroupGAP"
+              "type": "USER",
+              "value": "#DIRECTEUR"
             }
           ],
           "copies": [],
@@ -266,8 +266,8 @@ const ACTIV_WORKFLOW = {
           "value": "Validation du supérieur hiérarchique ",
           "actors": [
             {
-              "type": "GROUP",
-              "value": "GroupGAP"
+              "type": "USER",
+              "value": "#N1"
             }
           ],
           "copies": [],
@@ -426,8 +426,8 @@ const ACTIV_WORKFLOW = {
           "value": "Validation du responsable hiérarchique ",
           "actors": [
             {
-              "type": "GROUP",
-              "value": "GroupGDI"
+              "type": "USER",
+              "value": "#N1"
             }
           ],
           "copies": [],
@@ -586,8 +586,8 @@ const ACTIV_WORKFLOW = {
           "value": "Validation du responsable hiérarchique ",
           "actors": [
             {
-              "type": "GROUP",
-              "value": "GroupGSI"
+              "type": "USER",
+              "value": "#N1"
             }
           ],
           "copies": [],
