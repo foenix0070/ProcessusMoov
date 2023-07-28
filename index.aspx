@@ -237,7 +237,6 @@ Name="Microsoft.Web.CommandUI, Version=16.0.0.0, Culture=neutral, PublicKeyToken
           </a>
         </div>
 
-
         <div class="infoboxs_item ">
           <a href="#" class="infoboxs-item_link">
             <div class="infoboxs-item_bg"></div>
@@ -247,7 +246,6 @@ Name="Microsoft.Web.CommandUI, Version=16.0.0.0, Culture=neutral, PublicKeyToken
             <div class="infoboxs-item_date">0</div>
           </a>
         </div>
-
 
         <div class="infoboxs_item ">
           <a href="#" class="infoboxs-item_link">
@@ -259,10 +257,7 @@ Name="Microsoft.Web.CommandUI, Version=16.0.0.0, Culture=neutral, PublicKeyToken
           </a>
         </div>
 
-
       </div>
-
-
 
     </section>
 
