@@ -20,25 +20,17 @@ appAbsence.InitializePage = function () {
               item.get_item("EmpManager"),
               function () {
 
-              span= document.getElementById('spanSolde');
-              span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
+              // span= document.getElementById('spanSolde');
+              // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
 
-                appAbsence.initCmbTypeConge(function(){
-                  document.getElementById("TxtNom").value = document.getElementById("TxtCurrentUserDisplayName").value
-                  document.getElementById("TxtMatricule").value = document.getElementById("TxtSpUserMatricule").value
-                  document.getElementById("TxtEmail").value = document.getElementById("TxtSpEmpMail").value
 
-                  setTimeout(function () {
-                    appSpHelper.InitializePeoplePicker( "plePickerInterimaireDiv",  false,  "350px"  );
 
-                    appSpHelper. PeoplePickerOnChangeEvent("plePickerInterimaireDiv", function(key){
-                     // appAbsence.interimaire = key.toString().split('\\')[1];
-                      appAbsence.GetInterimData(key);
-                    });
 
-                  }, 2000);
 
-                });
+
+              //  appAbsence.initCmbTypeConge(function(){
+                  appAbsence.List();
+              //  });
               }
             );
           }
@@ -47,21 +39,20 @@ appAbsence.InitializePage = function () {
     );
   });
 
-
-  appAbsence.GetInterimData= function(login){
-    appSpHelper. GetEmploye(appHelper.ListName.Employe, login, function(it){
-      document.getElementById("TxtIntName").value = it.get_item('EmpPrenom') + ' ' + it.get_item('EmpNom');
-      document.getElementById("TxtIntMatricule").value =  it.get_item('EmpMatricule');
-      document.getElementById("TxtIntEmail").value = it.get_item('EmpMail');
-    });
-  }
-
   const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
 
 
 
-  
+  BtnAdd.addEventListener("click", function () {
+    setTimeout(function () {
+      appSpHelper.InitializePeoplePicker(
+        "plePickerInterimaireDiv",
+        false,
+        "350px"
+      );
+    }, 2000);
+  });
 
   BtnSave.addEventListener("click", function () {
     appAbsence.Add (function(){
@@ -71,13 +62,15 @@ appAbsence.InitializePage = function () {
 
 };
 
+function getRating (str){
+  document.getElementById('TxtNature').value = str;
+}
 
-
-appAbsence.initCmbTypeAbsence = function (callBack) {
+appAbsence.initCmbTypeConge = function (callBack) {
   ListerMotif(function(){
-    let cmb = document.getElementById("cmbTypeAbsence");
-    let txtColor = document.getElementById("TxtTypeAbsenceColeur");
-    let txtText = document.getElementById("TxtTypeAbsenceText");
+    let cmb = document.getElementById("cmbTypeConge");
+    let txtColor = document.getElementById("TxtTypeCongeColeur");
+    let txtText = document.getElementById("TxtTypeCongeText");
     cmb.addEventListener("change", function () {
       let selectedOption = this.options[this.selectedIndex];
       let color = selectedOption.getAttribute("data-color");
@@ -96,7 +89,7 @@ appAbsence.initCmbTypeAbsence = function (callBack) {
 
 
 function ListerMotif( callBack) {
-  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.TypeAbsence);
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.TypeConge);
   let q = '<View><Query><Where>' +
                '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
           '</Where></Query></View>';
@@ -202,18 +195,14 @@ appAbsence.Add = function ( callBack) {
   oListItem.set_item("DateRetour", endDate);
   oListItem.set_item("DateReprise", repDate);
 
-  // oListItem.set_item(
-  //   "Title",
-  //   document.getElementById("TxtNature").value
-  // );
+  oListItem.set_item(
+    "Title",
+    document.getElementById("TxtNature").value
+  );
 
   oListItem.set_item(
-    "Titre",
-    document.getElementById("RadNature").value
-  );
-  oListItem.set_item(
     "Nature",
-    document.getElementById("RadNature").value
+    document.getElementById("TxtNature").value
   );
 
   oListItem.set_item(
@@ -221,34 +210,14 @@ appAbsence.Add = function ( callBack) {
     document.getElementById("TxtMotif").value
   );
 
-  // oListItem.set_item(
-  //   "Durée",
-  //   parseInt(document.getElementById("TxtDuree").value)
-  // );
+  oListItem.set_item(
+    "NombreJours",
+    parseInt(document.getElementById("TxtNbreJour").value)
+  );
 
   oListItem.set_item(
     "NombreJourAccorde",
-    parseInt(document.getElementById("Durée").value)
-  );
-
-  oListItem.set_item(
-    "DateDepart",
-    parseInt(document.getElementById("DateDebut").value)
-  );
-
-  oListItem.set_item(
-    "DateRetour",
-    parseInt(document.getElementById("DateFin").value)
-  );
-
-  oListItem.set_item(
-    "DateReprise",
-    parseInt(document.getElementById("DateReprise").value)
-  );
-
-  oListItem.set_item(
-    "Doc justificatifs",
-    parseInt(document.getElementById("DocJustificatif").value)
+    parseInt(document.getElementById("TxtNbreJour").value)
   );
 
   oListItem.set_item(
@@ -300,7 +269,7 @@ appAbsence.Add = function ( callBack) {
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
-const appUrl = '/tools1/pages/absence/show.aspx?ID=' + oListItem.get_id();
+const appUrl = '/tools1/absence/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.ABSENCE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
       WF.createWFTask(clientContext,appUrl, appHelper.AppCode.ABSENCE, oListItem.get_id(), document.getElementById("TxtSpManagerN1Login").value,document.getElementById("TxtSpManagerN2Login").value, function(){}   )
       if(callBack){
