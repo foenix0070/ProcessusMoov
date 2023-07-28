@@ -66,9 +66,9 @@ function getRating (str){
   document.getElementById('TxtNature').value = str;
 }
 
-appAbsence.initCmbTypeConge = function (callBack) {
+appAbsence.initCmbTypeAbsence = function (callBack) {
   ListerMotif(function(){
-    let cmb = document.getElementById("cmbTypeConge");
+    let cmb = document.getElementById("cmbTypeAbsence");
     let txtColor = document.getElementById("TxtTypeCongeColeur");
     let txtText = document.getElementById("TxtTypeCongeText");
     cmb.addEventListener("change", function () {
@@ -195,14 +195,18 @@ appAbsence.Add = function ( callBack) {
   oListItem.set_item("DateRetour", endDate);
   oListItem.set_item("DateReprise", repDate);
 
-  oListItem.set_item(
-    "Title",
-    document.getElementById("TxtNature").value
-  );
+  // oListItem.set_item(
+  //   "Title",
+  //   document.getElementById("TxtNature").value
+  // );
 
   oListItem.set_item(
+    "Titre",
+    document.getElementById("RadNature").value
+  );
+  oListItem.set_item(
     "Nature",
-    document.getElementById("TxtNature").value
+    document.getElementById("RadNature").value
   );
 
   oListItem.set_item(
@@ -210,14 +214,34 @@ appAbsence.Add = function ( callBack) {
     document.getElementById("TxtMotif").value
   );
 
-  oListItem.set_item(
-    "NombreJours",
-    parseInt(document.getElementById("TxtNbreJour").value)
-  );
+  // oListItem.set_item(
+  //   "Durée",
+  //   parseInt(document.getElementById("TxtDuree").value)
+  // );
 
   oListItem.set_item(
     "NombreJourAccorde",
-    parseInt(document.getElementById("TxtNbreJour").value)
+    parseInt(document.getElementById("Durée").value)
+  );
+
+  oListItem.set_item(
+    "DateDepart",
+    parseInt(document.getElementById("DateDebut").value)
+  );
+
+  oListItem.set_item(
+    "DateRetour",
+    parseInt(document.getElementById("DateFin").value)
+  );
+
+  oListItem.set_item(
+    "DateReprise",
+    parseInt(document.getElementById("DateReprise").value)
+  );
+
+  oListItem.set_item(
+    "Doc justificatifs",
+    parseInt(document.getElementById("DocJustificatif").value)
   );
 
   oListItem.set_item(

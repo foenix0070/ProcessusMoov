@@ -46,7 +46,7 @@ var arrMenu = [
     ],
   },
 
-  /*{
+{
     id: "dmd_autorisationAbsence",
     title: "Demande d'autorisation d'absence",
     icon: "fa fa-2x fa-globe",
@@ -91,7 +91,7 @@ var arrMenu = [
         },
       },
     ],
-  },*/
+  },
 
   {
     id: "dmd_fraismission",
