@@ -91,7 +91,7 @@ var arrMenu = [
         },
       },
     ],
-  },
+  },*/
 
   {
     id: "dmd_fraismission",
@@ -140,7 +140,7 @@ var arrMenu = [
     ],
   },
 
-  {
+ /* {
     id: "dmd_regularisationFinMission",
     title: "Demande de régularisation de frais de mission",
     icon: "fa fa-2x fa-globe",
