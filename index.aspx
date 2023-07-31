@@ -63,10 +63,10 @@ Name="Microsoft.Web.CommandUI, Version=16.0.0.0, Culture=neutral, PublicKeyToken
       integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="/tools1/assets/css/reset.css" />
-    <link rel="stylesheet" href="/tools1/assets/css/font-awesome.css" />
-    <link rel="stylesheet" href="/tools1/assets/plugins/DataTables/datatables.min.css">
-    <link rel="stylesheet" href="/tools1/assets/css/style.css" />
+    <link rel="stylesheet" href="/tools1/assets/css/reset.css?t=1" />
+    <link rel="stylesheet" href="/tools1/assets/css/font-awesome.css?t=1" />
+    <link rel="stylesheet" href="/tools1/assets/plugins/DataTables/datatables.min.css?t=1">
+    <link rel="stylesheet" href="/tools1/assets/css/style.css?t=1" />
     <!-- END STYLE -->
 
     <!-- SCRIPT -->
@@ -77,19 +77,18 @@ Name="Microsoft.Web.CommandUI, Version=16.0.0.0, Culture=neutral, PublicKeyToken
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script src="/tools1/assets/js/bootstrap.bundle.min.js"></script>
 
-    <script src="/tools1/assets/plugins/DataTables/datatables.min.js"></script>
-    <script src="/tools1/assets/js/workflow_template.js"></script>
-    <script src="/tools1/assets/js/SpGroupConstante.js"></script>
-    <script src="/tools1/assets/js/mustache.js"></script>
-    <script src="/tools1/assets/js/script.js"></script>
-    <script src="/tools1/assets/js/extensions.js"></script>
-    <script src="/tools1/assets/js/appHelper.js"></script>
-    <script src="/tools1/assets/js/appSpHelper.js"></script>
-    <script src="/tools1/assets/js/WFManager.js"></script>
-
-    <script src="/tools1/assets/js/autoNumeric.min.js"></script>
-    <script src="/tools1/assets/js/mustache.js"></script>
-    <script src="/tools1/assets/js/appHelper.js"></script>
+    <script src="/tools1/assets/plugins/DataTables/datatables.min.js?t=1"></script>
+    <script src="/tools1/assets/js/workflow_template.js?t=1"></script>
+    <script src="/tools1/assets/js/SpGroupConstante.js?t=1"></script>
+    <script src="/tools1/assets/js/mustache.js?t=1"></script>
+    <script src="/tools1/assets/js/script.js?t=1"></script>
+    <script src="/tools1/assets/js/extensions.js?t=1"></script>
+    <script src="/tools1/assets/js/appHelper.js?t=1"></script>
+    <script src="/tools1/assets/js/appSpHelper.js?t=1"></script>
+    <script src="/tools1/assets/js/WFManager.js?t=1"></script>
+    <script src="/tools1/assets/js/autoNumeric.min.js?t=1"></script>
+    <script src="/tools1/assets/js/mustache.js?t=1"></script>
+    <script src="/tools1/assets/js/appHelper.js?t=1"></script>
     <!--END SCRIPT -->
 
   </head>

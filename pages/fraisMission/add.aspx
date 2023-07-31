@@ -55,16 +55,22 @@
       </div>
 
       <div class="mb-3 d-flex flex-row">
-        <label class="form-label">Zone geographique: &nbsp;</label>
+        <label for="CmbZone" class="form-label">Zone geographique: &nbsp;</label>
 
-        <div>
+        <select id="CmbZone" name="CmbZone">
+          <option value="cote d'ivoire">Cote d'Ivoire</option>
+          <option value="Afrique">Afrique</option>
+          <option value="hors afrique">Hors Afrique</option>
+        </select>
+
+        <!--<div>
           <input type="radio" name="zoneGeo" value="cote d'ivoire" id="RadCiv">
           <label for="RadCiv">Cote d'Ivoire</label>
           <input type="radio" name="zoneGeo" value="Afrique" id="RadAfrik">
           <label for="RadAfrik">Afrique</label>
           <input type="radio" name="zoneGeo" value="hors afrique" id="RadHorsAfrik">
           <label for="RadHorsAfrik">Hors Afrique/Afrique du Sud</label>
-        </div>
+        </div>-->
 
       </div>
       <div class="mb-3">
@@ -85,22 +91,32 @@
       </div>
       <div class="mb-3">
         <label class="form-label">Caisse de paiement :</label>
-        <input type="text" id="TxtCaisse" class="  form-control">
+        <!--<input type="text" id="TxtCaisse" class="  form-control">-->
+        <select id="CmbCaisse" name="fruits">
+          <option value="Test 1">Test 1</option>
+          <option value="Test 2">Test 2</option>
+          <option value="Autre">Autre</option>
+        </select>
       </div>
       <div class="mb-3">
         <label class="form-label">Mode de paiement :</label>
-        <input type="text" id="TxtMode" class="  form-control">
+        <!--<input type="text" id="TxtMode" class="  form-control">-->
+        <select id="CmbCaisse" name="fruits">
+          <option value="Test 1">Test 1</option>
+          <option value="Test 2">Test 2</option>
+          <option value="Autre">Autre</option>
+        </select>
       </div>
-      <div class="mb-3">
+      <!--<div class="mb-3">
         <label class="form-label">Doc Justificatifs :</label>
         <input type="text" id="TxtDoc" class="  form-control">
-      </div>
+      </div>-->
 
     </fieldset>
 
     <fieldset class="form-elts">
       <legend>FRAIS DE MISSION</legend>
-      <table>
+      <!--<table>
         <tr>
           <th>Libellé</th>
           <th>Date de début</th>
@@ -155,7 +171,7 @@
           <td><input type="text" id="TotalAutreFrais"></td>
 
         </tr>
-      </table>
+      </table>-->
     </fieldset>
 
   </div>
