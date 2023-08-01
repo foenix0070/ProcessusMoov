@@ -99,6 +99,7 @@
 
 
      let oList = ctx.get_web().get_lists().getByTitle(this.TaskListName);
+     let oListItemEnCours = null;
      tasks.forEach(e => {
       let itemCreateInfo = new window.SP.ListItemCreationInformation();
       let oListItem = oList.addItem(itemCreateInfo);
@@ -116,11 +117,20 @@
      // oListItem.set_item('TypeTache', taskItem.typeTache);
      oListItem.set_item('Body', e.detail);
      // oListItem.set_item('Url', taskItem.url);
+     if(e.status ==  "En cours" ){
+      oListItemEnCours = oListItem;
+     }
+
      oListItem.update();
      ctx.load(oListItem);
       });
 
       ctx.executeQueryAsync(function(){
+
+        console.log(oListItemEnCours);
+        appSpHelper.SendNotificationTask(ctx,oListItemEnCours );
+      //  alert('okkk');
+
         if(callBack){
           callBack();
         }

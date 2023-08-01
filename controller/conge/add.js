@@ -284,10 +284,13 @@ appConge.Add = function ( callBack) {
 
 const appUrl = '/tools1/pages/conge/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.CONGE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.CONGE, oListItem.get_id(), document.getElementById("TxtSpManagerN1Login").value,document.getElementById("TxtSpManagerN2Login").value, function(){}   )
-      if(callBack){
-        callBack(oListItem);
-      }
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.CONGE, oListItem.get_id(), document.getElementById("TxtSpManagerN1Login").value,document.getElementById("TxtSpManagerN2Login").value, function(){
+
+        if(callBack){
+          callBack(oListItem);
+        }
+      })
+
   }, appSpHelper.writeError);
 };
 
