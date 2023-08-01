@@ -21,7 +21,9 @@ Absence : 'ListeAbsence',
 Employe : 'ListeEmploye',
 TypeConge : 'ListeTypeConge',
 Validation : 'TachesValidation',
-Notification : 'ListeNotification'
+Notification : 'ListeNotification',
+Mission : 'ListeMission',
+FraisMission : 'ListeFraisMission'
 };
 
 appHelper.Status = {

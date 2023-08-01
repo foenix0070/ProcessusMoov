@@ -12,7 +12,9 @@ Materiel : 'ListeMateriel',
 Absence : 'ListeAbsence',
 Employe : 'ListeEmploye',
 TypeConge : 'ListeTypeConge',
-Validation : 'TachesValidation'
+Validation : 'TachesValidation',
+Mission : 'ListeMission',
+FraisMission : 'ListeFraisMission'
 
 };
 
@@ -44,7 +46,9 @@ appHelper.AppCode = {
   MATERIEL : 'MATERIEL',
   GADGET : 'GADGET',
   CONGE : 'CONGE',
-  ABSENCE : 'ABSENCE'
+  ABSENCE : 'ABSENCE',
+  MISSION : 'MISSION',
+  FRAISMISSION : 'FRAISMISSION',
 }
 
 appHelper.GetQueryStringFromAjaxQuery = function (param) {
