@@ -199,79 +199,26 @@ appConge.Add = function ( callBack) {
 
   oListItem.set_item("Title",document.getElementById("TxtTypeCongeText").value);
 
-  oListItem.set_item(
-    "NombreJours",
-    parseInt(document.getElementById("TxtNbreJour").value)
-  );
-  oListItem.set_item(
-    "NombreJourAcquis",
-    parseInt(document.getElementById("TxtNbreJour").value)
-  );
-  oListItem.set_item(
-    "NombreJourAccorde",
-    parseInt(document.getElementById("TxtNbreJour").value)
-  );
-  oListItem.set_item(
-    "DomicileConge",
-    document.getElementById("TxtCongeDomicile").value
-  );
-  oListItem.set_item(
-    "CongeTelephone",
-    document.getElementById("TxtCongeTelephone").value
-  );
-  oListItem.set_item(
-    "CongeContact",
-    document.getElementById("TxtCongeContact").value
-  );
-  oListItem.set_item(
-    "TypeCongeID",
-    document.getElementById("cmbTypeConge").value
-  );
-  oListItem.set_item(
-    "TypeCongeLibelle",
-    document.getElementById("TxtTypeCongeText").value
-  );
+  oListItem.set_item("NombreJours", parseInt(document.getElementById("TxtNbreJour").value));
+  oListItem.set_item("NombreJourAcquis", parseInt(document.getElementById("TxtNbreJour").value));
+  oListItem.set_item("NombreJourAccorde", parseInt(document.getElementById("TxtNbreJour").value));
+  oListItem.set_item("DomicileConge", document.getElementById("TxtCongeDomicile").value);
+  oListItem.set_item("CongeTelephone", document.getElementById("TxtCongeTelephone").value);
+  oListItem.set_item("CongeContact", document.getElementById("TxtCongeContact").value);
+  oListItem.set_item("TypeCongeID", document.getElementById("cmbTypeConge").value);
+  oListItem.set_item("TypeCongeLibelle", document.getElementById("TxtTypeCongeText").value);
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
-  oListItem.set_item(
-    "Couleur",
-    document.getElementById("TxtTypeCongeColeur").value
-  );
+  oListItem.set_item("Couleur", document.getElementById("TxtTypeCongeColeur").value);
   oListItem.set_item("Historique", "#");
 
-  oListItem.set_item(
-    "Demandeur",
-    SP.FieldUserValue.fromUser(document.getElementById("TxtCurrentUserLogin").value)
-  );
-  oListItem.set_item(
-    "Interimaire",
-    SP.FieldUserValue.fromUser(SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys())
-  );
+  oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
+  oListItem.set_item("Interimaire", SP.FieldUserValue.fromUser(SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys()));
 
-  oListItem.set_item(
-    "ResponsableN1",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN1Login").value
-    )
-  );
-  oListItem.set_item(
-    "ResponsableN2",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN2Login").value
-    )
-  );
+  oListItem.set_item("ResponsableN1", SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN1Login").value));
+  oListItem.set_item("ResponsableN2",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN2Login").value));
 
-  oListItem.set_item(
-    "ResponsableN1Email",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN1Email").value
-    )
-  );
-  oListItem.set_item(
-    "ResponsableN2Email",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN2Email").value
-    )
-  );
+  oListItem.set_item("ResponsableN1Email", SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN1Email").value));
+  oListItem.set_item("ResponsableN2Email",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN2Email").value));
 
   oListItem.update();
   clientContext.load(oListItem);
