@@ -4,11 +4,11 @@ appMateriel.clientContext;
 
 appMateriel.InitializePage = function () {
   appMateriel.clientContext = SP.ClientContext.get_current();
-  clientContext =  SP.ClientContext.get_current();
+  clientContext = SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
     appSpHelper.LoadUserCongeParam(
-      appHelper.ListName.Employe,
-      document.getElementById("TxtCurrentUserLogin").value,
+      appHelper.ListName.Employe, "ETISALAT-AFRICA\pouattara", App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
+      //document.getElementById("TxtCurrentUserLogin").value,
       function () {
         appSpHelper.GetEmploye(
           appHelper.ListName.Employe,
@@ -19,11 +19,11 @@ appMateriel.InitializePage = function () {
               "N2",
               item.get_item("EmpManager"),
               function () {
-              // span= document.getElementById('spanSolde');
-              // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
-              //  appMateriel.initCmbTypeConge(function(){
-                  appMateriel.List();
-              //  });
+                // span= document.getElementById('spanSolde');
+                // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
+                //  appMateriel.initCmbTypeConge(function(){
+                appMateriel.List();
+                //  });
               }
             );
           }
@@ -51,19 +51,19 @@ appMateriel.InitializePage = function () {
   */
 
   BtnSave.addEventListener("click", function () {
-    appMateriel.Add (function(){
+    appMateriel.Add(function () {
       location.reload();
     });
   });
 
 };
 
-function getRating (str){
+function getRating(str) {
   document.getElementById('TxtNature').value = str;
 }
 
 appMateriel.initCmbTypeConge = function (callBack) {
-  ListerMotif(function(){
+  ListerMotif(function () {
     let cmb = document.getElementById("cmbTypeConge");
     let txtColor = document.getElementById("TxtTypeCongeColeur");
     let txtText = document.getElementById("TxtTypeCongeText");
@@ -74,7 +74,7 @@ appMateriel.initCmbTypeConge = function (callBack) {
       txtText.value = selectedOption.text;
     });
 
-    if(callBack){
+    if (callBack) {
       callBack();
     }
   });
@@ -84,35 +84,35 @@ appMateriel.initCmbTypeConge = function (callBack) {
 
 
 
-function ListerMotif( callBack) {
+function ListerMotif(callBack) {
   let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.TypeConge);
   let q = '<View><Query><Where>' +
-               '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
-          '</Where></Query></View>';
+    '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
+    '</Where></Query></View>';
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(q);
   let listItemMotif = oList.getItems(camlQuery);
   clientContext.load(listItemMotif);
   clientContext.executeQueryAsync(
-      function () {
-          var listItemEnumerator = listItemMotif.getEnumerator();
+    function () {
+      var listItemEnumerator = listItemMotif.getEnumerator();
 
-          while (listItemEnumerator.moveNext()) {
-              let oListItemTp = listItemEnumerator.get_current();
-              let opt = document.createElement("option");
-              opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
-              opt.setAttribute("data-color", oListItemTp.get_item('Background'));
-              opt.setAttribute("value", oListItemTp.get_id());
-              opt.innerHTML = oListItemTp.get_item('Title');
-              document.getElementById('cmbTypeConge').appendChild(opt);
-          }
+      while (listItemEnumerator.moveNext()) {
+        let oListItemTp = listItemEnumerator.get_current();
+        let opt = document.createElement("option");
+        opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
+        opt.setAttribute("data-color", oListItemTp.get_item('Background'));
+        opt.setAttribute("value", oListItemTp.get_id());
+        opt.innerHTML = oListItemTp.get_item('Title');
+        document.getElementById('cmbTypeConge').appendChild(opt);
+      }
 
 
-          if(callBack){
-            callBack();
-          }
-      },
-      function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
+      if (callBack) {
+        callBack();
+      }
+    },
+    function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
 }
 
 appMateriel.List = function () {
@@ -123,8 +123,8 @@ appMateriel.List = function () {
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(
     "<View><Query><Where>" +
-      '<Eq><FieldRef ID="Demandeur" /><Value Type="Integer"><UserID/></Value></Eq>' +
-      "</Where></Query></View>"
+    '<Eq><FieldRef ID="Demandeur" /><Value Type="Integer"><UserID/></Value></Eq>' +
+    "</Where></Query></View>"
   );
   let collListItem = oList.getItems(camlQuery);
   appMateriel.clientContext.load(collListItem);
@@ -138,8 +138,8 @@ appMateriel.List = function () {
         view.materiel.push({
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Title"),
-          startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
-          reprise: new Date( oListItem.get_item("DateReprise")).toLocaleDateString(),
+          startdate: new Date(oListItem.get_item("DateDepart")).toLocaleDateString(),
+          reprise: new Date(oListItem.get_item("DateReprise")).toLocaleDateString(),
           nbre: oListItem.get_item("NombreJours"),
           status: oListItem.get_item("StatutLibelle"),
           classe: appHelper.Status.GetClass(oListItem.get_item("Statut")),
@@ -164,7 +164,7 @@ appMateriel.List = function () {
   }, appSpHelper.writeError);
 };
 
-appMateriel.Add = function ( callBack) {
+appMateriel.Add = function (callBack) {
   let oList = appMateriel.clientContext
     .get_web()
     .get_lists()
@@ -202,90 +202,46 @@ appMateriel.Add = function ( callBack) {
   );
   */
 
-  oListItem.set_item(
-    "Title",
-    document.getElementById("TxtMateriel").value
-  );
-
-  
-  oListItem.set_item(
-    "Quantite",
-    document.getElementById("TxtQuantite").value
-  );
+  oListItem.set_item("Title",document.getElementById("TxtMateriel").value);
 
 
-  oListItem.set_item(
-    "Nature",
-    document.getElementById("TxtMateriel").value
-  );
+  oListItem.set_item("Quantite",document.getElementById("TxtQuantite").value);
 
-  oListItem.set_item(
-    "Motif",
-    document.getElementById("TxtMotif").value
-  );
 
-  oListItem.set_item(
-    "NombreJours",
-    parseInt(document.getElementById("TxtQuantite").value)
-  );
-  oListItem.set_item(
-    "NombreJourAccorde",
-    parseInt(document.getElementById("TxtQuantite").value)
-  );
-  oListItem.set_item(
-    "DemandeurEmail",
-    document.getElementById("TxtCurrentUserEmail").value
-  );
+  oListItem.set_item("Nature",document.getElementById("TxtMateriel").value);
 
- // oListItem.set_item("Historique", "#");
+  oListItem.set_item("Motif",document.getElementById("TxtMotif").value);
 
-  oListItem.set_item(
-    "Demandeur",
-    SP.FieldUserValue.fromUser(document.getElementById("TxtCurrentUserLogin").value)
-  );
+  oListItem.set_item("NombreJours",parseInt(document.getElementById("TxtQuantite").value));
+  oListItem.set_item("NombreJourAccorde",parseInt(document.getElementById("TxtQuantite").value));
+  oListItem.set_item("DemandeurEmail",document.getElementById("TxtCurrentUserEmail").value);
 
-  oListItem.set_item(
-    "ResponsableN1",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN1Login").value
-    )
-  );
-  oListItem.set_item(
-    "ResponsableN2",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN2Login").value
-    )
-  );
+  // oListItem.set_item("Historique", "#");
 
-  oListItem.set_item(
-    "ResponsableN1Email",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN1Email").value
-    )
-  );
-  oListItem.set_item(
-    "ResponsableN2Email",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN2Email").value
-    )
-  );
+  oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
+
+  oListItem.set_item("ResponsableN1",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN1Login").value));
+  oListItem.set_item("ResponsableN2",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN2Login").value));
+
+  oListItem.set_item("ResponsableN1Email",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN1Email").value));
+  oListItem.set_item("ResponsableN2Email",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN2Email").value));
 
   oListItem.update();
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
-const appUrl = '/tools/materiel/show.aspx?ID=' + oListItem.get_id();
-      let WF = new WFManager(appHelper.AppCode.MATERIEL,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MATERIEL, oListItem.get_id(), document.getElementById("TxtSpManagerN1Login").value,document.getElementById("TxtSpManagerN2Login").value, function(){}   )
-      if(callBack){
-        callBack(oListItem);
-      }
+    const appUrl = '/tools/materiel/show.aspx?ID=' + oListItem.get_id();
+    let WF = new WFManager(appHelper.AppCode.MATERIEL, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.MATERIEL, oListItem.get_id(), document.getElementById("TxtSpManagerN1Login").value, document.getElementById("TxtSpManagerN2Login").value, function () { })
+    if (callBack) {
+      callBack(oListItem);
+    }
   }, appSpHelper.writeError);
 };
 
 
 //document.addEventListener("DOMContentLoaded", () => {
 //  ExecuteOrDelayUntilScriptLoaded(function(){
-    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appMateriel.InitializePage);
+SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appMateriel.InitializePage);
  // }, "SP.ClientContext");
 //});

@@ -7,8 +7,7 @@ Mission.InitializePage = function () {
   clientContext =  SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
     appSpHelper.LoadUserCongeParam(
-      appHelper.ListName.Employe,
-      document.getElementById("TxtCurrentUserLogin").value,
+      appHelper.ListName.Employe, 	"ETISALAT-AFRICA\pouattara",  App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
       function () {
         appSpHelper.GetEmploye(
           appHelper.ListName.Employe,
@@ -228,86 +227,30 @@ Mission.Add = function ( callBack) {
   //oListItem.set_item("DateRetour", endDate);
   oListItem.set_item("DateFin", repDate);
 
-  oListItem.set_item(
-    "Title",
-    document.getElementById("TxtMotif").value
-  );
+  oListItem.set_item("Title",document.getElementById("TxtMotif").value);
 
-  oListItem.set_item(
-    "Motif",
-    document.getElementById("TxtMotif").value
-  );
+  oListItem.set_item("Motif",document.getElementById("TxtMotif").value);
 
-  oListItem.set_item(
-    "Destination",
-    document.getElementById("TxtDestination").value
-  );
+  oListItem.set_item("Destination",document.getElementById("TxtDestination").value);
 
-  oListItem.set_item(
-    "Commentaire",
-    document.getElementById("TxtCommentaire").value
-  );
+  oListItem.set_item("Commentaire",document.getElementById("TxtCommentaire").value);
 
-  oListItem.set_item(
-    "SiteBTS",
-    parseInt(document.getElementById("TxtSite").value)
-  );
+  oListItem.set_item("SiteBTS",parseInt(document.getElementById("TxtSite").value));
 
-  oListItem.set_item(
-    "CoutTotal",
-    parseInt(document.getElementById("TxtCoutTotal").value)
-  );
-  oListItem.set_item(
-    "ZoneGeographiqueID",
-    parseInt(document.getElementById("CmbZone").value)
-  );
-  oListItem.set_item(
-    "CaissePaiementID",
-    parseInt(document.getElementById("CmbCaisse").value)
-  );
-  oListItem.set_item(
-    "ModePaiementID",
-    parseInt(document.getElementById("CmbMode").value)
-  );
-  oListItem.set_item(
-    "AutreCaissePaiement",
-    parseInt(document.getElementById("TxtAutreCaisse").value)
-  );
-  oListItem.set_item(
-    "DemandeurEmail",
-    document.getElementById("TxtCurrentUserEmail").value
-  );
+  oListItem.set_item("CoutTotal",parseInt(document.getElementById("TxtCoutTotal").value));
+  oListItem.set_item("ZoneGeographiqueID",parseInt(document.getElementById("CmbZone").value));
+  oListItem.set_item("CaissePaiementID",parseInt(document.getElementById("CmbCaisse").value));
+  oListItem.set_item("ModePaiementID",parseInt(document.getElementById("CmbMode").value));
+  oListItem.set_item("AutreCaissePaiement",parseInt(document.getElementById("TxtAutreCaisse").value));
+  oListItem.set_item("DemandeurEmail",document.getElementById("TxtCurrentUserEmail").value);
  
-  oListItem.set_item(
-    "Demandeur",
-    SP.FieldUserValue.fromUser(document.getElementById("TxtCurrentUserLogin").value)
-  );
+  oListItem.set_item("Demandeur",SP.FieldUserValue.fromUser(App.CurrentUser.Login));
 
-  oListItem.set_item(
-    "ResponsableN1",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN1Login").value
-    )
-  );
-  oListItem.set_item(
-    "ResponsableN2",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN2Login").value
-    )
-  );
+  oListItem.set_item("ResponsableN1",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN1Login").value));
+  oListItem.set_item("ResponsableN2",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN2Login").value));
 
-  oListItem.set_item(
-    "ResponsableN1Email",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN1Email").value
-    )
-  );
-  oListItem.set_item(
-    "ResponsableN2Email",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN2Email").value
-    )
-  );
+  oListItem.set_item("ResponsableN1Email",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN1Email").value));
+  oListItem.set_item("ResponsableN2Email",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN2Email").value));
 
   oListItem.update();
   clientContext.load(oListItem);
