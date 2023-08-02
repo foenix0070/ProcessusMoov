@@ -7,7 +7,7 @@
   </div>
 
 <!-- <Table /> -->
-<div id="DivCongeTableShow">
+<div id="DivMissionTableShow">
   <div style="padding: 10px 0 10px 2px;"
       class="w3-panel w3-pale-yellow w3-border">
       <p>Aucun &eacute;l&eacute;ment &agrave; afficher ici.</p>
@@ -17,28 +17,28 @@
 
 
 <script type="text/javascript">
-  appHelper.loadJSWithNameSpace("ListFraisMission", 'ListfraisMission', "controller/fraisMission/list.js");
+  appHelper.loadJSWithNameSpace("ListMission", 'ListMission', "controller/fraisMission/list.js");
 </script>
 
-<script id="tmpl_table_fraisMission" type="x-tmpl-mustache">
+<script id="tmpl_table_Mission" type="x-tmpl-mustache">
   <div class="table-container">
     <table class="table table-bordered table-responsive table-striped">
       <thead>
         <tr>
-          <th>N*</th>
           <th>Intitul&eacute</th>
-          <th>Date de d&eacutepart</th>
-          <th>Nombre de jours</th>
+          <th>Date de début</th>
+          <th>Date de fin</th>
+          <th>Destination/th>
           <th>Etat</th>
         </tr>
       </thead>
       <tbody>
         {{#fraisMissions}}
         <tr class="" >
-          <td>{{id}}</td>
           <td>{{title}}</td>
           <td>{{startdate}}</td>
-          <td>{{nbre}}</td>
+          <td>{{enddate}}</td>
+          <td>{{destination}}</td>
           <td><a href="tools1/pages/fraisMission/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/fraisMission/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
           <td><span class="{{classe}}">{{status}}</span></td>
         </tr>

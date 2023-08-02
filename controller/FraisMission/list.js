@@ -1,26 +1,26 @@
-var ListGadget = ListGadget || {};
+var ListMission = ListMission || {};
 var clientContext;
-ListGadget.clientContext;
+ListMission.clientContext;
 
-ListGadget.InitializePage = function () {
-  ListGadget.clientContext = SP.ClientContext.get_current();
+ListMission.InitializePage = function () {
+  ListMission.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
 
   let T =  appHelper.GetQueryStringFromAjaxQuery('t');
   let x = document.getElementById('h2Titre');
   switch(T){
-    case 'E' :  ListGadget.ListGadget('ENCOURS');
-                x.innerHTML = " Listes des demandes de gadget en cours";
+    case 'E' :  ListMission.ListMission('ENCOURS');
+                x.innerHTML = " Listes des demandes de mission en cours";
     break;
-    case 'V' :  ListGadget.ListGadget('VALIDEE');
-    x.innerHTML = " Listes des demandes de gadget validées";
+    case 'V' :  ListMission.ListMission('VALIDEE');
+    x.innerHTML = " Listes des demandes de mission validées";
     break;
-    case 'R' :  ListGadget.ListGadget('REJETEE');
-    x.innerHTML = " Listes des demandes de gadget rejétées";
+    case 'R' :  ListMission.ListMission('REJETEE');
+    x.innerHTML = " Listes des demandes de mission rejétées";
     break;
-    default : ListGadget.ListGadget('ENCOURS');
-    x.innerHTML = " Listes des demandes de gadget en cours";
+    default : ListMission.ListMission('ENCOURS');
+    x.innerHTML = " Listes des demandes de mission en cours";
     break;
   }
 
@@ -31,11 +31,11 @@ ListGadget.InitializePage = function () {
 
 
 
-ListGadget.ListGadget = function (T) {
-  let oList = ListGadget.clientContext
+ListMission.ListMission = function (T) {
+  let oList = ListMission.clientContext
     .get_web()
     .get_lists()
-    .getByTitle(appHelper.ListName.Gadget);
+    .getByTitle(appHelper.ListName.Mission);
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(
     "<View><Query><Where>" +
@@ -46,25 +46,26 @@ ListGadget.ListGadget = function (T) {
       "</Where></Query></View>"
   );
   let collListItem = oList.getItems(camlQuery);
-  ListGadget.clientContext.load(collListItem);
-  ListGadget.clientContext.executeQueryAsync(function (sender, args) {
+  ListMission.clientContext.load(collListItem);
+  ListMission.clientContext.executeQueryAsync(function (sender, args) {
     if (collListItem.get_count() > 0) {
       var listItemEnumerator = collListItem.getEnumerator();
       let view = {};
-      view.gadget = [];
+      view.mission = [];
       while (listItemEnumerator.moveNext()) {
         var oListItem = listItemEnumerator.get_current();
-        view.gadget.push({
+        view.mission.push({
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Title"),
-          startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
-          nbre: oListItem.get_item("NombreJours"),
+          startdate: new Date( oListItem.get_item("DateDebut")).toLocaleDateString(),
+          enddate: new Date( oListItem.get_item("DateFin")).toLocaleDateString(),
+          destination: new Date( oListItem.get_item("Destination")).toLocaleDateString(),
           status: oListItem.get_item("StatutLibelle"),
           classe: appHelper.Status.GetClass(oListItem.get_item("Statut")),
         });
       }
 
-      appHelper.renderTemplate("tmpl_table_gadget", "DivGadgetTableShow", view);
+      appHelper.renderTemplate("tmpl_table_Mission", "DivMissionTableShow", view);
 
    //   appHelper.listenNavigationLink ('linkMainNavigation');
       const linkClick = document.getElementsByClassName('click');
@@ -97,6 +98,6 @@ ListGadget.ListGadget = function (T) {
 
 // document.addEventListener("DOMContentLoaded", () => {
 //   ExecuteOrDelayUntilScriptLoaded(function(){
-  SP.SOD.executeFunc('sp.js', 'SP.ClientContext', ListGadget.InitializePage);
+  SP.SOD.executeFunc('sp.js', 'SP.ClientContext', ListMission.InitializePage);
   //   }, "SP.ClientContext");
   // });

@@ -9,6 +9,7 @@ showConge.InitializePage = function () {
 
   let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
   let Id = appHelper.GetQueryStringFromAjaxQuery('id');
+  console.log(tacheId, Id);
 
   appSpHelper.CheckAttachmentFolder(showConge.clientContext, Id, appHelper.ListName.Conge, null);
 
@@ -266,6 +267,7 @@ showConge.ShowDetails = function (demandeid) {
 
   let oList = showConge.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Conge);
   let It = oList.getItemById(demandeid);
+  console.log("IN ShowDetails");
 
   showConge.clientContext.load(It);
   showConge.clientContext.executeQueryAsync(function () {
@@ -280,6 +282,8 @@ showConge.ShowDetails = function (demandeid) {
         telephone: It.get_item('CongeTelephone') != null ? It.get_item('CongeTelephone') : '',
         personne: It.get_item('CongeContact') != null ? It.get_item('CongeContact') : '',
       };
+
+      console.log("OUT ShowDetails");
 
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
 

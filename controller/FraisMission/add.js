@@ -1,9 +1,9 @@
-var fraisMission = fraisMission || {};
+var Mission = Mission || {};
 var clientContext;
-fraisMission.clientContext;
+Mission.clientContext;
 
-fraisMission.InitializePage = function () {
-  fraisMission.clientContext = SP.ClientContext.get_current();
+Mission.InitializePage = function () {
+  Mission.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
     appSpHelper.LoadUserCongeParam(
@@ -29,7 +29,7 @@ fraisMission.InitializePage = function () {
 
 
               //  fraisMission.initCmbTypeConge(function(){
-                  fraisMission.List();
+                Mission.List();
               //  });
               }
             );
@@ -56,7 +56,7 @@ fraisMission.InitializePage = function () {
   // });
 
   BtnSave.addEventListener("click", function () {
-    fraisMission.Add (function(){
+    Mission.Add (function(){
       location.reload();
     });
   });
@@ -67,7 +67,7 @@ function getRating (str){
   document.getElementById('TxtNature').value = str;
 }
 
-fraisMission.initCmbTypefraisMission = function (callBack) {
+Mission.initCmbTypefraisMission = function (callBack) {
   ListerMotif(function(){
     let cmb = document.getElementById("cmbTypefraisMission");
     let txtColor = document.getElementById("TxtTypefraisMissionColeur");
@@ -120,11 +120,11 @@ function ListerMotif( callBack) {
       function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
 }
 
-fraisMission.List = function () {
-  let oList = fraisMission.clientContext
+Mission.List = function () {
+  let oList = Mission.clientContext
     .get_web()
     .get_lists()
-    .getByTitle(appHelper.ListName.fraisMission);
+    .getByTitle(appHelper.ListName.Mission);
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(
     "<View><Query><Where>" +
@@ -132,15 +132,15 @@ fraisMission.List = function () {
       "</Where></Query></View>"
   );
   let collListItem = oList.getItems(camlQuery);
-  fraisMission.clientContext.load(collListItem);
-  fraisMission.clientContext.executeQueryAsync(function (sender, args) {
+  Mission.clientContext.load(collListItem);
+  Mission.clientContext.executeQueryAsync(function (sender, args) {
     if (collListItem.get_count() > 0) {
       var listItemEnumerator = collListItem.getEnumerator();
       let view = {};
-      view.fraisMission = [];
+      view.Mission = [];
       while (listItemEnumerator.moveNext()) {
         var oListItem = listItemEnumerator.get_current();
-        view.fraisMission.push({
+        view.Mission.push({
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Title"),
           startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
@@ -221,7 +221,7 @@ Mission.Add = function ( callBack) {
 
   //let endDate = startDate.addDays(2);
 
-  oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
+  oListItem.set_item("Status", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "Validation du supérieur hiérarchique");
 
   oListItem.set_item("DateDebut", startDate);
@@ -313,7 +313,8 @@ Mission.Add = function ( callBack) {
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
-const appUrl = '/tools/fraisMission/show.aspx?ID=' + oListItem.get_id();
+  const appUrl = '/tools1/fraisMission/show.aspx?ID=' + oListItem.get_id();
+      //AddFM(oListItem);
       let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
       WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), document.getElementById("TxtSpManagerN1Login").value,document.getElementById("TxtSpManagerN2Login").value, function(){}   )
       if(callBack){
@@ -322,7 +323,7 @@ const appUrl = '/tools/fraisMission/show.aspx?ID=' + oListItem.get_id();
   }, appSpHelper.writeError);
 };
 
-FraisMission.Add = function () {
+function AddFM (oListItem) {
   var table = document.getElementById("TableFraisMission");
   var data = [];
 
@@ -341,10 +342,10 @@ FraisMission.Add = function () {
     data.push(rowData);
   }
 
-  AddFraisMission(data);
-};
+  AddFraisMission(data, oListItem);
+}
 
-function AddFraisMission(data) {
+function AddFraisMission(data, oListItem) {
 
   for (var i = 0; i < data.length; i++) {
     var item = data[i];
@@ -354,41 +355,41 @@ function AddFraisMission(data) {
     .get_lists()
     .getByTitle(appHelper.ListName.FraisMission);
     let itemCreateInfo = new window.SP.ListItemCreationInformation();
-    let oListItem = oList.addItem(itemCreateInfo);
+    let oListItem1 = oList.addItem(itemCreateInfo);
 
     let startDate = new Date();
 
     let repDate = new Date();
 
 
-    oListItem.set_item("DateDebut", startDate);
-    oListItem.set_item("DateFin", repDate);
+    oListItem1.set_item("DateDebut", startDate);
+    oListItem1.set_item("DateFin", repDate);
 
-    oListItem.set_item(
-      "MissionID", );
+    oListItem1.set_item(
+      "MissionID", oListItem.get_id());
 
-    oListItem.set_item(
+    oListItem1.set_item(
       "PerdiemeID", item.CmbPerdieme);
 
-    oListItem.set_item(
-      "Forfait",);
+    oListItem1.set_item(
+      "Forfait", item.TxtForfait);
 
-    oListItem.set_item(
-      "Total",);
+    oListItem1.set_item(
+      "Total", item.TxtTotal);
 
-    oListItem.set_item(
-      "Nombre",);
+    oListItem1.set_item(
+      "Nombre", item.TxtNombre);
 
-    oListItem.update();
-    clientContext.load(oListItem);
+    oListItem1.update();
+    clientContext.load(oListItem1);
     clientContext.executeQueryAsync(function (callBack) {
-          callBack(oListItem);
+          callBack(oListItem1);
     });
     
   }
 }
 
-SP.SOD.executeFunc('sp.js', 'SP.ClientContext', fraisMission.InitializePage);
+SP.SOD.executeFunc('sp.js', 'SP.ClientContext', Mission.InitializePage);
 // document.addEventListener("DOMContentLoaded", () => {
 //   ExecuteOrDelayUntilScriptLoaded(function(){
     

@@ -140,11 +140,6 @@
                         <td style="text-align:left;"class="fw-bold" width="200px">Int&eacute;rimaire</td>
                         <td style="text-align:left;">{{interimaire}}</td>
                       </tr>
-
-                      <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Adresse pendant les cong&eacute;s </td>
-                        <td style="text-align:left;"> Domicile : {{domicile}} <br>  T&eacute;l&eacute;phone : {{telephone}} <br> Personne &agrave; contacter :{{personne}} </td>
-                      </tr>
                   </table>
                 </script>
 

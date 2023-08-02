@@ -54,7 +54,9 @@ appHelper.AppCode = {
   MATERIEL : 'MATERIEL',
   GADGET : 'GADGET',
   CONGE : 'CONGE',
-  ABSENCE : 'ABSENCE'
+  ABSENCE : 'ABSENCE',
+  MISSION : 'MISSION',
+  FRAISMISSION : 'FRAISMISSION'
 }
 
 appHelper. isArray = function(myArray) {

@@ -47,7 +47,7 @@
 
 
       <div class="mb-3">
-        <label class="form-label"> P&eacute;riode du :</label>
+        <label class="form-label"> Période du :</label>
         <input type="date" id="DateDebut">
 
         <label class="form-label"> Au:</label>
@@ -166,7 +166,7 @@
 
 
 <script type="text/javascript">
-  appHelper.loadJSWithNameSpace("appFraisMission", 'appFraisMission', "controller/fraisMission/add.js");
+  appHelper.loadJSWithNameSpace("appMission", 'appMission', "controller/fraisMission/add.js");
 </script>
 
 

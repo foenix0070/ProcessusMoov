@@ -1,7 +1,7 @@
-<div class="popup" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); background-color: #FFA500; border: 1px solid #ccc; padding: 20px; box-shadow: 0 4px 8px rgb(255, 255, 255); z-index: 9999;">
+<!--<div class="popup" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); background-color: #FFA500; border: 1px solid #ccc; padding: 20px; box-shadow: 0 4px 8px rgb(255, 255, 255); z-index: 9999;">
   <h2><b>ATTENTION!</b></h2>
   <p style="color: #fff"><b>L'ajout de nouveaux processus sont en cours et cela pourrait créer quelques perturbations sur la plateforme. Veillez-nous excuser !</b></p>
-</div>
+</div>-->
 
 <div class="popup" id="popup" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #f9f9f9; border: 1px solid #ccc; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 9999;">
   <h2>Information</h2>

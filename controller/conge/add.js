@@ -7,8 +7,8 @@ appConge.InitializePage = function () {
   clientContext =  SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
     appSpHelper.LoadUserCongeParam(
-      appHelper.ListName.Employe,
-      document.getElementById("TxtCurrentUserLogin").value,
+      appHelper.ListName.Employe, 	"ETISALAT-AFRICA\pouattara",  App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
+      //document.getElementById("TxtCurrentUserLogin").value,
       function () {
         appSpHelper.GetEmploye(
           appHelper.ListName.Employe,
@@ -24,9 +24,10 @@ appConge.InitializePage = function () {
               span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
 
                 appConge.initCmbTypeConge(function(){
-                  document.getElementById("TxtNom").value = document.getElementById("TxtCurrentUserDisplayName").value
-                  document.getElementById("TxtMatricule").value = document.getElementById("TxtSpUserMatricule").value
-                  document.getElementById("TxtEmail").value = document.getElementById("TxtSpEmpMail").value
+                  
+                  document.getElementById("TxtNom").value = App.CurrentUser.Nom;
+                  document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
+                  document.getElementById("TxtEmail").value = App.CurrentUser.Email;
 
                   setTimeout(function () {
                     appSpHelper.InitializePeoplePicker( "plePickerInterimaireDiv",  false,  "350px"  );
@@ -196,10 +197,7 @@ appConge.Add = function ( callBack) {
   oListItem.set_item("DateReprise", endDate);
   oListItem.set_item("DateRetourPrevisionnelle", endDate);
 
-  oListItem.set_item(
-    "Title",
-    document.getElementById("TxtTypeCongeText").value
-  );
+  oListItem.set_item("Title",document.getElementById("TxtTypeCongeText").value);
 
   oListItem.set_item(
     "NombreJours",
@@ -233,10 +231,7 @@ appConge.Add = function ( callBack) {
     "TypeCongeLibelle",
     document.getElementById("TxtTypeCongeText").value
   );
-  oListItem.set_item(
-    "DemandeurEmail",
-    document.getElementById("TxtCurrentUserEmail").value
-  );
+  oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
   oListItem.set_item(
     "Couleur",
     document.getElementById("TxtTypeCongeColeur").value
