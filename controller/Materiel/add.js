@@ -6,30 +6,26 @@ appMateriel.InitializePage = function () {
   appMateriel.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
-    appSpHelper.LoadUserCongeParam(
-      appHelper.ListName.Employe, "ETISALAT-AFRICA\pouattara", App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
+    //appSpHelper.LoadUserCongeParam(
+      //appHelper.ListName.Employe, "ETISALAT-AFRICA\pouattara", App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
       //document.getElementById("TxtCurrentUserLogin").value,
-      function () {
-        appSpHelper.GetEmploye(
-          appHelper.ListName.Employe,
-          document.getElementById("TxtSpManagerN1Login").value,
-          function (item) {
-            console.log(item);
-            appSpHelper.GetEmployeeManagerLogin(
-              "N2",
-              item.get_item("EmpManager"),
-              function () {
+      //function () {
+        //appSpHelper.GetEmploye(appHelper.ListName.Employe,document.getElementById("TxtSpManagerN1Login").value,
+          //function (item) {
+            //console.log(item);
+            //appSpHelper.GetEmployeeManagerLogin("N2",item.get_item("EmpManager"),
+              //function () {
                 // span= document.getElementById('spanSolde');
                 // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
                 //  appMateriel.initCmbTypeConge(function(){
                 appMateriel.List();
                 //  });
-              }
-            );
-          }
-        );
-      }
-    );
+              //}
+            //);
+          //}
+        //);
+      //}
+    //);
   });
 
   //const BtnAdd = document.querySelector("#demande");
@@ -220,11 +216,11 @@ appMateriel.Add = function (callBack) {
 
   oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
 
-  oListItem.set_item("ResponsableN1",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN1Login").value));
-  oListItem.set_item("ResponsableN2",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN2Login").value));
+  oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
+  oListItem.set_item("ResponsableN2", App.CurrentUser.ManagerPersonne2);
 
-  oListItem.set_item("ResponsableN1Email",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN1Email").value));
-  oListItem.set_item("ResponsableN2Email",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN2Email").value));
+  oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
+  oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
 
   oListItem.update();
   clientContext.load(oListItem);
@@ -232,7 +228,7 @@ appMateriel.Add = function (callBack) {
 
     const appUrl = '/tools/materiel/show.aspx?ID=' + oListItem.get_id();
     let WF = new WFManager(appHelper.AppCode.MATERIEL, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.MATERIEL, oListItem.get_id(), document.getElementById("TxtSpManagerN1Login").value, document.getElementById("TxtSpManagerN2Login").value, function () { })
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.MATERIEL, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
     if (callBack) {
       callBack(oListItem);
     }

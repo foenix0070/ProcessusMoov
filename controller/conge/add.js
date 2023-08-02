@@ -4,55 +4,51 @@ appConge.clientContext;
 
 appConge.InitializePage = function () {
   appConge.clientContext = SP.ClientContext.get_current();
-  clientContext =  SP.ClientContext.get_current();
+  clientContext = SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
-    appSpHelper.LoadUserCongeParam(
-      appHelper.ListName.Employe, 	"ETISALAT-AFRICA\pouattara",  App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
-      //document.getElementById("TxtCurrentUserLogin").value,
-      function () {
-        appSpHelper.GetEmploye(
-          appHelper.ListName.Employe,
-          document.getElementById("TxtSpManagerN1Login").value,
-          function (item) {
-            console.log(item);
-            appSpHelper.GetEmployeeManagerLogin(
-              "N2",
-              item.get_item("EmpManager"),
-              function () {
+    //appSpHelper.LoadUserCongeParam(
+    //appHelper.ListName.Employe, 	"ETISALAT-AFRICA\pouattara",  App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
+    //document.getElementById("TxtCurrentUserLogin").value,
+    //function () {
+    //appSpHelper.GetEmploye(appHelper.ListName.Employe,document.getElementById("TxtSpManagerN1Login").value,
+    //function (item) {
+    //console.log(item);
+    //appSpHelper.GetEmployeeManagerLogin("N2", item.get_item("EmpManager"),
+    //function () {
 
-              span= document.getElementById('spanSolde');
-              span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
+    //span = document.getElementById('spanSolde');
+    //span.innerHTML = document.getElementById('TxtSpUserNbreJrsAcquis').value;
 
-                appConge.initCmbTypeConge(function(){
-                  
-                  document.getElementById("TxtNom").value = App.CurrentUser.Nom;
-                  document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
-                  document.getElementById("TxtEmail").value = App.CurrentUser.Email;
+    appConge.initCmbTypeConge(function () {
 
-                  setTimeout(function () {
-                    appSpHelper.InitializePeoplePicker( "plePickerInterimaireDiv",  false,  "350px"  );
+      document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
+      document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
+      document.getElementById("TxtEmail").value = App.CurrentUser.Email;
 
-                    appSpHelper. PeoplePickerOnChangeEvent("plePickerInterimaireDiv", function(key){
-                     // appConge.interimaire = key.toString().split('\\')[1];
-                      appConge.GetInterimData(key);
-                    });
+      setTimeout(function () {
+        appSpHelper.InitializePeoplePicker("plePickerInterimaireDiv", false, "350px");
 
-                  }, 2000);
+        appSpHelper.PeoplePickerOnChangeEvent("plePickerInterimaireDiv", function (key) {
+          // appConge.interimaire = key.toString().split('\\')[1];
+          appConge.GetInterimData(key);
+        });
 
-                });
-              }
-            );
-          }
-        );
-      }
-    );
+      }, 2000);
+
+    });
+    //}
+    //);
+    //}
+    //);
+    //}
+    //);
   });
 
 
-  appConge.GetInterimData= function(login){
-    appSpHelper. GetEmploye(appHelper.ListName.Employe, login, function(it){
+  appConge.GetInterimData = function (login) {
+    appSpHelper.GetEmploye(appHelper.ListName.Employe, login, function (it) {
       document.getElementById("TxtIntName").value = it.get_item('EmpPrenom') + ' ' + it.get_item('EmpNom');
-      document.getElementById("TxtIntMatricule").value =  it.get_item('EmpMatricule');
+      document.getElementById("TxtIntMatricule").value = it.get_item('EmpMatricule');
       document.getElementById("TxtIntEmail").value = it.get_item('EmpMail');
     });
   }
@@ -63,12 +59,12 @@ appConge.InitializePage = function () {
 
   TxtIntName.addEventListener("click", function () {
 
-   // document.querySelector("#TxtIntName").value = 'Consultant INOVA';
+    // document.querySelector("#TxtIntName").value = 'Consultant INOVA';
 
-   });
+  });
 
   BtnSave.addEventListener("click", function () {
-    appConge.Add (function(){
+    appConge.Add(function () {
       location.reload();
     });
   });
@@ -78,7 +74,7 @@ appConge.InitializePage = function () {
 
 
 appConge.initCmbTypeConge = function (callBack) {
-  ListerMotif(function(){
+  ListerMotif(function () {
     let cmb = document.getElementById("cmbTypeConge");
     let txtColor = document.getElementById("TxtTypeCongeColeur");
     let txtText = document.getElementById("TxtTypeCongeText");
@@ -89,7 +85,7 @@ appConge.initCmbTypeConge = function (callBack) {
       txtText.value = selectedOption.text;
     });
 
-    if(callBack){
+    if (callBack) {
       callBack();
     }
   });
@@ -97,35 +93,35 @@ appConge.initCmbTypeConge = function (callBack) {
 };
 
 
-function ListerMotif( callBack) {
+function ListerMotif(callBack) {
   let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.TypeConge);
   let q = '<View><Query><Where>' +
-               '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
-          '</Where></Query></View>';
+    '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
+    '</Where></Query></View>';
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(q);
   let listItemMotif = oList.getItems(camlQuery);
   clientContext.load(listItemMotif);
   clientContext.executeQueryAsync(
-      function () {
-          var listItemEnumerator = listItemMotif.getEnumerator();
+    function () {
+      var listItemEnumerator = listItemMotif.getEnumerator();
 
-          while (listItemEnumerator.moveNext()) {
-              let oListItemTp = listItemEnumerator.get_current();
-              let opt = document.createElement("option");
-              opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
-              opt.setAttribute("data-color", oListItemTp.get_item('Background'));
-              opt.setAttribute("value", oListItemTp.get_id());
-              opt.innerHTML = oListItemTp.get_item('Title');
-              document.getElementById('cmbTypeConge').appendChild(opt);
-          }
+      while (listItemEnumerator.moveNext()) {
+        let oListItemTp = listItemEnumerator.get_current();
+        let opt = document.createElement("option");
+        opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
+        opt.setAttribute("data-color", oListItemTp.get_item('Background'));
+        opt.setAttribute("value", oListItemTp.get_id());
+        opt.innerHTML = oListItemTp.get_item('Title');
+        document.getElementById('cmbTypeConge').appendChild(opt);
+      }
 
 
-          if(callBack){
-            callBack();
-          }
-      },
-      function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
+      if (callBack) {
+        callBack();
+      }
+    },
+    function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
 }
 
 appConge.List = function () {
@@ -136,8 +132,8 @@ appConge.List = function () {
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(
     "<View><Query><Where>" +
-      '<Eq><FieldRef ID="Demandeur" /><Value Type="Integer"><UserID/></Value></Eq>' +
-      "</Where></Query></View>"
+    '<Eq><FieldRef ID="Demandeur" /><Value Type="Integer"><UserID/></Value></Eq>' +
+    "</Where></Query></View>"
   );
   let collListItem = oList.getItems(camlQuery);
   appConge.clientContext.load(collListItem);
@@ -151,7 +147,7 @@ appConge.List = function () {
         view.conges.push({
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Title"),
-          startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
+          startdate: new Date(oListItem.get_item("DateDepart")).toLocaleDateString(),
           nbre: oListItem.get_item("NombreJours"),
           status: oListItem.get_item("StatutLibelle"),
           classe: appHelper.Status.GetClass(oListItem.get_item("Statut")),
@@ -173,7 +169,7 @@ appConge.List = function () {
   }, appSpHelper.writeError);
 };
 
-appConge.Add = function ( callBack) {
+appConge.Add = function (callBack) {
   let oList = appConge.clientContext
     .get_web()
     .get_lists()
@@ -197,7 +193,7 @@ appConge.Add = function ( callBack) {
   oListItem.set_item("DateReprise", endDate);
   oListItem.set_item("DateRetourPrevisionnelle", endDate);
 
-  oListItem.set_item("Title",document.getElementById("TxtTypeCongeText").value);
+  oListItem.set_item("Title", document.getElementById("TxtTypeCongeText").value);
 
   oListItem.set_item("NombreJours", parseInt(document.getElementById("TxtNbreJour").value));
   oListItem.set_item("NombreJourAcquis", parseInt(document.getElementById("TxtNbreJour").value));
@@ -214,24 +210,24 @@ appConge.Add = function ( callBack) {
   oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
   oListItem.set_item("Interimaire", SP.FieldUserValue.fromUser(SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys()));
 
-  oListItem.set_item("ResponsableN1", SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN1Login").value));
-  oListItem.set_item("ResponsableN2",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN2Login").value));
+  oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
+  oListItem.set_item("ResponsableN2", App.CurrentUser.ManagerPersonne2);
 
-  oListItem.set_item("ResponsableN1Email", SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN1Email").value));
-  oListItem.set_item("ResponsableN2Email",SP.FieldUserValue.fromUser(document.getElementById("TxtSpManagerN2Email").value));
+  oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
+  oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
 
   oListItem.update();
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
-const appUrl = '/tools1/pages/conge/show.aspx?ID=' + oListItem.get_id();
-      let WF = new WFManager(appHelper.AppCode.CONGE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.CONGE, oListItem.get_id(), document.getElementById("TxtSpManagerN1Login").value,document.getElementById("TxtSpManagerN2Login").value, function(){
+    const appUrl = '/tools1/pages/conge/show.aspx?ID=' + oListItem.get_id();
+    let WF = new WFManager(appHelper.AppCode.CONGE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.CONGE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () {
 
-        if(callBack){
-          callBack(oListItem);
-        }
-      })
+      if (callBack) {
+        callBack(oListItem);
+      }
+    })
 
   }, appSpHelper.writeError);
 };
@@ -239,6 +235,6 @@ const appUrl = '/tools1/pages/conge/show.aspx?ID=' + oListItem.get_id();
 
 // document.addEventListener("DOMContentLoaded", () => {
 //   ExecuteOrDelayUntilScriptLoaded(function(){
-    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appConge.InitializePage);
+SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appConge.InitializePage);
 //   }, "SP.ClientContext");
 // });

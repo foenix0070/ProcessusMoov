@@ -82,14 +82,14 @@
                 <script src="/tools1/assets/plugins/DataTables/datatables.min.js?t=1"></script>
                 <script src="/tools1/assets/js/workflow_template.js?t=1"></script>
                 <script src="/tools1/assets/js/SpGroupConstante.js?t=1"></script>
-                <script src="/tools1/assets/js/mustache.js?t=1"></script>
                 <script src="/tools1/assets/js/script.js?t=1"></script>
                 <script src="/tools1/assets/js/extensions.js?t=1"></script>
-                <script src="/tools1/assets/js/appHelper.js?t=1"></script>
+                
                 <script src="/tools1/assets/js/appSpHelper.js?t=1"></script>
                 <script src="/tools1/assets/js/WFManager.js?t=1"></script>
                 <script src="/tools1/assets/js/autoNumeric.min.js?t=1"></script>
                 <script src="/tools1/assets/js/mustache.js?t=1"></script>
+                <script src="/tools1/assets/js/App.js?t=1"></script>
                 <script src="/tools1/assets/js/appHelper.js?t=1"></script>
                 <!--END SCRIPT -->
 
