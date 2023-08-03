@@ -5,7 +5,26 @@ appVehicule.clientContext;
 appVehicule.InitializePage = function () {
   appVehicule.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
-  //appSpHelper.GetMyProperties(function () {
+  appSpHelper.GetMyProperties(function () {
+
+    appVehicule.initCmbTypeConge(function () {
+
+      document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
+      document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
+      document.getElementById("TxtEmail").value = App.CurrentUser.Email;
+
+      //setTimeout(function () {
+        //appSpHelper.InitializePeoplePicker("plePickerInterimaireDiv", false, "350px");
+
+        //appSpHelper.PeoplePickerOnChangeEvent("plePickerInterimaireDiv", function (key) {
+          // appConge.interimaire = key.toString().split('\\')[1];
+          //appConge.GetInterimData(key);
+        //});
+
+      //}, 2000);
+
+    });
+
     //appSpHelper.LoadUserCongeParam(
       //appHelper.ListName.Employe, 	"ETISALAT-AFRICA\pouattara",  App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
       //function () {
@@ -26,7 +45,7 @@ appVehicule.InitializePage = function () {
         //);
       //}
     //);
-  //});
+  });
 
   //const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
