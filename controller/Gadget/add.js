@@ -5,7 +5,7 @@ appGadget.clientContext;
 appGadget.InitializePage = function () {
   appGadget.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
-  appSpHelper.GetMyProperties(function () {
+  //appSpHelper.GetMyProperties(function () {
     //appSpHelper.LoadUserCongeParam(appHelper.ListName.Employe, "ETISALAT-AFRICA\pouattara", App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
       //document.getElementById("TxtCurrentUserLogin").value,
       //function () {
@@ -24,7 +24,7 @@ appGadget.InitializePage = function () {
 
 
               //  appGadget.initCmbTypeConge(function(){
-                  appGadget.List();
+                  //appGadget.List();
               //  });
               //}
             //);
@@ -32,7 +32,7 @@ appGadget.InitializePage = function () {
         //);
       //}
     //);
-  });
+  //});
 
   // const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
