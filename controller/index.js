@@ -1,4 +1,6 @@
 var MoovTools = MoovTools || {};
+MoovTools.view = {};
+MoovTools.view.demandes = [];
 
 MoovTools.InitializePage = function () {
   MoovTools.clientContext = SP.ClientContext.get_current();
@@ -24,19 +26,50 @@ MoovTools.InitializePage = function () {
         //function (item) {
         //console.log(item);
         //appSpHelper.GetEmployeeManagerLogin(
-          //"N2",
-          //item.get_item("EmpManager"),
-          //function () {
-            span = document.getElementById('spanSolde');
-            h4User = document.getElementById('h4User');
-            span.innerHTML = App.CurrentUser.NombreJoursAcquis;
-            h4User.innerHTML = App.CurrentUser.DisplayName;
+        //"N2",
+        //item.get_item("EmpManager"),
+        //function () {
+        span = document.getElementById('spanSolde');
+        h4User = document.getElementById('h4User');
+        span.innerHTML = App.CurrentUser.NombreJoursAcquis;
+        h4User.innerHTML = App.CurrentUser.DisplayName;
 
-            MoovTools.listTache();
+        MoovTools.listTache();
 
-            MoovTools.ListConge();
+        //MoovTools.ListConge();
+        MoovTools.ListDemande(appHelper.ListName.Conge, "conge", "CONGES", function () {
+          MoovTools.ListDemande(appHelper.ListName.Materiel, "materiel", "MATERIEL", function () {
+            MoovTools.ListDemande(appHelper.ListName.Vehicule, "vehicule", "VEHICULE", function () {
+              MoovTools.ListDemande(appHelper.ListName.Gadget, "gadget", "GADGET", function () {
+                appHelper.renderTemplate("tmpl_table_demande", "DivDemandeTableShow", MoovTools.view);
 
-          //}
+                //   appHelper.listenNavigationLink ('linkMainNavigation');
+                const linkClick = document.getElementsByClassName('click');
+                for (var i = 0; i < linkClick.length; i++) {
+                  linkClick[i].addEventListener("click", function () {
+                    let url = this.getAttribute("data-url");
+                    sessionStorage.setItem("ajax_url", url);
+                    $.ajax({
+                      url: url,
+                      method: 'GET',
+                      dataType: 'html',
+                      success: function (data) {
+                        $('#reponseAjax').html(data);
+                      },
+                      error: function () {
+                        $('#reponseAjax').html('Erreur lors du chargement des données.');
+                      }
+                    });
+
+                    return false;
+                  });
+                }
+              });
+            });
+          });
+        });
+
+        //}
         //);
         //  }
         //);
@@ -114,10 +147,49 @@ MoovTools.ListConge = function () {
   }, appSpHelper.writeError);
 };
 
+MoovTools.ListDemande = function (DemandeList, nomdurepertoire, nomduprocessus, callback) {
+  let oList = MoovTools.clientContext
+    .get_web()
+    .get_lists()
+    .getByTitle(DemandeList);
+  let camlQuery = new SP.CamlQuery();
+  camlQuery.set_viewXml(
+    "<View><Query><Where>" +
+    '<Eq><FieldRef ID="Demandeur" /><Value Type="Integer"><UserID/></Value></Eq>' +
+    "</Where></Query></View>"
+  );
+  let collListItem = oList.getItems(camlQuery);
+  MoovTools.clientContext.load(collListItem);
+  MoovTools.clientContext.executeQueryAsync(function (sender, args) {
+    if (collListItem.get_count() > 0) {
+      var listItemEnumerator = collListItem.getEnumerator();
+
+      while (listItemEnumerator.moveNext()) {
+        var oListItem = listItemEnumerator.get_current();
+        MoovTools.view.demandes.push({
+          id: oListItem.get_item("ID"),
+          title: oListItem.get_item("Title"),
+          requestdate: new Date(oListItem.get_item("Created")).toLocaleDateString(),
+          status: oListItem.get_item("StatutLibelle"),
+          classe: appHelper.Status.GetClass(oListItem.get_item("Statut")),
+          repertoire: nomdurepertoire,
+          nomdemande: nomduprocessus,
+        });
+
+      }
+
+      if (callback) {
+        callback();
+      }
 
 
 
-MoovTools.listTache2 = function () {
+    }
+  }, appSpHelper.writeError);
+};
+
+
+MoovTools.listTache = function () {
   let oList = MoovTools.clientContext
     .get_web()
     .get_lists()
@@ -171,7 +243,7 @@ MoovTools.listTache2 = function () {
   }, appSpHelper.writeError);
 };
 
-MoovTools.listTache = function () {
+MoovTools.listTacheTest = function () {
   let oList = MoovTools.clientContext
     .get_web()
     .get_lists()

@@ -31,7 +31,7 @@ showSortieCaisse.TestShowForm = function(tacheId, demandeid){
   clientContext.load(It);
   clientContext.executeQueryAsync(function () {
     if(It.get_item('Status') == "En cours"){
-      showConge.ShowForm (tacheId, demandeid);
+      showSortieCaisse.ShowForm (tacheId, demandeid);
     }
   }, appSpHelper.writeError);
 }
@@ -53,7 +53,7 @@ showSortieCaisse.ShowForm = function(tacheId, demandeid){
   BtnOK.addEventListener("click", function () {
     WF.goToNextTask(showSortieCaisse.clientContext ,tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
-      showConge.UpDateItemStatus (nextTask, demandeid, function(){
+      showSortieCaisse.UpDateItemStatus (nextTask, demandeid, function(){
         location.reload();
       });
     });
@@ -62,7 +62,7 @@ showSortieCaisse.ShowForm = function(tacheId, demandeid){
   BtnNOK.addEventListener("click", function () {
     WF.goToRefusedTask(showSortieCaisse.clientContext ,tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
-      showConge.UpDateItemStatusRejet (true, demandeid, function(){
+      showSortieCaisse.UpDateItemStatusRejet (true, demandeid, function(){
         location.reload();
       });
     });
@@ -71,14 +71,14 @@ showSortieCaisse.ShowForm = function(tacheId, demandeid){
   BtnMod.addEventListener("click", function () {
     WF.goToRefusedTask(showSortieCaisse.clientContext ,tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
-      showConge.UpDateItemStatusRejet (false, demandeid, function(){
+      showSortieCaisse.UpDateItemStatusRejet (false, demandeid, function(){
         location.reload();
       });
     });
   });
 }
 
-showConge.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
+showSortieCaisse.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 
   let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Conge);
   let It = oList .getItemById(demandeid);
@@ -100,7 +100,7 @@ showConge.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 
 }
 
-showConge.UpDateItemStatus = function(nextTask, demandeid, callBack){
+showSortieCaisse.UpDateItemStatus = function(nextTask, demandeid, callBack){
   let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Conge);
   let It = oList .getItemById(demandeid);
 
@@ -122,7 +122,7 @@ showConge.UpDateItemStatus = function(nextTask, demandeid, callBack){
 
 
 
-showConge.ShowFichierJoint = function(demandeid) {
+showSortieCaisse.ShowFichierJoint = function(demandeid) {
 
   let view = {};
 
@@ -148,22 +148,22 @@ showConge.ShowFichierJoint = function(demandeid) {
               url : appHelper.AppConstante.SiteUrl + '/'+  attachmentFiles.itemAt(i).get_serverRelativeUrl()
             });
           }
-        showConge.ShowUploadForm (demandeid, view);
+        showSortieCaisse.ShowUploadForm (demandeid, view);
 
         }else{
           view.fichiers = [];
-          showConge.ShowUploadForm (demandeid, view);
+          showSortieCaisse.ShowUploadForm (demandeid, view);
         }
       }
   },
 
   function(){
     view.fichiers = [];
-    showConge.ShowUploadForm (demandeid, view);
+    showSortieCaisse.ShowUploadForm (demandeid, view);
   });
 }
 
-showConge.ShowUploadForm = function(demandeid, view){
+showSortieCaisse.ShowUploadForm = function(demandeid, view){
   appHelper.renderTemplate("tmpl_form_fichiers_attaches", "SectionDocumentsJoint", view);
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
   FpUploadAttachement.addEventListener('change', (e) => {
@@ -171,7 +171,7 @@ showConge.ShowUploadForm = function(demandeid, view){
    for (const file of files) {
       let reader = new FileReader();
       reader.onload = function(e) {
-          showConge.AttachFile (demandeid,  e.target.result, file.name)
+          showSortieCaisse.AttachFile (demandeid,  e.target.result, file.name)
       }
       reader.onerror = function(e)
       {
@@ -182,7 +182,7 @@ showConge.ShowUploadForm = function(demandeid, view){
     });
 }
 
-showConge.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
+showSortieCaisse.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
 
       //Get Client Context and Web object.
       var oWeb = clientContext.get_web();
@@ -209,15 +209,15 @@ showConge.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
       clientContext.load(oList);
       clientContext.load(attachmentFiles);
       clientContext.executeQueryAsync(function(){
-        showConge.ShowFichierJoint(demandeid);
+        showSortieCaisse.ShowFichierJoint(demandeid);
       }, appSpHelper.writeError);
 
 };
 
-showConge.ShowValidation = function(demandeid) {
+showSortieCaisse.ShowValidation = function(demandeid) {
   let view = {};
 
-  let oList = showConge.clientContext  .get_web()  .get_lists()  .getByTitle(appHelper.ListName.Validation);
+  let oList = showSortieCaisse.clientContext  .get_web()  .get_lists()  .getByTitle(appHelper.ListName.Validation);
   var QryGetNextOne = '<View>' +
   '<Query>' +
      '<Where>' +
@@ -235,8 +235,8 @@ showConge.ShowValidation = function(demandeid) {
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml( QryGetNextOne);
   let collListItem = oList.getItems(camlQuery);
-  showConge.clientContext.load(collListItem);
-  showConge.clientContext.executeQueryAsync(function (sender, args) {
+  showSortieCaisse.clientContext.load(collListItem);
+  showSortieCaisse.clientContext.executeQueryAsync(function (sender, args) {
 
     if (collListItem.get_count() > 0) {
       var listItemEnumerator = collListItem.getEnumerator();
@@ -263,15 +263,15 @@ showConge.ShowValidation = function(demandeid) {
 
 }
 
-showConge.ShowDetails = function (demandeid){
+showSortieCaisse.ShowDetails = function (demandeid){
 
-  let oList = showConge.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.Conge);
+  let oList = showSortieCaisse.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.Conge);
   let It = oList .getItemById(demandeid);
 
-  showConge.clientContext.load(It);
-  showConge.clientContext.executeQueryAsync(function () {
+  showSortieCaisse.clientContext.load(It);
+  showSortieCaisse.clientContext.executeQueryAsync(function () {
   if(It){
-    showConge.isSoldeImpact = (It.get_item('TypeCongeID') != null ? It.get_item('TypeCongeID') : 0)
+    showSortieCaisse.isSoldeImpact = (It.get_item('TypeCongeID') != null ? It.get_item('TypeCongeID') : 0)
   let view = {
     typeconge : It.get_item('TypeCongeLibelle') != null ?  It.get_item('TypeCongeLibelle') : '',
     nbrejour: It.get_item('NombreJours') != null ?  It.get_item('NombreJours') : '',
@@ -303,6 +303,6 @@ function OpenFileUpload(str_select){
 
 // document.addEventListener("DOMContentLoaded", () => {
 //   ExecuteOrDelayUntilScriptLoaded(function(){
-    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showConge.InitializePage);
+    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showSortieCaisse.InitializePage);
 //   }, "SP.ClientContext");
 // });

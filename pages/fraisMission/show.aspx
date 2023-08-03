@@ -144,7 +144,7 @@
                 </script>
 
                 <script type="text/javascript">
-                  appHelper.loadJSWithNameSpace("showConge", 'showConge', "controller/conge/show.js");
+                  appHelper.loadJSWithNameSpace("showFraisMission", 'showFraisMission', "controller/fraisMission/show.js");
                 </script>
 <script type="text/javascript">
 

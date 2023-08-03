@@ -269,10 +269,10 @@ showGadget.ShowDetails = function (demandeid){
   showGadget.clientContext.executeQueryAsync(function () {
   if(It){
   let view = {
-    typeconge : It.get_item('Title') != null ?  It.get_item('Title') : '',
+    nature : It.get_item('Title') != null ?  It.get_item('Title') : '',
     nbrejour: It.get_item('NombreJourAccorde') != null ?  It.get_item('NombreJourAccorde') : '',
-    datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
-    interimaire: It.get_item('Demandeur') != null ?  It.get_item('Demandeur').get_lookupValue() : '',
+    //datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
+    //interimaire: It.get_item('Demandeur') != null ?  It.get_item('Demandeur').get_lookupValue() : '',
     motif: It.get_item('Motif') != null ?  It.get_item('Motif') : ''
   };
   appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
@@ -281,4 +281,4 @@ showGadget.ShowDetails = function (demandeid){
 }, appSpHelper.writeError);
 }
 
-SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appGadget.InitializePage);
+SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showGadget.InitializePage);

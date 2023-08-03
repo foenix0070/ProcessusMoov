@@ -18,12 +18,18 @@
       </h2>
     </div>
       <!-- <Table /> -->
-      <div id="DivCongeTableShow">
+      <div id="DivDemandeTableShow">
           <div style="padding: 10px 0 10px 2px;"
               class="w3-panel w3-pale-yellow w3-border">
               <p>Aucun &eacute;l&eacute;ment &agrave; afficher ici.</p>
           </div>
       </div>
+      <!--<div id="DivCongeTableShow">
+        <div style="padding: 10px 0 10px 2px;"
+            class="w3-panel w3-pale-yellow w3-border">
+            <p>Aucun &eacute;l&eacute;ment &agrave; afficher ici.</p>
+        </div>
+    </div>-->
   </div>
 
   <div class="col-5">
@@ -89,6 +95,31 @@
             <td><span class="{{classe}}">{{status}}</span></td>
           </tr>
           {{/conges}}
+        </tbody>
+      </table>
+    </div>
+  </script>
+
+  <script id="tmpl_table_demande" type="x-tmpl-mustache">
+    <div class="table-container">
+      <table class="table table-bordered table-responsive table-striped">
+        <thead>
+          <tr>
+            <th>N*</th>
+            <th></th>
+            <th>Intitul&eacute</th>
+            <th>Etat</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#demandes}}
+          <tr class="" >
+            <td>{{id}}</td>
+            <th>{{nomdemande}}</th>
+            <td><a href="tools1/pages/{{repertoire}}/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/{{repertoire}}/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+            <td><span class="{{classe}}">{{status}}</span></td>
+          </tr>
+          {{/demandes}}
         </tbody>
       </table>
     </div>

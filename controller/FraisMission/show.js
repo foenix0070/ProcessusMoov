@@ -1,39 +1,39 @@
-var showGadget = showGadget || {};
+var showFraisMission = showFraisMission || {};
 var clientContext;
-showGadget.clientContext;
-showGadget.isSoldeImpact = 0;
+showFraisMission.clientContext;
+showFraisMission.isSoldeImpact = 0;
 
-showGadget.InitializePage = function () {
-  showGadget.clientContext = SP.ClientContext.get_current();
+showFraisMission.InitializePage = function () {
+  showFraisMission.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
   let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
   let Id = appHelper.GetQueryStringFromAjaxQuery('id');
 
-  appSpHelper.CheckAttachmentFolder(showGadget.clientContext, Id, appHelper.ListName.Gadget, null);
+  appSpHelper.CheckAttachmentFolder(showFraisMission.clientContext, Id, appHelper.ListName.Gadget, null);
 
   appSpHelper.GetMyProperties(function () {
-    showGadget.ShowDetails (Id);
-  showGadget.ShowFichierJoint(Id);
-  showGadget.ShowValidation(Id);
+    showFraisMission.ShowDetails (Id);
+  showFraisMission.ShowFichierJoint(Id);
+  showFraisMission.ShowValidation(Id);
   if(tacheId){
-   showGadget.TestShowForm (tacheId, Id);
+   showFraisMission.TestShowForm (tacheId, Id);
   }
   });
 }
 
-showGadget.TestShowForm = function(tacheId, demandeid){
+showFraisMission.TestShowForm = function(tacheId, demandeid){
   let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Validation);
   let It = oList .getItemById(tacheId);
   clientContext.load(It);
   clientContext.executeQueryAsync(function () {
     if(It.get_item('Status') == "En cours"){
-      showGadget.ShowForm (tacheId, demandeid);
+      showFraisMission.ShowForm (tacheId, demandeid);
     }
   }, appSpHelper.writeError);
 }
 
-showGadget.ShowForm = function(tacheId, demandeid){
+showFraisMission.ShowForm = function(tacheId, demandeid){
 
   let view = {};
   view.did = demandeid;
@@ -48,34 +48,34 @@ showGadget.ShowForm = function(tacheId, demandeid){
   const WF  =  new WFManager(appHelper.AppCode.GADGET,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
 
   BtnOK.addEventListener("click", function () {
-    WF.goToNextTask(showGadget.clientContext ,tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToNextTask(showFraisMission.clientContext ,tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
-      showGadget.UpDateItemStatus (nextTask, demandeid, function(){
+      showFraisMission.UpDateItemStatus (nextTask, demandeid, function(){
         location.reload();
       });
     });
   });
 
   BtnNOK.addEventListener("click", function () {
-    WF.goToRefusedTask(showGadget.clientContext ,tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToRefusedTask(showFraisMission.clientContext ,tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
-      showGadget.UpDateItemStatusRejet (true, demandeid, function(){
+      showFraisMission.UpDateItemStatusRejet (true, demandeid, function(){
         location.reload();
       });
     });
   });
 
   BtnMod.addEventListener("click", function () {
-    WF.goToRefusedTask(showGadget.clientContext ,tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToRefusedTask(showFraisMission.clientContext ,tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
-      showGadget.UpDateItemStatusRejet (false, demandeid, function(){
+      showFraisMission.UpDateItemStatusRejet (false, demandeid, function(){
         location.reload();
       });
     });
   });
 }
 
-showGadget.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
+showFraisMission.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 
   let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Gadget);
   let It = oList .getItemById(demandeid);
@@ -97,7 +97,7 @@ showGadget.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 
 }
 
-showGadget.UpDateItemStatus = function(nextTask, demandeid, callBack){
+showFraisMission.UpDateItemStatus = function(nextTask, demandeid, callBack){
   let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Gadget);
   let It = oList .getItemById(demandeid);
 
@@ -119,7 +119,7 @@ showGadget.UpDateItemStatus = function(nextTask, demandeid, callBack){
 
 
 
-showGadget.ShowFichierJoint = function(demandeid) {
+showFraisMission.ShowFichierJoint = function(demandeid) {
 
   let view = {};
 
@@ -145,22 +145,22 @@ showGadget.ShowFichierJoint = function(demandeid) {
               url : appHelper.AppConstante.SiteUrl + '/'+  attachmentFiles.itemAt(i).get_serverRelativeUrl()
             });
           }
-        showGadget.ShowUploadForm (demandeid, view);
+        showFraisMission.ShowUploadForm (demandeid, view);
 
         }else{
           view.fichiers = [];
-          showGadget.ShowUploadForm (demandeid, view);
+          showFraisMission.ShowUploadForm (demandeid, view);
         }
       }
   },
 
   function(){
     view.fichiers = [];
-    showGadget.ShowUploadForm (demandeid, view);
+    showFraisMission.ShowUploadForm (demandeid, view);
   });
 }
 
-showGadget.ShowUploadForm = function(demandeid, view){
+showFraisMission.ShowUploadForm = function(demandeid, view){
   appHelper.renderTemplate("tmpl_form_fichiers_attaches", "SectionDocumentsJoint", view);
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
   FpUploadAttachement.addEventListener('change', (e) => {
@@ -168,7 +168,7 @@ showGadget.ShowUploadForm = function(demandeid, view){
    for (const file of files) {
       let reader = new FileReader();
       reader.onload = function(e) {
-          showGadget.AttachFile (demandeid,  e.target.result, file.name)
+          showFraisMission.AttachFile (demandeid,  e.target.result, file.name)
       }
       reader.onerror = function(e)
       {
@@ -179,7 +179,7 @@ showGadget.ShowUploadForm = function(demandeid, view){
     });
 }
 
-showGadget.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
+showFraisMission.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
 
       //Get Client Context and Web object.
       var oWeb = clientContext.get_web();
@@ -206,15 +206,15 @@ showGadget.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
       clientContext.load(oList);
       clientContext.load(attachmentFiles);
       clientContext.executeQueryAsync(function(){
-        showGadget.ShowFichierJoint(demandeid);
+        showFraisMission.ShowFichierJoint(demandeid);
       }, appSpHelper.writeError);
 
 };
 
-showGadget.ShowValidation = function(demandeid) {
+showFraisMission.ShowValidation = function(demandeid) {
   let view = {};
 
-  let oList = showGadget.clientContext  .get_web()  .get_lists()  .getByTitle(appHelper.ListName.Validation);
+  let oList = showFraisMission.clientContext  .get_web()  .get_lists()  .getByTitle(appHelper.ListName.Validation);
   var QryGetNextOne = '<View>' +
   '<Query>' +
      '<Where>' +
@@ -232,8 +232,8 @@ showGadget.ShowValidation = function(demandeid) {
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml( QryGetNextOne);
   let collListItem = oList.getItems(camlQuery);
-  showGadget.clientContext.load(collListItem);
-  showGadget.clientContext.executeQueryAsync(function (sender, args) {
+  showFraisMission.clientContext.load(collListItem);
+  showFraisMission.clientContext.executeQueryAsync(function (sender, args) {
 
     if (collListItem.get_count() > 0) {
       var listItemEnumerator = collListItem.getEnumerator();
@@ -260,13 +260,13 @@ showGadget.ShowValidation = function(demandeid) {
 
 }
 
-showGadget.ShowDetails = function (demandeid){
+showFraisMission.ShowDetails = function (demandeid){
 
-  let oList = showGadget.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.Gadget);
+  let oList = showFraisMission.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.Gadget);
   let It = oList .getItemById(demandeid);
 
-  showGadget.clientContext.load(It);
-  showGadget.clientContext.executeQueryAsync(function () {
+  showFraisMission.clientContext.load(It);
+  showFraisMission.clientContext.executeQueryAsync(function () {
   if(It){
   let view = {
     typeconge : It.get_item('Title') != null ?  It.get_item('Title') : '',
@@ -281,4 +281,4 @@ showGadget.ShowDetails = function (demandeid){
 }, appSpHelper.writeError);
 }
 
-SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appGadget.InitializePage);
+SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showFraisMission.InitializePage);

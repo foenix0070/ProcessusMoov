@@ -150,7 +150,7 @@
 
                 <script type="text/javascript">
                   //appHelper.loadJSWithNameSpace("showConge", 'showConge', "controller/conge/show.js");
-                  appHelper.loadJSWithNameSpace("showSortieCaisse", 'showSortieCaisse', "controller/sortieCaisse/show.js");
+                  appHelper.loadJSWithNameSpace("showRegularisationSortieCaisse", 'showRegularisationSortieCaisse', "controller/regularisationSortieCaisse/show.js");
                 </script>
 <script type="text/javascript">
 

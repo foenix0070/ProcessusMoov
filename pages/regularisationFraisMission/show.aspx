@@ -149,7 +149,7 @@
                 </script>
 
                 <script type="text/javascript">
-                  appHelper.loadJSWithNameSpace("showConge", 'showConge', "controller/conge/show.js");
+                  appHelper.loadJSWithNameSpace("showRegularisationFraisMission", 'showRegularisationFraisMission', "controller/regularisationFraisMission/show.js");
                 </script>
 <script type="text/javascript">
 

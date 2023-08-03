@@ -60,7 +60,7 @@
         <button class="Submit" id="BtnSave" type="button"> Valider </button>
     </div>
 </form>
-<script src="http://ci08vmmitest/tools1/controller/Vehicule/add.js"></script>
+<!--<script src="http://ci08vmmitest/tools1/controller/Vehicule/add.js"></script>-->
 <script type="text/javascript">
     appHelper.loadJSWithNameSpace("appVehicule", 'appVehicule', "controller/Vehicule/add.js");
 </script>

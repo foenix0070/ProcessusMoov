@@ -143,7 +143,7 @@
                   </table>
                 </script>
 
-              <script src="http://ci08vmmitest/tools1/controller/Vehicule/show.js"></script>
+              <!--<script src="http://ci08vmmitest/tools1/controller/Vehicule/show.js"></script>-->
                 
               <script type="text/javascript">
                 appHelper.loadJSWithNameSpace("showVehicule", 'showVehicule', "controller/Vehicule/show.js");

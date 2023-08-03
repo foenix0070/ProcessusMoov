@@ -116,7 +116,7 @@
                       <div class="offcanvas offcanvas-50 offcanvas-end" tafandex="-1" id="ffcMainForm"
                         data-bs-backdrop="true" aria-labelledby="ffcMainFormTitle">
                         <div class="offcanvas-header">
-                          <h5 id="ffcMainFormTitle">Demande de congés</h5>
+                          <h5 id="ffcMainFormTitle">Demande</h5>
                           <button type="button" class="btn-close " data-bs-dismiss="offcanvas"
                             aria-label="Close"></button>
                         </div>
