@@ -5,7 +5,7 @@ appMateriel.clientContext;
 appMateriel.InitializePage = function () {
   appMateriel.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
-  appSpHelper.GetMyProperties(function () {
+  //appSpHelper.GetMyProperties(function () {
     //appSpHelper.LoadUserCongeParam(
       //appHelper.ListName.Employe, "ETISALAT-AFRICA\pouattara", App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
       //document.getElementById("TxtCurrentUserLogin").value,
@@ -18,7 +18,7 @@ appMateriel.InitializePage = function () {
                 // span= document.getElementById('spanSolde');
                 // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
                 //  appMateriel.initCmbTypeConge(function(){
-                appMateriel.List();
+                //appMateriel.List();
                 //  });
               //}
             //);
@@ -26,7 +26,7 @@ appMateriel.InitializePage = function () {
         //);
       //}
     //);
-  });
+  //});
 
   //const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
@@ -210,7 +210,7 @@ appMateriel.Add = function (callBack) {
 
   oListItem.set_item("NombreJours",parseInt(document.getElementById("TxtQuantite").value));
   oListItem.set_item("NombreJourAccorde",parseInt(document.getElementById("TxtQuantite").value));
-  oListItem.set_item("DemandeurEmail",document.getElementById("TxtCurrentUserEmail").value);
+  oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
 
   // oListItem.set_item("Historique", "#");
 
