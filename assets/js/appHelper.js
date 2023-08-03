@@ -165,6 +165,7 @@ appHelper.navigation = function (container, url) {
 appHelper.listenNavigationOffCanvas = function (lienNavigation, offCanvasid) {
 
   document.addEventListener("click", function (event) {
+    App.Counter++;
     var target = event.target;
     if (target) {
 
@@ -185,7 +186,8 @@ appHelper.listenNavigationOffCanvas = function (lienNavigation, offCanvasid) {
           url = appHelper.AppConstante.SiteUrl + url;
         } catch (e) {}
 
-        console.log(container, url);
+        console.log(container, url, );
+
 
         appHelper.navigation(container, url);
 

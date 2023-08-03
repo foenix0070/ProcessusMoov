@@ -117,7 +117,7 @@ MoovTools.ListConge = function () {
 
 
 
-MoovTools.listTache = function () {
+MoovTools.listTache2 = function () {
   let oList = MoovTools.clientContext
     .get_web()
     .get_lists()
@@ -141,6 +141,47 @@ MoovTools.listTache = function () {
     '</Or>' +
     '<Eq><FieldRef Name="Status" /><Value Type="Choice">En cours</Value></Eq>' +
     '</And>' +
+    '</Where>' +
+    '</Query>' +
+    '</View>';
+  camlQuery.set_viewXml(q);
+
+  let collListItem = oList.getItems(camlQuery);
+  MoovTools.clientContext.load(collListItem);
+  MoovTools.clientContext.executeQueryAsync(function (sender, args) {
+
+    if (collListItem.get_count() > 0) {
+      var listItemEnumerator = collListItem.getEnumerator();
+      let view = {};
+      view.taches = [];
+      while (listItemEnumerator.moveNext()) {
+        var oListItem = listItemEnumerator.get_current();
+        view.taches.push({
+          id: oListItem.get_item("ID"),
+          title: oListItem.get_item("Body"),
+          startdate: new Date(oListItem.get_item("StartDate")).toLocaleDateString(),
+          url: oListItem.get_item("AppUrl") + '&tacheid=' + oListItem.get_item("ID")
+        });
+      }
+
+      appHelper.renderTemplate("tmpl_table_tache", "DivTacheTableShow", view);
+      //    appHelper.listenNavigationLink ('linkMainNavigation');
+
+    }
+  }, appSpHelper.writeError);
+};
+
+MoovTools.listTache = function () {
+  let oList = MoovTools.clientContext
+    .get_web()
+    .get_lists()
+    .getByTitle(appHelper.ListName.Validation);
+  let camlQuery = new SP.CamlQuery();
+
+  var q = '<View>' +
+    '<Query>' +
+    '<Where>' +
+    '<Eq><FieldRef Name="Status" /><Value Type="Choice">En cours</Value></Eq>' +
     '</Where>' +
     '</Query>' +
     '</View>';

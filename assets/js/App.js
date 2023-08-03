@@ -1,5 +1,6 @@
 var App = App || {};
 App.CurrentUser = null;
+App.Counter = 0;
 
 App.LoadUser = function (callBack) {
     let clientContext = new SP.ClientContext.get_current();

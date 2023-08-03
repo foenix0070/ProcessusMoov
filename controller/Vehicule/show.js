@@ -7,8 +7,9 @@ showVehicule.InitializePage = function () {
   showVehicule.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
-  let tacheId =  appHelper.getQueryStringParameter('tacheid');
-  let Id =  appHelper.getQueryStringParameter('id');
+  let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
+  let Id = appHelper.GetQueryStringFromAjaxQuery('id');
+
 
   appSpHelper.CheckAttachmentFolder(showVehicule.clientContext, Id, appHelper.ListName.Vehicule, null);
 

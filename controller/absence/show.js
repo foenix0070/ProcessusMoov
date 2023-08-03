@@ -7,8 +7,8 @@ showAbsence.InitializePage = function () {
   showAbsence.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
-  let tacheId =  appHelper.getQueryStringParameter('tacheid');
-  let Id =  appHelper.getQueryStringParameter('id');
+  let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
+  let Id = appHelper.GetQueryStringFromAjaxQuery('id');
 
   appSpHelper.CheckAttachmentFolder(showAbsence.clientContext, Id, appHelper.ListName.Absence, null);
 

@@ -78,7 +78,7 @@
    createWFTask(ctx, _appUrl,  _parent, _parentid, managerN1, managerN2, callBack) {
      const WF = this.getWFSchema();
      const cWF = WF[0]["step"];
-     const appUrl = this.WFRunSite + _appUrl;
+     const appUrl = this.WFRunSite + "/tools1" + _appUrl;
 
      let tasks = [];
      let i = 0;

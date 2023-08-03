@@ -7,8 +7,8 @@ showGadget.InitializePage = function () {
   showGadget.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
-  let tacheId =  appHelper.getQueryStringParameter('tacheid');
-  let Id =  appHelper.getQueryStringParameter('id');
+  let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
+  let Id = appHelper.GetQueryStringFromAjaxQuery('id');
 
   appSpHelper.CheckAttachmentFolder(showGadget.clientContext, Id, appHelper.ListName.Gadget, null);
 

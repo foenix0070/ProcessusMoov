@@ -7,8 +7,8 @@ showSortieCaisse.InitializePage = function () {
   showSortieCaisse.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
-  let tacheId =  appHelper.GetQueryStringFromAjaxQuery('tacheid');
-  let Id =  appHelper.GetQueryStringFromAjaxQuery('id');
+  let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
+  let Id = appHelper.GetQueryStringFromAjaxQuery('id');
 
   appSpHelper.CheckAttachmentFolder(showSortieCaisse.clientContext, Id, appHelper.ListName.SortieCaisse, null);
 

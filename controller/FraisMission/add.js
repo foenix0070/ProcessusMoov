@@ -272,7 +272,7 @@ Mission.Add = function ( callBack) {
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
-  const appUrl = '/tools1/fraisMission/show.aspx?ID=' + oListItem.get_id();
+  const appUrl = '/fraisMission/show.aspx?ID=' + oListItem.get_id();
       //AddFM(oListItem);
       let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
       WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
