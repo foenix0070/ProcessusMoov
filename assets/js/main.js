@@ -93,6 +93,9 @@ var arrMenu = [
     ],
   },*/
 
+
+
+  /*
   {
     id: "dmd_fraismission",
     title: "Demande de frais de mission",
@@ -139,6 +142,7 @@ var arrMenu = [
       },
     ],
   },
+  */
 
  /* {
     id: "dmd_regularisationFinMission",
