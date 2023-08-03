@@ -177,13 +177,10 @@ MoovTools.ListDemande = function (DemandeList, nomdurepertoire, nomduprocessus, 
         });
 
       }
+    }
 
-      if (callback) {
-        callback();
-      }
-
-
-
+    if (callback) {
+      callback();
     }
   }, appSpHelper.writeError);
 };
