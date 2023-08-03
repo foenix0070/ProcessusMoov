@@ -4,6 +4,25 @@
         <fieldset class="form-elts">
             <legend>Demandeur</legend>
             <div class="mb-3">
+              <label  class="form-label">Nom & Prenoms</label>
+                <input type="text" id="TxtNom" disabled class="  form-control" value="" placeholder="" />
+            </div>
+      
+            <div class="mb-3">
+              <label  class="form-label">Matricule</label>
+                <input type="text" id="TxtMatricule" disabled class="  form-control" name="" placeholder="" />
+            </div>
+      
+            <div class="mb-3">
+              <label  class="form-label">Email</label>
+                <input type="text" id="TxtEmail" disabled class="  form-control" name="" placeholder="" />
+            </div>
+      
+          </fieldset>
+
+        <fieldset class="form-elts">
+            <legend>Demandeur</legend>
+            <div class="mb-3">
                 <label class="form-label">Nom & Prenoms</label>
                 <input type="text" id="TxtNom" disabled class="  form-control" value="" placeholder="" />
             </div>
