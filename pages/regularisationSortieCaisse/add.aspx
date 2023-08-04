@@ -27,12 +27,12 @@
         <input type="text" class="form-control" id="TxtTitle" placeholder="" />
       </div>
       <div class="mb-3">
-        <label class="form-label"> Montant utilisé</label>
+        <label class="form-label"> Montant utilis&eacute;</label>
         <input type="text" class="form-control" id="TxtMontant" placeholder="" />
       </div>
 
       <div class="mb-3">
-        <label class="form-label"> Solde à reverser</label>
+        <label class="form-label"> Solde &agrave; reverser</label>
         <input type="text" class="form-control" id="TxtSolde" placeholder="" />
       </div>
 

@@ -72,9 +72,9 @@ appRegularisationSortieCaisse.Add = function (callBack) {
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "Validation du supérieur hiérarchique");
   oListItem.set_item("Montant", parseInt(document.getElementById("TxtMontant").value));
-  oListItem.set_item("Solde", document.getElementById("Solde").value);
+  oListItem.set_item("Solde", document.getElementById("TxtSolde").value);
  
-  oListItem.set_item("Observation", document.getElementById("Observation").value);
+  oListItem.set_item("Observation", document.getElementById("TxtObservation").value);
   oListItem.set_item("Title", document.getElementById("TxtTitle").value);
   //oListItem.set_item("DocJustificatifs",document.getElementById("FileDoc").value);
 
