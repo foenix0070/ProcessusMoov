@@ -281,8 +281,8 @@ showAbsence.ShowDetails = function (demandeid){
 }, appSpHelper.writeError);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  ExecuteOrDelayUntilScriptLoaded(function(){
+//document.addEventListener("DOMContentLoaded", () => {
+  //ExecuteOrDelayUntilScriptLoaded(function(){
     SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showAbsence.InitializePage);
-  }, "SP.ClientContext");
-});
+  //}, "SP.ClientContext");
+//});
