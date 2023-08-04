@@ -39,7 +39,7 @@
             <td>{{objetReglement}}</td>
             <td>{{montant}}</td>
             <td>{{payerA}}</td>
-            <td><a href="http://ci08vmmitest/tools1/pages/SortieCaisse/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="http://ci08vmmitest/tools1/pages/SortieCaisse/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+            <td><a href="http://ci08vmmitest/tools1/pages/sortieCaisse/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="http://ci08vmmitest/tools1/pages/sortieCaisse/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
             <td><span class="{{classe}}">{{status}}</span></td>
           </tr>
           {{/sortiecaisse}}

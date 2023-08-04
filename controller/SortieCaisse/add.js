@@ -8,24 +8,24 @@ appSortieCaisse.InitializePage = function () {
   clientContext = SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
     //appSpHelper.LoadUserCongeParam(
-      //appHelper.ListName.Employe, "ETISALAT-AFRICA\pouattara", App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
-      //document.getElementById("TxtCurrentUserLogin").value,
-      //function () {
-        //appSpHelper.GetEmploye(appHelper.ListName.Employe,document.getElementById("TxtSpManagerN1Login").value,
-          //function (item) {
-            //console.log(item);
-            //appSpHelper.GetEmployeeManagerLogin("N2",item.get_item("EmpManager"),
-              //function () {
-                // span= document.getElementById('spanSolde');
-                // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
-                //  appSortieCaisse.initCmbTypeConge(function(){
-                //appSortieCaisse.List();
-                //  });
-              //}
-            //);
-          //}
-        //);
-      //}
+    //appHelper.ListName.Employe, "ETISALAT-AFRICA\pouattara", App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
+    //document.getElementById("TxtCurrentUserLogin").value,
+    //function () {
+    //appSpHelper.GetEmploye(appHelper.ListName.Employe,document.getElementById("TxtSpManagerN1Login").value,
+    //function (item) {
+    //console.log(item);
+    //appSpHelper.GetEmployeeManagerLogin("N2",item.get_item("EmpManager"),
+    //function () {
+    // span= document.getElementById('spanSolde');
+    // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
+    //  appSortieCaisse.initCmbTypeConge(function(){
+    //appSortieCaisse.List();
+    //  });
+    //}
+    //);
+    //}
+    //);
+    //}
     //);
 
 
@@ -61,7 +61,7 @@ appSortieCaisse.InitializePage = function () {
 
 };
 
-appSortieCaisse.Add = function ( callBack) {
+appSortieCaisse.Add = function (callBack) {
   let oList = appSortieCaisse.clientContext
     .get_web()
     .get_lists()
@@ -71,11 +71,12 @@ appSortieCaisse.Add = function ( callBack) {
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "Validation du supérieur hiérarchique");
-  oListItem.set_item("Montant",parseInt(document.getElementById("TxtMontant").value));
-  oListItem.set_item("ModePaiement",document.getElementById("TxtModePaiement").value);
-  oListItem.set_item("PayerA",document.getElementById("TxtPayerA").value);
-  oListItem.set_item("CaissePaiement",document.getElementById("TxtCaissePaiement").value);
-  oListItem.set_item("ObjetReglement",document.getElementById("TxtObjetReglement").value);
+  oListItem.set_item("Montant", parseInt(document.getElementById("TxtMontant").value));
+  oListItem.set_item("ModePaiement", document.getElementById("TxtModePaiement").value);
+  oListItem.set_item("PayerA", document.getElementById("TxtPayerA").value);
+  oListItem.set_item("CaissePaiement", document.getElementById("TxtCaissePaiement").value);
+  oListItem.set_item("ObjetReglement", document.getElementById("TxtObjetReglement").value);
+  // oListItem.set_item("Title", document.getElementById("TxtTitle").value);
   //oListItem.set_item("DocJustificatifs",document.getElementById("FileDoc").value);
 
   oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
@@ -93,19 +94,25 @@ appSortieCaisse.Add = function ( callBack) {
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
-//const appUrl = '/tools1/pages/conge/show.aspx?ID=' + oListItem.get_id();
-const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
-      let WF = new WFManager(appHelper.AppCode.SORTIECAISSE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW);
-      WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
-      if(callBack){
+
+    //const appUrl = '/tools1/pages/conge/show.aspx?ID=' + oListItem.get_id();
+    const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
+    let WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () {
+
+      if (callBack) {
         callBack(oListItem);
       }
+      
+    })
+
+
   }, appSpHelper.writeError);
 };
 
 
 // document.addEventListener("DOMContentLoaded", () => {
 //   ExecuteOrDelayUntilScriptLoaded(function(){
-    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appSortieCaisse.InitializePage);
+SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appSortieCaisse.InitializePage);
 //   }, "SP.ClientContext");
 // });
