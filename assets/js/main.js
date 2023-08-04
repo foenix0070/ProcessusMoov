@@ -95,7 +95,7 @@ var arrMenu = [
 
 
 
-  /*
+  
   {
     id: "dmd_fraismission",
     title: "Demande de frais de mission",
@@ -117,7 +117,7 @@ var arrMenu = [
         link: {
           id: "dmd_fraismission_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/fraisMission/ici.html",
+          url: "tools1/pages/fraisMission/list.aspx?t=E",
           target: "DivMainPageContainer",
         },
       },
@@ -126,7 +126,7 @@ var arrMenu = [
         link: {
           id: "dmd_fraismission_list_validee",
           title: "Demandes validées",
-          //url: "#",
+          url: "tools1/pages/fraisMission/list.aspx?t=V",
           target: "DivMainPageContainer",
         },
       },
@@ -136,13 +136,13 @@ var arrMenu = [
         link: {
           id: "dmd_fraismission_list_rejetee",
           title: "Demandes réjetées",
-          //url: "#",
+          url: "tools1/pages/fraisMission/list.aspx?t=R",
           target: "DivMainPageContainer",
         },
       },
     ],
   },
-  */
+  
 
  /* {
     id: "dmd_regularisationFinMission",

@@ -98,7 +98,6 @@ function ListerZone( callBack) {
           while (listItemEnumerator.moveNext()) {
               let oListItemTp = listItemEnumerator.get_current();
               let opt = document.createElement("option");
-              opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
               opt.setAttribute("data-color", oListItemTp.get_item('Background'));
               opt.setAttribute("value", oListItemTp.get_id());
               opt.innerHTML = oListItemTp.get_item('Title');

@@ -52,7 +52,7 @@
       <div class="mb-3">
         <label  class="form-label"> Zone géographique</label>
         <select id="cmbZoneGeo" name="cmbZoneGeo" class="form-control">
-          <option value="0" data-color="#000">Choisir le type de cong&eacute;s</option>
+          <option value="0" data-color="#000">Choisir la zone geographique</option>
         </select>
         <input id="TxtZoneGeoColeur" value="" type="hidden" >
         <input id="TxtZoneGeoText" value="" type="hidden" >
