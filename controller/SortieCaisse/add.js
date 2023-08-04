@@ -2,30 +2,59 @@ var appSortieCaisse = appConge || {};
 var clientContext;
 appSortieCaisse.clientContext;
 
+
 appSortieCaisse.InitializePage = function () {
   appSortieCaisse.clientContext = SP.ClientContext.get_current();
-  clientContext =  SP.ClientContext.get_current();
-  
-  appSortieCaisse.GetInterimData= function(login){
-    appSpHelper. GetEmploye(appHelper.ListName.Employe, login, function(it){
-      document.getElementById("TxtIntName").value = it.get_item('EmpPrenom') + ' ' + it.get_item('EmpNom');
-      document.getElementById("TxtIntMatricule").value =  it.get_item('EmpMatricule');
-      document.getElementById("TxtIntEmail").value = it.get_item('EmpMail');
-    });
-  }
+  clientContext = SP.ClientContext.get_current();
+  appSpHelper.GetMyProperties(function () {
+    //appSpHelper.LoadUserCongeParam(
+      //appHelper.ListName.Employe, "ETISALAT-AFRICA\pouattara", App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
+      //document.getElementById("TxtCurrentUserLogin").value,
+      //function () {
+        //appSpHelper.GetEmploye(appHelper.ListName.Employe,document.getElementById("TxtSpManagerN1Login").value,
+          //function (item) {
+            //console.log(item);
+            //appSpHelper.GetEmployeeManagerLogin("N2",item.get_item("EmpManager"),
+              //function () {
+                // span= document.getElementById('spanSolde');
+                // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
+                //  appSortieCaisse.initCmbTypeConge(function(){
+                //appSortieCaisse.List();
+                //  });
+              //}
+            //);
+          //}
+        //);
+      //}
+    //);
 
 
+    document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
+    document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
+    document.getElementById("TxtEmail").value = App.CurrentUser.Email;
+
+  });
+
+  //const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
-  const TxtIntName = document.querySelector("#TxtIntName");
 
-  TxtIntName.addEventListener("click", function () {
 
-   // document.querySelector("#TxtIntName").value = 'Consultant INOVA';
 
-   });
+  /*
+  BtnAdd.addEventListener("click", function () {
+    // setTimeout(function () {
+    //   appSpHelper.InitializePeoplePicker(
+    //     "plePickerInterimaireDiv",
+    //     false,
+    //     "350px"
+    //   );
+    // }, 2000);
+
+  });
+  */
 
   BtnSave.addEventListener("click", function () {
-    appSortieCaisse.Add (function(){
+    appSortieCaisse.Add(function () {
       location.reload();
     });
   });
@@ -42,61 +71,22 @@ appappSortieCaisse.Add = function ( callBack) {
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "Validation du supérieur hiérarchique");
-  oListItem.set_item(
-    "Montant",
-    parseInt(document.getElementById("TxtMontant").value)
-  );
-  oListItem.set_item(
-    "ModePaiement",
-    parseInt(document.getElementById("TxtModePaiement").value)
-  );
-  oListItem.set_item(
-    "PayerA",
-    parseInt(document.getElementById("TxtPayerA").value)
-  );
-  oListItem.set_item(
-    "CaissePaiement",
-    document.getElementById("TxtCaissePaiement").value
-  );
-  oListItem.set_item(
-    "ObjetReglement",
-    document.getElementById("TxtObjetReglement").value
-  );
-  oListItem.set_item(
-    "DocJustificatifs",
-    document.getElementById("FileDoc").value
-  );
+  oListItem.set_item("Montant",parseInt(document.getElementById("TxtMontant").value));
+  oListItem.set_item("ModePaiement",parseInt(document.getElementById("TxtModePaiement").value));
+  oListItem.set_item("PayerA",parseInt(document.getElementById("TxtPayerA").value));
+  oListItem.set_item("CaissePaiement",document.getElementById("TxtCaissePaiement").value);
+  oListItem.set_item("ObjetReglement",document.getElementById("TxtObjetReglement").value);
+  oListItem.set_item("DocJustificatifs",document.getElementById("FileDoc").value);
 
-  oListItem.set_item(
-    "Demandeur",
-    SP.FieldUserValue.fromUser(document.getElementById("TxtCurrentUserLogin").value)
-  );
+  oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
 
-  oListItem.set_item(
-    "ResponsableN1",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN1Login").value
-    )
-  );
-  oListItem.set_item(
-    "ResponsableN2",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN2Login").value
-    )
-  );
 
-  oListItem.set_item(
-    "ResponsableN1Email",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN1Email").value
-    )
-  );
-  oListItem.set_item(
-    "ResponsableN2Email",
-    SP.FieldUserValue.fromUser(
-      document.getElementById("TxtSpManagerN2Email").value
-    )
-  );
+  oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
+  oListItem.set_item("ResponsableN2", App.CurrentUser.ManagerPersonne2);
+
+  oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
+  oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
+
 
   oListItem.update();
   clientContext.load(oListItem);

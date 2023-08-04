@@ -46,7 +46,7 @@ var arrMenu = [
     ],
   },
 
-  /*{
+  {
     id: "dmd_autorisationAbsence",
     title: "Demande d'autorisation d'absence",
     icon: "fa fa-2x fa-globe",
@@ -67,7 +67,8 @@ var arrMenu = [
         link: {
           id: "dmd_autorisationAbsence_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/autorisationAbsence/ici.html",
+          url: "tools1/pages/autorisationAbsence/list.aspx?t=R",
+          url: "tools1/pages//ici.html",
           target: "DivMainPageContainer",
         },
       },
@@ -76,7 +77,7 @@ var arrMenu = [
         link: {
           id: "dmd_autorisationAbsence_list_validee",
           title: "Demandes validées",
-          //url: "#",
+          url: "tools1/pages/autorisationAbsence/list.aspx?t=V",
           target: "DivMainPageContainer",
         },
       },
@@ -86,12 +87,12 @@ var arrMenu = [
         link: {
           id: "dmd_autorisationAbsence_list_rejetee",
           title: "Demandes réjetées",
-          //url: "#",
+          url: "tools1/pages/autorisationAbsence/list.aspx?t=R",
           target: "DivMainPageContainer",
         },
       },
     ],
-  },*/
+  },
 
 
 
@@ -191,6 +192,10 @@ var arrMenu = [
     ],
   },
 
+  */
+
+
+
   {
     id: "dmd_sortieCaisse",
     title: "Demande de sortie de caisse",
@@ -212,7 +217,7 @@ var arrMenu = [
         link: {
           id: "dmd_sortieCaisse_list_en_cours",
           title: "Demande en cours",
-          url: "/pages/sortieCaisse/ici.html",
+          url: "tools1/pages/sortieCaisse/list.aspx?t=E", 
           target: "DivMainPageContainer",
         },
       },
@@ -221,7 +226,7 @@ var arrMenu = [
         link: {
           id: "dmd_sortieCaisse_list_validee",
           title: "Demandes validées",
-          //url: "#",
+          url: "tools1/pages/sortieCaisse/list.aspx?t=V", 
           target: "DivMainPageContainer",
         },
       },
@@ -231,13 +236,14 @@ var arrMenu = [
         link: {
           id: "dmd_sortieCaisse_list_rejetee",
           title: "Demandes réjetées",
-          //url: "#",
+          url: "tools1/pages/sortieCaisse/list.aspx?t=R", 
           target: "DivMainPageContainer",
         },
       },
     ],
   },
 
+  /*
   {
     id: "dmd_regularisationSortieCaisse",
     title: "Demande de regularisation de sortie de caisse",
