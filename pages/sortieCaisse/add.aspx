@@ -62,11 +62,11 @@
   </div>
 
   <div class="input-optn">
-    <button class="Submit" id="BtnSave mt-2" type="button"> Valider </button>
+    <button class="Submit" id="BtnSave" type="button"> Valider </button>
   </div>
 </form>
 
 
 <script type="text/javascript">
-  appHelper.loadJSWithNameSpace("appSortieCaisse", 'appSortieCaisse', "controller/sortieCaisse/add.js");
+  appHelper.loadJSWithNameSpace("appSortieCaisse", 'appSortieCaisse', "controller/SortieCaisse/add.js");
 </script>

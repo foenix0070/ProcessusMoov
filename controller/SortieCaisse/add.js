@@ -38,6 +38,11 @@ appSortieCaisse.InitializePage = function () {
   //const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
 
+  BtnSave.addEventListener("click", function () {
+    appSortieCaisse.Add(function () {
+      location.reload();
+    });
+  });
 
 
   /*
@@ -53,19 +58,14 @@ appSortieCaisse.InitializePage = function () {
   });
   */
 
-  BtnSave.addEventListener("click", function () {
-    appSortieCaisse.Add(function () {
-      location.reload();
-    });
-  });
 
 };
 
-appappSortieCaisse.Add = function ( callBack) {
-  let oList = appappSortieCaisse.clientContext
+appSortieCaisse.Add = function ( callBack) {
+  let oList = appSortieCaisse.clientContext
     .get_web()
     .get_lists()
-    .getByTitle(appHelper.ListName.Conge);
+    .getByTitle(appHelper.ListName.SortieCaisse);
   let itemCreateInfo = new window.SP.ListItemCreationInformation();
   let oListItem = oList.addItem(itemCreateInfo);
 
