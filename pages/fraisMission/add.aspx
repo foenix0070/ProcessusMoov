@@ -23,13 +23,20 @@
       <legend>INTERIMAIRE</legend>
 
       <div class="mb-3">
-        <label class="form-label">Matricule :</label>
-        <input type="text" id="TxtMatricule" class="  form-control" value="" placeholder="" />
+        <label  class="form-label"> Interimaire</label>
+        <div id="plePickerInterimaireDiv" ></div>
       </div>
+
       <div class="mb-3">
-        <label class="form-label"> Nom & Prenoms :</label>
-        <input type="text" id="TxtNom" class="  form-control" name="" placeholder="" />
+        <label  class="form-label"> Nom</label>
+        <input type="text" class="form-control"  id="TxtIntName" placeholder="" />
       </div>
+
+      <div class="mb-3">
+        <label  class="form-label"> Matricule</label>
+        <input type="text" class="form-control" id="TxtIntMatricule" placeholder="" />
+      </div>
+
       <div class="mb-3">
         <label  class="form-label"> Email</label>
         <input type="text" class="form-control" id="TxtIntEmail" placeholder="" />
