@@ -35,7 +35,7 @@ ListRegularisationSortieCaisse.ListRegularisationSortieCaisse = function (T) {
   let oList = ListRegularisationSortieCaisse.clientContext
     .get_web()
     .get_lists()
-    .getByTitle(appHelper.ListName.SortieCaisse);
+    .getByTitle(appHelper.ListName.RegularisationSortieCaisse);
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(
     "<View><Query><Where>" +

@@ -80,7 +80,7 @@ showRegularisationSortieCaisse.ShowForm = function(tacheId, demandeid){
 
 showRegularisationSortieCaisse.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.SortieCaisse);
+  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.RegularisationSortieCaisse);
   let It = oList .getItemById(demandeid);
 
   if(isRejet){
@@ -101,7 +101,7 @@ showRegularisationSortieCaisse.UpDateItemStatusRejet = function(isRejet, demande
 }
 
 showRegularisationSortieCaisse.UpDateItemStatus = function(nextTask, demandeid, callBack){
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.SortieCaisse);
+  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.RegularisationSortieCaisse);
   let It = oList .getItemById(demandeid);
 
   if(nextTask){
@@ -187,7 +187,7 @@ showRegularisationSortieCaisse.AttachFile = function(demandeid,  arrayBuffer, fi
       //Get Client Context and Web object.
       var oWeb = clientContext.get_web();
       //Get list and Attachment folder where the attachment of a particular list item is stored.
-      var oList = oWeb.get_lists().getByTitle(appHelper.ListName.SortieCaisse);
+      var oList = oWeb.get_lists().getByTitle(appHelper.ListName.RegularisationSortieCaisse);
       var urlToAttach = '/Lists/'+ appHelper.ListName.SortieCaisse +'/Attachments/'+ demandeid + '/'
       var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
       console.log(attachmentFolder);
@@ -265,7 +265,7 @@ showRegularisationSortieCaisse.ShowValidation = function(demandeid) {
 
 showRegularisationSortieCaisse.ShowDetails = function (demandeid){
 
-  let oList = showRegularisationSortieCaisse.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.SortieCaisse);
+  let oList = showRegularisationSortieCaisse.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.RegularisationSortieCaisse);
   let It = oList .getItemById(demandeid);
 
   showRegularisationSortieCaisse.clientContext.load(It);

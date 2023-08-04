@@ -65,7 +65,7 @@ appRegularisationSortieCaisse.Add = function (callBack) {
   let oList = appRegularisationSortieCaisse.clientContext
     .get_web()
     .get_lists()
-    .getByTitle(appHelper.ListName.SortieCaisse);
+    .getByTitle(appHelper.ListName.RegularisationSortieCaisse);
   let itemCreateInfo = new window.SP.ListItemCreationInformation();
   let oListItem = oList.addItem(itemCreateInfo);
 
