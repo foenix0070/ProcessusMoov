@@ -1,75 +1,38 @@
-var Mission = Mission || {};
+var appMission = appMission || {};
 var clientContext;
-Mission.clientContext;
+appMission.clientContext;
 
-Mission.InitializePage = function () {
-  Mission.clientContext = SP.ClientContext.get_current();
+appMission.InitializePage = function () {
+  appMission.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
   
   appSpHelper.GetMyProperties(function () {
 
-    /*
-   // appSpHelper.LoadUserCongeParam(
-     // appHelper.ListName.Employe, 	"ETISALAT-AFRICA\pouattara",  App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
-      //function () {
-        //appSpHelper.GetEmploye(
-          //appHelper.ListName.Employe,
-          //document.getElementById("TxtSpManagerN1Login").value,
-          //function (item) {
-            //console.log(item);
-            //appSpHelper.GetEmployeeManagerLogin(
-              //"N2",
-              //item.get_item("EmpManager"),
-              //function () {
+    appMission.initCmbZone(function () {
 
-              // span= document.getElementById('spanSolde');
-              // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
+      document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
+      document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
+      document.getElementById("TxtEmail").value = App.CurrentUser.Email;
 
+      setTimeout(function () {
+        appSpHelper.InitializePeoplePicker("plePickerInterimaireDiv", false, "350px");
 
+        appSpHelper.PeoplePickerOnChangeEvent("plePickerInterimaireDiv", function (key) {
+          appMission.GetInterimData(key);
+        });
 
+      }, 2000);
 
-
-
-              //  fraisMission.initCmbTypeConge(function(){
-                Mission.List();
-              //  });
-             // }
-            //);
-          //}
-        //);
-      //}
-   // );
-   */
-
-    document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
-    document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
-    document.getElementById("TxtEmail").value = App.CurrentUser.Email;
-
-
-
-
+    });
   });
 
 
-  // const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
 
 
-
-  // BtnAdd.addEventListener("click", function () {
-  //   // setTimeout(function () {
-  //   //   appSpHelper.InitializePeoplePicker(
-  //   //     "plePickerInterimaireDiv",
-  //   //     false,
-  //   //     "350px"
-  //   //   );
-  //   // }, 2000);
-
-  // });
-
   BtnSave.addEventListener("click", function () {
-    Mission.Add (function(){
+    appMission.Add (function(){
       location.reload();
     });
   });
@@ -99,8 +62,56 @@ Mission.initCmbTypefraisMission = function (callBack) {
 
 };
 
+Mission.initCmbZone = function (callBack) {
+  ListerZone(function(){
+    let cmb = document.getElementById("cmbZoneGeo");
+    let txtColor = document.getElementById("TxtcmbZoneGeoColeur");
+    let txtText = document.getElementById("TxtcmbZoneGeoText");
+    cmb.addEventListener("change", function () {
+      let selectedOption = this.options[this.selectedIndex];
+      let color = selectedOption.getAttribute("data-color");
+      txtColor.value = color;
+      txtText.value = selectedOption.text;
+    });
+
+    if(callBack){
+      callBack();
+    }
+  });
+
+};
 
 
+function ListerZone( callBack) {
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Zone);
+  let q = '<View><Query><Where>' +
+               '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
+          '</Where></Query></View>';
+  let camlQuery = new SP.CamlQuery();
+  camlQuery.set_viewXml(q);
+  let listItemMotif = oList.getItems(camlQuery);
+  clientContext.load(listItemMotif);
+  clientContext.executeQueryAsync(
+      function () {
+          var listItemEnumerator = listItemMotif.getEnumerator();
+
+          while (listItemEnumerator.moveNext()) {
+              let oListItemTp = listItemEnumerator.get_current();
+              let opt = document.createElement("option");
+              opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
+              opt.setAttribute("data-color", oListItemTp.get_item('Background'));
+              opt.setAttribute("value", oListItemTp.get_id());
+              opt.innerHTML = oListItemTp.get_item('Title');
+              document.getElementById('cmbZoneGeo').appendChild(opt);
+          }
+
+
+          if(callBack){
+            callBack();
+          }
+      },
+      function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
+}
 
 function ListerMotif( callBack) {
   let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.TypefraisMission);

@@ -4,7 +4,7 @@
     <fieldset class="form-elts">
       <legend>Demandeur</legend>
       <div class="mb-3">
-        <label class="form-label">Nom & Prenoms</label>
+        <label class="form-label">Nom</label>
         <input type="text" id="TxtNom" disabled class="  form-control" value="" placeholder="" />
       </div>
 
@@ -31,13 +31,8 @@
         <input type="text" id="TxtNom" class="  form-control" name="" placeholder="" />
       </div>
       <div class="mb-3">
-        <label class="form-label">Catégorie :</label>
-        <input type="text" id="TxtCategorie" class="  form-control" name="" placeholder="" />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Direction :</label>
-        <input type="text" id="TxtDirection" class="  form-control" name="" placeholder="" />
+        <label  class="form-label"> Email</label>
+        <input type="text" class="form-control" id="TxtIntEmail" placeholder="" />
       </div>
 
     </fieldset>
@@ -54,23 +49,13 @@
         <input type="date" id="DateFin">
       </div>
 
-      <div class="mb-3 d-flex flex-row">
-        <label class="form-label">Zone geographique: &nbsp;</label>
-        <select id="CmbZone">
-          <option value="1">Cote d'Ivoire</option>
-          <option value="2">Afrique</option>
-          <option value="3">Hors Afrique/Afrique du Sud</option>
+      <div class="mb-3">
+        <label  class="form-label"> Zone géographique</label>
+        <select id="cmbZoneGeo" name="cmbZoneGeo" class="form-control">
+          <option value="0" data-color="#000">Choisir le type de cong&eacute;s</option>
         </select>
-
-        <!--<div>
-          <input type="radio" name="zoneGeo" value="cote d'ivoire" id="RadCiv">
-          <label for="RadCiv">Cote d'Ivoire</label>
-          <input type="radio" name="zoneGeo" value="Afrique" id="RadAfrik">
-          <label for="RadAfrik">Afrique</label>
-          <input type="radio" name="zoneGeo" value="hors afrique" id="RadHorsAfrik">
-          <label for="RadHorsAfrik">Hors Afrique/Afrique du Sud</label>
-        </div>-->
-
+        <input id="TxtZoneGeoColeur" value="" type="hidden" >
+        <input id="TxtZoneGeoText" value="" type="hidden" >
       </div>
       <div class="mb-3">
         <label class="form-label">Motif :</label>
@@ -166,7 +151,7 @@
 
 
 <script type="text/javascript">
-  appHelper.loadJSWithNameSpace("appMission", 'appMission', "controller/fraisMission/add.js");
+  appHelper.loadJSWithNameSpace("appMission", 'appMission', "controller/FraisMission/add.js");
 </script>
 
 
