@@ -242,7 +242,6 @@ var arrMenu = [
     ],
   },
 
-  /*
   {
     id: "dmd_regularisationSortieCaisse",
     title: "Demande de regularisation de sortie de caisse",
@@ -253,7 +252,6 @@ var arrMenu = [
           id: "dmd_regularisationSortieCaisse_new",
           title: "Effectuer une demande",
           url: "tools1/pages/regularisationSortieCaisse/add.aspx",
-         // url: "/pages/regularisationSortieCaisse/add.html",
           target: "ffcMainFormContainer",
         },
         link: false,
@@ -264,7 +262,7 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationSortieCaisse_list_en_cours",
           title: "Demande en cours",
-          url: "/pages/regularisationSortieCaisse/ici.html",
+          url: "tools1/pages/regularisationSortieCaisse/list.aspx?t=E", 
           target: "DivMainPageContainer",
         },
       },
@@ -273,7 +271,7 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationSortieCaisse_list_validee",
           title: "Demandes validées",
-          //url: "#",
+          url: "tools1/pages/regularisationSortieCaisse/list.aspx?t=V", 
           target: "DivMainPageContainer",
         },
       },
@@ -283,12 +281,12 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationSortieCaisse_list_rejetee",
           title: "Demandes réjetées",
-          //url: "#",
+          url: "tools1/pages/regularisationSortieCaisse/list.aspx?t=R", 
           target: "DivMainPageContainer",
         },
       },
     ],
-  },*/
+  },
 
 
   {

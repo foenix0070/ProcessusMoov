@@ -25,7 +25,9 @@ Validation : 'TachesValidation',
 Notification : 'ListeNotification',
 Mission : 'ListeMission',
 FraisMission : 'ListeFraisMission',
+RegularisationFraisMission : 'ListeRegularisationFraisMission',
 SortieCaisse : 'ListeSortieCaisse',
+RegularisationSortieCaisse : 'ListeRegularisationSortieCaisse',
 Zone : 'ListeZoneGeographique',
 Caisse : 'ListeCaissePaiement',
 Mode : 'ListeModePaiement'
@@ -62,7 +64,9 @@ appHelper.AppCode = {
   ABSENCE : 'ABSENCE',
   MISSION : 'MISSION',
   FRAISMISSION : 'FRAISMISSION',
-  SORTIECAISSE : 'SORTIECAISSE'
+  REGULARISATIONFRAISMISSION : 'REGULARISATIONFRAISMISSION',
+  SORTIECAISSE : 'SORTIECAISSE',
+  REGULARISATIONSORTIECAISSE : 'REGULARISATIONSORTIECAISSE'
 }
 
 appHelper. isArray = function(myArray) {

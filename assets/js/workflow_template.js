@@ -897,6 +897,488 @@ const ACTIV_WORKFLOW = {
           ]
         }
       ]
+    },
+    {
+      "item": "REGULARISATIONSORTIECAISSE",
+      "step": [
+        {
+          "id": "VHCL#1",
+          "value": "Validation du responsable hiérarchique ",
+          "actors": [
+            {
+              "type": "USER",
+              "value": "#N1"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#2"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#2",
+          "value": "Validation du gestionnaire park automobile ",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupGPA"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#3"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#3",
+          "value": "Validation du chef de division achat et logistique",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupCDAL"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#4"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#4",
+          "value": "Validation du DAF",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupDAF"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#5"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#5",
+          "value": "Validation du gestionnaire ",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupGV"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#5"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": "FRAISMISSION",
+      "step": [
+        {
+          "id": "VHCL#1",
+          "value": "Validation du responsable hiérarchique ",
+          "actors": [
+            {
+              "type": "USER",
+              "value": "#N1"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#2"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#2",
+          "value": "Validation du gestionnaire park automobile ",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupGPA"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#3"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#3",
+          "value": "Validation du chef de division achat et logistique",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupCDAL"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#4"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#4",
+          "value": "Validation du DAF",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupDAF"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#5"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#5",
+          "value": "Validation du gestionnaire ",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupGV"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#5"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": "REGULARISATIONFRAISMISSION",
+      "step": [
+        {
+          "id": "VHCL#1",
+          "value": "Validation du responsable hiérarchique ",
+          "actors": [
+            {
+              "type": "USER",
+              "value": "#N1"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#2"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#2",
+          "value": "Validation du gestionnaire park automobile ",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupGPA"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#3"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#3",
+          "value": "Validation du chef de division achat et logistique",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupCDAL"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#4"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#4",
+          "value": "Validation du DAF",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupDAF"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#5"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#5",
+          "value": "Validation du gestionnaire ",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupGV"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#5"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        }
+      ]
     }
+
+
   ]
 }

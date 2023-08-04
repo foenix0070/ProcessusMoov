@@ -38,11 +38,11 @@ MoovTools.InitializePage = function () {
 
         //MoovTools.ListConge();
         MoovTools.ListDemande(appHelper.ListName.Conge, "conge", "CONGES", function () {
-          MoovTools.ListDemande(appHelper.ListName.Materiel, "materiel", "MATERIEL", function () {
-            MoovTools.ListDemande(appHelper.ListName.Vehicule, "vehicule", "VEHICULE", function () {
-              MoovTools.ListDemande(appHelper.ListName.Gadget, "gadget", "GADGET", function () {
-                MoovTools.ListDemande(appHelper.ListName.Absence, "autorisationAbsence", "ABSENCE", function () {
-                  MoovTools.ListDemande(appHelper.ListName.SortieCaisse, "sortieCaisse", "SORTIE CAISSE", function () {
+          MoovTools.ListDemande(appHelper.ListName.SortieCaisse, "sortieCaisse", "SORTIE CAISSE", function () {
+            MoovTools.ListDemande(appHelper.ListName.Materiel, "materiel", "MATERIEL", function () {
+              MoovTools.ListDemande(appHelper.ListName.Vehicule, "vehicule", "VEHICULE", function () {
+                MoovTools.ListDemande(appHelper.ListName.Gadget, "gadget", "GADGET", function () {
+                  MoovTools.ListDemande(appHelper.ListName.Absence, "autorisationAbsence", "ABSENCE", function () {
                     appHelper.renderTemplate("tmpl_table_demande", "DivDemandeTableShow", MoovTools.view);
 
                     //   appHelper.listenNavigationLink ('linkMainNavigation');

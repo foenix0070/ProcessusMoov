@@ -23,6 +23,10 @@
     <fieldset class="form-elts">
       <legend>Regularisation de la sortie de caisse</legend>
       <div class="mb-3">
+        <label class="form-label"> Titre</label>
+        <input type="text" class="form-control" id="TxtTitle" placeholder="" />
+      </div>
+      <div class="mb-3">
         <label class="form-label"> Montant utilisé</label>
         <input type="text" class="form-control" id="TxtMontant" placeholder="" />
       </div>
@@ -57,5 +61,5 @@
 
 
 <script type="text/javascript">
-  appHelper.loadJSWithNameSpace("appRegularisationSortieCaisse", 'appRegularisationSortieCaisse', "controller/regularisationSortieCaisse/add.js");
+  appHelper.loadJSWithNameSpace("appRegularisationSortieCaisse", 'appRegularisationSortieCaisse', "controller/RegularisationSortieCaisse/add.js");
 </script>
