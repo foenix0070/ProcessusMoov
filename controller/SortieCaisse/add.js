@@ -79,6 +79,7 @@ appSortieCaisse.Add = function ( callBack) {
   oListItem.set_item("DocJustificatifs",document.getElementById("FileDoc").value);
 
   oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
+  oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
 
 
   oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
