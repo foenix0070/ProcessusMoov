@@ -1,4 +1,4 @@
-var appSortieCaisse = appConge || {};
+var appSortieCaisse = appSortieCaisse || {};
 var clientContext;
 appSortieCaisse.clientContext;
 
