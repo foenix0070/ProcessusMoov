@@ -84,25 +84,33 @@
         <label class="form-label">Coût Total :</label>
         <input type="text" id="TxtCoutTotal" class="  form-control">
       </div>
+
       <div class="mb-3">
-        <label class="form-label">Caisse de paiement :</label>
-        <!--<input type="text" id="TxtCaisse" class="  form-control">-->
+        <label  class="form-label"> Caisse de paiement :</label>
+        <select id="cmbCaisse" name="cmbCaisse" class="form-control" onchange="afficher()">
+          <option value="0" data-color="#000">Choisir la Caisse de paiement</option>
+        </select>
+        <input id="TxtCaisseColeur" value="" type="hidden" >
+        <input id="TxtCaisseText" value="" type="hidden" >
+      </div>
+
+      <div class="mb-3">
+        <!--<label class="form-label">Caisse de paiement :</label>
         <select id="CmbCaisse" onchange="afficher()">
           <option value="1">Test 1</option>
           <option value="2">Test 2</option>
           <option value="3">Test 3</option>
           <option value="Autre">Autre</option>
-        </select> &nbsp; &nbsp;
+        </select> &nbsp; &nbsp;-->
 
         <label class="form-label">Mode de paiement :</label>
-        <select id="CmbMode">
-          <option value="1">Orange Money</option>
-          <option value="2">Wave</option>
-          <option value="3">Virement</option>
+        <select id="cmbMode" name="cmbMode" class="form-control">
+          <option value="0" data-color="#000">Choisir le mode de paiement</option>
         </select>
-
+        <input id="TxtModeColeur" value="" type="hidden" >
+        <input id="TxtModeText" value="" type="hidden" >
       </div>
-      <div class="mb-3" id="AutreCaisse" style="display: none;">
+      <div class="mb-3" id="AutreCaisse" style="display: none;" class="form-control">
         <label class="form-label">Autre Caisse :</label>
         <input type="text" id="TxtAutreCaisse" class="  form-control">
       </div>

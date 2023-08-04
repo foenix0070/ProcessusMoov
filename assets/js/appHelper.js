@@ -26,7 +26,9 @@ Notification : 'ListeNotification',
 Mission : 'ListeMission',
 FraisMission : 'ListeFraisMission',
 SortieCaisse : 'ListeSortieCaisse',
-Zone : 'ListeZoneGeographique'
+Zone : 'ListeZoneGeographique',
+Caisse : 'ListeCaissePaiement',
+Mode : 'ListeModePaiement'
 };
 
 appHelper.Status = {

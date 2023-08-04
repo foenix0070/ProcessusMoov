@@ -9,6 +9,9 @@ appMission.InitializePage = function () {
   
   appSpHelper.GetMyProperties(function () {
 
+    appMission.initCmbMode(function () {});
+    appMission.initCmbCaisse(function () {});
+
     appMission.initCmbZone(function () {
 
       document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
@@ -20,11 +23,28 @@ appMission.InitializePage = function () {
 
         appSpHelper.PeoplePickerOnChangeEvent("plePickerInterimaireDiv", function (key) {
           appMission.GetInterimData(key);
+          
         });
 
       }, 2000);
 
+  });
+  });
+
+  appMission.GetInterimData = function (login) {
+    appSpHelper.GetEmploye(appHelper.ListName.Employe, login, function (it) {
+      document.getElementById("TxtIntName").value = it.get_item('EmpPrenom') + ' ' + it.get_item('EmpNom');
+      document.getElementById("TxtIntMatricule").value = it.get_item('EmpMatricule');
+      document.getElementById("TxtIntEmail").value = it.get_item('EmpMail');
     });
+  }
+
+  const TxtIntName = document.querySelector("#TxtIntName");
+
+  TxtIntName.addEventListener("click", function () {
+
+    // document.querySelector("#TxtIntName").value = 'Consultant INOVA';
+
   });
 
 
@@ -43,7 +63,7 @@ function getRating (str){
   document.getElementById('TxtNature').value = str;
 }
 
-Mission.initCmbTypefraisMission = function (callBack) {
+/*Mission.initCmbTypefraisMission = function (callBack) {
   ListerMotif(function(){
     let cmb = document.getElementById("cmbTypefraisMission");
     let txtColor = document.getElementById("TxtTypefraisMissionColeur");
@@ -60,13 +80,51 @@ Mission.initCmbTypefraisMission = function (callBack) {
     }
   });
 
-};
+};*/
 
-Mission.initCmbZone = function (callBack) {
+appMission.initCmbZone = function (callBack) {
   ListerZone(function(){
     let cmb = document.getElementById("cmbZoneGeo");
-    let txtColor = document.getElementById("TxtcmbZoneGeoColeur");
-    let txtText = document.getElementById("TxtcmbZoneGeoText");
+    let txtColor = document.getElementById("TxtZoneGeoColeur");
+    let txtText = document.getElementById("TxtZoneGeoText");
+    cmb.addEventListener("change", function () {
+      let selectedOption = this.options[this.selectedIndex];
+      let color = selectedOption.getAttribute("data-color");
+      txtColor.value = color;
+      txtText.value = selectedOption.text;
+    });
+
+    if(callBack){
+      callBack();
+    }
+  });
+
+};
+
+appMission.initCmbCaisse = function (callBack) {
+  ListerCaisse(function(){
+    let cmb = document.getElementById("cmbCaisse");
+    let txtColor = document.getElementById("TxtCaisseColeur");
+    let txtText = document.getElementById("TxtCaisseText");
+    cmb.addEventListener("change", function () {
+      let selectedOption = this.options[this.selectedIndex];
+      let color = selectedOption.getAttribute("data-color");
+      txtColor.value = color;
+      txtText.value = selectedOption.text;
+    });
+
+    if(callBack){
+      callBack();
+    }
+  });
+
+};
+
+appMission.initCmbMode = function (callBack) {
+  ListerMode(function(){
+    let cmb = document.getElementById("cmbMode");
+    let txtColor = document.getElementById("TxtModeColeur");
+    let txtText = document.getElementById("TxtModeText");
     cmb.addEventListener("change", function () {
       let selectedOption = this.options[this.selectedIndex];
       let color = selectedOption.getAttribute("data-color");
@@ -98,9 +156,10 @@ function ListerZone( callBack) {
           while (listItemEnumerator.moveNext()) {
               let oListItemTp = listItemEnumerator.get_current();
               let opt = document.createElement("option");
-              opt.setAttribute("data-color", oListItemTp.get_item('Background'));
-              opt.setAttribute("value", oListItemTp.get_id());
-              opt.innerHTML = oListItemTp.get_item('Title');
+        opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
+        opt.setAttribute("data-color", oListItemTp.get_item('Background'));
+        opt.setAttribute("value", oListItemTp.get_id());
+        opt.innerHTML = oListItemTp.get_item('Title');
               document.getElementById('cmbZoneGeo').appendChild(opt);
           }
 
@@ -112,7 +171,69 @@ function ListerZone( callBack) {
       function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
 }
 
-function ListerMotif( callBack) {
+function ListerCaisse( callBack) {
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Caisse);
+  let q = '<View><Query><Where>' +
+               '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
+          '</Where></Query></View>';
+  let camlQuery = new SP.CamlQuery();
+  camlQuery.set_viewXml(q);
+  let listItemMotif = oList.getItems(camlQuery);
+  clientContext.load(listItemMotif);
+  clientContext.executeQueryAsync(
+      function () {
+          var listItemEnumerator = listItemMotif.getEnumerator();
+
+          while (listItemEnumerator.moveNext()) {
+              let oListItemTp = listItemEnumerator.get_current();
+              let opt = document.createElement("option");
+        opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
+        opt.setAttribute("data-color", oListItemTp.get_item('Background'));
+        opt.setAttribute("value", oListItemTp.get_id());
+        opt.innerHTML = oListItemTp.get_item('Title');
+              document.getElementById('cmbCaisse').appendChild(opt);
+          }
+
+
+          if(callBack){
+            callBack();
+          }
+      },
+      function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
+}
+
+function ListerMode( callBack) {
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Mode);
+  let q = '<View><Query><Where>' +
+               '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
+          '</Where></Query></View>';
+  let camlQuery = new SP.CamlQuery();
+  camlQuery.set_viewXml(q);
+  let listItemMotif = oList.getItems(camlQuery);
+  clientContext.load(listItemMotif);
+  clientContext.executeQueryAsync(
+      function () {
+          var listItemEnumerator = listItemMotif.getEnumerator();
+
+          while (listItemEnumerator.moveNext()) {
+              let oListItemTp = listItemEnumerator.get_current();
+              let opt = document.createElement("option");
+        opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
+        opt.setAttribute("data-color", oListItemTp.get_item('Background'));
+        opt.setAttribute("value", oListItemTp.get_id());
+        opt.innerHTML = oListItemTp.get_item('Title');
+              document.getElementById('cmbMode').appendChild(opt);
+          }
+
+
+          if(callBack){
+            callBack();
+          }
+      },
+      function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
+}
+
+/*function ListerMotif( callBack) {
   let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.TypefraisMission);
   let q = '<View><Query><Where>' +
                '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
@@ -141,9 +262,9 @@ function ListerMotif( callBack) {
           }
       },
       function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
-}
+}*/
 
-Mission.List = function () {
+appMission.List = function () {
   let oList = Mission.clientContext
     .get_web()
     .get_lists()
@@ -214,12 +335,12 @@ function ajouterLigne() {
   var cell5 = newRow.insertCell(5);
   var cell6 = newRow.insertCell(6);
   
-  cell.innerHTML = '<select id="CmbPerdieme" name"CmbPerdieme"><option value"Hotel">Hotel</option></select>';
+  cell.innerHTML = '<select class="mt-3" id="CmbPerdieme" name"CmbPerdieme"><option value"Hotel">Hotel</option></select>';
   cell1.innerHTML = '<input type="date" id="DateDebut" name="DateDebut">';
   cell2.innerHTML = '<input type="date" id="DateFin" name="DateFin">';
   cell3.innerHTML = '<input type="text" id="TxtNombre" name="TxtNombre">';
   cell4.innerHTML = '<input type="text" id="TxtForfait" name="TxtForfait">';
-  cell5.innerHTML = '<input type="text" id="TxtTotal" name="TxtTotal"></';
+  cell5.innerHTML = '<input type="text" id="TxtTotal" name="TxtTotal">';
   cell6.innerHTML = '<button onclick="supprimerLigne(this)">Supprimer</button>';
 }
 
@@ -230,17 +351,26 @@ function supprimerLigne(button) {
 }
 
 
-Mission.Add = function ( callBack) {
-  let oList = Mission.clientContext
+appMission.Add = function ( callBack) {
+  let oList = appMission.clientContext
     .get_web()
     .get_lists()
-    .getByTitle(appHelper.ListName.Mission);
+    .getByTitle(appHelper.ListName.appMission);
   let itemCreateInfo = new window.SP.ListItemCreationInformation();
   let oListItem = oList.addItem(itemCreateInfo);
 
-  let startDate = new Date();
+  /*let startDate = new Date();
 
-  let repDate = new Date();
+  let repDate = new Date();*/
+
+  let startDate = new Date(
+    document.getElementById("DateDebut").value
+    //appHelper.ReturnISODate()
+  );
+  let endDate = new Date(
+    document.getElementById("DateFin").value
+    //appHelper.ReturnISODate()
+  );
 
   //let endDate = startDate.addDays(2);
 
@@ -249,7 +379,7 @@ Mission.Add = function ( callBack) {
 
   oListItem.set_item("DateDebut", startDate);
   //oListItem.set_item("DateRetour", endDate);
-  oListItem.set_item("DateFin", repDate);
+  oListItem.set_item("DateFin", endDate);
 
   oListItem.set_item("Title",document.getElementById("TxtMotif").value);
 
@@ -280,10 +410,10 @@ Mission.Add = function ( callBack) {
 
   oListItem.update();
   clientContext.load(oListItem);
+  AddFM(oListItem);
   clientContext.executeQueryAsync(function () {
 
   const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
-      //AddFM(oListItem);
       let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
       WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
       if(callBack){
@@ -358,7 +488,7 @@ function AddFraisMission(data, oListItem) {
   }
 }
 
-SP.SOD.executeFunc('sp.js', 'SP.ClientContext', Mission.InitializePage);
+SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appMission.InitializePage);
 // document.addEventListener("DOMContentLoaded", () => {
 //   ExecuteOrDelayUntilScriptLoaded(function(){
     
