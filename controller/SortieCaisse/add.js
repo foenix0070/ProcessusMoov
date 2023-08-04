@@ -76,7 +76,7 @@ appSortieCaisse.Add = function (callBack) {
   oListItem.set_item("PayerA", document.getElementById("TxtPayerA").value);
   oListItem.set_item("CaissePaiement", document.getElementById("TxtCaissePaiement").value);
   oListItem.set_item("ObjetReglement", document.getElementById("TxtObjetReglement").value);
-  // oListItem.set_item("Title", document.getElementById("TxtTitle").value);
+  oListItem.set_item("Title", document.getElementById("TxtTitle").value);
   //oListItem.set_item("DocJustificatifs",document.getElementById("FileDoc").value);
 
   oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
@@ -95,18 +95,22 @@ appSortieCaisse.Add = function (callBack) {
   clientContext.executeQueryAsync(function () {
 
 
-    //const appUrl = '/tools1/pages/conge/show.aspx?ID=' + oListItem.get_id();
-    const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
-    let WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+    //const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
+    /*let WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
     WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () {
 
       if (callBack) {
         callBack(oListItem);
       }
-      
-    })
 
+    })*/
 
+    const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
+      let WF = new WFManager(appHelper.AppCode.SORTIECAISSE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      if(callBack){
+        callBack(oListItem);
+      }
   }, appSpHelper.writeError);
 };
 

@@ -133,7 +133,7 @@
       <legend>FRAIS DE MISSION</legend>
       <table id="TableFraisMission">
         <tr>
-          <th>Libelle</th>
+          <!--<th>Libelle</th>-->
           <th>Date de début</th>
           <th>Date de fin</th>
           <th>Nombre</th>
@@ -142,7 +142,7 @@
           <th>Action</th>
         </tr>
         <tr>
-          <td><select id="CmbPerdieme" name="CmbPerdieme"><option>Hotel</option></select></td>
+          <!--<td><select id="CmbPerdieme" name="CmbPerdieme"><option>Hotel</option></select></td>-->
           <td><input type="date" id="DateDebut" name="DateDebut"></td>
           <td><input type="date" id="DateFin" name="DateFin"></td>
           <td><input type="text" id="TxtNombre" name="TxtNombre"></td>

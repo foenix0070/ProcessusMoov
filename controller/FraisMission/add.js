@@ -327,7 +327,7 @@ function ajouterLigne() {
   var table = document.getElementById("TableFraisMission");
   var newRow = table.insertRow(table.rows.length);
   
-  var cell = newRow.insertCell(0);
+  //var cell = newRow.insertCell(0);
   var cell1 = newRow.insertCell(1);
   var cell2 = newRow.insertCell(2);
   var cell3 = newRow.insertCell(3);
@@ -335,7 +335,7 @@ function ajouterLigne() {
   var cell5 = newRow.insertCell(5);
   var cell6 = newRow.insertCell(6);
   
-  cell.innerHTML = '<select class="mt-3" id="CmbPerdieme" name"CmbPerdieme"><option value"Hotel">Hotel</option></select>';
+  //cell.innerHTML = '<select class="mt-3" id="CmbPerdieme" name"CmbPerdieme"><option value"Hotel">Hotel</option></select>';
   cell1.innerHTML = '<input type="date" id="DateDebut" name="DateDebut">';
   cell2.innerHTML = '<input type="date" id="DateFin" name="DateFin">';
   cell3.innerHTML = '<input type="text" id="TxtNombre" name="TxtNombre">';
@@ -355,7 +355,7 @@ appMission.Add = function ( callBack) {
   let oList = appMission.clientContext
     .get_web()
     .get_lists()
-    .getByTitle(appHelper.ListName.appMission);
+    .getByTitle(appHelper.ListName.FraisMission);
   let itemCreateInfo = new window.SP.ListItemCreationInformation();
   let oListItem = oList.addItem(itemCreateInfo);
 
@@ -392,9 +392,9 @@ appMission.Add = function ( callBack) {
   oListItem.set_item("SiteBTS",parseInt(document.getElementById("TxtSite").value));
 
   oListItem.set_item("CoutTotal",parseInt(document.getElementById("TxtCoutTotal").value));
-  oListItem.set_item("ZoneGeographiqueID",parseInt(document.getElementById("CmbZone").value));
-  oListItem.set_item("CaissePaiementID",parseInt(document.getElementById("CmbCaisse").value));
-  oListItem.set_item("ModePaiementID",parseInt(document.getElementById("CmbMode").value));
+  oListItem.set_item("ZoneGeographiqueID",parseInt(document.getElementById("cmbZoneGeo").value));
+  oListItem.set_item("CaissePaiementID",parseInt(document.getElementById("cmbCaisse").value));
+  oListItem.set_item("ModePaiementID",parseInt(document.getElementById("cmbMode").value));
   oListItem.set_item("AutreCaissePaiement",parseInt(document.getElementById("TxtAutreCaisse").value));
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
 
@@ -441,9 +441,10 @@ function AddFM (oListItem) {
     data.push(rowData);
   }
 
-  AddFraisMission(data, oListItem);
+  FraisMission.AddFraisMission(data, oListItem);
 }
 
+/*
 function AddFraisMission(data, oListItem) {
 
   for (var i = 0; i < data.length; i++) {
@@ -487,6 +488,7 @@ function AddFraisMission(data, oListItem) {
     
   }
 }
+*/
 
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appMission.InitializePage);
 // document.addEventListener("DOMContentLoaded", () => {
