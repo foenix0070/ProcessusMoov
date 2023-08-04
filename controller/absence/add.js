@@ -8,40 +8,8 @@ appAbsence.InitializePage = function () {
 
   
   appSpHelper.GetMyProperties(function () {
-    /*
-    appSpHelper.LoadUserCongeParam(
-      appHelper.ListName.Employe, "ETISALAT-AFRICA\pouattara", App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
-      function () {
-        appSpHelper.GetEmploye(
-          appHelper.ListName.Employe,
-          document.getElementById("TxtSpManagerN1Login").value,
-          function (item) {
-            console.log(item);
-            appSpHelper.GetEmployeeManagerLogin(
-              "N2",
-              item.get_item("EmpManager"),
-              function () {
 
-              // span= document.getElementById('spanSolde');
-              // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
-
-
-
-
-
-
-              //  appAbsence.initCmbTypeConge(function(){
-                  appAbsence.List();
-              //  });
-              }
-            );
-          }
-        );
-      }
-    );
-    */
-    
-    appConge.initCmbTypeAbsence(function () {
+    appAbsence.initCmbTypeAbsence(function () {
 
       document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
       document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
@@ -51,45 +19,38 @@ appAbsence.InitializePage = function () {
         appSpHelper.InitializePeoplePicker("plePickerInterimaireDiv", false, "350px");
 
         appSpHelper.PeoplePickerOnChangeEvent("plePickerInterimaireDiv", function (key) {
-          appConge.GetInterimData(key);
+          appAbsence.GetInterimData(key);
         });
 
       }, 2000);
 
+      appAbsence.GetInterimData = function (login) {
+        appSpHelper.GetEmploye(appHelper.ListName.Employe, login, function (it) {
+          document.getElementById("TxtIntName").value = it.get_item('EmpPrenom') + ' ' + it.get_item('EmpNom');
+          document.getElementById("TxtIntMatricule").value = it.get_item('EmpMatricule');
+          document.getElementById("TxtIntEmail").value = it.get_item('EmpMail');
+        });
+      } 
+
     });
-    
-    /*
-    document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
-    document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
-    document.getElementById("TxtEmail").value = App.CurrentUser.Email;
 
-    setTimeout(function () {
-      appSpHelper.InitializePeoplePicker("plePickerInterimaireDiv", false, "350px");
+  });
 
-      appSpHelper.PeoplePickerOnChangeEvent("plePickerInterimaireDiv", function (key) {
-        // appConge.interimaire = key.toString().split('\\')[1];
-        appConge.GetInterimData(key);
-      });
+  const TxtIntName = document.querySelector("#TxtIntName");
 
-    }, 2000);
+  TxtIntName.addEventListener("click", function () {
 
-    appConge.GetInterimData = function (login) {
-      appSpHelper.GetEmploye(appHelper.ListName.Employe, login, function (it) {
-        document.getElementById("TxtIntName").value = it.get_item('EmpPrenom') + ' ' + it.get_item('EmpNom');
-        document.getElementById("TxtIntMatricule").value = it.get_item('EmpMatricule');
-        document.getElementById("TxtIntEmail").value = it.get_item('EmpMail');
-      });
-    } 
-    */ 
+    // document.querySelector("#TxtIntName").value = 'Consultant INOVA';
 
   });
   
 
-  const BtnAdd = document.querySelector("#demande");
+  //const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
 
 
 
+  /*
   BtnAdd.addEventListener("click", function () {
     setTimeout(function () {
       appSpHelper.InitializePeoplePicker(
@@ -99,6 +60,7 @@ appAbsence.InitializePage = function () {
       );
     }, 2000);
   });
+  */
 
   BtnSave.addEventListener("click", function () {
     appAbsence.Add (function(){
@@ -130,8 +92,6 @@ appAbsence.initCmbTypeAbsence = function (callBack) {
   });
 
 };
-
-
 
 
 function ListerMotif( callBack) {
@@ -220,18 +180,18 @@ appAbsence.Add = function ( callBack) {
   let oListItem = oList.addItem(itemCreateInfo);
 
   let startDate = new Date(
-    document.getElementById("TxtDateDepart").value
+    document.getElementById("DateDebut").value
     //appHelper.ReturnISODate()
   );
 
   let repDate = new Date(
-    document.getElementById("TxtDateReprise").value
+    document.getElementById("DateReprise").value
     //appHelper.ReturnISODate()
   );
 
 
   let endDate = startDate.addDays(
-    parseInt(document.getElementById("TxtNbreJour").value)
+    parseInt(document.getElementById("TxtDuree").value)
   );
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
@@ -243,15 +203,15 @@ appAbsence.Add = function ( callBack) {
 
   oListItem.set_item("Title",document.getElementById("TxtTypeAbsenceText").value);
 
-  oListItem.set_item("Nature",document.getElementById("TxtNature").value);
+  oListItem.set_item("Nature",document.getElementById("TxtTypeAbsenceText").value);
 
   oListItem.set_item("TypeAbsenceID", document.getElementById("cmbTypeAbsence").value);
 
   oListItem.set_item("Motif",document.getElementById("TxtMotif").value);
 
-  oListItem.set_item("NombreJours",parseInt(document.getElementById("TxtNbreJour").value));
+  oListItem.set_item("NombreJours",parseInt(document.getElementById("TxtDuree").value));
 
-  oListItem.set_item("NombreJourAccorde",parseInt(document.getElementById("TxtNbreJour").value));
+  oListItem.set_item("NombreJourAccorde",parseInt(document.getElementById("TxtDuree").value));
 
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
 

@@ -28,13 +28,18 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label"> Nom & Prenoms</label>
+        <label class="form-label"> Nom</label>
         <input type="text" class="form-control" id="TxtIntName" placeholder="" />
       </div>
 
       <div class="mb-3">
         <label class="form-label"> Matricule</label>
         <input type="text" class="form-control" id="TxtIntMatricule" placeholder="" />
+      </div>
+
+      <div class="mb-3">
+        <label  class="form-label"> Email</label>
+        <input type="text" class="form-control" id="TxtIntEmail" placeholder="" />
       </div>
 
       <span class="note">
@@ -63,7 +68,7 @@
         </label>-->
 
         <label class="form-label"> Nature de l'absence</label>
-        <select id="cmbTypeConge" name="cmbTypeAbsence" class="form-control">
+        <select id="cmbTypeAbsence" name="cmbTypeAbsence" class="form-control">
           <option value="0" data-color="#000">Choisir le type de absence</option>
         </select>
         <input id="TxtTypeAbsenceColeur" value="" type="hidden">
@@ -84,11 +89,6 @@
       <div class="mb-3">
         <label class="form-label">Date de debut</label>
         <input type="date" class="form-control" id="DateDebut" placeholder="" />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Date de fin</label>
-        <input type="date" class="form-control" id="DateFin" placeholder="" />
       </div>
 
       <div class="mb-3">

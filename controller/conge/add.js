@@ -29,7 +29,6 @@ appConge.InitializePage = function () {
         appSpHelper.InitializePeoplePicker("plePickerInterimaireDiv", false, "350px");
 
         appSpHelper.PeoplePickerOnChangeEvent("plePickerInterimaireDiv", function (key) {
-          // appConge.interimaire = key.toString().split('\\')[1];
           appConge.GetInterimData(key);
         });
 

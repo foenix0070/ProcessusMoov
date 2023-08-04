@@ -46,7 +46,7 @@ var arrMenu = [
     ],
   },
 
-  /*{
+  {
     id: "dmd_autorisationAbsence",
     title: "Demande d'autorisation d'absence",
     icon: "fa fa-2x fa-globe",
@@ -56,7 +56,6 @@ var arrMenu = [
           id: "dmd_autorisationAbsence_new",
           title: "Effectuer une demande",
           url: "tools1/pages/autorisationAbsence/add.aspx",
-         // url: "/pages/autorisationAbsence/add.html",
           target: "ffcMainFormContainer",
         },
         link: false,
@@ -67,7 +66,7 @@ var arrMenu = [
         link: {
           id: "dmd_autorisationAbsence_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/autorisationAbsence/ici.html",
+          url: "tools1/pages/autorisationAbsence/list.aspx?t=E",
           target: "DivMainPageContainer",
         },
       },
@@ -76,7 +75,7 @@ var arrMenu = [
         link: {
           id: "dmd_autorisationAbsence_list_validee",
           title: "Demandes validées",
-          //url: "#",
+          url: "tools1/pages/autorisationAbsence/list.aspx?t=V",
           target: "DivMainPageContainer",
         },
       },
@@ -86,12 +85,12 @@ var arrMenu = [
         link: {
           id: "dmd_autorisationAbsence_list_rejetee",
           title: "Demandes réjetées",
-          //url: "#",
+          url: "tools1/pages/autorisationAbsence/list.aspx?t=R",
           target: "DivMainPageContainer",
         },
       },
     ],
-  },*/
+  },
 
 
 

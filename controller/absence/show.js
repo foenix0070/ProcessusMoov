@@ -269,10 +269,10 @@ showAbsence.ShowDetails = function (demandeid){
   showAbsence.clientContext.executeQueryAsync(function () {
   if(It){
   let view = {
-    typeconge : It.get_item('Title') != null ?  It.get_item('Title') : '',
+    title : It.get_item('Title') != null ?  It.get_item('Title') : '',
     nbrejour: It.get_item('NombreJourAccorde') != null ?  It.get_item('NombreJourAccorde') : '',
     datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
-    interimaire: It.get_item('Interimaire') != null ?  It.get_item('Interimaire').get_lookupValue() : '',
+    //interimaire: It.get_item('Interimaire') != null ?  It.get_item('Interimaire').get_lookupValue() : '',
     motif: It.get_item('Motif') != null ?  It.get_item('Motif') : ''
   };
   appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);

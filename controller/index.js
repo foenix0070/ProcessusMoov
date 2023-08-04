@@ -41,29 +41,31 @@ MoovTools.InitializePage = function () {
           MoovTools.ListDemande(appHelper.ListName.Materiel, "materiel", "MATERIEL", function () {
             MoovTools.ListDemande(appHelper.ListName.Vehicule, "vehicule", "VEHICULE", function () {
               MoovTools.ListDemande(appHelper.ListName.Gadget, "gadget", "GADGET", function () {
-                appHelper.renderTemplate("tmpl_table_demande", "DivDemandeTableShow", MoovTools.view);
+                MoovTools.ListDemande(appHelper.ListName.Absence, "autorisationAbsence", "ABSENCE", function () {
+                  appHelper.renderTemplate("tmpl_table_demande", "DivDemandeTableShow", MoovTools.view);
 
-                //   appHelper.listenNavigationLink ('linkMainNavigation');
-                const linkClick = document.getElementsByClassName('click');
-                for (var i = 0; i < linkClick.length; i++) {
-                  linkClick[i].addEventListener("click", function () {
-                    let url = this.getAttribute("data-url");
-                    sessionStorage.setItem("ajax_url", url);
-                    $.ajax({
-                      url: url,
-                      method: 'GET',
-                      dataType: 'html',
-                      success: function (data) {
-                        $('#reponseAjax').html(data);
-                      },
-                      error: function () {
-                        $('#reponseAjax').html('Erreur lors du chargement des données.');
-                      }
+                  //   appHelper.listenNavigationLink ('linkMainNavigation');
+                  const linkClick = document.getElementsByClassName('click');
+                  for (var i = 0; i < linkClick.length; i++) {
+                    linkClick[i].addEventListener("click", function () {
+                      let url = this.getAttribute("data-url");
+                      sessionStorage.setItem("ajax_url", url);
+                      $.ajax({
+                        url: url,
+                        method: 'GET',
+                        dataType: 'html',
+                        success: function (data) {
+                          $('#reponseAjax').html(data);
+                        },
+                        error: function () {
+                          $('#reponseAjax').html('Erreur lors du chargement des données.');
+                        }
+                      });
+
+                      return false;
                     });
-
-                    return false;
-                  });
-                }
+                  }
+                });
               });
             });
           });

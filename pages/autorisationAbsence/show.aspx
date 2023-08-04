@@ -96,7 +96,7 @@
                   <table>
                       <tr>
                         <td style="text-align:left;" width="200px" >Nature</td>
-                        <td style="text-align:left;">{{typeconge}}</td>
+                        <td style="text-align:left;">{{title}}</td>
                       </tr>
 
                       <tr>
@@ -107,10 +107,6 @@
                       <tr>
                         <td style="text-align:left;" width="200px">Nombre de jours</td>
                         <td style="text-align:left;">{{nbrejour}}</td>
-                      </tr>
-                      <tr>
-                        <td style="text-align:left;" width="200px">Int&eacute;rimaire</td>
-                        <td style="text-align:left;">{{interimaire}}</td>
                       </tr>
 
                       <tr>
