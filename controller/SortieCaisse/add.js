@@ -72,11 +72,11 @@ appSortieCaisse.Add = function ( callBack) {
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "Validation du supérieur hiérarchique");
   oListItem.set_item("Montant",parseInt(document.getElementById("TxtMontant").value));
-  oListItem.set_item("ModePaiement",parseInt(document.getElementById("TxtModePaiement").value));
-  oListItem.set_item("PayerA",parseInt(document.getElementById("TxtPayerA").value));
+  oListItem.set_item("ModePaiement",document.getElementById("TxtModePaiement").value);
+  oListItem.set_item("PayerA",document.getElementById("TxtPayerA").value);
   oListItem.set_item("CaissePaiement",document.getElementById("TxtCaissePaiement").value);
   oListItem.set_item("ObjetReglement",document.getElementById("TxtObjetReglement").value);
-  oListItem.set_item("DocJustificatifs",document.getElementById("FileDoc").value);
+  //oListItem.set_item("DocJustificatifs",document.getElementById("FileDoc").value);
 
   oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
@@ -95,8 +95,8 @@ appSortieCaisse.Add = function ( callBack) {
 
 //const appUrl = '/tools1/pages/conge/show.aspx?ID=' + oListItem.get_id();
 const appUrl = '/pages/SortieCaisse/show.aspx?ID=' + oListItem.get_id();
-      let WF = new WFManager(appHelper.AppCode.SortieCisse,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.SortieCisse, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      let WF = new WFManager(appHelper.AppCode.SORTIECAISSE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
       if(callBack){
         callBack(oListItem);
       }
