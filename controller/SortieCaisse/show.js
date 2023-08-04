@@ -80,7 +80,7 @@ showSortieCaisse.ShowForm = function(tacheId, demandeid){
 
 showSortieCaisse.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.SORTIECAISSE);
+  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.SortieCaisse);
   let It = oList .getItemById(demandeid);
 
   if(isRejet){
@@ -101,7 +101,7 @@ showSortieCaisse.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 }
 
 showSortieCaisse.UpDateItemStatus = function(nextTask, demandeid, callBack){
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.SORTIECAISSE);
+  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.SortieCaisse);
   let It = oList .getItemById(demandeid);
 
   if(nextTask){
@@ -126,7 +126,7 @@ showSortieCaisse.ShowFichierJoint = function(demandeid) {
 
   let view = {};
 
-  let appName = appHelper.ListName.SORTIECAISSE;
+  let appName = appHelper.ListName.SortieCaisse;
   let id = demandeid;
   let folderPath = `/Lists/${appName}/Attachments/${id}/`;
   console.log(folderPath);
@@ -187,8 +187,8 @@ showSortieCaisse.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
       //Get Client Context and Web object.
       var oWeb = clientContext.get_web();
       //Get list and Attachment folder where the attachment of a particular list item is stored.
-      var oList = oWeb.get_lists().getByTitle(appHelper.ListName.SORTIECAISSE);
-      var urlToAttach = '/Lists/'+ appHelper.ListName.SORTIECAISSE +'/Attachments/'+ demandeid + '/'
+      var oList = oWeb.get_lists().getByTitle(appHelper.ListName.SortieCaisse);
+      var urlToAttach = '/Lists/'+ appHelper.ListName.SortieCaisse +'/Attachments/'+ demandeid + '/'
       var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
       console.log(attachmentFolder);
       //Convert the file contents into base64 data
@@ -265,7 +265,7 @@ showSortieCaisse.ShowValidation = function(demandeid) {
 
 showSortieCaisse.ShowDetails = function (demandeid){
 
-  let oList = showSortieCaisse.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.SORTIECAISSE);
+  let oList = showSortieCaisse.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.SortieCaisse);
   let It = oList .getItemById(demandeid);
 
   showSortieCaisse.clientContext.load(It);
