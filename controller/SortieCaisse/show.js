@@ -41,17 +41,17 @@ showSortieCaisse.ShowForm = function(tacheId, demandeid){
   let view = {};
   view.did = demandeid;
   view.tid = tacheId;
-  view.process = appHelper.AppCode.CONGE;
+  view.process = appHelper.AppCode.SORTIECAISSE;
   appHelper.renderTemplate("tmpl_form_validation", "SectionValidation", view);
 
   const TxtCommentaire = document.getElementById("TxtCommentaire");
   const BtnMod = document.getElementById("BtnValidationModification");
   const BtnOK = document.getElementById("BtnValidationOK");
   const BtnNOK = document.getElementById("BtnValidationNOK");
-  const WF  =  new WFManager(appHelper.AppCode.CONGE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+  const WF  =  new WFManager(appHelper.AppCode.SORTIECAISSE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
 
   BtnOK.addEventListener("click", function () {
-    WF.goToNextTask(showSortieCaisse.clientContext ,tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToNextTask(showSortieCaisse.clientContext ,tacheId, appHelper.AppCode.SORTIECAISSE, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
       showSortieCaisse.UpDateItemStatus (nextTask, demandeid, function(){
         location.reload();
@@ -60,7 +60,7 @@ showSortieCaisse.ShowForm = function(tacheId, demandeid){
   });
 
   BtnNOK.addEventListener("click", function () {
-    WF.goToRefusedTask(showSortieCaisse.clientContext ,tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToRefusedTask(showSortieCaisse.clientContext ,tacheId, appHelper.AppCode.SORTIECAISSE, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
       showSortieCaisse.UpDateItemStatusRejet (true, demandeid, function(){
         location.reload();
@@ -69,7 +69,7 @@ showSortieCaisse.ShowForm = function(tacheId, demandeid){
   });
 
   BtnMod.addEventListener("click", function () {
-    WF.goToRefusedTask(showSortieCaisse.clientContext ,tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToRefusedTask(showSortieCaisse.clientContext ,tacheId, appHelper.AppCode.SORTIECAISSE, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
       showSortieCaisse.UpDateItemStatusRejet (false, demandeid, function(){
         location.reload();
@@ -80,7 +80,7 @@ showSortieCaisse.ShowForm = function(tacheId, demandeid){
 
 showSortieCaisse.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Conge);
+  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.SORTIECAISSE);
   let It = oList .getItemById(demandeid);
 
   if(isRejet){
@@ -101,7 +101,7 @@ showSortieCaisse.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 }
 
 showSortieCaisse.UpDateItemStatus = function(nextTask, demandeid, callBack){
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Conge);
+  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.SORTIECAISSE);
   let It = oList .getItemById(demandeid);
 
   if(nextTask){
@@ -126,7 +126,7 @@ showSortieCaisse.ShowFichierJoint = function(demandeid) {
 
   let view = {};
 
-  let appName = appHelper.ListName.Conge;
+  let appName = appHelper.ListName.SORTIECAISSE;
   let id = demandeid;
   let folderPath = `/Lists/${appName}/Attachments/${id}/`;
   console.log(folderPath);
@@ -187,8 +187,8 @@ showSortieCaisse.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
       //Get Client Context and Web object.
       var oWeb = clientContext.get_web();
       //Get list and Attachment folder where the attachment of a particular list item is stored.
-      var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Conge);
-      var urlToAttach = '/Lists/'+ appHelper.ListName.Conge +'/Attachments/'+ demandeid + '/'
+      var oList = oWeb.get_lists().getByTitle(appHelper.ListName.SORTIECAISSE);
+      var urlToAttach = '/Lists/'+ appHelper.ListName.SORTIECAISSE +'/Attachments/'+ demandeid + '/'
       var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
       console.log(attachmentFolder);
       //Convert the file contents into base64 data
@@ -223,7 +223,7 @@ showSortieCaisse.ShowValidation = function(demandeid) {
      '<Where>' +
       '<And>' +
       '<And>' +
-      '<Eq><FieldRef Name="Parent" /><Value Type="Text">'+ appHelper.AppCode.CONGE +'</Value></Eq>' +
+      '<Eq><FieldRef Name="Parent" /><Value Type="Text">'+ appHelper.AppCode.SORTIECAISSE +'</Value></Eq>' +
       '<Eq><FieldRef Name="ParentID0" /><Value Type="Text">'+ demandeid +'</Value></Eq>' +
       '</And>' +
       '<Eq><FieldRef Name="Status" /><Value Type="Choice">Terminé</Value></Eq>' +
@@ -265,21 +265,21 @@ showSortieCaisse.ShowValidation = function(demandeid) {
 
 showSortieCaisse.ShowDetails = function (demandeid){
 
-  let oList = showSortieCaisse.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.Conge);
+  let oList = showSortieCaisse.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.SORTIECAISSE);
   let It = oList .getItemById(demandeid);
 
   showSortieCaisse.clientContext.load(It);
   showSortieCaisse.clientContext.executeQueryAsync(function () {
   if(It){
-    showSortieCaisse.isSoldeImpact = (It.get_item('TypeCongeID') != null ? It.get_item('TypeCongeID') : 0)
+    showSortieCaisse.isSoldeImpact = (It.get_item('TypeSORTIECAISSEID') != null ? It.get_item('TypeSORTIECAISSEID') : 0)
   let view = {
-    typeconge : It.get_item('TypeCongeLibelle') != null ?  It.get_item('TypeCongeLibelle') : '',
-    nbrejour: It.get_item('NombreJours') != null ?  It.get_item('NombreJours') : '',
-    datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
-    interimaire: It.get_item('Interimaire') != null ?  It.get_item('Interimaire').get_lookupValue() : '',
-    domicile: It.get_item('DomicileConge') != null ?  It.get_item('DomicileConge') : '',
-    telephone: It.get_item('CongeTelephone') != null ?  It.get_item('CongeTelephone') : '',
-    personne: It.get_item('CongeContact') != null ?  It.get_item('CongeContact') : '',
+    montant : It.get_item('Montant') != null ?  It.get_item('Montant') : '',
+    modePaiement: It.get_item('ModePaiement') != null ?  It.get_item('ModePaiement') : '',
+    // datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
+    // interimaire: It.get_item('Interimaire') != null ?  It.get_item('Interimaire').get_lookupValue() : '',
+    payerA: It.get_item('PayerA') != null ?  It.get_item('PayerA') : '',
+    caissePaiement: It.get_item('CaissePaiement') != null ?  It.get_item('CaissePaiement') : '',
+    objetReglement: It.get_item('ObjetReglement') != null ?  It.get_item('ObjetReglement') : '',
   };
 
   appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);

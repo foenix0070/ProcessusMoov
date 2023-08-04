@@ -123,28 +123,25 @@
                   </div>
                   <table>
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px" >Motif de cong&eacute;</td>
-                        <td style="text-align:left;">{{typeconge}}</td>
+                        <td style="text-align:left;" class="fw-bold" width="200px" >Montant</td>
+                        <td style="text-align:left;">{{montant}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Date de d&eacute;part</td>
-                        <td style="text-align:left;">{{datedepart}}</td>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Mode de paiement</td>
+                        <td style="text-align:left;">{{modePaiement}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Nombre de jours</td>
-                        <td style="text-align:left;">{{nbrejour}}</td>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Caisse de paiement</td>
+                        <td style="text-align:left;">{{caissePaiement}}</td>
                       </tr>
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Int&eacute;rimaire</td>
-                        <td style="text-align:left;">{{interimaire}}</td>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Objet de reglement</td>
+                        <td style="text-align:left;">{{objetReglement}}</td>
                       </tr>
 
-                      <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Adresse pendant les cong&eacute;s </td>
-                        <td style="text-align:left;"> Domicile : {{domicile}} <br>  T&eacute;l&eacute;phone : {{telephone}} <br> Personne &agrave; contacter :{{personne}} </td>
-                      </tr>
+                    
                   </table>
                 </script>
 

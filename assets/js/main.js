@@ -94,6 +94,7 @@ var arrMenu = [
 
 
 
+
   /*
   {
     id: "dmd_fraismission",
@@ -190,6 +191,10 @@ var arrMenu = [
     ],
   },
 
+  */
+
+
+
   {
     id: "dmd_sortieCaisse",
     title: "Demande de sortie de caisse",
@@ -211,7 +216,7 @@ var arrMenu = [
         link: {
           id: "dmd_sortieCaisse_list_en_cours",
           title: "Demande en cours",
-          url: "/pages/sortieCaisse/ici.html",
+          url: "tools1/pages/sortieCaisse/list.aspx?t=E", 
           target: "DivMainPageContainer",
         },
       },
@@ -220,7 +225,7 @@ var arrMenu = [
         link: {
           id: "dmd_sortieCaisse_list_validee",
           title: "Demandes validées",
-          //url: "#",
+          url: "tools1/pages/sortieCaisse/list.aspx?t=V", 
           target: "DivMainPageContainer",
         },
       },
@@ -230,13 +235,14 @@ var arrMenu = [
         link: {
           id: "dmd_sortieCaisse_list_rejetee",
           title: "Demandes réjetées",
-          //url: "#",
+          url: "tools1/pages/sortieCaisse/list.aspx?t=R", 
           target: "DivMainPageContainer",
         },
       },
     ],
   },
 
+  /*
   {
     id: "dmd_regularisationSortieCaisse",
     title: "Demande de regularisation de sortie de caisse",
