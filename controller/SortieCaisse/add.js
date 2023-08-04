@@ -94,7 +94,7 @@ appSortieCaisse.Add = function ( callBack) {
   clientContext.executeQueryAsync(function () {
 
 //const appUrl = '/tools1/pages/conge/show.aspx?ID=' + oListItem.get_id();
-const appUrl = '/pages/SortieCaisse/show.aspx?ID=' + oListItem.get_id();
+const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.SORTIECAISSE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
       WF.createWFTask(clientContext,appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
       if(callBack){

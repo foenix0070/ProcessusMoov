@@ -25,7 +25,8 @@ Validation : 'TachesValidation',
 Notification : 'ListeNotification',
 Mission : 'ListeMission',
 FraisMission : 'ListeFraisMission',
-SortieCaisse : 'ListeSortieCaisse'
+SortieCaisse : 'ListeSortieCaisse',
+Zone : 'ListeZoneGeographique'
 };
 
 appHelper.Status = {
