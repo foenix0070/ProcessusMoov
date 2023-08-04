@@ -40,11 +40,47 @@ appAbsence.InitializePage = function () {
       }
     );
     */
+    
+    appConge.initCmbTypeAbsence(function () {
 
+      document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
+      document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
+      document.getElementById("TxtEmail").value = App.CurrentUser.Email;
 
+      setTimeout(function () {
+        appSpHelper.InitializePeoplePicker("plePickerInterimaireDiv", false, "350px");
+
+        appSpHelper.PeoplePickerOnChangeEvent("plePickerInterimaireDiv", function (key) {
+          appConge.GetInterimData(key);
+        });
+
+      }, 2000);
+
+    });
+    
+    /*
     document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
     document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
     document.getElementById("TxtEmail").value = App.CurrentUser.Email;
+
+    setTimeout(function () {
+      appSpHelper.InitializePeoplePicker("plePickerInterimaireDiv", false, "350px");
+
+      appSpHelper.PeoplePickerOnChangeEvent("plePickerInterimaireDiv", function (key) {
+        // appConge.interimaire = key.toString().split('\\')[1];
+        appConge.GetInterimData(key);
+      });
+
+    }, 2000);
+
+    appConge.GetInterimData = function (login) {
+      appSpHelper.GetEmploye(appHelper.ListName.Employe, login, function (it) {
+        document.getElementById("TxtIntName").value = it.get_item('EmpPrenom') + ' ' + it.get_item('EmpNom');
+        document.getElementById("TxtIntMatricule").value = it.get_item('EmpMatricule');
+        document.getElementById("TxtIntEmail").value = it.get_item('EmpMail');
+      });
+    } 
+    */ 
 
   });
   
@@ -76,11 +112,11 @@ function getRating (str){
   document.getElementById('TxtNature').value = str;
 }
 
-appAbsence.initCmbTypeConge = function (callBack) {
+appAbsence.initCmbTypeAbsence = function (callBack) {
   ListerMotif(function(){
-    let cmb = document.getElementById("cmbTypeConge");
-    let txtColor = document.getElementById("TxtTypeCongeColeur");
-    let txtText = document.getElementById("TxtTypeCongeText");
+    let cmb = document.getElementById("cmbTypeAbsence");
+    let txtColor = document.getElementById("TxtTypeAbsenceColeur");
+    let txtText = document.getElementById("TxtTypeAbsenceText");
     cmb.addEventListener("change", function () {
       let selectedOption = this.options[this.selectedIndex];
       let color = selectedOption.getAttribute("data-color");
@@ -99,7 +135,7 @@ appAbsence.initCmbTypeConge = function (callBack) {
 
 
 function ListerMotif( callBack) {
-  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.TypeConge);
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.TypeAbsence);
   let q = '<View><Query><Where>' +
                '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
           '</Where></Query></View>';
@@ -118,7 +154,7 @@ function ListerMotif( callBack) {
               opt.setAttribute("data-color", oListItemTp.get_item('Background'));
               opt.setAttribute("value", oListItemTp.get_id());
               opt.innerHTML = oListItemTp.get_item('Title');
-              document.getElementById('cmbTypeConge').appendChild(opt);
+              document.getElementById('cmbTypeAbsence').appendChild(opt);
           }
 
 
@@ -205,9 +241,11 @@ appAbsence.Add = function ( callBack) {
   oListItem.set_item("DateRetour", endDate);
   oListItem.set_item("DateReprise", repDate);
 
-  oListItem.set_item("Title",document.getElementById("TxtNature").value);
+  oListItem.set_item("Title",document.getElementById("TxtTypeAbsenceText").value);
 
   oListItem.set_item("Nature",document.getElementById("TxtNature").value);
+
+  oListItem.set_item("TypeAbsenceID", document.getElementById("cmbTypeAbsence").value);
 
   oListItem.set_item("Motif",document.getElementById("TxtMotif").value);
 
@@ -216,9 +254,6 @@ appAbsence.Add = function ( callBack) {
   oListItem.set_item("NombreJourAccorde",parseInt(document.getElementById("TxtNbreJour").value));
 
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
-
-
- // oListItem.set_item("Historique", "#");
 
   oListItem.set_item("Demandeur",SP.FieldUserValue.fromUser(App.CurrentUser.Login));
 

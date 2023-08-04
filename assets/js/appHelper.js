@@ -20,10 +20,12 @@ Materiel : 'ListeMateriel',
 Absence : 'ListeAbsence',
 Employe : 'ListeEmploye',
 TypeConge : 'ListeTypeConge',
+TypeAbsence : 'ListeTypeAbsence',
 Validation : 'TachesValidation',
 Notification : 'ListeNotification',
 Mission : 'ListeMission',
-FraisMission : 'ListeFraisMission'
+FraisMission : 'ListeFraisMission',
+SortieCaisse : 'ListeSortieCaisse'
 };
 
 appHelper.Status = {
@@ -56,7 +58,8 @@ appHelper.AppCode = {
   CONGE : 'CONGE',
   ABSENCE : 'ABSENCE',
   MISSION : 'MISSION',
-  FRAISMISSION : 'FRAISMISSION'
+  FRAISMISSION : 'FRAISMISSION',
+  SORTIECAISSE : 'SORTIECAISSE'
 }
 
 appHelper. isArray = function(myArray) {

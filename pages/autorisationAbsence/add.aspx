@@ -19,7 +19,7 @@
       </div>
 
     </fieldset>
-    
+
     <fieldset class="form-elts">
       <legend>Interimaire</legend>
       <div class="mb-3">
@@ -37,16 +37,6 @@
         <input type="text" class="form-control" id="TxtIntMatricule" placeholder="" />
       </div>
 
-      <div class="mb-3">
-        <label class="form-label"> Direction</label>
-        <input type="text" class="form-control" id="TxtIntDirection" placeholder="" />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label"> Categorie</label>
-        <input type="text" class="form-control" id="TxtIntCategorie" placeholder="" />
-      </div>
-
       <span class="note">
         L'interim ne concerne que les validations dans Moovinside.
         Toutes vos taches &aacute; venir seront automatiquement r&eacute;-affecct&eacute; &aacute;
@@ -58,7 +48,7 @@
       <legend>Motif de la demande</legend>
 
       <div class="mb-3">
-        <label class="form-label"> Nature absence : &nbsp; &nbsp;</label>
+        <!--<label class="form-label"> Nature absence : &nbsp; &nbsp;</label>
 
         <input type="radio" name="Absence" id="" value="Absence exceptionnelle" />
 
@@ -70,8 +60,14 @@
 
         <label>
           Permission exceptionnelle
-        </label>
+        </label>-->
 
+        <label class="form-label"> Nature de l'absence</label>
+        <select id="cmbTypeConge" name="cmbTypeAbsence" class="form-control">
+          <option value="0" data-color="#000">Choisir le type de absence</option>
+        </select>
+        <input id="TxtTypeAbsenceColeur" value="" type="hidden">
+        <input id="TxtTypeAbsenceText" value="" type="hidden">
 
       </div>
 
@@ -123,5 +119,5 @@
 
 
 <script type="text/javascript">
-  appHelper.loadJSWithNameSpace("appAutorisationAbsence", 'appAutorisationAbsence', "controller/autorisationAbsence/add.js");
+  appHelper.loadJSWithNameSpace("appAbsence", 'appAbsence', "controller/absence/add.js");
 </script>
