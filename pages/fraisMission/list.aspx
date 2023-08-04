@@ -17,7 +17,7 @@
 
 
 <script type="text/javascript">
-  appHelper.loadJSWithNameSpace("ListMission", 'ListMission', "controller/fraisMission/list.js");
+  appHelper.loadJSWithNameSpace("ListMission", 'ListMission', "controller/FraisMission/list.js");
 </script>
 
 <script id="tmpl_table_Mission" type="x-tmpl-mustache">
@@ -39,7 +39,7 @@
           <td>{{startdate}}</td>
           <td>{{enddate}}</td>
           <td>{{destination}}</td>
-          <td><a href="tools1/pages/fraisMission/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/fraisMission/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+          <td><a href="http://ci08vmmitest/tools1/pages/fraisMission/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="http://ci08vmmitest/tools1/pages/fraisMission/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
           <td><span class="{{classe}}">{{status}}</span></td>
         </tr>
         {{/fraisMission}}

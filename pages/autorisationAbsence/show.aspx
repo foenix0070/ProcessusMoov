@@ -116,8 +116,6 @@
                   </table>
                 </script>
 
-
-<script src="/tools1/pages//show.js"></script>
 <script type="text/javascript">
   appHelper.loadJSWithNameSpace("showAbsence", 'showAbsence', "controller/absence/show.js");
 </script>
