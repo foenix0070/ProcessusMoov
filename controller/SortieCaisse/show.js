@@ -267,30 +267,24 @@ showSortieCaisse.ShowDetails = function (demandeid){
 
   let oList = showSortieCaisse.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.SortieCaisse);
   let It = oList .getItemById(demandeid);
+  console.log("IN ShowDetails");
 
   showSortieCaisse.clientContext.load(It);
   showSortieCaisse.clientContext.executeQueryAsync(function () {
   if(It){
-    showSortieCaisse.isSoldeImpact = (It.get_item('TypeSORTIECAISSEID') != null ? It.get_item('TypeSORTIECAISSEID') : 0)
+    //showSortieCaisse.isSoldeImpact = (It.get_item('TypeSORTIECAISSEID') != null ? It.get_item('TypeSORTIECAISSEID') : 0)
   let view = {
+    date : It.get_item('Created') != null ?  It.get_item('Created') : '',
     montant : It.get_item('Montant') != null ?  It.get_item('Montant') : '',
     modePaiement: It.get_item('ModePaiement') != null ?  It.get_item('ModePaiement') : '',
-    // datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
-    // interimaire: It.get_item('Interimaire') != null ?  It.get_item('Interimaire').get_lookupValue() : '',
     payerA: It.get_item('PayerA') != null ?  It.get_item('PayerA') : '',
     caissePaiement: It.get_item('CaissePaiement') != null ?  It.get_item('CaissePaiement') : '',
     objetReglement: It.get_item('ObjetReglement') != null ?  It.get_item('ObjetReglement') : '',
   };
 
+  console.log("OUT ShowDetails");
+
   appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
-
-
-  const addfile = document.getElementById("addfile");
-  addfile.addEventListener("click", function () {
-
-    OpenFileUpload('FpUploadAttachement');
-   });
-
 
   }
 }, appSpHelper.writeError);

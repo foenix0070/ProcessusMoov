@@ -108,29 +108,26 @@
                     </h2>
                   </div>
                   <table>
+                    <tr>
+                      <td style="text-align:left;" class="fw-bold" width="200px" >Date</td>
+                      <td style="text-align:left;">{{date}}</td>
+                    </tr>
                       <tr>
                         <td style="text-align:left;" class="fw-bold" width="200px" >Montant</td>
                         <td style="text-align:left;">{{montant}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Mode de paiement</td>
+                        <td style="text-align:left; "class="fw-bold" width="200px">Mode de paiement</td>
                         <td style="text-align:left;">{{solde}}</td>
                       </tr>
-
-                    
-                      <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Objet de reglement</td>
-                        <td style="text-align:left;">{{observation}}</td>
-                      </tr>
-
                     
                   </table>
                 </script>
 
                 <script type="text/javascript">
                   //appHelper.loadJSWithNameSpace("showConge", 'showConge', "controller/conge/show.js");
-                  appHelper.loadJSWithNameSpace("showRegularisationSortieCaisse", 'showRegularisationSortieCaisse', "controller/SortieCaisse/show.js");
+                  appHelper.loadJSWithNameSpace("showRegularisationSortieCaisse", 'showRegularisationSortieCaisse', "controller/RegularisationSortieCaisse/show.js");
                 </script>
 <script type="text/javascript">
 

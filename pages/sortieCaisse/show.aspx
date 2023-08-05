@@ -108,6 +108,12 @@
                     </h2>
                   </div>
                   <table>
+
+                    <tr>
+                      <td style="text-align:left;" class="fw-bold" width="200px" >Montant</td>
+                      <td style="text-align:left;">{{date}}</td>
+                    </tr>
+
                       <tr>
                         <td style="text-align:left;" class="fw-bold" width="200px" >Montant</td>
                         <td style="text-align:left;">{{montant}}</td>
@@ -116,6 +122,11 @@
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="200px">Mode de paiement</td>
                         <td style="text-align:left;">{{modePaiement}}</td>
+                      </tr>
+
+                      <tr>
+                        <td style="text-align:left;" class="fw-bold" width="200px" >Montant</td>
+                        <td style="text-align:left;">{{payerA}}</td>
                       </tr>
 
                       <tr>

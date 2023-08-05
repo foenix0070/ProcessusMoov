@@ -255,9 +255,6 @@ showRegularisationSortieCaisse.ShowValidation = function(demandeid) {
       appHelper.renderTemplate("tmpl_form_historique_validation", "SectionHistoriqueValidation", view);
     }
 
-
-
-
    }, appSpHelper.writeError);
 
 
@@ -271,24 +268,17 @@ showRegularisationSortieCaisse.ShowDetails = function (demandeid){
   showRegularisationSortieCaisse.clientContext.load(It);
   showRegularisationSortieCaisse.clientContext.executeQueryAsync(function () {
   if(It){
-    showRegularisationSortieCaisse.isSoldeImpact = (It.get_item('TypeREGULARISATIONSORTIECAISSEID') != null ? It.get_item('TypeREGULARISATIONSORTIECAISSEID') : 0)
+    //showRegularisationSortieCaisse.isSoldeImpact = (It.get_item('TypeREGULARISATIONSORTIECAISSEID') != null ? It.get_item('TypeREGULARISATIONSORTIECAISSEID') : 0)
   let view = {
+    date : It.get_item('Created').toLocaleDateString() != null ?  It.get_item('Created').toLocaleDateString() : '',
     montant : It.get_item('Montant') != null ?  It.get_item('Montant') : '',
     solde: It.get_item('Solde') != null ?  It.get_item('Solde') : '',
     // datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
     // interimaire: It.get_item('Interimaire') != null ?  It.get_item('Interimaire').get_lookupValue() : '',
-    observation: It.get_item('Observation') != null ?  It.get_item('Observation') : '',
+    //observation: It.get_item('Observation') != null ?  It.get_item('Observation') : '',
   };
 
   appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
-
-
-  const addfile = document.getElementById("addfile");
-  addfile.addEventListener("click", function () {
-
-    OpenFileUpload('FpUploadAttachement');
-   });
-
 
   }
 }, appSpHelper.writeError);
