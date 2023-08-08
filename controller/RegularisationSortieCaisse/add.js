@@ -61,6 +61,34 @@ appRegularisationSortieCaisse.InitializePage = function () {
 
 };
 
+function ajouterLigne() {
+  var table = document.getElementById("TableFraisMission");
+  var newRow = table.insertRow(table.rows.length);
+  
+  var cell = newRow.insertCell(0);
+  var cell1 = newRow.insertCell(1);
+  var cell2 = newRow.insertCell(2);
+  var cell3 = newRow.insertCell(3);
+  var cell4 = newRow.insertCell(4);
+  var cell5 = newRow.insertCell(5);
+  var cell6 = newRow.insertCell(6);
+  
+  //cell.innerHTML = '<select class="mt-3" id="CmbPerdieme" name"CmbPerdieme"><option value"Hotel">Hotel</option></select>';
+  cell.innerHTML = '<input type="text" id="Txtlibelle" name="Txtlibelle" placeholder="Libelle"/>';
+  cell1.innerHTML = '<input type="date" id="DateDebut" name="DateDebut">';
+  cell2.innerHTML = '<input type="date" id="DateFin" name="DateFin">';
+  cell3.innerHTML = '<input type="text" id="TxtNombre" name="TxtNombre">';
+  cell4.innerHTML = '<input type="text" id="TxtForfait" name="TxtForfait">';
+  cell5.innerHTML = '<input type="text" id="TxtTotal" name="TxtTotal">';
+  cell6.innerHTML = '<button onclick="supprimerLigne(this)">Supprimer</button>';
+}
+
+function supprimerLigne(button) {
+  var row = button.parentNode.parentNode;
+  var table = row.parentNode;
+  table.removeChild(row);
+}
+
 appRegularisationSortieCaisse.Add = function (callBack) {
   let oList = appRegularisationSortieCaisse.clientContext
     .get_web()

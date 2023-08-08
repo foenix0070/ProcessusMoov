@@ -32,7 +32,7 @@
       <label for="RadEchecs">La mission n'a pas été effectuée</label><br>
 
       <h4>REMBOURSEMENT DES FRAIS COMPLEMENTAIRES</h4>
-      <table>
+      <!--<table>
         <tr>
           <td>
             <label for="">Avance N:</label>
@@ -121,7 +121,34 @@
           <td><input type="text" id="SoldeReverserCaisse"></td>
         </tr>
 
+      </table>-->
+      
+      <table id="TableFraisMission">
+        <tr>
+          <th>Libelle</th>
+          <th>Date de début</th>
+          <th>Date de fin</th>
+          <th>Nombre</th>
+          <th>Forfait</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <!--<td><select id="CmbPerdieme" name="CmbPerdieme"><option>Hotel</option></select></td>-->
+          <td><input type="text" id="Txtlibelle" name="Txtlibelle" placeholder="Libelle"></td>
+          <td><input type="date" id="DateDebut" name="DateDebut"></td>
+          <td><input type="date" id="DateFin" name="DateFin"></td>
+          <td><input type="text" id="TxtNombre" name="TxtNombre"></td>
+          <td><input type="text" id="TxtForfait" name="TxtForfait"></td>
+          <td><input type="text" id="TxtTotal" name="TxtTotal"></td>
+          <td><input type="button" onclick="supprimerLigne(this)" value="Supprimer"></td>
+
+        </tr>
       </table>
+      <div class="input-optn mt-3">
+        <input type="button" onclick="ajouterLigne()" value="Ajouter une nouvelle ligne">
+      </div>
+
     </fieldset>
 
   </div>

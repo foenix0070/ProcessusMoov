@@ -374,7 +374,7 @@ appMission.Add = function ( callBack) {
 
   //let endDate = startDate.addDays(2);
 
-  oListItem.set_item("Status", appHelper.Status.ENATTENTE);
+  oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "Validation du supérieur hiérarchique");
 
   oListItem.set_item("DateDebut", startDate);

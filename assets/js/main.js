@@ -144,7 +144,7 @@ var arrMenu = [
   },
   
 
- /* {
+  {
     id: "dmd_regularisationFinMission",
     title: "Demande de régularisation de frais de mission",
     icon: "fa fa-2x fa-globe",
@@ -153,7 +153,7 @@ var arrMenu = [
         offcanvas: {
           id: "dmd_regularisationFinMission_new",
           title: "Effectuer une demande",
-          url: "tools1/pages/regularisationFinMission/add.aspx",
+          url: "tools1/pages/regularisationFraisMission/add.aspx",
          // url: "/pages/regularisationFraisMission/add.html",
           target: "ffcMainFormContainer",
         },
@@ -165,7 +165,7 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationFinMission_list_en_cours",
           title: "Demande en cours",
-          url: "/pages/conge/ici.html",
+          url: "tools1/pages/regularisationFinMission/list.aspx?t=E",
           target: "DivMainPageContainer",
         },
       },
@@ -174,7 +174,7 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationFinMission_list_validee",
           title: "Demandes validées",
-          //url: "#",
+          url: "tools1/pages/regularisationFinMission/list.aspx?t=V",
           target: "DivMainPageContainer",
         },
       },
@@ -184,14 +184,14 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationFinMission_list_rejetee",
           title: "Demandes réjetées",
-          //url: "#",
+          url: "tools1/pages/regularisationFinMission/list.aspx?t=R",
           target: "DivMainPageContainer",
         },
       },
     ],
   },
 
-  */
+
 
 
 
