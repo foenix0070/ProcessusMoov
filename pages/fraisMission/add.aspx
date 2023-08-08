@@ -146,9 +146,9 @@
           <!--<td><input type="text" id="Txtlibelle" name="Txtlibelle"></td>-->
           <td><input type="date" id="DateDebut" name="DateDebut"></td>
           <td><input type="date" id="DateFin" name="DateFin"></td>
-          <td><input type="text" id="TxtNombre" name="TxtNombre"></td>
-          <td><input type="text" id="TxtForfait" name="TxtForfait"></td>
-          <td><input type="text" id="TxtTotal" name="TxtTotal"></td>
+          <td><input type="number" id="TxtNombre" name="TxtNombre"></td>
+          <td><input type="number" id="TxtForfait" name="TxtForfait"></td>
+          <td><input type="number" id="TxtTotal" name="TxtTotal"></td>
           <td><input type="button" onclick="supprimerLigne(this)" value="Supprimer"></td>
 
         </tr>
