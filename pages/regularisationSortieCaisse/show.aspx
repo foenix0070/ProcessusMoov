@@ -1,37 +1,36 @@
+<div class="row">
 
-                    <div class="row">
+
+  <div class="col-6">
+    <section id="SectionDetails"> </section>
+  </div>
+
+  <div class="col-6">
+    <section class="sect1" id="SectionDocumentsJoint"> </section>
+  </div>
+  <div class="col-12">
+
+    <br><br>
+
+    <section class="sect1" id="SectionHistoriqueValidation">
+
+    </section>
 
 
-<div class="col-6">
-  <section  id="SectionDetails"> </section>
+  </div>
+
+  <div class="col-12">
+    <br><br>
+    <section class="sect2" id="SectionValidation">
+
+    </section>
+  </div>
+
+
 </div>
 
-<div class="col-6">
-  <section class="sect1" id="SectionDocumentsJoint"> </section>
-</div>
-<div class="col-12">
 
-  <br><br>
-
-  <section class="sect1" id="SectionHistoriqueValidation">
-
-  </section>
-
-
-</div>
-
-<div class="col-12">
-  <br><br>
-  <section class="sect2" id="SectionValidation">
-
-  </section>
-</div>
-
-
-                    </div>
-
-
-                    <script id="tmpl_form_fichiers_attaches" type="x-tmpl-mustache">
+<script id="tmpl_form_fichiers_attaches" type="x-tmpl-mustache">
 
                       <div class="head-titre">
                         <h2>
@@ -59,10 +58,10 @@
                         {{/fichiers}}
                       </div>
                     </script>
-    
-                  <script id="tmpl_form_historique_validation" type="x-tmpl-mustache">
-    
-    
+
+<script id="tmpl_form_historique_validation" type="x-tmpl-mustache">
+
+
                       <div class="head-titre">
                         <h2>
                           Historique de validations
@@ -81,8 +80,8 @@
                         </div>
                       </div>
                     </script>
-    
-                  <script id="tmpl_form_validation" type="x-tmpl-mustache">
+
+<script id="tmpl_form_validation" type="x-tmpl-mustache">
     <br/>
                       <div class="head-titre">
                         <h2>
@@ -100,7 +99,7 @@
                       </form>
                     </script>
 
-                <script id="tmpl_form_details" type="x-tmpl-mustache">
+<script id="tmpl_form_details" type="x-tmpl-mustache">
 
                   <div class="head-titre">
                     <h2>
@@ -125,14 +124,14 @@
                   </table>
                 </script>
 
-                <script type="text/javascript">
-                  //appHelper.loadJSWithNameSpace("showConge", 'showConge', "controller/conge/show.js");
-                  appHelper.loadJSWithNameSpace("showRegularisationSortieCaisse", 'showRegularisationSortieCaisse', "controller/RegularisationSortieCaisse/show.js");
-                </script>
+<script type="text/javascript">
+  //appHelper.loadJSWithNameSpace("showConge", 'showConge', "controller/conge/show.js");
+  appHelper.loadJSWithNameSpace("showRegularisationSortieCaisse", 'showRegularisationSortieCaisse', "controller/RegularisationSortieCaisse/show.js");
+</script>
 <script type="text/javascript">
 
-function OpenFileUpload(str_select){
-  let transEshowRegularisationSortieCaisselt = document.getElementById(str_select);
-  transElt.click();
-}
+  function OpenFileUpload(str_select) {
+    let transEshowRegularisationSortieCaisselt = document.getElementById(str_select);
+    transElt.click();
+  }
 </script>

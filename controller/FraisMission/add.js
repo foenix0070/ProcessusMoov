@@ -355,7 +355,7 @@ appMission.Add = function ( callBack) {
   let oList = appMission.clientContext
     .get_web()
     .get_lists()
-    .getByTitle(appHelper.ListName.FraisMission);
+    .getByTitle(appHelper.ListName.Mission);
   let itemCreateInfo = new window.SP.ListItemCreationInformation();
   let oListItem = oList.addItem(itemCreateInfo);
 
@@ -410,8 +410,9 @@ appMission.Add = function ( callBack) {
 
   oListItem.update();
   clientContext.load(oListItem);
-  AddFM(oListItem);
   clientContext.executeQueryAsync(function () {
+    AddFM(oListItem);
+    console.log("Test");
 
   const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );

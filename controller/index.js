@@ -39,37 +39,39 @@ MoovTools.InitializePage = function () {
         //MoovTools.ListConge();
         MoovTools.ListDemande(appHelper.ListName.Conge, "conge", "CONGES", function () {
           MoovTools.ListDemande(appHelper.ListName.SortieCaisse, "sortieCaisse", "SORTIECAISSE", function () {
-            MoovTools.ListDemande(appHelper.ListName.RegularisationSortieCaisse, "regularisationSortieCaisse", "REGULARISATIONSORTIECAISSE", function () {
+            MoovTools.ListDemande(appHelper.ListName.RegularisationSortieCaisse, "regularisation de Sortie de Caisse", "REGULARISATIONSORTIECAISSE", function () {
               MoovTools.ListDemande(appHelper.ListName.Materiel, "materiel", "MATERIEL", function () {
                 MoovTools.ListDemande(appHelper.ListName.Vehicule, "vehicule", "VEHICULE", function () {
                   MoovTools.ListDemande(appHelper.ListName.Gadget, "gadget", "GADGET", function () {
-                    MoovTools.ListDemande(appHelper.ListName.Mission, "fraisMission", "MISSION", function () {
-                      MoovTools.ListDemande(appHelper.ListName.Absence, "autorisationAbsence", "ABSENCE", function () {
+                    //MoovTools.ListDemande(appHelper.ListName.Mission, "fraisMission", "MISSION", function () {
+                    MoovTools.ListDemande(appHelper.ListName.Absence, "autorisation Absence", "ABSENCE", function () {
+                      MoovTools.ListDemande(appHelper.ListName.Mission, "frais Mission", "MISSION", function () {
                         appHelper.renderTemplate("tmpl_table_demande", "DivDemandeTableShow", MoovTools.view);
 
-                      //   appHelper.listenNavigationLink ('linkMainNavigation');
-                      const linkClick = document.getElementsByClassName('click');
-                      for (var i = 0; i < linkClick.length; i++) {
-                        linkClick[i].addEventListener("click", function () {
-                          let url = this.getAttribute("data-url");
-                          sessionStorage.setItem("ajax_url", url);
-                          $.ajax({
-                            url: url,
-                            method: 'GET',
-                            dataType: 'html',
-                            success: function (data) {
-                              $('#reponseAjax').html(data);
-                            },
-                            error: function () {
-                              $('#reponseAjax').html('Erreur lors du chargement des données.');
-                            }
-                          });
+                        //   appHelper.listenNavigationLink ('linkMainNavigation');
+                        const linkClick = document.getElementsByClassName('click');
+                        for (var i = 0; i < linkClick.length; i++) {
+                          linkClick[i].addEventListener("click", function () {
+                            let url = this.getAttribute("data-url");
+                            sessionStorage.setItem("ajax_url", url);
+                            $.ajax({
+                              url: url,
+                              method: 'GET',
+                              dataType: 'html',
+                              success: function (data) {
+                                $('#reponseAjax').html(data);
+                              },
+                              error: function () {
+                                $('#reponseAjax').html('Erreur lors du chargement des données.');
+                              }
+                            });
 
-                          return false;
-                        });
-                      }
+                            return false;
+                          });
+                        }
+                      });
+                      //});
                     });
-                  });
                   });
                 });
               });

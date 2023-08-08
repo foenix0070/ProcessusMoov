@@ -1059,7 +1059,7 @@ const ACTIV_WORKFLOW = {
       ]
     },
     {
-      "item": "FRAISMISSION",
+      "item": "MISSION",
       "step": [
         {
           "id": "VHCL#1",

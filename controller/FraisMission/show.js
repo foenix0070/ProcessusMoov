@@ -10,7 +10,7 @@ showFraisMission.InitializePage = function () {
   let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
   let Id = appHelper.GetQueryStringFromAjaxQuery('id');
 
-  appSpHelper.CheckAttachmentFolder(showFraisMission.clientContext, Id, appHelper.ListName.Gadget, null);
+  appSpHelper.CheckAttachmentFolder(showFraisMission.clientContext, Id, appHelper.ListName.Mission, null);
 
   appSpHelper.GetMyProperties(function () {
     showFraisMission.ShowDetails (Id);
@@ -38,17 +38,17 @@ showFraisMission.ShowForm = function(tacheId, demandeid){
   let view = {};
   view.did = demandeid;
   view.tid = tacheId;
-  view.process = appHelper.AppCode.GADGET;
+  view.process = appHelper.AppCode.Mission;
   appHelper.renderTemplate("tmpl_form_validation", "SectionValidation", view);
 
   const TxtCommentaire = document.getElementById("TxtCommentaire");
   const BtnMod = document.getElementById("BtnValidationModification");
   const BtnOK = document.getElementById("BtnValidationOK");
   const BtnNOK = document.getElementById("BtnValidationNOK");
-  const WF  =  new WFManager(appHelper.AppCode.GADGET,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+  const WF  =  new WFManager(appHelper.AppCode.Mission,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
 
   BtnOK.addEventListener("click", function () {
-    WF.goToNextTask(showFraisMission.clientContext ,tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToNextTask(showFraisMission.clientContext ,tacheId, appHelper.AppCode.Mission, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
       showFraisMission.UpDateItemStatus (nextTask, demandeid, function(){
         location.reload();
@@ -57,7 +57,7 @@ showFraisMission.ShowForm = function(tacheId, demandeid){
   });
 
   BtnNOK.addEventListener("click", function () {
-    WF.goToRefusedTask(showFraisMission.clientContext ,tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToRefusedTask(showFraisMission.clientContext ,tacheId, appHelper.AppCode.Mission, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
       showFraisMission.UpDateItemStatusRejet (true, demandeid, function(){
         location.reload();
@@ -66,7 +66,7 @@ showFraisMission.ShowForm = function(tacheId, demandeid){
   });
 
   BtnMod.addEventListener("click", function () {
-    WF.goToRefusedTask(showFraisMission.clientContext ,tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToRefusedTask(showFraisMission.clientContext ,tacheId, appHelper.AppCode.Mission, demandeid, TxtCommentaire.value, function(nextTask){
       console.log(nextTask);
       showFraisMission.UpDateItemStatusRejet (false, demandeid, function(){
         location.reload();
@@ -77,7 +77,7 @@ showFraisMission.ShowForm = function(tacheId, demandeid){
 
 showFraisMission.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Gadget);
+  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Mission);
   let It = oList .getItemById(demandeid);
 
   if(isRejet){
@@ -98,7 +98,7 @@ showFraisMission.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
 }
 
 showFraisMission.UpDateItemStatus = function(nextTask, demandeid, callBack){
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Gadget);
+  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Mission);
   let It = oList .getItemById(demandeid);
 
   if(nextTask){
@@ -123,7 +123,7 @@ showFraisMission.ShowFichierJoint = function(demandeid) {
 
   let view = {};
 
-  let appName = appHelper.ListName.Gadget;
+  let appName = appHelper.ListName.Mission;
   let id = demandeid;
   let folderPath = `/Lists/${appName}/Attachments/${id}/`;
   console.log(folderPath);
@@ -184,8 +184,8 @@ showFraisMission.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
       //Get Client Context and Web object.
       var oWeb = clientContext.get_web();
       //Get list and Attachment folder where the attachment of a particular list item is stored.
-      var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Gadget);
-      var urlToAttach = '/Lists/'+ appHelper.ListName.Gadget +'/Attachments/'+ demandeid + '/'
+      var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Mission);
+      var urlToAttach = '/Lists/'+ appHelper.ListName.Mission +'/Attachments/'+ demandeid + '/'
       var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
       console.log(attachmentFolder);
       //Convert the file contents into base64 data
@@ -220,7 +220,7 @@ showFraisMission.ShowValidation = function(demandeid) {
      '<Where>' +
       '<And>' +
       '<And>' +
-      '<Eq><FieldRef Name="Parent" /><Value Type="Text">'+ appHelper.AppCode.GADGET +'</Value></Eq>' +
+      '<Eq><FieldRef Name="Parent" /><Value Type="Text">'+ appHelper.AppCode.MISSION +'</Value></Eq>' +
       '<Eq><FieldRef Name="ParentID0" /><Value Type="Text">'+ demandeid +'</Value></Eq>' +
       '</And>' +
       '<Eq><FieldRef Name="Status" /><Value Type="Choice">Terminé</Value></Eq>' +
@@ -262,18 +262,19 @@ showFraisMission.ShowValidation = function(demandeid) {
 
 showFraisMission.ShowDetails = function (demandeid){
 
-  let oList = showFraisMission.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.Gadget);
+  let oList = showFraisMission.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.Mission);
   let It = oList .getItemById(demandeid);
 
   showFraisMission.clientContext.load(It);
   showFraisMission.clientContext.executeQueryAsync(function () {
   if(It){
   let view = {
-    typeconge : It.get_item('Title') != null ?  It.get_item('Title') : '',
-    nbrejour: It.get_item('NombreJourAccorde') != null ?  It.get_item('NombreJourAccorde') : '',
-    datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
-    interimaire: It.get_item('Demandeur') != null ?  It.get_item('Demandeur').get_lookupValue() : '',
-    motif: It.get_item('Motif') != null ?  It.get_item('Motif') : ''
+    title: It.get_item('Title') != null ?  It.get_item('Title') : '',
+    datedepart: It.get_item('DateDebut') != null ?  new Date( It.get_item('DateDebut')).toLocaleDateString() : '',
+    dateretour: It.get_item('DateFin') != null ?  It.get_item('DateFin').get_lookupValue() : '',
+    motif: It.get_item('Motif') != null ?  It.get_item('Motif') : '',
+    destination: It.get_item('Destination') != null ?  It.get_item('Destination') : '',
+    cout: It.get_item('CoutTotal') != null ?  It.get_item('CoutTotal') : ''
   };
   appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
 

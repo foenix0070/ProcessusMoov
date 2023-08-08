@@ -124,7 +124,7 @@
                   <table>
                       <tr>
                         <td style="text-align:left;" class="fw-bold" width="200px" >Motif de cong&eacute;</td>
-                        <td style="text-align:left;">{{typeconge}}</td>
+                        <td style="text-align:left;">{{title}}</td>
                       </tr>
 
                       <tr>
@@ -134,11 +134,19 @@
 
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="200px">Nombre de jours</td>
-                        <td style="text-align:left;">{{nbrejour}}</td>
+                        <td style="text-align:left;">{{dateretour}}</td>
                       </tr>
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="200px">Int&eacute;rimaire</td>
-                        <td style="text-align:left;">{{interimaire}}</td>
+                        <td style="text-align:left;">{{motif}}</td>
+                      </tr>
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Int&eacute;rimaire</td>
+                        <td style="text-align:left;">{{destination}}</td>
+                      </tr>
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Int&eacute;rimaire</td>
+                        <td style="text-align:left;">{{cout}}</td>
                       </tr>
                   </table>
                 </script>

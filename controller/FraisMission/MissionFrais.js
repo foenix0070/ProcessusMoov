@@ -49,6 +49,7 @@ FraisMission.AddFraisMission = function (data, oListItem) {
       });
       
     }
+    console.log("Add FraisMission");
   }
 
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', FraisMission.InitializePage);
