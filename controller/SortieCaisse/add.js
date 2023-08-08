@@ -10,6 +10,7 @@ appSortieCaisse.InitializePage = function () {
 
     appSortieCaisse.initCmbMode(function () { });
     appSortieCaisse.initSomme(function () { });
+    appSortieCaisse.initCmbCaisse(function () { });
 
 
     document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
@@ -57,6 +58,27 @@ appSortieCaisse.initSomme = function (callBack) {
   });
 
 };
+
+
+appSortieCaisse.initCmbCaisse = function (callBack) {
+  ListerCaisse(function () {
+    let cmb = document.getElementById("TxtCaissePaiement");
+    let txtColor = document.getElementById("TxtCaisseColeur");
+    let txtText = document.getElementById("TxtCaisseText");
+    cmb.addEventListener("change", function () {
+      let selectedOption = this.options[this.selectedIndex];
+      let color = selectedOption.getAttribute("data-color");
+      txtColor.value = color;
+      txtText.value = selectedOption.text;
+    });
+
+    if (callBack) {
+      callBack();
+    }
+  });
+
+};
+
 
 
 appSortieCaisse.initCmbMode = function (callBack) {
