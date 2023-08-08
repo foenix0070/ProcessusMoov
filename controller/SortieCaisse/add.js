@@ -7,26 +7,9 @@ appSortieCaisse.InitializePage = function () {
   appSortieCaisse.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
-    //appSpHelper.LoadUserCongeParam(
-    //appHelper.ListName.Employe, "ETISALAT-AFRICA\pouattara", App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
-    //document.getElementById("TxtCurrentUserLogin").value,
-    //function () {
-    //appSpHelper.GetEmploye(appHelper.ListName.Employe,document.getElementById("TxtSpManagerN1Login").value,
-    //function (item) {
-    //console.log(item);
-    //appSpHelper.GetEmployeeManagerLogin("N2",item.get_item("EmpManager"),
-    //function () {
-    // span= document.getElementById('spanSolde');
-    // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
-    //  appSortieCaisse.initCmbTypeConge(function(){
-    //appSortieCaisse.List();
-    //  });
-    //}
-    //);
-    //}
-    //);
-    //}
-    //);
+
+    appSortieCaisse.initCmbMode(function () { });
+    appSortieCaisse.initSomme(function () { });
 
 
     document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
@@ -45,21 +28,57 @@ appSortieCaisse.InitializePage = function () {
   });
 
 
-  /*
-  BtnAdd.addEventListener("click", function () {
-    // setTimeout(function () {
-    //   appSpHelper.InitializePeoplePicker(
-    //     "plePickerInterimaireDiv",
-    //     false,
-    //     "350px"
-    //   );
-    // }, 2000);
 
-  });
-  */
 
 
 };
+
+
+appSortieCaisse.initSomme = function (callBack) {
+  ListerSomme(function () {
+    const sommeInput = document.getElementById('TxtMontant');
+
+    sommeInput.addEventListener('change', function () {
+      const valeur = parseFloat(sommeInput.value);
+
+      if (isNaN(valeur)) {
+        console.log("Veuillez saisir un nombre valide.");
+        sommeInput.value = '';
+        return;
+      }
+
+      sommeInput.value = valeur.toFixed(2);
+    });
+
+
+    if (callBack) {
+      callBack();
+    }
+  });
+
+};
+
+
+appSortieCaisse.initCmbMode = function (callBack) {
+  ListerMode(function () {
+    let cmb = document.getElementById("TxtModePaiement");
+    let txtColor = document.getElementById("TxtModeColeur");
+    let txtText = document.getElementById("TxtModeText");
+    cmb.addEventListener("change", function () {
+      let selectedOption = this.options[this.selectedIndex];
+      let color = selectedOption.getAttribute("data-color");
+      txtColor.value = color;
+      txtText.value = selectedOption.text;
+    });
+
+    if (callBack) {
+      callBack();
+    }
+  });
+
+};
+
+
 
 appSortieCaisse.Add = function (callBack) {
   let oList = appSortieCaisse.clientContext
@@ -106,11 +125,11 @@ appSortieCaisse.Add = function (callBack) {
     })*/
 
     const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
-      let WF = new WFManager(appHelper.AppCode.SORTIECAISSE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
-      if(callBack){
-        callBack(oListItem);
-      }
+    let WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+    if (callBack) {
+      callBack(oListItem);
+    }
   }, appSpHelper.writeError);
 };
 

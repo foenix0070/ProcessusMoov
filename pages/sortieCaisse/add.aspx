@@ -18,22 +18,27 @@
       </div>
 
     </fieldset>
-   
+
     <fieldset class="form-elts">
       <legend>Sortie de caisse</legend>
       <div class="mb-3">
         <label class="form-label"> Titre</label>
         <input type="text" class="form-control" id="TxtTitle" placeholder="" />
       </div>
-      
+
       <div class="mb-3">
         <label class="form-label"> Montant</label>
-        <input type="text" class="form-control" id="TxtMontant" placeholder="" />
+        <input type="number" step="0.01" class="form-control" id="TxtMontant" placeholder="" />
       </div>
 
       <div class="mb-3">
         <label class="form-label"> Mode de paiement</label>
-        <input type="text" class="form-control" id="TxtModePaiement" placeholder="" />
+        <!-- <input type="text" class="form-control" id="TxtModePaiement" placeholder="" /> -->
+        <select id="TxtModePaiement" name="TxtModePaiement" class="form-control">
+          <option value="0" data-color="#000">Choisir le mode de paiement</option>
+        </select>
+        <input id="TxtModeColeur" value="" type="hidden">
+        <input id="TxtModeText" value="" type="hidden">
       </div>
 
       <div class="mb-3">

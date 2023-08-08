@@ -62,8 +62,8 @@
           <td><input type="date" id="DateDebutHotel"></td>
           <td><input type="date" id="DateFinHotel"></td>
           <td><input type="number" id="NombreHotel"></td>
-          <td><input type="text" id="ForfaitHotel"></td>
-          <td><input type="text" id="TotalHotel"></td>
+          <td><input type="number" id="ForfaitHotel"></td>
+          <td><input type="number" id="TotalHotel"></td>
 
 
         </tr>
@@ -72,8 +72,8 @@
           <td><input type="date" id="DateDebutRepas"></td>
           <td><input type="date" id="DateFinRepas"></td>
           <td><input type="number" id="NombreRepas"></td>
-          <td><input type="text" id="ForfaitRepas"></td>
-          <td><input type="text" id="TotalRepas"></td>
+          <td><input type="number" id="ForfaitRepas"></td>
+          <td><input type="number" id="TotalRepas"></td>
 
         </tr>
         <tr>
@@ -81,8 +81,8 @@
           <td><input type="date" id="DateDebutFraisTransport"></td>
           <td><input type="date" id="DateFinFraisTransport"></td>
           <td><input type="number" id="NombreFraisTransport"></td>
-          <td><input type="text" id="ForfaitFraisTransport"></td>
-          <td><input type="text" id="TotalFraisTransport"></td>
+          <td><input type="number" id="ForfaitFraisTransport"></td>
+          <td><input type="number" id="TotalFraisTransport"></td>
 
         </tr>
         <tr>
@@ -90,8 +90,8 @@
           <td><input type="date" id="DateDebutAutreFrais"></td>
           <td><input type="date" id="DateFinAutreFrais"></td>
           <td><input type="number" id="NombreAutreFrais"></td>
-          <td><input type="text" id="ForfaitAutreFrais"></td>
-          <td><input type="text" id="TotalAutreFrais"></td>
+          <td><input type="number" id="ForfaitAutreFrais"></td>
+          <td><input type="number" id="TotalAutreFrais"></td>
 
         </tr>
         <tr>
@@ -100,7 +100,7 @@
           <td></td>
           <td></td>
           <td><label for="">Total :</label></td>
-          <td><input type="text" id="Total"></td>
+          <td><input type="number" id="Total"></td>
         </tr>
 
         <tr>
@@ -109,7 +109,7 @@
           <td></td>
           <td></td>
           <td><label for="">Total des frais perçus (F CFA):</label></td>
-          <td><input type="text" id="TotalFraisPercus"></td>
+          <td><input type="number" id="TotalFraisPercus"></td>
         </tr>
 
         <tr>
@@ -118,7 +118,7 @@
           <td></td>
           <td></td>
           <td><label for="">Solde à reverser à la caisse (F CFA) :</label></td>
-          <td><input type="text" id="SoldeReverserCaisse"></td>
+          <td><input type="number" id="SoldeReverserCaisse"></td>
         </tr>
 
       </table>
