@@ -93,6 +93,13 @@
                         {{/historique}}
                       </table>
                     </div>
+                  </div></br>
+                  <div>
+                    <h2 style="color:#c50000 !important;">
+                      <b>
+                        {{etat}}
+                      </b>
+                    </h2>
                   </div>
                 </script>
 
@@ -120,25 +127,32 @@
                     <h2>
                       Details de la demande
                     </h2>
-                  </div>
+                  </div></br>
+                  <div>
+                    <h3 style="color:#c50000 !important;">
+                      <b>
+                        {{etat}}
+                      </b>
+                    </h3>
+                  </div></br>
                   <table>
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px" >Motif de cong&eacute;</td>
+                        <td style="text-align:left;" class="fw-bold" width="200px" >Titre :</td>
                         <td style="text-align:left;">{{title}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Date de d&eacute;part</td>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Date de depart :</td>
                         <td style="text-align:left;">{{datedepart}}</td>
+                      </tr>
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Date de retour :</td>
+                        <td style="text-align:left;">{{dateretour}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Nombre de jours</td>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Motif :</td>
                         <td style="text-align:left;">{{motif}}</td>
-                      </tr>
-                      <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Int&eacute;rimaire</td>
-                        <td style="text-align:left;">{{status}}</td>
                       </tr>
                   </table>
                 </script>

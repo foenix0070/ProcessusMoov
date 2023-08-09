@@ -246,6 +246,8 @@ showMateriel.ShowValidation = function (demandeid) {
           dateaction: '',
           decision: '',
           commentaire: oListItem.get_item('_Comment') != null ? oListItem.get_item('_Comment').toString() : ''
+          //etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
+
         });
       }
       appHelper.renderTemplate("tmpl_form_historique_validation", "SectionHistoriqueValidation", view);
@@ -271,8 +273,10 @@ showMateriel.ShowDetails = function (demandeid) {
         title: It.get_item('Title') != null ? It.get_item('Title') : '',
         //nbrejour: It.get_item('NombreJourAccorde') != null ? It.get_item('NombreJourAccorde') : '',
         datedepart: It.get_item('DateDepart') != null ? new Date(It.get_item('DateDepart')).toLocaleDateString() : '',
+        quantite: It.get_item('Quantite') != null ? It.get_item('Quantite') : '',
         //interimaire: It.get_item('Demandeur') != null ? It.get_item('Demandeur').get_lookupValue() : '',
         motif: It.get_item('Motif') != null ? It.get_item('Motif') : '',
+        etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
 
         //quantite: It.get_item('Quantite') != null ? It.get_item('Quantite') : ''
       };

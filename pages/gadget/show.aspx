@@ -79,6 +79,13 @@
                         {{/historique}}
                       </table>
                     </div>
+                  </div></br>
+                  <div>
+                    <h2 style="color:#c50000 !important;">
+                      <b>
+                        {{etat}}
+                      </b>
+                    </h2>
                   </div>
                 </script>
 
@@ -105,20 +112,32 @@
                     <h2>
                       Details de la demande
                     </h2>
-                  </div>
+                  </div></br>
+                  <div>
+                    <h3 style="color:#c50000 !important;">
+                      <b>
+                        {{etat}}
+                      </b>
+                    </h3>
+                  </div></br>
                   <table>
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px" >Article </td>
+                        <td style="text-align:left;" class="fw-bold" width="200px" >Article :</td>
                         <td style="text-align:left;">{{nature}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px">Nombre</td>
-                        <td style="text-align:left;">{{nbrejour}}</td>
+                        <td style="text-align:left;" class="fw-bold" width="200px">Date de la demande :</td>
+                        <td style="text-align:left;">{{datedepart}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px">Description </td>
+                        <td style="text-align:left;" class="fw-bold" width="200px">Quantite :</td>
+                        <td style="text-align:left;">{{quantite}}</td>
+                      </tr>
+
+                      <tr>
+                        <td style="text-align:left;" class="fw-bold" width="200px">Motif :</td>
                         <td style="text-align:left;"> {{motif}}  </td>
                       </tr>
                   </table>

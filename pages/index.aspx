@@ -116,7 +116,7 @@
           <tr class="" >
             <td>{{id}}</td>
             <th>{{nomdemande}}</th>
-            <td><a href="tools1/pages/{{repertoire}}/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/{{repertoire}}/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+            <td><a href="tools1/pages/{{repertoire}}/show.aspx?id={{id}}" class="linkMainNavigation" data-url="tools1/pages/{{repertoire}}/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
             <td><span class="{{classe}}">{{status}}</span></td>
           </tr>
           {{/demandes}}

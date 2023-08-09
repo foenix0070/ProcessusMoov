@@ -26,8 +26,9 @@
       <thead>
         <tr>
           <th>Titre</th>
-          <th>Date</th>
-          <th>Motif</th>
+          <th>Date debut</th>
+          <th>Date de fin</th>
+          <th>Motif de reprise</th>
           <th>Etat</th>
         </tr>
       </thead>
@@ -36,6 +37,8 @@
         <tr class="" >
           <td>{{title}}</td>
           <td>{{startdate}}</td>
+          <td>{{enddate}}</td>
+          <td>{{reprisedate}}</td>
           <td>{{motif}}</td>
           <td><a href="tools1/pages/vehicule/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/vehicule/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
           <td><span class="{{classe}}">{{status}}</span></td>

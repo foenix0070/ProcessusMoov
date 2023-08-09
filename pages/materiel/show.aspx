@@ -76,8 +76,16 @@
         </tr>
         {{/historique}}
       </table>
+    </div></br>
+    <div>
+      <h2 style="color:#c50000 !important;">
+        <b>
+          {{etat}}
+        </b>
+      </h2>
     </div>
   </div>
+  
 </script>
 
 <script id="tmpl_form_validation" type="x-tmpl-mustache">
@@ -103,27 +111,34 @@
     <h2>
       Details de la demande
     </h2>
-  </div>
+  </div></br>
+  <div>
+    <h3 style="color:#c50000 !important;">
+      <b>
+        {{etat}}
+      </b>
+    </h3>
+  </div></br>
                   <table>
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px" >Materiel </td>
+                        <td style="text-align:left;" class="fw-bold" width="200px" >Materiel :</td>
                         <td style="text-align:left;">{{title}}</td>
                       </tr>
 
                       
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px">Date de la demande </td>
+                        <td style="text-align:left;" class="fw-bold" width="200px">Date de la demande :</td>
                         <td style="text-align:left;">{{datedepart}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px">Nombre</td>
-                        <td style="text-align:left;">{{motif}}</td>
+                        <td style="text-align:left;" class="fw-bold" width="200px">Quantite :</td>
+                        <td style="text-align:left;">{{quantite}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px">Nombre</td>
-                        <td style="text-align:left;">{{status}}</td>
+                        <td style="text-align:left;" class="fw-bold" width="200px">Motif :</td>
+                        <td style="text-align:left;">{{motif}}</td>
                       </tr>
                   </table>
                 </script>

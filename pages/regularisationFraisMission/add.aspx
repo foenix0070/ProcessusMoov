@@ -27,9 +27,9 @@
       <h4>CERTIFICATION DE LA MISSION</h4>
 
       <input type="radio" name="success" value="Succes" id="RadSucces">
-      <label for="RadSucces">La mission a été effectuée</label><br>
+      <label for="RadSucces">Mission effectuée</label> &nbsp;
       <input type="radio" name="echec" value="Echecs" id="RadEchecs">
-      <label for="RadEchecs">La mission n'a pas été effectuée</label><br>
+      <label for="RadEchecs">Mission non effectuée</label><br>
 
       <h4>REMBOURSEMENT DES FRAIS COMPLEMENTAIRES</h4>
       <!--<table>
@@ -138,9 +138,9 @@
           <td><input type="text" id="Txtlibelle" name="Txtlibelle" placeholder="Libelle"></td>
           <td><input type="date" id="DateDebut" name="DateDebut"></td>
           <td><input type="date" id="DateFin" name="DateFin"></td>
-          <td><input type="text" id="TxtNombre" name="TxtNombre"></td>
-          <td><input type="text" id="TxtForfait" name="TxtForfait"></td>
-          <td><input type="text" id="TxtTotal" name="TxtTotal"></td>
+          <td><input type="number" id="TxtNombre" name="TxtNombre"></td>
+          <td><input type="number" id="TxtForfait" name="TxtForfait"></td>
+          <td><input type="number" id="TxtTotal" name="TxtTotal"></td>
           <td><input type="button" onclick="supprimerLigne(this)" value="Supprimer"></td>
 
         </tr>

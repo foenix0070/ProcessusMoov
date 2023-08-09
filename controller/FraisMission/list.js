@@ -61,7 +61,7 @@ ListMission.ListMission = function (T) {
           enddate: new Date( oListItem.get_item("DateFin")).toLocaleDateString(),
           destination: new Date( oListItem.get_item("Destination")).toLocaleDateString(),
           status: oListItem.get_item("StatutLibelle"),
-          classe: appHelper.Status.GetClass(oListItem.get_item("Status")),
+          classe: appHelper.Status.GetClass(oListItem.get_item("Statut")),
         });
       }
 

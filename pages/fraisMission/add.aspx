@@ -82,7 +82,7 @@
       </div>
       <div class="mb-3">
         <label class="form-label">Coût Total :</label>
-        <input type="text" id="TxtCoutTotal" class="  form-control">
+        <input type="number" id="TxtCoutTotal" class="  form-control">
       </div>
 
       <div class="mb-3">
@@ -95,13 +95,6 @@
       </div>
 
       <div class="mb-3">
-        <!--<label class="form-label">Caisse de paiement :</label>
-        <select id="CmbCaisse" onchange="afficher()">
-          <option value="1">Test 1</option>
-          <option value="2">Test 2</option>
-          <option value="3">Test 3</option>
-          <option value="Autre">Autre</option>
-        </select> &nbsp; &nbsp;-->
 
         <label class="form-label">Mode de paiement :</label>
         <select id="cmbMode" name="cmbMode" class="form-control">

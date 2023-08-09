@@ -5,7 +5,7 @@ showSortieCaisse.isSoldeImpact = 0;
 
 showSortieCaisse.InitializePage = function () {
   showSortieCaisse.clientContext = SP.ClientContext.get_current();
-  clientContext =  SP.ClientContext.get_current();
+  clientContext = SP.ClientContext.get_current();
 
   let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
   let Id = appHelper.GetQueryStringFromAjaxQuery('id');
@@ -15,28 +15,28 @@ showSortieCaisse.InitializePage = function () {
   appSpHelper.GetMyProperties(function () {
 
     console.log(tacheId, Id);
-    showSortieCaisse.ShowDetails (Id);
+    showSortieCaisse.ShowDetails(Id);
     showSortieCaisse.ShowFichierJoint(Id);
     showSortieCaisse.ShowValidation(Id);
-  if(tacheId){
-    showSortieCaisse.TestShowForm (tacheId, Id);
-  }
+    if (tacheId) {
+      showSortieCaisse.TestShowForm(tacheId, Id);
+    }
   });
 }
 
-showSortieCaisse.TestShowForm = function(tacheId, demandeid){
+showSortieCaisse.TestShowForm = function (tacheId, demandeid) {
   console.log(tacheId, demandeid);
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.Validation);
-  let It = oList .getItemById(tacheId);
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Validation);
+  let It = oList.getItemById(tacheId);
   clientContext.load(It);
   clientContext.executeQueryAsync(function () {
-    if(It.get_item('Status') == "En cours"){
-      showSortieCaisse.ShowForm (tacheId, demandeid);
+    if (It.get_item('Status') == "En cours") {
+      showSortieCaisse.ShowForm(tacheId, demandeid);
     }
   }, appSpHelper.writeError);
 }
 
-showSortieCaisse.ShowForm = function(tacheId, demandeid){
+showSortieCaisse.ShowForm = function (tacheId, demandeid) {
 
   let view = {};
   view.did = demandeid;
@@ -48,73 +48,73 @@ showSortieCaisse.ShowForm = function(tacheId, demandeid){
   const BtnMod = document.getElementById("BtnValidationModification");
   const BtnOK = document.getElementById("BtnValidationOK");
   const BtnNOK = document.getElementById("BtnValidationNOK");
-  const WF  =  new WFManager(appHelper.AppCode.SORTIECAISSE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+  const WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
 
   BtnOK.addEventListener("click", function () {
-    WF.goToNextTask(showSortieCaisse.clientContext ,tacheId, appHelper.AppCode.SORTIECAISSE, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToNextTask(showSortieCaisse.clientContext, tacheId, appHelper.AppCode.SORTIECAISSE, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
-      showSortieCaisse.UpDateItemStatus (nextTask, demandeid, function(){
+      showSortieCaisse.UpDateItemStatus(nextTask, demandeid, function () {
         location.reload();
       });
     });
   });
 
   BtnNOK.addEventListener("click", function () {
-    WF.goToRefusedTask(showSortieCaisse.clientContext ,tacheId, appHelper.AppCode.SORTIECAISSE, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToRefusedTask(showSortieCaisse.clientContext, tacheId, appHelper.AppCode.SORTIECAISSE, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
-      showSortieCaisse.UpDateItemStatusRejet (true, demandeid, function(){
+      showSortieCaisse.UpDateItemStatusRejet(true, demandeid, function () {
         location.reload();
       });
     });
   });
 
   BtnMod.addEventListener("click", function () {
-    WF.goToRefusedTask(showSortieCaisse.clientContext ,tacheId, appHelper.AppCode.SORTIECAISSE, demandeid, TxtCommentaire.value, function(nextTask){
+    WF.goToRefusedTask(showSortieCaisse.clientContext, tacheId, appHelper.AppCode.SORTIECAISSE, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
-      showSortieCaisse.UpDateItemStatusRejet (false, demandeid, function(){
+      showSortieCaisse.UpDateItemStatusRejet(false, demandeid, function () {
         location.reload();
       });
     });
   });
 }
 
-showSortieCaisse.UpDateItemStatusRejet = function(isRejet, demandeid, callBack){
+showSortieCaisse.UpDateItemStatusRejet = function (isRejet, demandeid, callBack) {
 
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.SortieCaisse);
-  let It = oList .getItemById(demandeid);
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.SortieCaisse);
+  let It = oList.getItemById(demandeid);
 
-  if(isRejet){
+  if (isRejet) {
     It.set_item("Statut", "REJETEE");
     It.set_item("StatutLibelle", 'Demande rejetée');
-  }else{
+  } else {
     It.set_item("Statut", "DEMANDEMODIFICATION");
     It.set_item("StatutLibelle", 'Demande renvoyée pour modification');
   }
   It.update();
   clientContext.load(It);
   clientContext.executeQueryAsync(function () {
-    if(callBack){
+    if (callBack) {
       callBack();
     }
   }, appSpHelper.writeError);
 
 }
 
-showSortieCaisse.UpDateItemStatus = function(nextTask, demandeid, callBack){
-  let oList = clientContext .get_web().get_lists() .getByTitle(appHelper.ListName.SortieCaisse);
-  let It = oList .getItemById(demandeid);
+showSortieCaisse.UpDateItemStatus = function (nextTask, demandeid, callBack) {
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.SortieCaisse);
+  let It = oList.getItemById(demandeid);
 
-  if(nextTask){
+  if (nextTask) {
     It.set_item("Statut", "ENCOURS");
     It.set_item("StatutLibelle", nextTask.get_item('Title'));
-  }else{
+  } else {
     It.set_item("Statut", "VALIDEE");
     It.set_item("StatutLibelle", "Demande approuvée");
   }
   It.update();
   clientContext.load(It);
   clientContext.executeQueryAsync(function () {
-    if(callBack){
+    if (callBack) {
       callBack();
     }
   }, appSpHelper.writeError);
@@ -122,7 +122,7 @@ showSortieCaisse.UpDateItemStatus = function(nextTask, demandeid, callBack){
 
 
 
-showSortieCaisse.ShowFichierJoint = function(demandeid) {
+showSortieCaisse.ShowFichierJoint = function (demandeid) {
 
   let view = {};
 
@@ -139,101 +139,100 @@ showSortieCaisse.ShowFichierJoint = function(demandeid) {
         console.log('111');
         view.fichiers = [];
 
-          for (var i = 0; i < attachmentFiles.get_count() ; i++) {
-            view.fichiers.push({
-              nom : attachmentFiles.itemAt(i).get_name(),
-              dateajout :  new Date( attachmentFiles.itemAt(i).get_timeLastModified ()).toLocaleString (), //   new Date( attachmentFiles.itemAt(i).get_timeLastModified ()).toLocaleDateString() + ' ' +
-              taille : appHelper.ConvertOctetToKo( attachmentFiles.itemAt(i).get_length ()),
-              auteur : attachmentFiles.itemAt(i).get_author (),
-              url : appHelper.AppConstante.SiteUrl + '/'+  attachmentFiles.itemAt(i).get_serverRelativeUrl()
-            });
-          }
-        showSortieCaisse.ShowUploadForm (demandeid, view);
-
-        }else{
-          view.fichiers = [];
-          showSortieCaisse.ShowUploadForm (demandeid, view);
+        for (var i = 0; i < attachmentFiles.get_count(); i++) {
+          view.fichiers.push({
+            nom: attachmentFiles.itemAt(i).get_name(),
+            dateajout: new Date(attachmentFiles.itemAt(i).get_timeLastModified()).toLocaleString(), //   new Date( attachmentFiles.itemAt(i).get_timeLastModified ()).toLocaleDateString() + ' ' +
+            taille: appHelper.ConvertOctetToKo(attachmentFiles.itemAt(i).get_length()),
+            auteur: attachmentFiles.itemAt(i).get_author(),
+            url: appHelper.AppConstante.SiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
+          });
         }
+        showSortieCaisse.ShowUploadForm(demandeid, view);
+
+      } else {
+        view.fichiers = [];
+        showSortieCaisse.ShowUploadForm(demandeid, view);
       }
+    }
   },
 
-  function(){
-    view.fichiers = [];
-    showSortieCaisse.ShowUploadForm (demandeid, view);
-  });
+    function () {
+      view.fichiers = [];
+      showSortieCaisse.ShowUploadForm(demandeid, view);
+    });
 }
 
-showSortieCaisse.ShowUploadForm = function(demandeid, view){
+showSortieCaisse.ShowUploadForm = function (demandeid, view) {
   appHelper.renderTemplate("tmpl_form_fichiers_attaches", "SectionDocumentsJoint", view);
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
   FpUploadAttachement.addEventListener('change', (e) => {
     files = e.target.files;
-   for (const file of files) {
+    for (const file of files) {
       let reader = new FileReader();
-      reader.onload = function(e) {
-          showSortieCaisse.AttachFile (demandeid,  e.target.result, file.name)
+      reader.onload = function (e) {
+        showSortieCaisse.AttachFile(demandeid, e.target.result, file.name)
       }
-      reader.onerror = function(e)
-      {
-          console.log( e.target.error);
+      reader.onerror = function (e) {
+        console.log(e.target.error);
       }
       reader.readAsArrayBuffer(file);
     }
-    });
+  });
 }
 
-showSortieCaisse.AttachFile = function(demandeid,  arrayBuffer, fileName)   {
+showSortieCaisse.AttachFile = function (demandeid, arrayBuffer, fileName) {
 
-      //Get Client Context and Web object.
-      var oWeb = clientContext.get_web();
-      //Get list and Attachment folder where the attachment of a particular list item is stored.
-      var oList = oWeb.get_lists().getByTitle(appHelper.ListName.SortieCaisse);
-      var urlToAttach = '/Lists/'+ appHelper.ListName.SortieCaisse +'/Attachments/'+ demandeid + '/'
-      var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
-      console.log(attachmentFolder);
-      //Convert the file contents into base64 data
-      var bytes = new Uint8Array(arrayBuffer);
-      var i, length, out = '';
-      for (i = 0, length = bytes.length; i < length; i += 1) {
-          out += String.fromCharCode(bytes[i]);
-      }
-      var base64 = btoa(out);
-      //Create FileCreationInformation object using the read file data
-      createInfo = new SP.FileCreationInformation();
-      createInfo.set_content(base64);
-      createInfo.set_url(fileName);
+  //Get Client Context and Web object.
+  var oWeb = clientContext.get_web();
+  //Get list and Attachment folder where the attachment of a particular list item is stored.
+  var oList = oWeb.get_lists().getByTitle(appHelper.ListName.SortieCaisse);
+  var urlToAttach = '/Lists/' + appHelper.ListName.SortieCaisse + '/Attachments/' + demandeid + '/'
+  var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
+  console.log(attachmentFolder);
+  //Convert the file contents into base64 data
+  var bytes = new Uint8Array(arrayBuffer);
+  var i, length, out = '';
+  for (i = 0, length = bytes.length; i < length; i += 1) {
+    out += String.fromCharCode(bytes[i]);
+  }
+  var base64 = btoa(out);
+  //Create FileCreationInformation object using the read file data
+  createInfo = new SP.FileCreationInformation();
+  createInfo.set_content(base64);
+  createInfo.set_url(fileName);
 
-      //Add the file to the list item
-      attachmentFiles = attachmentFolder.get_files().add(createInfo);
-      //Load client context and execute the batch
-      clientContext.load(oList);
-      clientContext.load(attachmentFiles);
-      clientContext.executeQueryAsync(function(){
-        showSortieCaisse.ShowFichierJoint(demandeid);
-      }, appSpHelper.writeError);
+  //Add the file to the list item
+  attachmentFiles = attachmentFolder.get_files().add(createInfo);
+  //Load client context and execute the batch
+  clientContext.load(oList);
+  clientContext.load(attachmentFiles);
+  clientContext.executeQueryAsync(function () {
+    showSortieCaisse.ShowFichierJoint(demandeid);
+  }, appSpHelper.writeError);
 
 };
 
-showSortieCaisse.ShowValidation = function(demandeid) {
+showSortieCaisse.ShowValidation = function (demandeid) {
   let view = {};
 
-  let oList = showSortieCaisse.clientContext  .get_web()  .get_lists()  .getByTitle(appHelper.ListName.Validation);
+  let oList = showSortieCaisse.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Validation);
   var QryGetNextOne = '<View>' +
-  '<Query>' +
-     '<Where>' +
-      '<And>' +
-      '<And>' +
-      '<Eq><FieldRef Name="Parent" /><Value Type="Text">'+ appHelper.AppCode.SORTIECAISSE +'</Value></Eq>' +
-      '<Eq><FieldRef Name="ParentID0" /><Value Type="Text">'+ demandeid +'</Value></Eq>' +
-      '</And>' +
-      '<Eq><FieldRef Name="Status" /><Value Type="Choice">Terminé</Value></Eq>' +
-     '</And>' +
-   '</Where>' +
-  '</Query>' +
-  '</View>';
+    '<Query>' +
+    '<Where>' +
+    '<And>' +
+    '<And>' +
+    '<Eq><FieldRef Name="Parent" /><Value Type="Text">' + appHelper.AppCode.SORTIECAISSE + '</Value></Eq>' +
+    '<Eq><FieldRef Name="ParentID0" /><Value Type="Text">' + demandeid + '</Value></Eq>' +
+    '</And>' +
+    '<Eq><FieldRef Name="Status" /><Value Type="Choice">Terminé</Value></Eq>' +
+    '</And>' +
+    '</Where>' +
+    '</Query>' +
+    '</View>';
 
   let camlQuery = new SP.CamlQuery();
-  camlQuery.set_viewXml( QryGetNextOne);
+  camlQuery.set_viewXml(QryGetNextOne);
   let collListItem = oList.getItems(camlQuery);
   showSortieCaisse.clientContext.load(collListItem);
   showSortieCaisse.clientContext.executeQueryAsync(function (sender, args) {
@@ -246,11 +245,12 @@ showSortieCaisse.ShowValidation = function(demandeid) {
         var oListItem = listItemEnumerator.get_current();
 
         view.historique.push({
-            auteur : '',
-            dateaction : '',
-            decision : '',
-            commentaire : oListItem.get_item('_Comment') != null ? oListItem.get_item('_Comment').toString() : ''
-            });
+          auteur: '',
+          dateaction: '',
+          decision: '',
+          commentaire: oListItem.get_item('_Comment') != null ? oListItem.get_item('_Comment').toString() : ''
+          //etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
+        });
       }
       appHelper.renderTemplate("tmpl_form_historique_validation", "SectionHistoriqueValidation", view);
     }
@@ -258,45 +258,46 @@ showSortieCaisse.ShowValidation = function(demandeid) {
 
 
 
-   }, appSpHelper.writeError);
+  }, appSpHelper.writeError);
 
 
 }
 
-showSortieCaisse.ShowDetails = function (demandeid){
+showSortieCaisse.ShowDetails = function (demandeid) {
 
-  let oList = showSortieCaisse.clientContext.get_web().get_lists() .getByTitle(appHelper.ListName.SortieCaisse);
-  let It = oList .getItemById(demandeid);
+  let oList = showSortieCaisse.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.SortieCaisse);
+  let It = oList.getItemById(demandeid);
   console.log("IN ShowDetails");
 
   showSortieCaisse.clientContext.load(It);
   showSortieCaisse.clientContext.executeQueryAsync(function () {
-  if(It){
-    //showSortieCaisse.isSoldeImpact = (It.get_item('TypeSORTIECAISSEID') != null ? It.get_item('TypeSORTIECAISSEID') : 0)
-  let view = {
-    date : It.get_item('Created') != null ?  It.get_item('Created') : '',
-    montant : It.get_item('Montant') != null ?  It.get_item('Montant') : '',
-    modePaiement: It.get_item('ModePaiement') != null ?  It.get_item('ModePaiement') : '',
-    payerA: It.get_item('PayerA') != null ?  It.get_item('PayerA') : '',
-    caissePaiement: It.get_item('CaissePaiement') != null ?  It.get_item('CaissePaiement') : '',
-    objetReglement: It.get_item('ObjetReglement') != null ?  It.get_item('ObjetReglement') : '',
-  };
+    if (It) {
+      //showSortieCaisse.isSoldeImpact = (It.get_item('TypeSORTIECAISSEID') != null ? It.get_item('TypeSORTIECAISSEID') : 0)
+      let view = {
+        date: It.get_item('Created').toLocaleDateString() != null ? It.get_item('Created').toLocaleDateString() : '',
+        montant: It.get_item('Montant') != null ? It.get_item('Montant') : '',
+        modePaiement: It.get_item('ModePaiement') != null ? It.get_item('ModePaiement') : '',
+        payerA: It.get_item('PayerA') != null ? It.get_item('PayerA') : '',
+        caissePaiement: It.get_item('CaissePaiement') != null ? It.get_item('CaissePaiement') : '',
+        objetReglement: It.get_item('ObjetReglement') != null ? It.get_item('ObjetReglement') : '',
+        etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
+      };
 
-  console.log("OUT ShowDetails");
+      console.log("OUT ShowDetails");
 
-  appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
+      appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
 
-  }
-}, appSpHelper.writeError);
+    }
+  }, appSpHelper.writeError);
 }
 
-function OpenFileUpload(str_select){
+function OpenFileUpload(str_select) {
   let transElt = document.getElementById(str_select);
   transElt.click();
 }
 
 // document.addEventListener("DOMContentLoaded", () => {
 //   ExecuteOrDelayUntilScriptLoaded(function(){
-    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showSortieCaisse.InitializePage);
+SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showSortieCaisse.InitializePage);
 //   }, "SP.ClientContext");
 // });

@@ -32,13 +32,13 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label"> Mode de paiement</label>
-        <!-- <input type="text" class="form-control" id="TxtModePaiement" placeholder="" /> -->
-        <select id="TxtModePaiement" name="TxtModePaiement" class="form-control">
+
+        <label class="form-label">Mode de paiement :</label>
+        <select id="cmbMode" name="cmbMode" class="form-control">
           <option value="0" data-color="#000">Choisir le mode de paiement</option>
         </select>
-        <input id="TxtModeColeur" value="" type="hidden">
-        <input id="TxtModeText" value="" type="hidden">
+        <input id="TxtModeColeur" value="" type="hidden" >
+        <input id="TxtModeText" value="" type="hidden" >
       </div>
 
       <div class="mb-3">
@@ -47,13 +47,12 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label"> Caisse de paiement</label>
-        <!-- <input type="text" class="form-control" id="TxtCaissePaiement" placeholder="" /> -->
-        <select id="TxtCaissePaiement" name="TxtCaissePaiement" class="form-control" >
+        <label  class="form-label"> Caisse de paiement :</label>
+        <select id="cmbCaisse" name="cmbCaisse" class="form-control" onchange="afficher()">
           <option value="0" data-color="#000">Choisir la Caisse de paiement</option>
         </select>
-        <input id="TxtCaisseColeur" value="" type="hidden">
-        <input id="TxtCaisseText" value="" type="hidden">
+        <input id="TxtCaisseColeur" value="" type="hidden" >
+        <input id="TxtCaisseText" value="" type="hidden" >
       </div>
 
       <div class="mb-3">

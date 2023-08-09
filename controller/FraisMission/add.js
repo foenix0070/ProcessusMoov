@@ -375,7 +375,7 @@ appMission.Add = function ( callBack) {
   //let endDate = startDate.addDays(2);
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
-  oListItem.set_item("StatutLibelle", "Validation du supérieur hiérarchique");
+  oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
 
   oListItem.set_item("DateDebut", startDate);
   //oListItem.set_item("DateRetour", endDate);
@@ -414,12 +414,26 @@ appMission.Add = function ( callBack) {
     AddFM(oListItem);
     console.log("Test");
 
-  const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
+    if(document.getElementById("TxtCoutTotal").value < 500000)
+    {
+      const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
       WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
       if(callBack){
         callBack(oListItem);
       }
+    }
+    else
+    {
+      const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
+      let WF = new WFManager(appHelper.AppCode.MISSIONDG,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSIONDG, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      if(callBack){
+        callBack(oListItem);
+      }
+    }
+
+  
   }, appSpHelper.writeError);
 };
 

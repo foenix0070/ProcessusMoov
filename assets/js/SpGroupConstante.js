@@ -12,5 +12,8 @@ const ACTIV_GROUPS = {
   GroupGPA : 26,
   GroupCDAL : 27,
   GroupDAF : 28,
-  GroupGV : 29
+  GroupDG : 68,
+  GroupDFC : 67,
+  GroupSE : 69,
+  GroupCI : 70
 };

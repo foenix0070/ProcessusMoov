@@ -93,6 +93,13 @@
                         {{/historique}}
                       </table>
                     </div>
+                  </div></br>
+                  <div>
+                    <h2 style="color:#c50000 !important;">
+                      <b>
+                        {{etat}}
+                      </b>
+                    </h2>
                   </div>
                 </script>
 
@@ -120,7 +127,15 @@
                     <h2>
                       Details de la demande
                     </h2>
-                  </div>
+                  </div></br>
+                  <div>
+                    <h3 style="color:#c50000 !important;">
+                      <b>
+                        {{etat}}
+                      </b>
+                    </h3>
+                  </div></br>
+
                   <table>
                       <tr>
                         <td style="text-align:left;" class="fw-bold" width="200px" >Motif de cong&eacute;</td>
@@ -144,6 +159,10 @@
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="200px">Adresse pendant les cong&eacute;s </td>
                         <td style="text-align:left;"> Domicile : {{domicile}} <br>  T&eacute;l&eacute;phone : {{telephone}} <br> Personne &agrave; contacter :{{personne}} </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="300px">Etat :</td>
+                        <td style="text-align:left;">{{etat}}</td>
                       </tr>
                   </table>
                 </script>

@@ -78,6 +78,13 @@
                             {{/historique}}
                           </table>
                         </div>
+                      </div></br>
+                      <div>
+                        <h2 style="color:#c50000 !important;">
+                          <b>
+                            {{etat}}
+                          </b>
+                        </h2>
                       </div>
                     </script>
 
@@ -105,19 +112,26 @@
                     <h2>
                       Details de la demande
                     </h2>
-                  </div>
+                  </div></br>
+                  <div>
+                    <h3 style="color:#c50000 !important;">
+                      <b>
+                        {{etat}}
+                      </b>
+                    </h3>
+                  </div></br>
                   <table>
                     <tr>
-                      <td style="text-align:left;" class="fw-bold" width="200px" >Date</td>
+                      <td style="text-align:left;" class="fw-bold" width="200px" >Date :</td>
                       <td style="text-align:left;">{{date}}</td>
                     </tr>
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px" >Montant</td>
+                        <td style="text-align:left;" class="fw-bold" width="200px" >Montant :</td>
                         <td style="text-align:left;">{{montant}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left; "class="fw-bold" width="200px">Mode de paiement</td>
+                        <td style="text-align:left; "class="fw-bold" width="200px">Mode de paiement :</td>
                         <td style="text-align:left;">{{solde}}</td>
                       </tr>
                     

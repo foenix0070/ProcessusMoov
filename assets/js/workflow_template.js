@@ -5,7 +5,7 @@ const ACTIV_WORKFLOW = {
       "step": [
         {
           "id": "ABS#1",
-          "value": "Validation du supérieur hiérarchique ",
+          "value": "VALIDATION DU SUPERIEUR HIERARCHIQUE ",
           "actors": [
             {
               "type": "USER",
@@ -36,7 +36,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "ABS#2",
-          "value": "Validation du supérieur directeur ",
+          "value": "VALIDATION DU SUPERIEUR DIRECTEUR ",
           "actors": [
             {
               "type": "USER",
@@ -67,7 +67,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "ABS#3",
-          "value": "Validation de la section GESTION ADMINISTRATIVE DU PERSONNEL",
+          "value": "VALIDATION DE LA SECTION GESTION ADMINISTRATIVE DU PERSONNEL",
           "actors": [
             {
               "type": "GROUP",
@@ -98,7 +98,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "ABS#4",
-          "value": "Validation du DRHO",
+          "value": "VALIDATION DU DRHO",
           "actors": [
             {
               "type": "GROUP",
@@ -134,7 +134,7 @@ const ACTIV_WORKFLOW = {
       "step": [
         {
           "id": "ABS#1",
-          "value": "Validation du supérieur hiérarchique ",
+          "value": "VALIDATION DU SUPERIEUR HIERARCHIQUE ",
           "actors": [
             {
               "type": "USER",
@@ -165,7 +165,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "ABS#2",
-          "value": "Validation du supérieur directeur ",
+          "value": "VALIDATION DU  DIRECTEUR ",
           "actors": [
             {
               "type": "USER",
@@ -196,7 +196,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "ABS#3",
-          "value": "Validation de la section GESTION ADMINISTRATIVE DU PERSONNEL",
+          "value": "VALIDATION DE LA SECTION GESTION ADMINISTRATIVE DU PERSONNEL",
           "actors": [
             {
               "type": "GROUP",
@@ -227,7 +227,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "ABS#4",
-          "value": "Validation du DRHO",
+          "value": "VALIDATION DU DRHO",
           "actors": [
             {
               "type": "GROUP",
@@ -263,7 +263,7 @@ const ACTIV_WORKFLOW = {
       "step": [
         {
           "id": "CNG#1",
-          "value": "Validation du supérieur hiérarchique ",
+          "value": "VALIDATION DU SUPERIEUR HIERARCHIQUE ",
           "actors": [
             {
               "type": "USER",
@@ -294,7 +294,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "CNG#2",
-          "value": "Validation du gestionnaire de division communication ",
+          "value": "VALIDATION DU GESTIONNAIRE DE LA DIVISION COMMUNICATION ",
           "actors": [
             {
               "type": "GROUP",
@@ -325,7 +325,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "CNG#3",
-          "value": "Validation du sous directeur communication",
+          "value": "VALIDATION DU SOUS DIRECTEUR COMMUNICATION",
           "actors": [
             {
               "type": "GROUP",
@@ -356,7 +356,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "CNG#4",
-          "value": "Validation du directeur marketing communication digitale",
+          "value": "VALIDATION DU DIRECTEUR MARKETING COMMUNICATION DIGITALE",
           "actors": [
             {
               "type": "GROUP",
@@ -387,7 +387,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "CNG#5",
-          "value": "Validation du gestionnaire du stock marketing",
+          "value": "VALIDATION DU GESTIONNAIRE DU STOCK MARKETING",
           "actors": [
             {
               "type": "GROUP",
@@ -423,7 +423,7 @@ const ACTIV_WORKFLOW = {
       "step": [
         {
           "id": "MTRL#1",
-          "value": "Validation du responsable hiérarchique ",
+          "value": "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           "actors": [
             {
               "type": "USER",
@@ -454,7 +454,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "MTRL#2",
-          "value": "Validation du gestionnaire de division infrastructure ",
+          "value": "VALIDATION DU GESTIONNAIRE DE DIVISION INFRASTRUCTURE ",
           "actors": [
             {
               "type": "GROUP",
@@ -485,7 +485,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "MTRL#3",
-          "value": "Validation du chef de division infrastructure",
+          "value": "VALIDATION DU CHEF DE DIVISION INFRASTRUCTURE",
           "actors": [
             {
               "type": "GROUP",
@@ -516,7 +516,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "MTRL#4",
-          "value": "Validation du directeur système informatique",
+          "value": "VALIDATION DU DIRECTEUR SYSTEME INFORMATIQUE",
           "actors": [
             {
               "type": "GROUP",
@@ -547,7 +547,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "MTRL#5",
-          "value": "Validation du gestionnaire du stock",
+          "value": "VALIDATION DU GESTIONNAIRE DU STOCK",
           "actors": [
             {
               "type": "GROUP",
@@ -583,7 +583,7 @@ const ACTIV_WORKFLOW = {
       "step": [
         {
           "id": "VHCL#1",
-          "value": "Validation du responsable hiérarchique ",
+          "value": "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           "actors": [
             {
               "type": "USER",
@@ -614,7 +614,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#2",
-          "value": "Validation du gestionnaire park automobile ",
+          "value": "VALIDATION DU GESTIONNAIRE PARK AUTOMOBILE ",
           "actors": [
             {
               "type": "GROUP",
@@ -645,7 +645,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#3",
-          "value": "Validation du chef de division achat et logistique",
+          "value": "VALIDATION DU CHEF DE DIVISION ACHAT ET LOGISTIQUE",
           "actors": [
             {
               "type": "GROUP",
@@ -676,7 +676,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#4",
-          "value": "Validation du DAF",
+          "value": "VALIDATION DU DAF",
           "actors": [
             {
               "type": "GROUP",
@@ -704,8 +704,8 @@ const ACTIV_WORKFLOW = {
               "next_step": "##"
             }
           ]
-        },
-        {
+        }
+        /*{
           "id": "VHCL#5",
           "value": "Validation du gestionnaire ",
           "actors": [
@@ -735,7 +735,7 @@ const ACTIV_WORKFLOW = {
               "next_step": "##"
             }
           ]
-        }
+        }*/
       ]
     },
     {
@@ -743,7 +743,7 @@ const ACTIV_WORKFLOW = {
       "step": [
         {
           "id": "VHCL#1",
-          "value": "Validation du responsable hiérarchique ",
+          "value": "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           "actors": [
             {
               "type": "USER",
@@ -774,11 +774,11 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#2",
-          "value": "Validation du gestionnaire park automobile ",
+          "value": "VALIDATION DE LA DFC ",
           "actors": [
             {
               "type": "GROUP",
-              "value": "GroupGPA"
+              "value": "GroupDFC"
             }
           ],
           "copies": [],
@@ -805,11 +805,11 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#3",
-          "value": "Validation du chef de division achat et logistique",
+          "value": "VALIDATION DE LA DRHO",
           "actors": [
             {
               "type": "GROUP",
-              "value": "GroupCDAL"
+              "value": "GroupDRHO"
             }
           ],
           "copies": [],
@@ -836,11 +836,11 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#4",
-          "value": "Validation du DAF",
+          "value": "VALIDATION DU DG",
           "actors": [
             {
               "type": "GROUP",
-              "value": "GroupDAF"
+              "value": "GroupDG"
             }
           ],
           "copies": [],
@@ -867,11 +867,11 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#5",
-          "value": "Validation du gestionnaire ",
+          "value": "VALIDATION DU SERVICE ENGAGEMENT ",
           "actors": [
             {
               "type": "GROUP",
-              "value": "GroupGV"
+              "value": "GroupSE"
             }
           ],
           "copies": [],
@@ -895,7 +895,7 @@ const ACTIV_WORKFLOW = {
               "next_step": "##"
             }
           ]
-        }
+        },
       ]
     },
     {
@@ -903,7 +903,7 @@ const ACTIV_WORKFLOW = {
       "step": [
         {
           "id": "VHCL#1",
-          "value": "Validation du responsable hiérarchique ",
+          "value": "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           "actors": [
             {
               "type": "USER",
@@ -934,11 +934,11 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#2",
-          "value": "Validation du gestionnaire park automobile ",
+          "value": "VALIDATION DU CONTROLE INTERNE ",
           "actors": [
             {
               "type": "GROUP",
-              "value": "GroupGPA"
+              "value": "GroupCI"
             }
           ],
           "copies": [],
@@ -965,11 +965,11 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#3",
-          "value": "Validation du chef de division achat et logistique",
+          "value": "VALIDATION DU SERVICE ENGAGEMENT",
           "actors": [
             {
               "type": "GROUP",
-              "value": "GroupCDAL"
+              "value": "GroupSE"
             }
           ],
           "copies": [],
@@ -979,68 +979,6 @@ const ACTIV_WORKFLOW = {
               "icon": "fa fa-check",
               "url": "",
               "next_step": "VHCL#4"
-            },
-            {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
-            },
-            {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
-        },
-        {
-          "id": "VHCL#4",
-          "value": "Validation du DAF",
-          "actors": [
-            {
-              "type": "GROUP",
-              "value": "GroupDAF"
-            }
-          ],
-          "copies": [],
-          "buttons": [
-            {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "VHCL#5"
-            },
-            {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
-            },
-            {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
-        },
-        {
-          "id": "VHCL#5",
-          "value": "Validation du gestionnaire ",
-          "actors": [
-            {
-              "type": "GROUP",
-              "value": "GroupGV"
-            }
-          ],
-          "copies": [],
-          "buttons": [
-            {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "VHCL#5"
             },
             {
               "text": "DEMANDER UNE MODIFICATION",
@@ -1063,7 +1001,7 @@ const ACTIV_WORKFLOW = {
       "step": [
         {
           "id": "VHCL#1",
-          "value": "Validation du responsable hiérarchique ",
+          "value": "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           "actors": [
             {
               "type": "USER",
@@ -1094,11 +1032,11 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#2",
-          "value": "Validation du gestionnaire park automobile ",
+          "value": "VALIDATION DE LA DFC ",
           "actors": [
             {
               "type": "GROUP",
-              "value": "GroupGPA"
+              "value": "GroupDFC"
             }
           ],
           "copies": [],
@@ -1125,11 +1063,172 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#3",
-          "value": "Validation du chef de division achat et logistique",
+          "value": "VALIDATION DE LA DRHO",
           "actors": [
             {
               "type": "GROUP",
-              "value": "GroupCDAL"
+              "value": "GroupDRHO"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#4"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        /*{
+          "id": "VHCL#4",
+          "value": "VALIDATION DU DG",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupDG"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#5"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },*/
+        {
+          "id": "VHCL#4",
+          "value": "VALIDATION DU SERVICE ENGAGEMENT ",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupSE"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#5"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+      ]
+    },
+
+    {
+      "item": "MISSIONDG",
+      "step": [
+        {
+          "id": "VHCL#1",
+          "value": "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
+          "actors": [
+            {
+              "type": "USER",
+              "value": "#N1"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#2"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#2",
+          "value": "VALIDATION DE LA DFC ",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupDFC"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#3"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#3",
+          "value": "VALIDATION DE LA DRHO",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupDRHO"
             }
           ],
           "copies": [],
@@ -1156,11 +1255,11 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#4",
-          "value": "Validation du DAF",
+          "value": "VALIDATION DU DG",
           "actors": [
             {
               "type": "GROUP",
-              "value": "GroupDAF"
+              "value": "GroupDG"
             }
           ],
           "copies": [],
@@ -1187,11 +1286,11 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#5",
-          "value": "Validation du gestionnaire ",
+          "value": "VALIDATION DU SERVICE ENGAGEMENT ",
           "actors": [
             {
               "type": "GROUP",
-              "value": "GroupGV"
+              "value": "GroupSE"
             }
           ],
           "copies": [],
@@ -1215,7 +1314,7 @@ const ACTIV_WORKFLOW = {
               "next_step": "##"
             }
           ]
-        }
+        },
       ]
     },
     {
@@ -1223,7 +1322,7 @@ const ACTIV_WORKFLOW = {
       "step": [
         {
           "id": "VHCL#1",
-          "value": "Validation du responsable hiérarchique ",
+          "value": "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           "actors": [
             {
               "type": "USER",
@@ -1254,11 +1353,11 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#2",
-          "value": "Validation du gestionnaire park automobile ",
+          "value": "VALIDATION DU CONTROLE INTERNE ",
           "actors": [
             {
               "type": "GROUP",
-              "value": "GroupGPA"
+              "value": "GroupCI"
             }
           ],
           "copies": [],
@@ -1285,11 +1384,11 @@ const ACTIV_WORKFLOW = {
         },
         {
           "id": "VHCL#3",
-          "value": "Validation du chef de division achat et logistique",
+          "value": "VALIDATION DU SERVICE ENGAGEMENT",
           "actors": [
             {
               "type": "GROUP",
-              "value": "GroupCDAL"
+              "value": "GroupSE"
             }
           ],
           "copies": [],
@@ -1299,68 +1398,6 @@ const ACTIV_WORKFLOW = {
               "icon": "fa fa-check",
               "url": "",
               "next_step": "VHCL#4"
-            },
-            {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
-            },
-            {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
-        },
-        {
-          "id": "VHCL#4",
-          "value": "Validation du DAF",
-          "actors": [
-            {
-              "type": "GROUP",
-              "value": "GroupDAF"
-            }
-          ],
-          "copies": [],
-          "buttons": [
-            {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "VHCL#5"
-            },
-            {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
-            },
-            {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
-        },
-        {
-          "id": "VHCL#5",
-          "value": "Validation du gestionnaire ",
-          "actors": [
-            {
-              "type": "GROUP",
-              "value": "GroupGV"
-            }
-          ],
-          "copies": [],
-          "buttons": [
-            {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "VHCL#5"
             },
             {
               "text": "DEMANDER UNE MODIFICATION",

@@ -92,8 +92,16 @@
                         </tr>
                         {{/historique}}
                       </table>
+                    </div></br>
+                    <div>
+                      <h2 style="color:#c50000 !important;">
+                        <b>
+                          {{etat}}
+                        </b>
+                      </h2>
                     </div>
-                  </div>
+                  </div></br>
+                  
                 </script>
 
                 <script id="tmpl_form_validation" type="x-tmpl-mustache">
@@ -120,7 +128,14 @@
                     <h2>
                       Details de la demande
                     </h2>
-                  </div>
+                  </div></br>
+                  <div>
+                    <h3 style="color:#c50000 !important;">
+                      <b>
+                        {{etat}}
+                      </b>
+                    </h3>
+                  </div></br>
                   <table>
                       <tr>
                         <td style="text-align:left;" class="fw-bold" width="300px" >Titre :</td>
@@ -136,10 +151,7 @@
                         <td style="text-align:left;"class="fw-bold" width="300px">Date de fin :</td>
                         <td style="text-align:left;">{{dateretour}}</td>
                       </tr>
-                      <tr>
-                        <td style="text-align:left;"class="fw-bold" width="300px">Motif :</td>
-                        <td style="text-align:left;">{{motif}}</td>
-                      </tr>
+                      
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="300px">Destination :</td>
                         <td style="text-align:left;">{{destination}}</td>

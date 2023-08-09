@@ -175,7 +175,7 @@ appGadget.Add = function ( callBack) {
   let endDate = startDate.addDays(2);
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
-  oListItem.set_item("StatutLibelle", "Validation du supérieur hiérarchique");
+  oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
 
   oListItem.set_item("DateDepart", startDate);
   oListItem.set_item("DateRetour", endDate);

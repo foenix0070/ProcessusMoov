@@ -4,9 +4,9 @@ appAbsence.clientContext;
 
 appAbsence.InitializePage = function () {
   appAbsence.clientContext = SP.ClientContext.get_current();
-  clientContext =  SP.ClientContext.get_current();
+  clientContext = SP.ClientContext.get_current();
 
-  
+
   appSpHelper.GetMyProperties(function () {
 
     appAbsence.initCmbTypeAbsence(function () {
@@ -30,7 +30,7 @@ appAbsence.InitializePage = function () {
           document.getElementById("TxtIntMatricule").value = it.get_item('EmpMatricule');
           document.getElementById("TxtIntEmail").value = it.get_item('EmpMail');
         });
-      } 
+      }
 
     });
 
@@ -43,7 +43,7 @@ appAbsence.InitializePage = function () {
     // document.querySelector("#TxtIntName").value = 'Consultant INOVA';
 
   });
-  
+
 
   //const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
@@ -63,19 +63,19 @@ appAbsence.InitializePage = function () {
   */
 
   BtnSave.addEventListener("click", function () {
-    appAbsence.Add (function(){
+    appAbsence.Add(function () {
       location.reload();
     });
   });
 
 };
 
-function getRating (str){
+function getRating(str) {
   document.getElementById('TxtNature').value = str;
 }
 
 appAbsence.initCmbTypeAbsence = function (callBack) {
-  ListerMotif(function(){
+  ListerMotif(function () {
     let cmb = document.getElementById("cmbTypeAbsence");
     let txtColor = document.getElementById("TxtTypeAbsenceColeur");
     let txtText = document.getElementById("TxtTypeAbsenceText");
@@ -86,7 +86,7 @@ appAbsence.initCmbTypeAbsence = function (callBack) {
       txtText.value = selectedOption.text;
     });
 
-    if(callBack){
+    if (callBack) {
       callBack();
     }
   });
@@ -94,35 +94,35 @@ appAbsence.initCmbTypeAbsence = function (callBack) {
 };
 
 
-function ListerMotif( callBack) {
+function ListerMotif(callBack) {
   let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.TypeAbsence);
   let q = '<View><Query><Where>' +
-               '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
-          '</Where></Query></View>';
+    '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
+    '</Where></Query></View>';
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(q);
   let listItemMotif = oList.getItems(camlQuery);
   clientContext.load(listItemMotif);
   clientContext.executeQueryAsync(
-      function () {
-          var listItemEnumerator = listItemMotif.getEnumerator();
+    function () {
+      var listItemEnumerator = listItemMotif.getEnumerator();
 
-          while (listItemEnumerator.moveNext()) {
-              let oListItemTp = listItemEnumerator.get_current();
-              let opt = document.createElement("option");
-              opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
-              opt.setAttribute("data-color", oListItemTp.get_item('Background'));
-              opt.setAttribute("value", oListItemTp.get_id());
-              opt.innerHTML = oListItemTp.get_item('Title');
-              document.getElementById('cmbTypeAbsence').appendChild(opt);
-          }
+      while (listItemEnumerator.moveNext()) {
+        let oListItemTp = listItemEnumerator.get_current();
+        let opt = document.createElement("option");
+        opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
+        opt.setAttribute("data-color", oListItemTp.get_item('Background'));
+        opt.setAttribute("value", oListItemTp.get_id());
+        opt.innerHTML = oListItemTp.get_item('Title');
+        document.getElementById('cmbTypeAbsence').appendChild(opt);
+      }
 
 
-          if(callBack){
-            callBack();
-          }
-      },
-      function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
+      if (callBack) {
+        callBack();
+      }
+    },
+    function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
 }
 
 appAbsence.List = function () {
@@ -133,8 +133,8 @@ appAbsence.List = function () {
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(
     "<View><Query><Where>" +
-      '<Eq><FieldRef ID="Demandeur" /><Value Type="Integer"><UserID/></Value></Eq>' +
-      "</Where></Query></View>"
+    '<Eq><FieldRef ID="Demandeur" /><Value Type="Integer"><UserID/></Value></Eq>' +
+    "</Where></Query></View>"
   );
   let collListItem = oList.getItems(camlQuery);
   appAbsence.clientContext.load(collListItem);
@@ -148,8 +148,8 @@ appAbsence.List = function () {
         view.absences.push({
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Title"),
-          startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
-          reprise: new Date( oListItem.get_item("DateReprise")).toLocaleDateString(),
+          startdate: new Date(oListItem.get_item("DateDepart")).toLocaleDateString(),
+          reprise: new Date(oListItem.get_item("DateReprise")).toLocaleDateString(),
           nbre: oListItem.get_item("NombreJours"),
           status: oListItem.get_item("StatutLibelle"),
           classe: appHelper.Status.GetClass(oListItem.get_item("Statut")),
@@ -171,7 +171,7 @@ appAbsence.List = function () {
   }, appSpHelper.writeError);
 };
 
-appAbsence.Add = function ( callBack) {
+appAbsence.Add = function (callBack) {
   let oList = appAbsence.clientContext
     .get_web()
     .get_lists()
@@ -195,29 +195,29 @@ appAbsence.Add = function ( callBack) {
   );
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
-  oListItem.set_item("StatutLibelle", "Validation du supérieur hiérarchique");
+  oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
 
   oListItem.set_item("DateDepart", startDate);
   oListItem.set_item("DateRetour", endDate);
   oListItem.set_item("DateReprise", repDate);
 
-  oListItem.set_item("Title",document.getElementById("TxtTypeAbsenceText").value);
+  oListItem.set_item("Title", document.getElementById("TxtTypeAbsenceText").value);
 
-  oListItem.set_item("Nature",document.getElementById("TxtTypeAbsenceText").value);
+  oListItem.set_item("Nature", document.getElementById("TxtTypeAbsenceText").value);
 
   oListItem.set_item("TypeAbsenceID", document.getElementById("cmbTypeAbsence").value);
 
-  oListItem.set_item("Motif",document.getElementById("TxtMotif").value);
+  oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
 
-  oListItem.set_item("NombreJours",parseInt(document.getElementById("TxtDuree").value));
+  oListItem.set_item("NombreJours", parseInt(document.getElementById("TxtDuree").value));
 
-  oListItem.set_item("NombreJourAccorde",parseInt(document.getElementById("TxtDuree").value));
+  oListItem.set_item("NombreJourAccorde", parseInt(document.getElementById("TxtDuree").value));
 
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
 
-  oListItem.set_item("Demandeur",SP.FieldUserValue.fromUser(App.CurrentUser.Login));
+  oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
 
-  oListItem.set_item("Interimaire",SP.FieldUserValue.fromUser(SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys()));
+  oListItem.set_item("Interimaire", SP.FieldUserValue.fromUser(SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys()));
 
   oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
   oListItem.set_item("ResponsableN2", App.CurrentUser.ManagerPersonne2);
@@ -229,18 +229,18 @@ appAbsence.Add = function ( callBack) {
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
-const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + oListItem.get_id();
-      let WF = new WFManager(appHelper.AppCode.ABSENCE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.ABSENCE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
-      if(callBack){
-        callBack(oListItem);
-      }
+    const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + oListItem.get_id();
+    let WF = new WFManager(appHelper.AppCode.ABSENCE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.ABSENCE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+    if (callBack) {
+      callBack(oListItem);
+    }
   }, appSpHelper.writeError);
 };
 
 
 //document.addEventListener("DOMContentLoaded", () => {
-  //ExecuteOrDelayUntilScriptLoaded(function(){
-    SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appAbsence.InitializePage);
+//ExecuteOrDelayUntilScriptLoaded(function(){
+SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appAbsence.InitializePage);
   //}, "SP.ClientContext");
 //});
