@@ -5,7 +5,7 @@
     <fieldset class="form-elts">
       <legend>Demandeur</legend>
       <div class="mb-3">
-        <label class="form-label">Nom & Prenoms</label>
+        <label class="form-label">Nom</label>
         <input type="text" id="TxtNom" disabled class="  form-control" value="" placeholder="" />
       </div>
 
@@ -24,14 +24,14 @@
     <fieldset class="form-elts">
       <legend>REGULATION DE LA MISSION</legend>
 
-      <h4>CERTIFICATION DE LA MISSION</h4>
+      <h4>CERTIFICATION DE LA MISSION</h4></br>
 
-      <input type="radio" name="success" value="Succes" id="RadSucces">
-      <label for="RadSucces">Mission effectuée</label> &nbsp;
-      <input type="radio" name="echec" value="Echecs" id="RadEchecs">
-      <label for="RadEchecs">Mission non effectuée</label><br>
+      <input type="radio" name="Etat" value="Succes" id="RadSucces">
+      <label for="RadSucces">Mission effectuee</label> &nbsp;&nbsp;&nbsp;
+      <input type="radio" name="Etat" value="Echec" id="RadEchec">
+      <label for="RadEchec">Mission non effectuee</label><br><br>
 
-      <h4>REMBOURSEMENT DES FRAIS COMPLEMENTAIRES</h4>
+      <h4>REMBOURSEMENT DES FRAIS COMPLEMENTAIRES</h4></br>
       <!--<table>
         <tr>
           <td>
@@ -153,12 +153,12 @@
 
   </div>
 
-  <div class="input-optn">
+  <div class="input-optn mt-3">
     <button class="Submit" id="BtnSave" type="button"> Valider </button>
   </div>
 </form>
 
 
 <script type="text/javascript">
-  appHelper.loadJSWithNameSpace("appRegularisationFraisMission", 'appRegularisationFraisMission', "controller/regularisationFraisMission/add.js");
+  appHelper.loadJSWithNameSpace("appRegularisationFraisMission", 'appRegularisationFraisMission', "controller/RegularisationFraisMission/add.js");
 </script>

@@ -46,6 +46,7 @@ MoovTools.InitializePage = function () {
                     //MoovTools.ListDemande(appHelper.ListName.Mission, "fraisMission", "MISSION", function () {
                     MoovTools.ListDemande(appHelper.ListName.Absence, "autorisationAbsence", "ABSENCE", function () {
                       MoovTools.ListDemande(appHelper.ListName.Mission, "fraisMission", "MISSION", function () {
+                        MoovTools.ListDemande(appHelper.ListName.RegularisationFraisMission, "regularisationFraisMission", "REGULARISATION MISSION", function () {
                         appHelper.renderTemplate("tmpl_table_demande", "DivDemandeTableShow", MoovTools.view);
 
                         //   appHelper.listenNavigationLink ('linkMainNavigation');
@@ -88,6 +89,7 @@ MoovTools.InitializePage = function () {
     //}
     //);
   });
+});
 
 };
 

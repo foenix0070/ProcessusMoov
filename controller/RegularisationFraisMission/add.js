@@ -19,7 +19,7 @@ appRegularisationFraisMission.InitializePage = function () {
 
 
     BtnSave.addEventListener("click", function () {
-        appMission.Add(function () {
+        appRegularisationFraisMission.Add(function () {
             location.reload();
         });
     });
@@ -67,9 +67,9 @@ function supprimerLigne(button) {
     table.removeChild(row);
 }
 
-AddRFM();
+//AddRFM();
 
-function AddRFM() {
+/*function AddRFM() {
     var table = document.getElementById("TableFraisMission");
     var data = [];
 
@@ -86,66 +86,84 @@ function AddRFM() {
         }
 
         data.push(rowData);
-    }
+    }*/
 
-    Add(data);
+//Add(data);
+appRegularisationFraisMission.Add = function (callBack) {
+    var table = document.getElementById("TableFraisMission");
+    var data = [];
+
+    for (var i = 1; i < table.rows.length; i++) {
+        var row = table.rows[i];
+        var cells = row.getElementsByTagName('td');
+        var rowData = {};
+
+        for (var j = 0; j < cells.length; j++) {
+            var input = cells[j].getElementsByTagName('input')[0];
+            var name = input.getAttribute('name');
+            var value = input.value;
+            rowData[name] = value;
+        }
+
+        data.push(rowData);
+
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+
+            let oList = appRegularisationFraisMission.clientContext
+                .get_web()
+                .get_lists()
+                .getByTitle(appHelper.ListName.RegularisationFraisMission);
+            let itemCreateInfo = new window.SP.ListItemCreationInformation();
+            let oListItem = oList.addItem(itemCreateInfo);
+
+            oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
+            oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
+
+            oListItem.set_item("DateDebut", item.DateDebut);
+            oListItem.set_item("DateFin", item.DateFin);
+
+            oListItem.set_item(
+                "Forfait", item.TxtForfait);
+
+            oListItem.set_item(
+                "Title", item.Txtlibelle);
+
+            oListItem.set_item(
+                "Total", item.TxtTotal);
+
+            oListItem.set_item(
+                "Nombre", item.TxtNombre);
+
+            oListItem.set_item(
+                "Etat", document.getElementsByName('Etat').value);
+
+            oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
+
+
+            oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
+
+            oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
+            oListItem.set_item("ResponsableN2", App.CurrentUser.ManagerPersonne2);
+
+            oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
+            oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
+
+            oListItem.update();
+            clientContext.load(oListItem);
+            clientContext.executeQueryAsync(function () {
+
+                const appUrl = '/pages/regularisationFraisMission/show.aspx?ID=' + oListItem.get_id();
+                let WF = new WFManager(appHelper.AppCode.REGULARISATIONFRAISMISSION, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+                WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONFRAISMISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+                if (callBack) {
+                    callBack(oListItem);
+                }
+            }, appSpHelper.writeError);
+
+        }
+    }
 }
 
-function Add(data) {
-    for (var i = 0; i < data.length; i++) {
-        var item = data[i];
-
-        let oList = appRegularisationFraisMission.clientContext
-            .get_web()
-            .get_lists()
-            .getByTitle(appHelper.ListName.RegularisationFraisMission);
-        let itemCreateInfo = new window.SP.ListItemCreationInformation();
-        let oListItem = oList.addItem(itemCreateInfo);
-
-        let startDate = new Date();
-
-        let repDate = new Date();
-
-
-        oListItem.set_item("DateDebut", startDate);
-        oListItem.set_item("DateFin", repDate);
-
-        oListItem.set_item(
-            "Forfait", item.TxtForfait);
-
-        oListItem.set_item(
-            "Libelle", item.TxtLibelle);
-
-        oListItem.set_item(
-            "Total", item.TxtTotal);
-
-        oListItem.set_item(
-            "Nombre", item.TxtNombre);
-
-        oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
-
-
-        oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
-
-        oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
-        oListItem.set_item("ResponsableN2", App.CurrentUser.ManagerPersonne2);
-
-        oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
-        oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
-
-        oListItem.update();
-        clientContext.load(oListItem);
-        clientContext.executeQueryAsync(function () {
-
-            const appUrl = '/pages/regularisationFraisMission/show.aspx?ID=' + oListItem.get_id();
-            let WF = new WFManager(appHelper.AppCode.REGULARISATIONFRAISMISSION, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-            WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONFRAISMISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
-            if (callBack) {
-                callBack(oListItem);
-            }
-        }, appSpHelper.writeError);
-
-    }
-}
 
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appRegularisationFraisMission.InitializePage);

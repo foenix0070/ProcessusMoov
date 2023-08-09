@@ -92,15 +92,16 @@
                         </tr>
                         {{/historique}}
                       </table>
+                    </div></br>
+                    <div>
+                      <h2 style="color:#c50000 !important;">
+                        <b>
+                          {{etat}}
+                        </b>
+                      </h2>
                     </div>
                   </div></br>
-                  <div>
-                    <h2 style="color:#c50000 !important;">
-                      <b>
-                        {{etat}}
-                      </b>
-                    </h2>
-                  </div>
+                  
                 </script>
 
                 <script id="tmpl_form_validation" type="x-tmpl-mustache">
@@ -135,40 +136,26 @@
                       </b>
                     </h3>
                   </div></br>
-
                   <table>
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px" >Motif de cong&eacute;</td>
-                        <td style="text-align:left;">{{typeconge}}</td>
+                        <td style="text-align:left;" class="fw-bold" width="300px" >Titre :</td>
+                        <td style="text-align:left;">{{title}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Date de d&eacute;part</td>
+                        <td style="text-align:left;"class="fw-bold" width="300px">Date de debut :</td>
                         <td style="text-align:left;">{{datedepart}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Nombre de jours</td>
-                        <td style="text-align:left;">{{nbrejour}}</td>
-                      </tr>
-                      <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Int&eacute;rimaire</td>
-                        <td style="text-align:left;">{{interimaire}}</td>
-                      </tr>
-
-                      <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Adresse pendant les cong&eacute;s </td>
-                        <td style="text-align:left;"> Domicile : {{domicile}} <br>  T&eacute;l&eacute;phone : {{telephone}} <br> Personne &agrave; contacter :{{personne}} </td>
-                      </tr>
-                      <tr>
-                        <td style="text-align:left;"class="fw-bold" width="300px">Etat :</td>
-                        <td style="text-align:left;">{{etat}}</td>
+                        <td style="text-align:left;"class="fw-bold" width="300px">Date de fin :</td>
+                        <td style="text-align:left;">{{dateretour}}</td>
                       </tr>
                   </table>
                 </script>
 
                 <script type="text/javascript">
-                  appHelper.loadJSWithNameSpace("showRegularisationFraisMission", 'showRegularisationFraisMission', "controller/regularisationFraisMission/show.js");
+                  appHelper.loadJSWithNameSpace("showRegularisationFraisMission", 'showRegularisationFraisMission', "controller/RegularisationFraisMission/show.js");
                 </script>
 <script type="text/javascript">
 

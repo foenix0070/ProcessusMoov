@@ -165,7 +165,7 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationFinMission_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/regularisationFinMission/list.aspx?t=E",
+          url: "tools1/pages/regularisationFraisMission/list.aspx?t=E",
           target: "DivMainPageContainer",
         },
       },
@@ -174,7 +174,7 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationFinMission_list_validee",
           title: "Demandes validées",
-          url: "tools1/pages/regularisationFinMission/list.aspx?t=V",
+          url: "tools1/pages/regularisationFraisMission/list.aspx?t=V",
           target: "DivMainPageContainer",
         },
       },
@@ -184,7 +184,7 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationFinMission_list_rejetee",
           title: "Demandes réjetées",
-          url: "tools1/pages/regularisationFinMission/list.aspx?t=R",
+          url: "tools1/pages/regularisationFraisMission/list.aspx?t=R",
           target: "DivMainPageContainer",
         },
       },
