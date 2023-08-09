@@ -426,8 +426,8 @@ appMission.Add = function ( callBack) {
     else
     {
       const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
-      let WF = new WFManager(appHelper.AppCode.MISSIONDG,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSIONDG, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW1  );
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
       if(callBack){
         callBack(oListItem);
       }

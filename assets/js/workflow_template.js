@@ -1158,7 +1158,7 @@ const ACTIV_WORKFLOW = {
     },
 
     {
-      "item": "MISSIONDG",
+      "item": "MISSION500000",
       "step": [
         {
           "id": "VHCL#1",
@@ -1413,6 +1413,174 @@ const ACTIV_WORKFLOW = {
             }
           ]
         }
+      ]
+    }
+
+
+  ]
+}
+
+const ACTIV_WORKFLOW1 = {
+  "processus": [
+
+    {
+      "item": "MISSION",
+      "step": [
+        {
+          "id": "VHCL#1",
+          "value": "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
+          "actors": [
+            {
+              "type": "USER",
+              "value": "#N1"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#2"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#2",
+          "value": "VALIDATION DE LA DFC ",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupDFC"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#3"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#3",
+          "value": "VALIDATION DE LA DRHO",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupDRHO"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#4"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#4",
+          "value": "VALIDATION DU DG",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupDG"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#5"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
+        {
+          "id": "VHCL#5",
+          "value": "VALIDATION DU SERVICE ENGAGEMENT ",
+          "actors": [
+            {
+              "type": "GROUP",
+              "value": "GroupSE"
+            }
+          ],
+          "copies": [],
+          "buttons": [
+            {
+              "text": "APPROUVER",
+              "icon": "fa fa-check",
+              "url": "",
+              "next_step": "VHCL#5"
+            },
+            {
+              "text": "DEMANDER UNE MODIFICATION",
+              "icon": "fa fa-mail-reply",
+              "url": "",
+              "next_step": "0#"
+            },
+            {
+              "text": "REJETER",
+              "icon": "fa fa-ban",
+              "url": "",
+              "next_step": "##"
+            }
+          ]
+        },
       ]
     }
 
