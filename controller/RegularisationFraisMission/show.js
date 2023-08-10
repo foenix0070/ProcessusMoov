@@ -269,8 +269,12 @@ showRegularisationFraisMission.ShowDetails = function (demandeid) {
     if (It) {
       let view = {
         title: It.get_item('Title') != null ? It.get_item('Title') : '',
+        choix: It.get_item('Etat') != null ? It.get_item('Etat') : '',
         datedepart: It.get_item('DateDebut') != null ? new Date(It.get_item('DateDebut')).toLocaleDateString() : '',
         dateretour: It.get_item('DateFin') != null ? It.get_item('DateFin').toLocaleDateString() : '',
+        nombre: It.get_item('Nombre') != null ? It.get_item('Nombre') : '',
+        forfait: It.get_item('Forfait') != null ? It.get_item('Forfait') : '',
+        total: It.get_item('Total') != null ? It.get_item('Total') : '',
         etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
       };
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);

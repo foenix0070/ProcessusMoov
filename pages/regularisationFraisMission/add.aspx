@@ -141,7 +141,7 @@
           <td><input type="number" id="TxtNombre" name="TxtNombre"></td>
           <td><input type="number" id="TxtForfait" name="TxtForfait"></td>
           <td><input type="number" id="TxtTotal" name="TxtTotal"></td>
-          <td><input type="button" onclick="supprimerLigne(this)" value="Supprimer"></td>
+          <td><!--<input type="button" onclick="supprimerLigne(this)" value="Supprimer">--></td>
 
         </tr>
       </table>

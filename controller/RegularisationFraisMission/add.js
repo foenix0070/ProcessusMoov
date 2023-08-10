@@ -6,7 +6,6 @@ appRegularisationFraisMission.InitializePage = function () {
     appRegularisationFraisMission.clientContext = SP.ClientContext.get_current();
     clientContext = SP.ClientContext.get_current();
 
-
     appSpHelper.GetMyProperties(function () {
 
         document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
@@ -14,9 +13,7 @@ appRegularisationFraisMission.InitializePage = function () {
         document.getElementById("TxtEmail").value = App.CurrentUser.Email;
     });
 
-
     const BtnSave = document.querySelector("#BtnSave");
-
 
     BtnSave.addEventListener("click", function () {
         appRegularisationFraisMission.Add(function () {
@@ -26,16 +23,16 @@ appRegularisationFraisMission.InitializePage = function () {
 
 };
 
-
 function afficher() {
     var selectValue = document.getElementById("CmbCaisse").value;
-
     var inputMasque = document.getElementById("AutreCaisse");
 
     if (selectValue === "Autre") {
         //alert("OK");
         inputMasque.style.display = "block";
-    } else {
+    } 
+    else 
+    {
         inputMasque.style.display = "none";
     }
 }
@@ -45,12 +42,12 @@ function ajouterLigne() {
     var newRow = table.insertRow(table.rows.length);
 
     //var cell = newRow.insertCell(0);
-    var cell1 = newRow.insertCell(1);
-    var cell2 = newRow.insertCell(2);
-    var cell3 = newRow.insertCell(3);
-    var cell4 = newRow.insertCell(4);
-    var cell5 = newRow.insertCell(5);
-    var cell6 = newRow.insertCell(6);
+    var cell1 = newRow.insertCell(0);
+    var cell2 = newRow.insertCell(1);
+    var cell3 = newRow.insertCell(2);
+    var cell4 = newRow.insertCell(3);
+    var cell5 = newRow.insertCell(4);
+    var cell6 = newRow.insertCell(5);
 
     //cell.innerHTML = '<select class="mt-3" id="CmbPerdieme" name"CmbPerdieme"><option value"Hotel">Hotel</option></select>';
     cell1.innerHTML = '<input type="date" id="DateDebut" name="DateDebut">';
@@ -67,28 +64,6 @@ function supprimerLigne(button) {
     table.removeChild(row);
 }
 
-//AddRFM();
-
-/*function AddRFM() {
-    var table = document.getElementById("TableFraisMission");
-    var data = [];
-
-    for (var i = 1; i < table.rows.length; i++) {
-        var row = table.rows[i];
-        var cells = row.getElementsByTagName('td');
-        var rowData = {};
-
-        for (var j = 0; j < cells.length; j++) {
-            var input = cells[j].getElementsByTagName('input')[0];
-            var name = input.getAttribute('name');
-            var value = input.value;
-            rowData[name] = value;
-        }
-
-        data.push(rowData);
-    }*/
-
-//Add(data);
 appRegularisationFraisMission.Add = function (callBack) {
     var table = document.getElementById("TableFraisMission");
     var data = [];
@@ -164,6 +139,5 @@ appRegularisationFraisMission.Add = function (callBack) {
         }
     }
 }
-
 
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appRegularisationFraisMission.InitializePage);

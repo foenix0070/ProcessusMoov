@@ -6,7 +6,6 @@ ListMission.InitializePage = function () {
   ListMission.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
-
   let T =  appHelper.GetQueryStringFromAjaxQuery('t');
   let x = document.getElementById('h2Titre');
   switch(T){
@@ -27,10 +26,6 @@ ListMission.InitializePage = function () {
 
 };
 
-
-
-
-
 ListMission.ListMission = function (T) {
   let oList = ListMission.clientContext
     .get_web()
@@ -45,10 +40,13 @@ ListMission.ListMission = function (T) {
       '</And>'+
       "</Where></Query></View>"
   );
+
   let collListItem = oList.getItems(camlQuery);
   ListMission.clientContext.load(collListItem);
   ListMission.clientContext.executeQueryAsync(function (sender, args) {
+    console.log(collListItem.get_count());
     if (collListItem.get_count() > 0) {
+      console.log("IN IF");
       var listItemEnumerator = collListItem.getEnumerator();
       let view = {};
       view.mission = [];

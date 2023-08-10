@@ -141,59 +141,7 @@ var arrMenu = [
         },
       },
     ],
-  },
-  
-
-  {
-    id: "dmd_regularisationFinMission",
-    title: "Demande de régularisation de frais de mission",
-    icon: "fa fa-2x fa-globe",
-    arrsmenu: [
-      {
-        offcanvas: {
-          id: "dmd_regularisationFinMission_new",
-          title: "Effectuer une demande",
-          url: "tools1/pages/regularisationFraisMission/add.aspx",
-         // url: "/pages/regularisationFraisMission/add.html",
-          target: "ffcMainFormContainer",
-        },
-        link: false,
-      },
-
-      {
-        offcanvas: false,
-        link: {
-          id: "dmd_regularisationFinMission_list_en_cours",
-          title: "Demande en cours",
-          url: "tools1/pages/regularisationFraisMission/list.aspx?t=E",
-          target: "DivMainPageContainer",
-        },
-      },
-      {
-        offcanvas: false,
-        link: {
-          id: "dmd_regularisationFinMission_list_validee",
-          title: "Demandes validées",
-          url: "tools1/pages/regularisationFraisMission/list.aspx?t=V",
-          target: "DivMainPageContainer",
-        },
-      },
-
-      {
-        offcanvas: false,
-        link: {
-          id: "dmd_regularisationFinMission_list_rejetee",
-          title: "Demandes réjetées",
-          url: "tools1/pages/regularisationFraisMission/list.aspx?t=R",
-          target: "DivMainPageContainer",
-        },
-      },
-    ],
-  },
-
-
-
-
+  },  
 
   {
     id: "dmd_sortieCaisse",
@@ -434,6 +382,53 @@ var arrMenu = [
           title: "Demandes réjetées",
           url: "tools1/pages/vehicule/list.aspx?t=R",
 
+          target: "DivMainPageContainer",
+        },
+      },
+    ],
+  },
+
+  {
+    id: "dmd_regularisationFinMission",
+    title: "Demande de régularisation de frais de mission",
+    icon: "fa fa-2x fa-globe",
+    arrsmenu: [
+      {
+        offcanvas: {
+          id: "dmd_regularisationFinMission_new",
+          title: "Effectuer une demande",
+          url: "tools1/pages/regularisationFraisMission/add.aspx",
+         // url: "/pages/regularisationFraisMission/add.html",
+          target: "ffcMainFormContainer",
+        },
+        link: false,
+      },
+
+      {
+        offcanvas: false,
+        link: {
+          id: "dmd_regularisationFinMission_list_en_cours",
+          title: "Demande en cours",
+          url: "tools1/pages/regularisationFraisMission/list.aspx?t=E",
+          target: "DivMainPageContainer",
+        },
+      },
+      {
+        offcanvas: false,
+        link: {
+          id: "dmd_regularisationFinMission_list_validee",
+          title: "Demandes validées",
+          url: "tools1/pages/regularisationFraisMission/list.aspx?t=V",
+          target: "DivMainPageContainer",
+        },
+      },
+
+      {
+        offcanvas: false,
+        link: {
+          id: "dmd_regularisationFinMission_list_rejetee",
+          title: "Demandes réjetées",
+          url: "tools1/pages/regularisationFraisMission/list.aspx?t=R",
           target: "DivMainPageContainer",
         },
       },

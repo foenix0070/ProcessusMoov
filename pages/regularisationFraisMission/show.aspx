@@ -75,8 +75,7 @@
                 </script>
 
                 <script id="tmpl_form_historique_validation" type="x-tmpl-mustache">
-
-
+                  
                   <div class="head-titre">
                     <h2>
                       Historique de validations
@@ -138,8 +137,13 @@
                   </div></br>
                   <table>
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="300px" >Titre :</td>
+                        <td style="text-align:left;" class="fw-bold" width="300px" >Intitule :</td>
                         <td style="text-align:left;">{{title}}</td>
+                      </tr>
+
+                      <tr>
+                        <td style="text-align:left;" class="fw-bold" width="300px" >Mission :</td>
+                        <td style="text-align:left;">{{choix}}</td>
                       </tr>
 
                       <tr>
@@ -150,6 +154,21 @@
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="300px">Date de fin :</td>
                         <td style="text-align:left;">{{dateretour}}</td>
+                      </tr>
+
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="300px">Nombre de Jours :</td>
+                        <td style="text-align:left;">{{nombre}}</td>
+                      </tr>
+
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="300px">Forfait :</td>
+                        <td style="text-align:left;">{{forfait}}</td>
+                      </tr>
+
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="300px">Montant :</td>
+                        <td style="text-align:left;">{{total}}</td>
                       </tr>
                   </table>
                 </script>
