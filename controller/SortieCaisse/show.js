@@ -276,6 +276,7 @@ showSortieCaisse.ShowDetails = function (demandeid) {
       let view = {
         date: It.get_item('Created').toLocaleDateString() != null ? It.get_item('Created').toLocaleDateString() : '',
         montant: It.get_item('Montant') != null ? It.get_item('Montant') : '',
+        titre: It.get_item('Title') != null ? It.get_item('Title') : '',
         modePaiement: It.get_item('ModePaiement') != null ? It.get_item('ModePaiement') : '',
         payerA: It.get_item('PayerA') != null ? It.get_item('PayerA') : '',
         caissePaiement: It.get_item('CaissePaiement') != null ? It.get_item('CaissePaiement') : '',

@@ -19,6 +19,9 @@ ListConge.InitializePage = function () {
     case 'R' :  ListConge.ListConge('REJETEE');
     x.innerHTML = " Listes des demandes de congés rejétées";
     break;
+    case 'M' :  ListConge.ListConge('DEMANDEMODIFICATION');
+    x.innerHTML = " Listes des demandes de congés à modifier";
+    break;
     default : ListConge.ListConge('ENCOURS');
     x.innerHTML = " Listes des demandes de congés en cours";
     break;

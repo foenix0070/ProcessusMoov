@@ -24,7 +24,6 @@ ListAbsence.InitializePage = function () {
     break;
   }
 
-
 };
 
 

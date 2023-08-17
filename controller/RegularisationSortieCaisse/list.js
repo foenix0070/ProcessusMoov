@@ -19,6 +19,9 @@ ListRegularisationSortieCaisse.InitializePage = function () {
     case 'R' :  ListRegularisationSortieCaisse.ListRegularisationSortieCaisse('REJETEE');
     x.innerHTML = " Listes des demandes de regularisation de sortie de caisse rejétées";
     break;
+    case 'N' :  ListRegularisationSortieCaisse.ListRegularisationSortieCaisse('A MODIFIER');
+    x.innerHTML = " Listes des demandes de regularisation de sortie de caisse à mofifier";
+    break;
     default : ListRegularisationSortieCaisse.ListRegularisationSortieCaisse('ENCOURS');
     x.innerHTML = " Listes des demandes de regularisation de sortie de caisse en cours";
     break;

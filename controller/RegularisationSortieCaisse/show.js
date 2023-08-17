@@ -271,13 +271,14 @@ showRegularisationSortieCaisse.ShowDetails = function (demandeid) {
     if (It) {
       //showRegularisationSortieCaisse.isSoldeImpact = (It.get_item('TypeREGULARISATIONSORTIECAISSEID') != null ? It.get_item('TypeREGULARISATIONSORTIECAISSEID') : 0)
       let view = {
+        etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : '',
+        titre: It.get_item('Title') != null ? It.get_item('Title') : '',
         date: It.get_item('Created').toLocaleDateString() != null ? It.get_item('Created').toLocaleDateString() : '',
         montant: It.get_item('Montant') != null ? It.get_item('Montant') : '',
         solde: It.get_item('Solde') != null ? It.get_item('Solde') : '',
-        etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
-        // datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
-        // interimaire: It.get_item('Interimaire') != null ?  It.get_item('Interimaire').get_lookupValue() : '',
-        //observation: It.get_item('Observation') != null ?  It.get_item('Observation') : '',
+        datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
+        //interimaire: It.get_item('Interimaire') != null ?  It.get_item('Interimaire').get_lookupValue() : '',
+        observation: It.get_item('Observation') != null ?  It.get_item('Observation') : '',
       };
 
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);

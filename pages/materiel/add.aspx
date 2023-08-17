@@ -34,32 +34,10 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label"> Description</label>
+                <label class="form-label"> Motif</label>
                 <textarea type="text" class="form-control" name="TxtMotif" id="TxtMotif" cols="30"
                     placeholder=""></textarea>
             </div>
-
-            <!--<label style="display: block;">
-                Materiel
-                <input type="text" name="TxtArticle" placeholder="ex: Ordinateur portable" id="TxtArticle">
-            </label>
-            <div class="form-elts__block" style="display: block;">
-                <label style="display: inline-block;">
-                    Quantit&eacute;
-                    <input type="number" name="TxtQuantite" placeholder="" id="TxtQuantite">
-                </label>
-
-
-            </div>
-            <div class="form-elts__block" style="display: block;">
-
-                <label>
-                    Description
-                    <textarea name="TxtMotif" style="width: 100%;" id="TxtMotif" cols="30" rows="10"></textarea>
-                </label>
-
-            </div>-->
-
 
         </fieldset>
 

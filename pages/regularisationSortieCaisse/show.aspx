@@ -122,19 +122,28 @@
                   </div></br>
                   <table>
                     <tr>
+                      <td style="text-align:left;" class="fw-bold" width="200px" >Titre :</td>
+                      <td style="text-align:left;">{{titre}}</td>
+                    </tr>
+                    <tr>
                       <td style="text-align:left;" class="fw-bold" width="200px" >Date :</td>
-                      <td style="text-align:left;">{{date}}</td>
+                      <td style="text-align:left;">{{datedepart}}</td>
                     </tr>
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px" >Montant :</td>
+                        <td style="text-align:left;" class="fw-bold" width="200px" >Montant utilisé:</td>
                         <td style="text-align:left;">{{montant}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left; "class="fw-bold" width="200px">Mode de paiement :</td>
+                        <td style="text-align:left; "class="fw-bold" width="200px">Solde reverser :</td>
                         <td style="text-align:left;">{{solde}}</td>
                       </tr>
-                    
+                      
+                      <tr>
+                        <td style="text-align:left; "class="fw-bold" width="200px">Observation :</td>
+                        <td style="text-align:left;">{{Observation}}</td>
+                      </tr>
+
                   </table>
                 </script>
 

@@ -39,7 +39,7 @@
           <td>{{title}}</td>
           <td>{{startdate}}</td>
           <td>{{nbre}}</td>
-          <td><a href="http://ci08vmmitest/tools1/pages/autorisationAbsence/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="http://ci08vmmitest/tools1/pages/autorisationAbsence/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+          <td><a href="/tools1/pages/autorisationAbsence/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/autorisationAbsence/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
           <td><span class="{{classe}}">{{status}}</span></td>
         </tr>
         {{/absences}}

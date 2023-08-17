@@ -148,6 +148,11 @@
                         <td style="text-align:left;" class="fw-bold" width="200px">Motif </td>
                         <td style="text-align:left;"> {{motif}}  </td>
                       </tr>
+
+                      <tr>
+                        <td style="text-align:left;" class="fw-bold" width="200px">Interimaire </td>
+                        <td style="text-align:left;"> {{Interimaire}}  </td>
+                      </tr>
                       
                   </table>
                 </script>

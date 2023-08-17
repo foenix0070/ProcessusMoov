@@ -114,8 +114,13 @@
                     <h2>
                       Details de la demande
                     </h2>
-                  </div></br>
-                  <div>
+                  </div>
+                  {{#id}}
+                  <div class="sect-bn"><button class="btn btn-warning btn-sm linkOffCanvasNavigation" data-url="/tools1/pages/conge/add.aspx?DID={{id}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" id="BtnModification" >Modifier la demande</button></div>
+                  {{/id}}
+                  
+
+                  <div> </br>
                     <h3 style="color:#c50000 !important;">
                       <b>
                         {{etat}}

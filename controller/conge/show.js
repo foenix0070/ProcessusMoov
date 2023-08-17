@@ -276,6 +276,7 @@ showConge.ShowDetails = function (demandeid) {
     if (It) {
       showConge.isSoldeImpact = (It.get_item('TypeCongeID') != null ? It.get_item('TypeCongeID') : 0)
       let view = {
+        id :  (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false ) ,
         typeconge: It.get_item('TypeCongeLibelle') != null ? It.get_item('TypeCongeLibelle') : '',
         nbrejour: It.get_item('NombreJours') != null ? It.get_item('NombreJours') : '',
         datedepart: It.get_item('DateDepart') != null ? new Date(It.get_item('DateDepart')).toLocaleDateString() : '',

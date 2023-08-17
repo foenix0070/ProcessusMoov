@@ -6,18 +6,6 @@ appConge.InitializePage = function () {
   appConge.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
-    //appSpHelper.LoadUserCongeParam(
-    //appHelper.ListName.Employe, 	"ETISALAT-AFRICA\pouattara",  App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
-    //document.getElementById("TxtCurrentUserLogin").value,
-    //function () {
-    //appSpHelper.GetEmploye(appHelper.ListName.Employe,document.getElementById("TxtSpManagerN1Login").value,
-    //function (item) {
-    //console.log(item);
-    //appSpHelper.GetEmployeeManagerLogin("N2", item.get_item("EmpManager"),
-    //function () {
-
-    //span = document.getElementById('spanSolde');
-    //span.innerHTML = document.getElementById('TxtSpUserNbreJrsAcquis').value;
 
     appConge.initCmbTypeConge(function () {
 
@@ -32,15 +20,11 @@ appConge.InitializePage = function () {
           appConge.GetInterimData(key);
         });
 
+        appConge.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function(){});
+
       }, 2000);
 
     });
-    //}
-    //);
-    //}
-    //);
-    //}
-    //);
   });
 
 
@@ -230,6 +214,37 @@ appConge.Add = function (callBack) {
 
   }, appSpHelper.writeError);
 };
+
+
+
+appConge.ShowDetails = function (demandeid, callBack) {
+
+  let oList = appConge.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Conge);
+  let It = oList.getItemById(demandeid);
+  console.log("IN ShowDetails");
+
+  appConge.clientContext.load(It);
+  appConge.clientContext.executeQueryAsync(function () {
+    if (It) {
+      
+        document.getElementById("TxtDateDepart").value = new Date(It.get_item('DateDepart')).toLocaleDateString(); 
+        document.getElementById("TxtTypeCongeText").value = It.get_item('TypeCongeLibelle') != null ? It.get_item('TypeCongeLibelle') : '';
+        document.getElementById("TxtNbreJour").value = It.get_item('NombreJours') != null ? It.get_item('NombreJours') : '';
+        document.getElementById("TxtCongeDomicile").value = It.get_item('DomicileConge') != null ? It.get_item('DomicileConge') : '';
+        document.getElementById("TxtCongeTelephone").value = It.get_item('CongeTelephone') != null ? It.get_item('CongeTelephone') : '';
+        document.getElementById("TxtCongeContact").value = It.get_item('CongeContact') != null ? It.get_item('CongeContact') : '';
+
+        document.getElementById("cmbTypeConge").value = It.get_item('TypeCongeID') != null ? It.get_item('TypeCongeID') : '';
+        document.getElementById("TxtTypeCongeText").value =  It.get_item('TypeCongeLibelle') != null ? It.get_item('TypeCongeLibelle') : '';
+        document.getElementById("TxtTypeCongeColeur").value =  It.get_item('Couleur') != null ? It.get_item('Couleur') : '';
+       
+        appSpHelper.SetPeoplePickerField ('plePickerInterimaireDiv', It.get_item('Interimaire') != null ? It.get_item('Interimaire').get_lookupValue() : '');
+        
+if(callBack){callBack();}
+
+    }else{if(callBack){callBack();}}
+  }, appSpHelper.writeError);
+}
 
 
 // document.addEventListener("DOMContentLoaded", () => {

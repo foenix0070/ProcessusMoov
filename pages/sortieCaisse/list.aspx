@@ -5,7 +5,7 @@
        Listes des demandes
       </h2>
     </div>
-  
+
   <!-- <Table /> -->
   <div id="DivSortieCaisseTableShow">
     <div style="padding: 10px 0 10px 2px;"
@@ -14,12 +14,12 @@
     </div>
   </div>
   </div>
-  
-  
+
+
   <script type="text/javascript">
     appHelper.loadJSWithNameSpace("ListSortieCaisse", 'ListSortieCaisse', "controller/SortieCaisse/list.js");
   </script>
-  
+
   <script id="tmpl_table_sortieCaisse" type="x-tmpl-mustache">
     <div class="table-container">
       <table class="table table-bordered table-responsive table-striped">
@@ -39,7 +39,7 @@
             <td>{{objetReglement}}</td>
             <td>{{montant}}</td>
             <td>{{payerA}}</td>
-            <td><a href="http://ci08vmmitest/tools1/pages/sortieCaisse/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="http://ci08vmmitest/tools1/pages/sortieCaisse/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+            <td><a href="tools1/pages/sortieCaisse/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/sortieCaisse/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
             <td><span class="{{classe}}">{{status}}</span></td>
           </tr>
           {{/sortiecaisse}}
@@ -47,4 +47,3 @@
       </table>
     </div>
   </script>
-  

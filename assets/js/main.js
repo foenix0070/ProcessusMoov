@@ -43,6 +43,15 @@ var arrMenu = [
           target: "DivMainPageContainer",
         },
       },
+      {
+        offcanvas: false,
+        link: {
+          id: "dmd_conge_list_modification",
+          title: "Demandes à modifier",
+          url: "tools1/pages/conge/list.aspx?t=M",
+          target: "DivMainPageContainer",
+        },
+      },
     ],
   },
 
