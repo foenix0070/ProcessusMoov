@@ -93,6 +93,10 @@ appHelper.Log = function (msg, type = appHelper.LogType.LOG, appName = 'MI') {
   }
 }
 
+appHelper. parseBool = function(str) {
+  return /^(true|1)$/i.test(str);
+}
+
 
 appHelper.isArray = function(myArray) {
   return myArray.constructor.toString().indexOf("Array") > -1;

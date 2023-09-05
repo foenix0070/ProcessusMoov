@@ -98,6 +98,7 @@ let str = '';
  var typeConge = document.getElementById("cmbTypeConge").value;
  var nbreJour = document.getElementById("TxtNbreJour").value;
  var dateDepart = document.getElementById("TxtDateDepart").value;
+ var isImpact = appHelper. parseBool(document.getElementById("cmbTypeConge").getAttribute("data-impact"));
 
  // Vérifier si les champs obligatoires sont vides
  if (nom === "" || matricule === "" || email === "" || typeConge === "0" || nbreJour === "" || dateDepart === "") {
@@ -112,10 +113,12 @@ let str = '';
  }
 
 
- if (parseInt(nbreJour) > App.CurrentUser.NombreJoursAcquis) {
-  str +=  ("Votre solde de congé est inférieur à votre demande. <br>");
-    v= false; // Empêche l'envoi du formulaire
-}
+ if (isImpact) {
+   if (parseInt(nbreJour) > App.CurrentUser.NombreJoursAcquis) {
+     str += "Votre solde de congé est inférieur à votre demande. <br>";
+     v = false; // Empêche l'envoi du formulaire
+   }
+ }
 
  let div = document.getElementById('DivErreurMessage');
  div.innerHTML = '';
@@ -181,6 +184,8 @@ appConge.ListerMotif = function (callBack) {
         let opt = document.createElement("option");
         opt.setAttribute("data-duree", oListItemTp.get_item("Duree"));
         opt.setAttribute("data-color", oListItemTp.get_item("Background"));
+        opt.setAttribute("data-impact", oListItemTp.get_item('IsSoldeImpact'));
+
         opt.setAttribute("value", oListItemTp.get_id());
         opt.innerHTML = oListItemTp.get_item("Title");
         document.getElementById("cmbTypeConge").appendChild(opt);
