@@ -18,6 +18,9 @@ ListMission.InitializePage = function () {
     case 'R' :  ListMission.ListMission('REJETEE');
     x.innerHTML = " Listes des demandes de mission rejétées";
     break;
+    case 'M' :  ListMission.ListMission('DEMANDEMODIFICATION');
+    x.innerHTML = " Listes des demandes de mission à modifier";
+    break;
     default : ListMission.ListMission('ENCOURS');
     x.innerHTML = " Listes des demandes de mission en cours";
     break;

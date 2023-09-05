@@ -26,9 +26,10 @@
         <thead>
           <tr>
             <th>N*</th>
-            <th>Intitul&eacute</th>
+            <th>Intitule</th>
             <th>Date de d&eacutepart</th>
             <th>Nombre de jours</th>
+            <th></th>
             <th>Etat</th>
           </tr>
         </thead>

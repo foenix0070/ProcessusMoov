@@ -26,9 +26,9 @@
       <thead>
         <tr>
           <th>N*</th>
-          <th>Intitul&eacute</th>
-          <th>Date de d&eacutepart</th>
+          <th>Date de depart</th>
           <th>Nombre de jours</th>
+          <th>Intitule</th>
           <th>Etat</th>
         </tr>
       </thead>
@@ -36,7 +36,6 @@
         {{#absences}}
         <tr class="" >
           <td>{{id}}</td>
-          <td>{{title}}</td>
           <td>{{startdate}}</td>
           <td>{{nbre}}</td>
           <td><a href="/tools1/pages/autorisationAbsence/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/autorisationAbsence/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>

@@ -30,13 +30,21 @@
 
             <div class="mb-3">
                 <label class="form-label"> Quantit&eacute</label>
-                <input type="number" class="form-control" name="TxtQuantite" id="TxtQuantite" placeholder="" />
+                <input type="text" class="form-control" name="TxtQuantite" id="TxtQuantite" placeholder="" />
             </div>
 
             <div class="mb-3">
                 <label class="form-label"> Motif</label>
                 <textarea type="text" class="form-control" name="TxtMotif" id="TxtMotif" cols="30"
                     placeholder=""></textarea>
+            </div>
+
+            <div class="mb-3">
+                <input id="TxtVerif" type="hidden" >
+            </div>
+
+            <div class="mb-3">
+                <input id="TxtID" type="hidden" >
             </div>
 
         </fieldset>

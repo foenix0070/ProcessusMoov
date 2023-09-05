@@ -74,7 +74,8 @@
       </div>
       <div class="mb-3">
         <label class="form-label">Commentaire :</label>
-        <input type="text" id="TxtCommentaire" class="  form-control">
+        <!-- <input type="text" id="TxtCommentaire" class="  form-control"> -->
+        <textarea id="TxtCommentaire" type="text" class="form-control" name="TxtCommentaire" cols="30"></textarea>
       </div>
       <div class="mb-3">
         <label class="form-label">Site BTS :</label>
@@ -82,7 +83,7 @@
       </div>
       <div class="mb-3">
         <label class="form-label">Coût Total :</label>
-        <input type="number" id="TxtCoutTotal" class="  form-control">
+        <input type="text" id="TxtCoutTotal" class="  form-control">
       </div>
 
       <div class="mb-3">
@@ -120,6 +121,14 @@
         <input type="text" id="TxtDoc" class="  form-control">
       </div>-->
 
+      <div class="mb-3">
+        <input id="TxtVerif" type="hidden">
+      </div>
+
+      <div class="mb-3">
+        <input id="TxtID" type="hidden">
+      </div>
+      
     </fieldset>
 
     <fieldset class="form-elts">
@@ -132,17 +141,17 @@
           <th>Nombre</th>
           <th>Forfait</th>
           <th>Total</th>
-          <th>Action</th>
+          <!-- <th>Action</th> -->
         </tr>
         <tr>
           <!--<td><select id="CmbPerdieme" name="CmbPerdieme"><option>Hotel</option></select></td>-->
           <!--<td><input type="text" id="Txtlibelle" name="Txtlibelle"></td>-->
           <td><input type="date" id="DateDebut" name="DateDebut"></td>
           <td><input type="date" id="DateFin" name="DateFin"></td>
-          <td><input type="number" id="TxtNombre" name="TxtNombre"></td>
-          <td><input type="number" id="TxtForfait" name="TxtForfait"></td>
-          <td><input type="number" id="TxtTotal" name="TxtTotal"></td>
-          <td><input type="button" onclick="supprimerLigne(this)" value="Supprimer"></td>
+          <td><input type="number" id="TxtNombre" name="TxtNombre" oninput="calculTotal()"></td>
+          <td><input type="number" id="TxtForfait" name="TxtForfait" oninput="calculTotal()"></td>
+          <td><input type="number" id="TxtTotal" name="TxtTotal" readonly></td>
+          <!-- <td><input type="button" onclick="supprimerLigne(this)" value="Supprimer"></td> -->
 
         </tr>
       </table>

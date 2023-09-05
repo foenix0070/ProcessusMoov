@@ -24,6 +24,7 @@ appAbsence.InitializePage = function () {
 
       }, 2000);
 
+
       appAbsence.GetInterimData = function (login) {
         appSpHelper.GetEmploye(appHelper.ListName.Employe, login, function (it) {
           document.getElementById("TxtIntName").value = it.get_item('EmpPrenom') + ' ' + it.get_item('EmpNom');
@@ -34,38 +35,62 @@ appAbsence.InitializePage = function () {
 
     });
 
+    appAbsence.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function(){});
+
   });
 
   const TxtIntName = document.querySelector("#TxtIntName");
+  const BtnSave = document.querySelector("#BtnSave");
+
 
   TxtIntName.addEventListener("click", function () {
-
-    // document.querySelector("#TxtIntName").value = 'Consultant INOVA';
 
   });
 
 
   //const BtnAdd = document.querySelector("#demande");
-  const BtnSave = document.querySelector("#BtnSave");
 
 
-
-  /*
-  BtnAdd.addEventListener("click", function () {
-    setTimeout(function () {
-      appSpHelper.InitializePeoplePicker(
-        "plePickerInterimaireDiv",
-        false,
-        "350px"
-      );
-    }, 2000);
-  });
-  */
 
   BtnSave.addEventListener("click", function () {
-    appAbsence.Add(function () {
-      location.reload();
-    });
+    let nature = document.getElementById("cmbTypeAbsence").value;
+    let motif = document.getElementById("TxtMotif").value;
+    let duree = document.getElementById("TxtDuree").value;
+    let startdate = document.getElementById("DateDebut").value;
+    let enddate = document.getElementById("DateReprise").value;
+    if(nature!="" && motif!="" && duree!=0 && startdate!="" && enddate!="")
+    {
+      let verif = document.getElementById("TxtVerif").value;
+      if(verif=="Edit")
+      {
+        let valID = document.getElementById("TxtID").value;
+        appHelper.Log(valID);
+        appAbsence.Edit (valID, function(a){
+          //location.reload();
+          const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + a.get_id();
+          const url = "/tools"+appUrl;
+          appHelper.navigation("DivMainPageContainer", url);
+          var closeButton = document.querySelector('[aria-label="Close"]');
+          closeButton.click();
+        });
+      }
+      else{
+        appAbsence.Add (function(a){
+          //location.reload();
+          const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + a.get_id();
+          const url = "/tools"+appUrl;
+          appHelper.navigation("DivMainPageContainer", url);
+          var closeButton = document.querySelector('[aria-label="Close"]');
+          closeButton.click();
+        });
+      }
+    }
+
+    else{
+      alert("Veillez renseigner correctement les champs");
+    }
+
+
   });
 
 };
@@ -112,6 +137,7 @@ function ListerMotif(callBack) {
         let opt = document.createElement("option");
         opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
         opt.setAttribute("data-color", oListItemTp.get_item('Background'));
+        opt.setAttribute("data-impact", oListItemTp.get_item('IsSoldeImpact'));
         opt.setAttribute("value", oListItemTp.get_id());
         opt.innerHTML = oListItemTp.get_item('Title');
         document.getElementById('cmbTypeAbsence').appendChild(opt);
@@ -122,7 +148,7 @@ function ListerMotif(callBack) {
         callBack();
       }
     },
-    function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
+    function (sender, args) { appHelper.Log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
 }
 
 appAbsence.List = function () {
@@ -194,6 +220,70 @@ appAbsence.Add = function (callBack) {
     parseInt(document.getElementById("TxtDuree").value)
   );
 
+  let pickerDict = SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan;
+  let userKeys = pickerDict.GetAllUserKeys();
+
+  oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
+  oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
+  oListItem.set_item("DateDepart", startDate);
+  oListItem.set_item("DateRetour", endDate);
+  oListItem.set_item("DateReprise", repDate);
+  oListItem.set_item("Title", document.getElementById("TxtTypeAbsenceText").value);
+  oListItem.set_item("Nature", document.getElementById("TxtTypeAbsenceText").value);
+  oListItem.set_item("TypeAbsenceID", document.getElementById("cmbTypeAbsence").value);
+  oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
+  oListItem.set_item("NombreJours", parseInt(document.getElementById("TxtDuree").value));
+  oListItem.set_item("NombreJourAccorde", parseInt(document.getElementById("TxtDuree").value));
+  oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
+  oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
+  oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
+  oListItem.set_item("ResponsableN2", App.CurrentUser.ManagerPersonne2);
+
+  oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
+  oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
+
+  if(userKeys.length >0)
+  {
+    oListItem.set_item("Interimaire", SP.FieldUserValue.fromUser(SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys()));
+  }
+
+  oListItem.update();
+  clientContext.load(oListItem);
+  clientContext.executeQueryAsync(function () {
+
+    const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + oListItem.get_id();
+    let WF = new WFManager(appHelper.AppCode.ABSENCE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.ABSENCE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+    if (callBack) {
+      callBack(oListItem);
+    }
+  }, appSpHelper.writeError);
+};
+
+
+appAbsence.Edit = function (demandeid, callBack) {
+
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Absence);
+  let oListItem = oList.getItemById(demandeid);
+
+  let startDate = new Date(
+    document.getElementById("DateDebut").value
+    //appHelper.ReturnISODate()
+  );
+
+  let repDate = new Date(
+    document.getElementById("DateReprise").value
+    //appHelper.ReturnISODate()
+  );
+
+
+  let endDate = startDate.addDays(
+    parseInt(document.getElementById("TxtDuree").value)
+  );
+
+  let pickerDict = SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan;
+  let userKeys = pickerDict.GetAllUserKeys();
+
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
 
@@ -217,7 +307,7 @@ appAbsence.Add = function (callBack) {
 
   oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
 
-  oListItem.set_item("Interimaire", SP.FieldUserValue.fromUser(SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys()));
+  //oListItem.set_item("Interimaire", SP.FieldUserValue.fromUser(SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys()));
 
   oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
   oListItem.set_item("ResponsableN2", App.CurrentUser.ManagerPersonne2);
@@ -225,19 +315,53 @@ appAbsence.Add = function (callBack) {
   oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
   oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
 
+  if(userKeys.length >0)
+  {
+    oListItem.set_item("Interimaire", SP.FieldUserValue.fromUser(SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys()));
+  }
+
   oListItem.update();
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
     const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + oListItem.get_id();
     let WF = new WFManager(appHelper.AppCode.ABSENCE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.ABSENCE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
-    if (callBack) {
-      callBack(oListItem);
-    }
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.ABSENCE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () {
+
+      if (callBack) {
+        callBack(oListItem);
+      }
+
+    })
+
   }, appSpHelper.writeError);
 };
 
+appAbsence.ShowDetails = function (demandeid, callBack) {
+
+  let oList = appAbsence.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Absence);
+  let It = oList.getItemById(demandeid);
+  appHelper.Log(demandeid);
+  appHelper.Log("IN ShowDetails");
+
+  appAbsence.clientContext.load(It);
+  appAbsence.clientContext.executeQueryAsync(function () {
+    if (It) {
+
+        document.getElementById("cmbTypeAbsence").value = It.get_item('Title') != null ? It.get_item('Title') : '';
+        document.getElementById("TxtTypeAbsenceText").value = It.get_item('Title') != null ? It.get_item('Title') : '';
+        document.getElementById("TxtDuree").value = It.get_item('NombreJours') != null ? It.get_item('NombreJours') : 0;
+        document.getElementById("DateDebut").value = It.get_item('DateDepart') != null ? It.get_item('DateDepart') : '';
+        document.getElementById("DateReprise").value = It.get_item('DateReprise') != null ? It.get_item('DateReprise') : '';
+        document.getElementById("TxtMotif").value = It.get_item('Motif') != null ? It.get_item('Motif') : '';
+        document.getElementById("TxtVerif").value = 'Edit';
+        document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;
+
+if(callBack){callBack();}
+
+    }else{if(callBack){callBack();}}
+  }, appSpHelper.writeError);
+}
 
 //document.addEventListener("DOMContentLoaded", () => {
 //ExecuteOrDelayUntilScriptLoaded(function(){

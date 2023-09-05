@@ -2,6 +2,9 @@
 
               <div class="row">
 
+                <div class="col-12">
+                  <section id="SectionFirst"> </section>
+                </div>
 
                 <div class="col-6">
                   <section id="SectionDetails"> </section>
@@ -30,6 +33,25 @@
 
 
               </div>
+
+              <script id="tmpl_form_first" type="x-tmpl-mustache">
+                <div class="mb-2" style="background-color: whitesmoke; border-bottom:5px solid #007bff ;">
+                  <div>
+                    <tr>
+                      <td style="text-align:left; font-weight: 700; font-size: 26px;"><h3><b>DEMANDE DE CONGE</h3></b></td>
+                    </tr>
+                  </div></br>
+                  
+                  <table class="col-12">
+                    <tr>
+                      <td style="text-align:left;"><h4><b>NUMERO DE LA DEMANDE : {{id}}</h5></b></td>
+                    </tr>
+                      <tr class="mb-2">
+                        <td style="text-align:left;">Creer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
+                      </tr>
+                  </table><br/>
+                </div>
+              </script>
 
 
               <script id="tmpl_form_fichiers_attaches" type="x-tmpl-mustache">
@@ -110,6 +132,32 @@
 
               <script id="tmpl_form_details" type="x-tmpl-mustache">
 
+                <div class="head-titre">
+                  <h2>
+                    Details du demandeur
+                  </h2>
+                </div></br>
+                <table>
+                  <tr>
+                    <td style="text-align:left;"class="fw-bold" width="200px">Demandeur</td>
+                    <td style="text-align:left;">{{demandeur}}</td>
+                  </tr>
+
+                  <tr>
+                    <td style="text-align:left;"class="fw-bold" width="200px">Demandeur Email</td>
+                    <td style="text-align:left;">{{demandeuremail}}</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;" class="fw-bold" width="200px">Superieur hierarchique </td>
+                    <td style="text-align:left;"> {{superieur}}  </td>
+                  </tr>
+
+                  <tr>
+                    <td style="text-align:left;" class="fw-bold" width="200px">Directeur </td>
+                    <td style="text-align:left;"> {{directeur}}  </td>
+                  </tr>
+                </table></br>
+
                   <div class="head-titre">
                     <h2>
                       Details de la demande
@@ -152,14 +200,15 @@
                         <td style="text-align:left;"class="fw-bold" width="200px">Nombre de jours</td>
                         <td style="text-align:left;">{{nbrejour}}</td>
                       </tr>
-                      <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Int&eacute;rimaire</td>
-                        <td style="text-align:left;">{{interimaire}}</td>
-                      </tr>
 
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="200px">Adresse pendant les cong&eacute;s </td>
                         <td style="text-align:left;"> Domicile : {{domicile}} <br>  T&eacute;l&eacute;phone : {{telephone}} <br> Personne &agrave; contacter :{{personne}} </td>
+                      </tr>
+                      
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Int&eacute;rimaire</td>
+                        <td style="text-align:left;">{{interimaire}}</td>
                       </tr>
                   </table>
                 </script>

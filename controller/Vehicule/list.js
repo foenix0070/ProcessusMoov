@@ -19,6 +19,9 @@ ListVehicule.InitializePage = function () {
     case 'R' :  ListVehicule.ListVehicule('REJETEE');
     x.innerHTML = " Listes des demandes de vehicule rejétées";
     break;
+    case 'M' :  ListVehicule.ListVehicule('DEMANDEMODIFICATION');
+    x.innerHTML = " Listes des demandes de vehicule à modifier";
+    break;
     default : ListVehicule.ListVehicule('ENCOURS');
     x.innerHTML = " Listes des demandes de vehicule en cours";
     break;
@@ -54,9 +57,7 @@ ListVehicule.ListVehicule = function (T) {
         view.vehicule.push({
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Title"),
-          startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
-          enddate: new Date( oListItem.get_item("DateRetour")).toLocaleDateString(),
-          reprisedate: new Date( oListItem.get_item("DateReprise")).toLocaleDateString(),
+          startdate: new Date( oListItem.get_item("Created")).toLocaleDateString(),
           motif: oListItem.get_item("Motif"),
           status: oListItem.get_item("StatutLibelle"),
           classe: appHelper.Status.GetClass(oListItem.get_item("Statut")),

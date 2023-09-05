@@ -11,16 +11,19 @@ ListRegularisationMission.InitializePage = function () {
   let x = document.getElementById('h2Titre');
   switch (T) {
     case 'E': ListRegularisationMission.ListRegularisationMission('ENCOURS');
-      x.innerHTML = " Listes des demandes de mission en cours";
+      x.innerHTML = " Listes des demandes de regularisation de mission en cours";
       break;
     case 'V': ListRegularisationMission.ListRegularisationMission('VALIDEE');
-      x.innerHTML = " Listes des demandes de mission validées";
+      x.innerHTML = " Listes des demandes de regularisation de mission validées";
       break;
     case 'R': ListRegularisationMission.ListRegularisationMission('REJETEE');
-      x.innerHTML = " Listes des demandes de mission rejétées";
+      x.innerHTML = " Listes des demandes de regularisation de mission rejétées";
+      break;
+    case 'M': ListRegularisationMission.ListRegularisationMission('DEMANDEMODIFICATION');
+      x.innerHTML = " Listes des demandes de regularisation de mission à modifier";
       break;
     default: ListRegularisationMission.ListRegularisationMission('ENCOURS');
-      x.innerHTML = " Listes des demandes de mission en cours";
+      x.innerHTML = " Listes des demandes de regularisation de mission en cours";
       break;
   }
 

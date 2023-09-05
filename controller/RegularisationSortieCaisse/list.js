@@ -19,7 +19,7 @@ ListRegularisationSortieCaisse.InitializePage = function () {
     case 'R' :  ListRegularisationSortieCaisse.ListRegularisationSortieCaisse('REJETEE');
     x.innerHTML = " Listes des demandes de regularisation de sortie de caisse rejétées";
     break;
-    case 'N' :  ListRegularisationSortieCaisse.ListRegularisationSortieCaisse('A MODIFIER');
+    case 'M' :  ListRegularisationSortieCaisse.ListRegularisationSortieCaisse('DEMANDEMODIFICATION');
     x.innerHTML = " Listes des demandes de regularisation de sortie de caisse à mofifier";
     break;
     default : ListRegularisationSortieCaisse.ListRegularisationSortieCaisse('ENCOURS');
@@ -60,18 +60,13 @@ ListRegularisationSortieCaisse.ListRegularisationSortieCaisse = function (T) {
         view.sortiecaisse.push({
           id: oListItem.get_item("ID"),
           observation: oListItem.get_item("Observation"),
-          //title: oListItem.get_item("Title"),
+          title: oListItem.get_item("Title"),
           // startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
           //motif: oListItem.get_item("Motif"),
           montant: oListItem.get_item("Montant"),
           solde: oListItem.get_item("Solde"),
           status: oListItem.get_item("StatutLibelle"),
           classe: appHelper.Status.GetClass(oListItem.get_item("Statut")),
-
-          /*
-          quantite: oListItem.get_item("Quantite"),
-          motif: oListItem.get_item("Motif"),
-          */
 
         });
       }

@@ -10,12 +10,13 @@ showRegularisationSortieCaisse.InitializePage = function () {
   let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
   let Id = appHelper.GetQueryStringFromAjaxQuery('id');
 
-  appSpHelper.CheckAttachmentFolder(showRegularisationSortieCaisse.clientContext, Id, appHelper.ListName.SortieCaisse, null);
+  appSpHelper.CheckAttachmentFolder(showRegularisationSortieCaisse.clientContext, Id, appHelper.ListName.RegularisationSortieCaisse, null);
 
   appSpHelper.GetMyProperties(function () {
 
     console.log(tacheId, Id);
     showRegularisationSortieCaisse.ShowDetails(Id);
+    showRegularisationSortieCaisse.ShowFirst(Id);
     showRegularisationSortieCaisse.ShowFichierJoint(Id);
     showRegularisationSortieCaisse.ShowValidation(Id);
     if (tacheId) {
@@ -261,27 +262,90 @@ showRegularisationSortieCaisse.ShowValidation = function (demandeid) {
 
 }
 
+function ajouterEspacesEntreChiffres(nombre) {
+  if(nombre>999){
+    // Convertir le nombre en une chaîne de caractères
+    var nombreString = nombre.toString();
+   
+    // Utiliser une expression régulière pour ajouter des espaces entre les chiffres
+    var nombreAvecEspaces = nombreString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    
+    return nombreAvecEspaces;
+  }
+  else{
+   return nombre;
+  }
+ }
+
 showRegularisationSortieCaisse.ShowDetails = function (demandeid) {
+
+  let oList = showRegularisationSortieCaisse.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.RegularisationSortieCaisse);
+  let It = oList.getItemById(demandeid);
+  console.log("OUT");
+
+  showRegularisationSortieCaisse.clientContext.load(It);
+  showRegularisationSortieCaisse.clientContext.executeQueryAsync(function () {
+    if (It) {
+      console.log("IN");
+      let demandeurField = It.get_item('Demandeur');
+      let superieurField = It.get_item('ResponsableN1');
+      let demandeurName = demandeurField.get_lookupValue();
+      let superieurName = superieurField.get_lookupValue();
+      let mont = ajouterEspacesEntreChiffres(It.get_item('Montant'));
+      let sold = ajouterEspacesEntreChiffres(It.get_item('Solde'));
+      let view = {
+        id :  (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false ) ,
+        etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : '',
+        sortie: It.get_item('Sortie') != null ? It.get_item('Sortie') : '',
+        sortieid: It.get_item('SortieID') != null ? It.get_item('SortieID') : '',
+        titre: It.get_item('Title') != null ? It.get_item('Title') : '',
+        date: It.get_item('Created').toLocaleDateString() != null ? It.get_item('Created').toLocaleDateString() : '',
+        //montant: It.get_item('Montant') != null ? It.get_item('Montant') : '',
+        //solde: It.get_item('Solde') != null ? It.get_item('Solde') : '',
+        montant: mont,
+        solde: sold,
+        demandeur: demandeurName,
+        demandeuremail: It.get_item('DemandeurEmail') != null ? It.get_item('DemandeurEmail') : '',
+        superieur: superieurName,
+        observation: It.get_item('Observation') != null ?  It.get_item('Observation') : ''
+      };
+
+      appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
+
+    }
+  }, appSpHelper.writeError);
+}
+
+showRegularisationSortieCaisse.ShowFirst = function (demandeid) {
 
   let oList = showRegularisationSortieCaisse.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.RegularisationSortieCaisse);
   let It = oList.getItemById(demandeid);
 
   showRegularisationSortieCaisse.clientContext.load(It);
   showRegularisationSortieCaisse.clientContext.executeQueryAsync(function () {
-    if (It) {
-      //showRegularisationSortieCaisse.isSoldeImpact = (It.get_item('TypeREGULARISATIONSORTIECAISSEID') != null ? It.get_item('TypeREGULARISATIONSORTIECAISSEID') : 0)
-      let view = {
-        etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : '',
-        titre: It.get_item('Title') != null ? It.get_item('Title') : '',
-        date: It.get_item('Created').toLocaleDateString() != null ? It.get_item('Created').toLocaleDateString() : '',
-        montant: It.get_item('Montant') != null ? It.get_item('Montant') : '',
-        solde: It.get_item('Solde') != null ? It.get_item('Solde') : '',
-        datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
-        //interimaire: It.get_item('Interimaire') != null ?  It.get_item('Interimaire').get_lookupValue() : '',
-        observation: It.get_item('Observation') != null ?  It.get_item('Observation') : '',
-      };
 
-      appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
+
+    if (It) {
+      console.log("test showFirst");
+
+      let createdValue = It.get_item('Created');
+      let formattedTime = '';
+
+      let createdDate = new Date(createdValue);
+
+      var options = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
+      formattedTime = createdDate.toLocaleTimeString(undefined, options);
+
+      let creeerpar = It.get_item('Author');
+      let creer = creeerpar.get_lookupValue();
+      console.log(creer);
+      let viewData = {
+        id: It.get_item("ID"),
+        heure: formattedTime,
+        create: creer,
+        requestdate: It.get_item('Created') != null ? new Date(It.get_item('Created')).toLocaleDateString() : '',
+      };
+      appHelper.renderTemplate("tmpl_form_first", "SectionFirst", viewData);
 
     }
   }, appSpHelper.writeError);

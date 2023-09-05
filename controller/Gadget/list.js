@@ -19,6 +19,9 @@ ListGadget.InitializePage = function () {
     case 'R' :  ListGadget.ListGadget('REJETEE');
     x.innerHTML = " Listes des demandes de gadget rejétées";
     break;
+    case 'M' :  ListGadget.ListGadget('DEMANDEMODIFICATION');
+    x.innerHTML = " Listes des demandes de gadget à modifier";
+    break;
     default : ListGadget.ListGadget('ENCOURS');
     x.innerHTML = " Listes des demandes de gadget en cours";
     break;

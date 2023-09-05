@@ -15,6 +15,7 @@ showVehicule.InitializePage = function () {
 
   appSpHelper.GetMyProperties(function () {
     showVehicule.ShowDetails(Id);
+    showVehicule.ShowFirst(Id);
     showVehicule.ShowFichierJoint(Id);
     showVehicule.ShowValidation(Id);
     if (tacheId) {
@@ -270,12 +271,20 @@ showVehicule.ShowDetails = function (demandeid) {
   showVehicule.clientContext.load(It);
   showVehicule.clientContext.executeQueryAsync(function () {
     if (It) {
+      let demandeurField = It.get_item('Demandeur');
+      let superieurField = It.get_item('ResponsableN1');
+      let demandeurName = demandeurField.get_lookupValue();
+      let superieurName = superieurField.get_lookupValue();
       let view = {
+        id :  (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false ) ,
         title: It.get_item('Title') != null ? It.get_item('Title') : '',
         //nbrejour: It.get_item('NombreJourAccorde') != null ?  It.get_item('NombreJourAccorde') : '',
         datedepart: It.get_item('DateDepart') != null ? new Date(It.get_item('DateDepart')).toLocaleDateString() : '',
         dateretour: It.get_item('DateRetour') != null ? new Date(It.get_item('DateRetour')).toLocaleDateString() : '',
         //interimaire: It.get_item('Demandeur') != null ?  It.get_item('Demandeur').get_lookupValue() : '',
+        demandeur: demandeurName,
+        demandeuremail: It.get_item('DemandeurEmail') != null ? It.get_item('DemandeurEmail') : '',
+        superieur: superieurName,
         motif: It.get_item('Motif') != null ? It.get_item('Motif') : '',
         etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
       };
@@ -285,9 +294,40 @@ showVehicule.ShowDetails = function (demandeid) {
   }, appSpHelper.writeError);
 }
 
-//document.addEventListener("DOMContentLoaded", () => {
-//ExecuteOrDelayUntilScriptLoaded(function(){
+showVehicule.ShowFirst = function (demandeid) {
+
+  let oList = showVehicule.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Vehicule);
+  let It = oList.getItemById(demandeid);
+
+  showVehicule.clientContext.load(It);
+  showVehicule.clientContext.executeQueryAsync(function () {
+
+
+    if (It) {
+      console.log("test showFirst");
+
+      let createdValue = It.get_item('Created');
+      let formattedTime = '';
+
+      let createdDate = new Date(createdValue);
+
+      var options = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
+      formattedTime = createdDate.toLocaleTimeString(undefined, options);
+
+      let creeerpar = It.get_item('Author');
+      let creer = creeerpar.get_lookupValue();
+      console.log(creer);
+      let viewData = {
+        id: It.get_item("ID"),
+        heure: formattedTime,
+        create: creer,
+        requestdate: It.get_item('Created') != null ? new Date(It.get_item('Created')).toLocaleDateString() : '',
+      };
+      appHelper.renderTemplate("tmpl_form_first", "SectionFirst", viewData);
+
+    }
+  }, appSpHelper.writeError);
+}
+
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showVehicule.InitializePage);
-  //}, "SP.ClientContext");
-//});
 

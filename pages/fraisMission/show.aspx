@@ -13,39 +13,62 @@
 
 
 
-                    <div class="row">
+              <div class="row">
+
+                <div class="col-12">
+                  <section id="SectionFirst"> </section>
+                </div>
 
 
-<div class="col-6">
-  <section  id="SectionDetails"> </section>
-</div>
+                <div class="col-6">
+                  <section id="SectionDetails"> </section>
+                </div>
 
-<div class="col-6">
-  <section class="sect1" id="SectionDocumentsJoint"> </section>
-</div>
-<div class="col-12">
+                <div class="col-6">
+                  <section class="sect1" id="SectionDocumentsJoint"> </section>
+                </div>
+                <div class="col-12">
 
-  <br><br>
+                  <br><br>
 
-  <section class="sect1" id="SectionHistoriqueValidation">
+                  <section class="sect1" id="SectionHistoriqueValidation">
 
-  </section>
-
-
-</div>
-
-<div class="col-12">
-  <br><br>
-  <section class="sect2" id="SectionValidation">
-
-  </section>
-</div>
+                  </section>
 
 
-                    </div>
+                </div>
+
+                <div class="col-12">
+                  <br><br>
+                  <section class="sect2" id="SectionValidation">
+
+                  </section>
+                </div>
 
 
-                <script id="tmpl_form_fichiers_attaches" type="x-tmpl-mustache">
+              </div>
+
+              <script id="tmpl_form_first" type="x-tmpl-mustache">
+                <div class="mb-2" style="background-color: whitesmoke; border-bottom:5px solid #007bff ;">
+                  <div>
+                    <tr>
+                      <td style="text-align:left; font-weight: 700; font-size: 26px;"><h3><b>DEMANDE DE FRAIS DE MISSION</h3></b></td>
+                    </tr>
+                  </div></br>
+                  
+                  <table class="col-12">
+                    <tr>
+                      <td style="text-align:left;"><h4><b>NUMERO DE LA DEMANDE : {{id}}</h5></b></td>
+                    </tr>
+                      <tr class="mb-2">
+                        <td style="text-align:left;">Creer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
+                      </tr>
+                  </table><br/>
+                </div>
+              </script>
+
+
+              <script id="tmpl_form_fichiers_attaches" type="x-tmpl-mustache">
 
                   <div class="head-titre">
                     <h2>
@@ -74,7 +97,7 @@
                   </div>
                 </script>
 
-                <script id="tmpl_form_historique_validation" type="x-tmpl-mustache">
+              <script id="tmpl_form_historique_validation" type="x-tmpl-mustache">
 
 
                   <div class="head-titre">
@@ -104,7 +127,7 @@
                   
                 </script>
 
-                <script id="tmpl_form_validation" type="x-tmpl-mustache">
+              <script id="tmpl_form_validation" type="x-tmpl-mustache">
 <br/>
                   <div class="head-titre">
                     <h2>
@@ -122,13 +145,40 @@
                   </form>
                 </script>
 
-                <script id="tmpl_form_details" type="x-tmpl-mustache">
+              <script id="tmpl_form_details" type="x-tmpl-mustache">
+                  <div class="head-titre">
+                    <h2>
+                      Details du demandeur
+                    </h2>
+                  </div></br>
+                  <table>
+                    <tr>
+                      <td style="text-align:left;"class="fw-bold" width="200px">Demandeur</td>
+                      <td style="text-align:left;">{{demandeur}}</td>
+                    </tr>
+
+                    <tr>
+                      <td style="text-align:left;"class="fw-bold" width="200px">Demandeur Email</td>
+                      <td style="text-align:left;">{{demandeuremail}}</td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:left;" class="fw-bold" width="200px">Superieur hierarchique </td>
+                      <td style="text-align:left;"> {{superieur}}  </td>
+                    </tr>
+                  </table></br>
 
                   <div class="head-titre">
                     <h2>
                       Details de la demande
                     </h2>
-                  </div></br>
+                  </div>
+                  {{#id}}
+                  <div class="sect-bn"><button class="btn btn-warning btn-sm linkOffCanvasNavigation" data-url="/tools1/pages/fraisMission/add.aspx?DID={{id}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" id="BtnModification" >Modifier la demande</button></div>
+                  {{/id}}
+                  {{#regul}}
+                  <div class="sect-bn"><button class="btn btn-primary btn-sm linkOffCanvasNavigation" data-url="/tools1/pages/regularisationFraisMission/add.aspx?DID={{regul}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" data-info="fraisMission" id="BtnRegularisation" >Effectuer une regularisation</button></div>
+                  {{/regul}}
+                </br>
                   <div>
                     <h3 style="color:#c50000 !important;">
                       <b>
@@ -160,16 +210,28 @@
                         <td style="text-align:left;"class="fw-bold" width="300px">Montant Total :</td>
                         <td style="text-align:left;">{{cout}}</td>
                       </tr>
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="300px">Zone geographique :</td>
+                        <td style="text-align:left;">{{zone}}</td>
+                      </tr>
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="300px">Caisse de paiement :</td>
+                        <td style="text-align:left;">{{caisse}}</td>
+                      </tr>
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="300px">Mode de paiement :</td>
+                        <td style="text-align:left;">{{mode}}</td>
+                      </tr>
                   </table>
                 </script>
 
-                <script type="text/javascript">
-                  appHelper.loadJSWithNameSpace("showFraisMission", 'showFraisMission', "controller/FraisMission/show.js");
-                </script>
-<script type="text/javascript">
+              <script type="text/javascript">
+                appHelper.loadJSWithNameSpace("showFraisMission", 'showFraisMission', "controller/FraisMission/show.js");
+              </script>
+              <script type="text/javascript">
 
-function OpenFileUpload(str_select){
-  let transElt = document.getElementById(str_select);
-  transElt.click();
-}
-</script>
+                function OpenFileUpload(str_select) {
+                  let transElt = document.getElementById(str_select);
+                  transElt.click();
+                }
+              </script>

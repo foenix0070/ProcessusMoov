@@ -26,10 +26,23 @@ appMission.InitializePage = function () {
           
         });
 
+        appMission.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function(){});
+        FraisMission.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function(){});
+
       }, 2000);
 
   });
   });
+
+  var monInput = document.getElementById("TxtCoutTotal");
+
+  var autoNumeric = new AutoNumeric(monInput, {
+    digitGroupSeparator: " ",
+    decimalPlaces: 0,
+    unformatOnSubmit: true,
+  });
+
+  
 
   appMission.GetInterimData = function (login) {
     appSpHelper.GetEmploye(appHelper.ListName.Employe, login, function (it) {
@@ -38,6 +51,12 @@ appMission.InitializePage = function () {
       document.getElementById("TxtIntEmail").value = it.get_item('EmpMail');
     });
   }
+
+  var monInput = document.getElementById("TxtCoutTotal");
+    
+  var autoNumeric = new AutoNumeric(monInput, {
+      digitGroupSeparator: " ",
+  });
 
   const TxtIntName = document.querySelector("#TxtIntName");
 
@@ -50,14 +69,62 @@ appMission.InitializePage = function () {
 
   const BtnSave = document.querySelector("#BtnSave");
 
-
   BtnSave.addEventListener("click", function () {
-    appMission.Add (function(){
-      location.reload();
-    });
+    let zone = document.getElementById("cmbZoneGeo").value;
+    let caisse = document.getElementById("cmbCaisse").value;
+    let mode = document.getElementById("cmbMode").value;
+    let cout = document.getElementById("TxtCoutTotal").value;
+    let nombre = document.getElementById("TxtNombre").value;
+    let forfait = document.getElementById("TxtForfait").value;
+    let startdate = document.getElementById("DateDebut").value;
+    let enddate = document.getElementById("DateFin").value;
+
+    if(zone!="" && caisse!="" && nombre!=0 && forfait!=0 && mode!="" && cout!=0 && startdate!="" && enddate!="")
+    {
+    let verif = document.getElementById("TxtVerif").value;
+    if(verif=="Edit")
+    {
+      let valID = document.getElementById("TxtID").value;
+      console.log(valID,);
+      appMission.Edit (valID, function(a){
+        //location.reload();
+        const appUrl = '/pages/fraisMission/show.aspx?ID=' + a.get_id();
+        const url = "/tools1"+appUrl;
+        appHelper.navigation("DivMainPageContainer", url);
+        var closeButton = document.querySelector('[aria-label="Close"]');
+        closeButton.click();
+      });
+    }
+    else{
+      appMission.Add (function(a){
+        //location.reload();
+        const appUrl = '/pages/fraisMission/show.aspx?ID=' + a.get_id();
+        const url = "/tools1"+appUrl;
+        appHelper.navigation("DivMainPageContainer", url);
+        var closeButton = document.querySelector('[aria-label="Close"]');
+        closeButton.click();
+      });
+    }
+  }
+  else {
+    alert("Veillez renseigner correctement les champs");
+  }
   });
 
 };
+
+function calculTotal() {
+  var nombre = parseFloat(document.getElementById("TxtNombre").value);
+  var forfait = parseFloat(document.getElementById("TxtForfait").value);
+
+  if (!isNaN(nombre) && !isNaN(forfait)) {
+      var total = nombre * forfait;
+      document.getElementById("TxtTotal").value = total;
+      //   document.getElementById("TxtTotal").value = total.toFixed(2);
+  } else {
+      document.getElementById("TxtTotal").value = "";
+  }
+}
 
 function getRating (str){
   document.getElementById('TxtNature').value = str;
@@ -100,6 +167,7 @@ appMission.initCmbZone = function (callBack) {
   });
 
 };
+
 
 appMission.initCmbCaisse = function (callBack) {
   ListerCaisse(function(){
@@ -372,6 +440,15 @@ appMission.Add = function ( callBack) {
     //appHelper.ReturnISODate()
   );
 
+  let pickerDict = SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan;
+  let userKeys = pickerDict.GetAllUserKeys();
+
+  var Input = document.getElementById("TxtCoutTotal");
+
+  var autoNumericObject = AutoNumeric.getAutoNumericElement(Input);
+
+  var cout = autoNumericObject.getNumber();
+
   //let endDate = startDate.addDays(2);
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
@@ -381,21 +458,24 @@ appMission.Add = function ( callBack) {
   //oListItem.set_item("DateRetour", endDate);
   oListItem.set_item("DateFin", endDate);
 
-  oListItem.set_item("Title",document.getElementById("TxtMotif").value);
+  oListItem.set_item("Title", document.getElementById("TxtMotif").value);
 
-  oListItem.set_item("Motif",document.getElementById("TxtMotif").value);
+  oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
 
-  oListItem.set_item("Destination",document.getElementById("TxtDestination").value);
+  oListItem.set_item("Destination", document.getElementById("TxtDestination").value);
 
-  oListItem.set_item("Commentaire",document.getElementById("TxtCommentaire").value);
+  oListItem.set_item("Commentaire", document.getElementById("TxtCommentaire").value);
 
-  oListItem.set_item("SiteBTS",parseInt(document.getElementById("TxtSite").value));
+  oListItem.set_item("SiteBTS", document.getElementById("TxtSite").value);
 
-  oListItem.set_item("CoutTotal",parseInt(document.getElementById("TxtCoutTotal").value));
+  oListItem.set_item("CoutTotal", cout);
   oListItem.set_item("ZoneGeographiqueID",parseInt(document.getElementById("cmbZoneGeo").value));
+  oListItem.set_item("ZoneGeographique", document.getElementById("TxtZoneGeoText").value);
   oListItem.set_item("CaissePaiementID",parseInt(document.getElementById("cmbCaisse").value));
+  oListItem.set_item("CaissePaiement", document.getElementById("TxtCaisseText").value);
   oListItem.set_item("ModePaiementID",parseInt(document.getElementById("cmbMode").value));
-  oListItem.set_item("AutreCaissePaiement",parseInt(document.getElementById("TxtAutreCaisse").value));
+  oListItem.set_item("ModePaiement", document.getElementById("TxtModeText").value);
+  oListItem.set_item("AutreCaissePaiement", parseInt(document.getElementById("TxtAutreCaisse").value));
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
 
  
@@ -407,6 +487,11 @@ appMission.Add = function ( callBack) {
   oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
   oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
 
+  if(userKeys.length >0)
+  {
+    oListItem.set_item("Interimaire", SP.FieldUserValue.fromUser(SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys()));
+  }
+
 
   oListItem.update();
   clientContext.load(oListItem);
@@ -414,7 +499,102 @@ appMission.Add = function ( callBack) {
     AddFM(oListItem);
     console.log("Test");
 
-    if(document.getElementById("TxtCoutTotal").value < 500000)
+    if(cout < 500000)
+    {
+      const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
+      let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      if(callBack){
+        callBack(oListItem);
+      }
+    }
+    else
+    {
+      const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
+      let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW1  );
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      if(callBack){
+        callBack(oListItem);
+      }
+    }
+
+  
+  }, appSpHelper.writeError);
+};
+
+appMission.Edit = function (demandeid, callBack) {
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Mission);
+  let oListItem = oList.getItemById(demandeid);
+
+  let startDate = new Date(
+    document.getElementById("DateDebut").value
+    //appHelper.ReturnISODate()
+  );
+  let endDate = new Date(
+    document.getElementById("DateFin").value
+    //appHelper.ReturnISODate()
+  );
+
+  let pickerDict = SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan;
+  let userKeys = pickerDict.GetAllUserKeys();
+
+  var Input = document.getElementById("TxtCoutTotal");
+
+  var autoNumericObject = AutoNumeric.getAutoNumericElement(Input);
+
+  var cout = autoNumericObject.getNumber();
+
+  //let endDate = startDate.addDays(2);
+
+  oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
+  oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
+
+  oListItem.set_item("DateDebut", startDate);
+  //oListItem.set_item("DateRetour", endDate);
+  oListItem.set_item("DateFin", endDate);
+
+  oListItem.set_item("Title", document.getElementById("TxtMotif").value);
+
+  oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
+
+  oListItem.set_item("Destination", document.getElementById("TxtDestination").value);
+
+  oListItem.set_item("Commentaire", document.getElementById("TxtCommentaire").value);
+
+  oListItem.set_item("SiteBTS", document.getElementById("TxtSite").value);
+
+  oListItem.set_item("CoutTotal", cout);
+  oListItem.set_item("ZoneGeographiqueID", parseInt(document.getElementById("cmbZoneGeo").value));
+  oListItem.set_item("ZoneGeographique", document.getElementById("TxtZoneGeoText").value);
+  oListItem.set_item("CaissePaiementID", parseInt(document.getElementById("cmbCaisse").value));
+  oListItem.set_item("CaissePaiement", document.getElementById("TxtCaisseText").value);
+  oListItem.set_item("ModePaiementID",parseInt(document.getElementById("cmbMode").value));
+  oListItem.set_item("ModePaiement", document.getElementById("TxtModeText").value);
+  oListItem.set_item("AutreCaissePaiement", parseInt(document.getElementById("TxtAutreCaisse").value));
+  oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
+
+ 
+  oListItem.set_item("Demandeur",SP.FieldUserValue.fromUser(App.CurrentUser.Login));
+
+  oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
+  oListItem.set_item("ResponsableN2", App.CurrentUser.ManagerPersonne2);
+
+  oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
+  oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
+
+  if(userKeys.length >0)
+  {
+    oListItem.set_item("Interimaire", SP.FieldUserValue.fromUser(SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys()));
+  }
+
+
+  oListItem.update();
+  clientContext.load(oListItem);
+  clientContext.executeQueryAsync(function () {
+    EditFM(demandeid);
+    console.log("Test");
+
+    if(cout < 500000)
     {
       const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
@@ -457,6 +637,29 @@ function AddFM (oListItem) {
   }
 
   FraisMission.AddFraisMission(data, oListItem);
+}
+
+
+function EditFM (demandeid) {
+  var table = document.getElementById("TableFraisMission");
+  var data = [];
+
+  for (var i = 1; i < table.rows.length; i++) { 
+    var row = table.rows[i];
+    var cells = row.getElementsByTagName('td');
+    var rowData = {};
+
+    for (var j = 0; j < cells.length; j++) {
+      var input = cells[j].getElementsByTagName('input')[0];
+      var name = input.getAttribute('name');
+      var value = input.value;
+      rowData[name] = value;
+    }
+
+    data.push(rowData);
+  }
+
+  FraisMission.EditFraisMission(data, demandeid);
 }
 
 /*
@@ -503,7 +706,87 @@ function AddFraisMission(data, oListItem) {
     
   }
 }
+
+function EditFraisMission(data, demandeid) {
+
+  for (var i = 0; i < data.length; i++) {
+    var item = data[i];
+    //let demandeid = oListItem.get_id();
+
+    let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.FraisMission);
+    let oListItem1 = oList.getItemById(demandeid);
+
+    let startDate = new Date();
+
+    let repDate = new Date();
+
+
+    oListItem1.set_item("DateDebut", startDate);
+    oListItem1.set_item("DateFin", repDate);
+
+    oListItem1.set_item(
+      "MissionID", demandeid);
+
+    oListItem1.set_item(
+      "PerdiemeID", item.CmbPerdieme);
+
+    oListItem1.set_item(
+      "Forfait", item.TxtForfait);
+
+    oListItem1.set_item(
+      "Total", item.TxtTotal);
+
+    oListItem1.set_item(
+      "Nombre", item.TxtNombre);
+
+    oListItem1.update();
+    clientContext.load(oListItem1);
+    clientContext.executeQueryAsync(function (callBack) {
+          callBack(oListItem1);
+    });
+    
+  }
+}
 */
+
+
+appMission.ShowDetails = function (demandeid, callBack) {
+
+  let oList = appMission.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Mission);
+  let It = oList.getItemById(demandeid);
+  console.log("IN ShowDetails");
+
+  appMission.clientContext.load(It);
+  appMission.clientContext.executeQueryAsync(function () {
+    if (It) {
+      
+        //document.getElementById("DateDebut").value = new Date(It.get_item('DateDebut')).toLocaleDateString(); 
+        //document.getElementById("DateFin").value = new Date(It.get_item('DateFin')).toLocaleDateString(); 
+        document.getElementById("TxtMotif").value = It.get_item('Motif') != null ? It.get_item('Motif') : '';
+        document.getElementById("TxtDestination").value = It.get_item('Destination') != null ? It.get_item('Destination') : '';
+        document.getElementById("TxtCommentaire").value = It.get_item('Commentaire') != null ? It.get_item('Commentaire') : '';
+        document.getElementById("TxtSite").value = It.get_item('SiteBTS') != null ? It.get_item('SiteBTS') : '';
+        document.getElementById("TxtCoutTotal").value = It.get_item('CoutTotal') != null ? It.get_item('CoutTotal') : '';
+
+        document.getElementById("cmbZoneGeo").value = It.get_item('ZoneGeographiqueID') != null ? It.get_item('ZoneGeographiqueID') : '';
+        document.getElementById("TxtZoneGeoText").value =  It.get_item('ZoneGeographique') != null ? It.get_item('ZoneGeographique') : '';
+
+        document.getElementById("cmbCaisse").value = It.get_item('CaissePaiementID') != null ? It.get_item('CaissePaiementID') : '';
+        document.getElementById("TxtCaisseText").value =  It.get_item('CaissePaiement') != null ? It.get_item('CaissePaiement') : '';
+
+        document.getElementById("cmbMode").value = It.get_item('ModePaiementID') != null ? It.get_item('ModePaiementID') : '';
+        document.getElementById("TxtModeText").value =  It.get_item('ModePaiement') != null ? It.get_item('ModePaiement') : '';
+
+        document.getElementById("TxtVerif").value = 'Edit';
+        document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;
+       
+        appSpHelper.SetPeoplePickerField ('plePickerInterimaireDiv', It.get_item('Interimaire') != null ? It.get_item('Interimaire').get_lookupValue() : '');
+        
+      if(callBack){callBack();}
+
+    }else{if(callBack){callBack();}}
+  }, appSpHelper.writeError);
+}
 
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appMission.InitializePage);
 // document.addEventListener("DOMContentLoaded", () => {

@@ -38,7 +38,7 @@
       </div>
 
       <div class="mb-3">
-        <label  class="form-label"> Email</label>
+        <label class="form-label"> Email</label>
         <input type="text" class="form-control" id="TxtIntEmail" placeholder="" />
       </div>
 
@@ -53,19 +53,6 @@
       <legend>Motif de la demande</legend>
 
       <div class="mb-3">
-        <!--<label class="form-label"> Nature absence : &nbsp; &nbsp;</label>
-
-        <input type="radio" name="Absence" id="" value="Absence exceptionnelle" />
-
-        <label>
-          Absence exceptionnelle &nbsp;
-        </label>
-
-        <input type="radio" name="Absence" id="" value="Permission exceptionnelle" />
-
-        <label>
-          Permission exceptionnelle
-        </label>-->
 
         <label class="form-label"> Nature de l'absence</label>
         <select id="cmbTypeAbsence" name="cmbTypeAbsence" class="form-control">
@@ -99,6 +86,14 @@
       <div class="mb-3">
         <label class="form-label">Doc justificatifs</label>
         <input type="file" class="form-control" id="DocJustificatif" placeholder="" />
+      </div>
+
+      <div class="mb-3">
+        <input id="TxtVerif" type="hidden">
+      </div>
+
+      <div class="mb-3">
+        <input id="TxtID" type="hidden">
       </div>
 
       <span class="note">

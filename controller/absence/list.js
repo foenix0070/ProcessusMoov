@@ -19,6 +19,9 @@ ListAbsence.InitializePage = function () {
     case 'R' :  ListAbsence.ListAbsence('REJETEE');
     x.innerHTML = " Listes des demandes d'absences rejétées";
     break;
+    case 'M' :  ListAbsence.ListAbsence('DEMANDEMODIFICATION');
+    x.innerHTML = " Listes des demandes d'absences à modifier";
+    break;
     default : ListAbsence.ListAbsence('ENCOURS');
     x.innerHTML = " Listes des demandes d'absences en cours";
     break;

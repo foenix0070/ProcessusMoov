@@ -51,9 +51,12 @@ ListConge.ListConge = function (T) {
   let collListItem = oList.getItems(camlQuery);
   ListConge.clientContext.load(collListItem);
   ListConge.clientContext.executeQueryAsync(function (sender, args) {
+    appHelper.Log(T);
+    appHelper.Log("NO ELEMENT");
     if (collListItem.get_count() > 0) {
       var listItemEnumerator = collListItem.getEnumerator();
       let view = {};
+      appHelper.Log(listItemEnumerator);
       view.conges = [];
       while (listItemEnumerator.moveNext()) {
         var oListItem = listItemEnumerator.get_current();

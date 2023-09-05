@@ -28,7 +28,7 @@
 
       <div class="mb-3">
         <label class="form-label"> Montant</label>
-        <input type="number" step="0.01" class="form-control" id="TxtMontant" placeholder="" />
+        <input type="text" step="0.01" class="form-control" id="TxtMontant" placeholder="" />
       </div>
 
       <div class="mb-3">
@@ -48,7 +48,7 @@
 
       <div class="mb-3">
         <label  class="form-label"> Caisse de paiement :</label>
-        <select id="cmbCaisse" name="cmbCaisse" class="form-control" onchange="afficher()">
+        <select id="cmbCaisse" name="cmbCaisse" class="form-control">
           <option value="0" data-color="#000">Choisir la Caisse de paiement</option>
         </select>
         <input id="TxtCaisseColeur" value="" type="hidden" >
@@ -65,6 +65,14 @@
         <label class="form-label"> Doc justificatifs</label>
         <input type="file" class="form-control" id="FileDoc" placeholder="" />
       </div>
+
+      <div class="mb-3">
+        <input id="TxtVerif" type="hidden" >
+    </div>
+
+    <div class="mb-3">
+        <input id="TxtID" type="hidden" >
+    </div>
 
       <span class="note">
         L'interim ne concerne que les validations dans Moovinside.

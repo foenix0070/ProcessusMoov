@@ -20,18 +20,23 @@
 
 body {
   color: var(--raisin-black) !important;
-  font-family: Courier, monospace !important;
+  /*font-family: Courier, monospace !important;*/
+  font-family: 'Segoe UI', "segeo UI Web(West Europea)";
   font-weight: normal !important;
+  /*
   background: url(../img/foot-line.jpg) !important;
   background-position: bottom !important;
   background-repeat: no-repeat !important;
   background-attachment: fixed !important;
+  */
   overflow: auto !important;
 }
 
 header {
-  background: var(--lapis-lazuli);
+  /*background: var(--lapis-lazuli);
   background: linear-gradient(90deg, var(--lapis-lazuli) 0%, var(--raisin-black) 100%);
+  */
+  background-color: white;
   z-index: 10;
   position: sticky;
   top: 0;
@@ -103,17 +108,20 @@ header {
 /*Jumbotron*/
 
 #jumbotron {
-  background-image: url('../img/bg-jumbotron.jpg');
+  /*background-image: url('../img/bg-jumbotron.jpg');*/
+  /* background-image: url('../img/accueil.png'); */
+  background: linear-gradient( transparent, #353434), url(../img/accueil.png);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 100%;
+  background-size: 125%;
+  height: 300px;
 }
 
 #jumbotron .carousel-content {
-  background: #1110107b;
+  /*background: #dbd0d07b;*/
   padding: 10px;
   color: #fff;
-  border: 3px solid var(--pumpkin);
+  /*border: 3px solid var(--pumpkin);*/
   width: 30%;
   border-radius: 5px;
 }
@@ -400,6 +408,27 @@ header {
   margin-bottom: 5px;
 }
 
+.head-titre h1 {
+  display: block;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: auto;
+  white-space: nowrap;
+  padding-bottom: 3px;
+  color: #007bff;
+}
+
+.head-titre h1:before {
+  background-color: #007bff;
+  content: '';
+  display: block;
+  height: 3px;
+  width: 75px;
+  margin-bottom: 5px;
+}
+
 
 /*End title*/
 
@@ -575,5 +604,77 @@ form table {
   width: 100% !important;
 }
 
+#liena a, #liena2 a{
+  text-decoration: none;
+}
+
+/*
+tbody tr {
+  border-bottom:1px solid #b4a7a7;
+}
+*/
+
 
 /* Table end */
+
+
+
+.container-step {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.step {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+.step.active {
+  background-color: #007bff;
+  color: white;
+}
+
+
+/*
+#menudrop .btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+#drop .dropdown-menu {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+}
+
+#drop .dropdown-menu a {
+  color: black;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+}
+
+#drop .dropdown-menu a:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+#drop .dropdown-menu li {
+  margin: 5px 0;
+}
+*/

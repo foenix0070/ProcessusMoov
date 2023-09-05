@@ -1,15 +1,10 @@
 ﻿var appHelper = appHelper || {};
 
 appHelper.AppConstante = {
-
-  SiteUrl : 'http://ci08vmmitest/',
-  SiteJsUrl : 'http://ci08vmmitest/tools1/'
-  //SiteUrl : 'http://localhost/design_moov/'
-
-
-  // SiteUrl : 'http://localhost:8081/Activ/MoovCopie/MOOV_ETISALAT',
-  // SiteJsUrl : 'http://localhost:8081/Activ/MoovCopie/MOOV_ETISALAT'
-
+  SiteUrl : 'http://vminsideweb01/sites/proc/',
+  SiteJsUrl : 'http://vminsideweb01/sites/proc/tools/',
+  MIMailSender : "no-reply-MI@moov-africa.ci",
+  IsDevEnvironment : true
 }
 
 appHelper.ListName = {
@@ -30,6 +25,7 @@ SortieCaisse : 'ListeSortieCaisse',
 RegularisationSortieCaisse : 'ListeRegularisationSortieCaisse',
 Zone : 'ListeZoneGeographique',
 Caisse : 'ListeCaissePaiement',
+AppListe : 'tools',
 Mode : 'ListeModePaiement'
 };
 
@@ -70,7 +66,35 @@ appHelper.AppCode = {
   REGULARISATIONSORTIECAISSE : 'REGULARISATIONSORTIECAISSE'
 }
 
-appHelper. isArray = function(myArray) {
+appHelper.LogType = {
+INFO : 'INFO',
+ERROR : 'ERROR',
+WARN : 'WARNING',
+LOG : 'LOG'
+};
+
+
+appHelper.Log = function (msg, type = appHelper.LogType.LOG, appName = 'MI') {
+  if (appHelper.AppConstante.IsDevEnvironment) {
+    switch (type) {
+      case appHelper.LogType.INFO:
+        console.info(appName, msg);
+        break;
+      case appHelper.LogType.ERROR:
+        console.error(appName, msg);
+        break;
+      case appHelper.LogType.WARN:
+        console.warn(appName, msg);
+        break;
+      default:
+        console.log(appName, msg); // Par défaut, utilisez console.log pour les autres types de journalisation
+        break;
+    }
+  }
+}
+
+
+appHelper.isArray = function(myArray) {
   return myArray.constructor.toString().indexOf("Array") > -1;
 }
 
@@ -145,6 +169,7 @@ appHelper.LisetenOffCanvas = function (offCavasId, openCallBack, closeCallBack){
 
 appHelper.navigation = function (container, url) {
 
+  url = `${appHelper.AppConstante.SiteUrl}\\${url}`;
   sessionStorage.setItem("ajax_url", url);
   container = container ? container : "DivMainPageContainer";
 
@@ -168,7 +193,8 @@ appHelper.navigation = function (container, url) {
 
     })
     .catch((error) => {
-      console.log("Une erreur s'est produite lors de la navigation: ", error);
+      appHelper.Log(  error,appHelper.LogType.ERROR, "Une erreur s'est produite lors de la navigation: ");
+
     });
 };
 
@@ -182,7 +208,7 @@ appHelper.listenNavigationOffCanvas = function (lienNavigation, offCanvasid) {
 
       let container = false;
       let url = false;
-      console.log( target.classList, lienNavigation, '_8_');
+      appHelper.Log( target.classList, lienNavigation, '_8_');
      if (target.classList.contains(lienNavigation)) {
 
       event.preventDefault(); // Empêcher le comportement par défaut du lien
@@ -190,16 +216,14 @@ appHelper.listenNavigationOffCanvas = function (lienNavigation, offCanvasid) {
 
         try {
           container = target.getAttribute("data-target");
-        } catch (e) {}
+        } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationOffCanvas"); }
 
         try {
           url = target.getAttribute("data-url");
-          url = appHelper.AppConstante.SiteUrl + url;
-        } catch (e) {}
+          url = url;
+        } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationOffCanvas"); }
 
-        console.log(container, url, );
-
-
+        appHelper.Log(container, url );
         appHelper.navigation(container, url);
 
       }, null)
@@ -221,12 +245,12 @@ appHelper.listenNavigationLink2 = function (lienNavigation) {
       event.preventDefault();
       try {
         container = target.getAttribute("data-target");
-      } catch (e) {}
+      } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationLink2"); }
 
       try {
         url = target.getAttribute("data-url");
 
-      } catch (e) {}
+      } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationLink2");}
 
       appHelper.navigation(container, url);
     }
@@ -245,14 +269,14 @@ appHelper.listenNavigationLink = function (lienNavigation) {
       event.preventDefault();
       try {
         container = target.getAttribute("data-target");
-      } catch (e) {}
+      } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationLink");}
 
       try {
         url = target.getAttribute("data-url");
         if(url.valueOf.toString().indexOf(appHelper.AppConstante.SiteUrl) < 0){
          url = appHelper.AppConstante.SiteUrl + url;
         }
-      } catch (e) {}
+      } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationLink");}
 
       appHelper.navigation(container, url);
     }

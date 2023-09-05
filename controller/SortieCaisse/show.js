@@ -16,6 +16,7 @@ showSortieCaisse.InitializePage = function () {
 
     console.log(tacheId, Id);
     showSortieCaisse.ShowDetails(Id);
+    showSortieCaisse.ShowFirst(Id);
     showSortieCaisse.ShowFichierJoint(Id);
     showSortieCaisse.ShowValidation(Id);
     if (tacheId) {
@@ -263,30 +264,92 @@ showSortieCaisse.ShowValidation = function (demandeid) {
 
 }
 
+function ajouterEspacesEntreChiffres(nombre) {
+  if(nombre>999){
+    // Convertir le nombre en une chaîne de caractères
+    var nombreString = nombre.toString();
+   
+    // Utiliser une expression régulière pour ajouter des espaces entre les chiffres
+    var nombreAvecEspaces = nombreString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    
+    return nombreAvecEspaces;
+  }
+  else{
+   return nombre;
+  }
+ }
+
 showSortieCaisse.ShowDetails = function (demandeid) {
 
   let oList = showSortieCaisse.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.SortieCaisse);
   let It = oList.getItemById(demandeid);
   console.log("IN ShowDetails");
 
+  
+
   showSortieCaisse.clientContext.load(It);
   showSortieCaisse.clientContext.executeQueryAsync(function () {
     if (It) {
-      //showSortieCaisse.isSoldeImpact = (It.get_item('TypeSORTIECAISSEID') != null ? It.get_item('TypeSORTIECAISSEID') : 0)
+      let demandeurField = It.get_item('Demandeur');
+      let superieurField = It.get_item('ResponsableN1');
+      let demandeurName = demandeurField.get_lookupValue();
+      let superieurName = superieurField.get_lookupValue();
+      let mont = ajouterEspacesEntreChiffres(It.get_item('Montant'));
       let view = {
+        regul :  (It.get_item('Statut') == 'VALIDEE' ? demandeid : false ) ,
+        id :  (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false ) ,
         date: It.get_item('Created').toLocaleDateString() != null ? It.get_item('Created').toLocaleDateString() : '',
-        montant: It.get_item('Montant') != null ? It.get_item('Montant') : '',
+        //montant: It.get_item('Montant') != null ? It.get_item('Montant') : '',
+        montant: mont,
         titre: It.get_item('Title') != null ? It.get_item('Title') : '',
         modePaiement: It.get_item('ModePaiement') != null ? It.get_item('ModePaiement') : '',
         payerA: It.get_item('PayerA') != null ? It.get_item('PayerA') : '',
         caissePaiement: It.get_item('CaissePaiement') != null ? It.get_item('CaissePaiement') : '',
         objetReglement: It.get_item('ObjetReglement') != null ? It.get_item('ObjetReglement') : '',
+        demandeur: demandeurName,
+        demandeuremail: It.get_item('DemandeurEmail') != null ? It.get_item('DemandeurEmail') : '',
+        superieur: superieurName,
         etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
       };
 
       console.log("OUT ShowDetails");
 
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
+
+    }
+  }, appSpHelper.writeError);
+}
+
+showSortieCaisse.ShowFirst = function (demandeid) {
+
+  let oList = showSortieCaisse.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.SortieCaisse);
+  let It = oList.getItemById(demandeid);
+
+  showSortieCaisse.clientContext.load(It);
+  showSortieCaisse.clientContext.executeQueryAsync(function () {
+
+
+    if (It) {
+      console.log("test showFirst");
+
+      let createdValue = It.get_item('Created');
+      let formattedTime = '';
+
+      let createdDate = new Date(createdValue);
+
+      var options = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
+      formattedTime = createdDate.toLocaleTimeString(undefined, options);
+
+      let creeerpar = It.get_item('Author');
+      let creer = creeerpar.get_lookupValue();
+      console.log(creer);
+      let viewData = {
+        id: It.get_item("ID"),
+        heure: formattedTime,
+        create: creer,
+        requestdate: It.get_item('Created') != null ? new Date(It.get_item('Created')).toLocaleDateString() : '',
+      };
+      appHelper.renderTemplate("tmpl_form_first", "SectionFirst", viewData);
 
     }
   }, appSpHelper.writeError);

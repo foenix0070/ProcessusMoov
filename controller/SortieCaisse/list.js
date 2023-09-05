@@ -19,6 +19,9 @@ ListSortieCaisse.InitializePage = function () {
     case 'R' :  ListSortieCaisse.ListSortieCaisse('REJETEE');
     x.innerHTML = " Listes des demandes de sortie de caisse rejétées";
     break;
+    case 'M' :  ListSortieCaisse.ListSortieCaisse('DEMANDEMODIFICATION');
+    x.innerHTML = " Listes des demandes de sortie de caisse à modifier";
+    break;
     default : ListSortieCaisse.ListSortieCaisse('ENCOURS');
     x.innerHTML = " Listes des demandes de sortie de caisse en cours";
     break;
@@ -56,8 +59,8 @@ ListSortieCaisse.ListSortieCaisse = function (T) {
         var oListItem = listItemEnumerator.get_current();
         view.sortiecaisse.push({
           id: oListItem.get_item("ID"),
-          objetReglement: oListItem.get_item("ObjetReglement"),
-          //title: oListItem.get_item("Title"),
+          //objetReglement: oListItem.get_item("ObjetReglement"),
+          title: oListItem.get_item("Title"),
           // startdate: new Date( oListItem.get_item("DateDepart")).toLocaleDateString(),
           //motif: oListItem.get_item("Motif"),
           montant: oListItem.get_item("Montant"),

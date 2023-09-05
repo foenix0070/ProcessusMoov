@@ -1,742 +1,742 @@
 const ACTIV_WORKFLOW = {
-  "processus": [
+  processus: [
     {
-      "item": "ABSENCE",
-      "step": [
+      item: "ABSENCE",
+      step: [
         {
-          "id": "ABS#1",
-          "value": "Validation du supérieur hiérarchique ",
-          "actors": [
+          id: "ABS#1",
+          value: "Validation du supérieur hiérarchique ",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGAP"
-            }
+              type: "GROUP",
+              value: "GroupGAP",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "ABS#2"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "ABS#2",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "ABS#2",
-          "value": "Validation du supérieur directeur ",
-          "actors": [
+          id: "ABS#2",
+          value: "Validation du supérieur directeur ",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGAP"
-            }
+              type: "GROUP",
+              value: "GroupGAP",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "ABS#3"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "ABS#3",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "ABS#3",
-          "value": "Validation de la section GESTION ADMINISTRATIVE DU PERSONNEL",
-          "actors": [
+          id: "ABS#3",
+          value: "Validation de la section GESTION ADMINISTRATIVE DU PERSONNEL",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGAP"
-            }
+              type: "GROUP",
+              value: "GroupGAP",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "ABS#4"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "ABS#4",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "ABS#4",
-          "value": "Validation du DRHO",
-          "actors": [
+          id: "ABS#4",
+          value: "Validation du DRHO",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupDRHO"
-            }
+              type: "GROUP",
+              value: "GroupDRHO",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "ABS#5"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "ABS#5",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
-        }
-      ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
+        },
+      ],
     },
     {
-      "item": "CONGE",
-      "step": [
+      item: "CONGE",
+      step: [
         {
-          "id": "ABS#1",
-          "value": "Validation du supérieur hiérarchique ",
-          "actors": [
+          id: "ABS#1",
+          value: "Validation du supérieur hiérarchique ",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGAP"
-            }
+              type: "GROUP",
+              value: "GroupGAP",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "ABS#2"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "ABS#2",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "ABS#2",
-          "value": "Validation du supérieur directeur ",
-          "actors": [
+          id: "ABS#2",
+          value: "Validation du supérieur directeur ",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGAP"
-            }
+              type: "GROUP",
+              value: "GroupGAP",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "ABS#3"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "ABS#3",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "ABS#3",
-          "value": "Validation de la section GESTION ADMINISTRATIVE DU PERSONNEL",
-          "actors": [
+          id: "ABS#3",
+          value: "Validation de la section GESTION ADMINISTRATIVE DU PERSONNEL",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGAP"
-            }
+              type: "GROUP",
+              value: "GroupGAP",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "ABS#4"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "ABS#4",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "ABS#4",
-          "value": "Validation du DRHO",
-          "actors": [
+          id: "ABS#4",
+          value: "Validation du DRHO",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupDRHO"
-            }
+              type: "GROUP",
+              value: "GroupDRHO",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "ABS#5"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "ABS#5",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
-        }
-      ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
+        },
+      ],
     },
     {
-      "item": "GADGET",
-      "step": [
+      item: "GADGET",
+      step: [
         {
-          "id": "CNG#1",
-          "value": "Validation du supérieur hiérarchique ",
-          "actors": [
+          id: "CNG#1",
+          value: "Validation du supérieur hiérarchique ",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGAP"
-            }
+              type: "GROUP",
+              value: "GroupGAP",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "CNG#2"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "CNG#2",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "CNG#2",
-          "value": "Validation du gestionnaire de division communication ",
-          "actors": [
+          id: "CNG#2",
+          value: "Validation du gestionnaire de division communication ",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGDC"
-            }
+              type: "GROUP",
+              value: "GroupGDC",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "CNG#3"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "CNG#3",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "CNG#3",
-          "value": "Validation du sous directeur communication",
-          "actors": [
+          id: "CNG#3",
+          value: "Validation du sous directeur communication",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupSDC"
-            }
+              type: "GROUP",
+              value: "GroupSDC",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "CNG#4"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "CNG#4",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "CNG#4",
-          "value": "Validation du directeur marketing communication digitale",
-          "actors": [
+          id: "CNG#4",
+          value: "Validation du directeur marketing communication digitale",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupDMCD"
-            }
+              type: "GROUP",
+              value: "GroupDMCD",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "CNG#5"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "CNG#5",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "CNG#5",
-          "value": "Validation du gestionnaire du stock marketing",
-          "actors": [
+          id: "CNG#5",
+          value: "Validation du gestionnaire du stock marketing",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGSM"
-            }
+              type: "GROUP",
+              value: "GroupGSM",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "CNG#5"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "CNG#5",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
-        }
-      ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
+        },
+      ],
     },
     {
-      "item": "MATERIEL",
-      "step": [
+      item: "MATERIEL",
+      step: [
         {
-          "id": "MTRL#1",
-          "value": "Validation du responsable hiérarchique ",
-          "actors": [
+          id: "MTRL#1",
+          value: "Validation du responsable hiérarchique ",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGDI"
-            }
+              type: "GROUP",
+              value: "GroupGDI",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "MTRL#2"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "MTRL#2",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "MTRL#2",
-          "value": "Validation du gestionnaire de division infrastructure ",
-          "actors": [
+          id: "MTRL#2",
+          value: "Validation du gestionnaire de division infrastructure ",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGDI"
-            }
+              type: "GROUP",
+              value: "GroupGDI",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "MTRL#3"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "MTRL#3",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "MTRL#3",
-          "value": "Validation du chef de division infrastructure",
-          "actors": [
+          id: "MTRL#3",
+          value: "Validation du chef de division infrastructure",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupCDI"
-            }
+              type: "GROUP",
+              value: "GroupCDI",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "MTRL#4"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "MTRL#4",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "MTRL#4",
-          "value": "Validation du directeur système informatique",
-          "actors": [
+          id: "MTRL#4",
+          value: "Validation du directeur système informatique",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupDSI"
-            }
+              type: "GROUP",
+              value: "GroupDSI",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "MTRL#5"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "MTRL#5",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "MTRL#5",
-          "value": "Validation du gestionnaire du stock",
-          "actors": [
+          id: "MTRL#5",
+          value: "Validation du gestionnaire du stock",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGSI"
-            }
+              type: "GROUP",
+              value: "GroupGSI",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "MTRL#5"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "MTRL#5",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
-        }
-      ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
+        },
+      ],
     },
     {
-      "item": "VEHICULE",
-      "step": [
+      item: "VEHICULE",
+      step: [
         {
-          "id": "VHCL#1",
-          "value": "Validation du responsable hiérarchique ",
-          "actors": [
+          id: "VHCL#1",
+          value: "Validation du responsable hiérarchique ",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGSI"
-            }
+              type: "GROUP",
+              value: "GroupGSI",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "VHCL#2"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "VHCL#2",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "VHCL#2",
-          "value": "Validation du gestionnaire park automobile ",
-          "actors": [
+          id: "VHCL#2",
+          value: "Validation du gestionnaire park automobile ",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGPA"
-            }
+              type: "GROUP",
+              value: "GroupGPA",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "VHCL#3"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "VHCL#3",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "VHCL#3",
-          "value": "Validation du chef de division achat et logistique",
-          "actors": [
+          id: "VHCL#3",
+          value: "Validation du chef de division achat et logistique",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupCDAL"
-            }
+              type: "GROUP",
+              value: "GroupCDAL",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "VHCL#4"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "VHCL#4",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "VHCL#4",
-          "value": "Validation du DAF",
-          "actors": [
+          id: "VHCL#4",
+          value: "Validation du DAF",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupDAF"
-            }
+              type: "GROUP",
+              value: "GroupDAF",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "VHCL#5"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "VHCL#5",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
         },
         {
-          "id": "VHCL#5",
-          "value": "Validation du gestionnaire ",
-          "actors": [
+          id: "VHCL#5",
+          value: "Validation du gestionnaire ",
+          actors: [
             {
-              "type": "GROUP",
-              "value": "GroupGV"
-            }
+              type: "GROUP",
+              value: "GroupGV",
+            },
           ],
-          "copies": [],
-          "buttons": [
+          copies: [],
+          buttons: [
             {
-              "text": "APPROUVER",
-              "icon": "fa fa-check",
-              "url": "",
-              "next_step": "VHCL#5"
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "VHCL#5",
             },
             {
-              "text": "DEMANDER UNE MODIFICATION",
-              "icon": "fa fa-mail-reply",
-              "url": "",
-              "next_step": "0#"
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
             },
             {
-              "text": "REJETER",
-              "icon": "fa fa-ban",
-              "url": "",
-              "next_step": "##"
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};

@@ -19,38 +19,62 @@
       </div>
 
     </fieldset>
-    
+
     <fieldset class="form-elts">
       <legend>Regularisation de la sortie de caisse</legend>
-      <div class="mb-3">
-        <label class="form-label"> Titre</label>
-        <input type="text" class="form-control" id="TxtTitle" placeholder="" />
-      </div>
-      <div class="mb-3">
-        <label class="form-label"> Montant utilis&eacute;</label>
-        <input type="number" class="form-control" id="TxtMontant" placeholder="" />
-      </div>
+      <label class="form-label"> Sortie de caisse :</label>
+      <select id="cmbSortie" name="cmbSortie" class="form-control">
+        <option value="0" data-color="#000">Choisir la sortie de caisse</option>
+      </select>
+      <input id="TxtSortieColeur" value="" type="hidden">
+      <input id="TxtSortieText" value="" type="hidden">
+      <!-- <input id="TxtSortieID" value="test" type="hidden" > -->
+  </div></br>
+  <div class="mb-3">
+    <input id="TxtSortie" class="form-control" type="text" style="display: none;" disabled>
+  </div>
+  <div class="mb-3">
+    <label class="form-label"> Titre</label>
+    <input type="text" class="form-control" id="TxtTitle" placeholder="" />
+  </div>
+  <div class="mb-3">
+    <label class="form-label"> Montant utilis&eacute;</label>
+    <input type="text" class="form-control" id="TxtMontant" placeholder="" />
+  </div>
 
-      <div class="mb-3">
-        <label class="form-label"> Solde &agrave; reverser</label>
-        <input type="number" class="form-control" id="TxtSolde" placeholder="" />
-      </div>
+  <div class="mb-3">
+    <label class="form-label"> Solde a reverser</label>
+    <input type="text" class="form-control" id="TxtSolde" placeholder="" />
+  </div>
 
-      <div class="mb-3">
-        <label class="form-label"> Observation</label>
-        <input type="text" class="form-control" id="TxtObservation" placeholder="" />
-      </div>
+  <div class="mb-3">
+    <label class="form-label"> Observation</label>
+    <textarea class="form-control" type="text" name="TxtObservation" id="TxtObservation" cols="30"></textarea>
+    <!-- <input type="text" class="form-control" id="TxtObservation" placeholder="" /> -->
+  </div>
 
-      <div class="mb-3">
-        <label class="form-label"> Doc justificatifs</label>
-        <input type="file" class="form-control" id="FileDoc" placeholder="" />
-      </div>
+  <div class="mb-3">
+    <label class="form-label"> Doc justificatifs</label>
+    <input type="file" class="form-control" id="FileDoc" placeholder="" />
+  </div>
 
-      <span class="note">
-        Une copie du papier du document de la justification qui motive la sortie de caisse est obligatoire pour 
-        accompagner le formulaire de Regularisation de la sortie de caisse (fonctionnement dégradé).
-      </span>
-    </fieldset>
+  <div class="mb-3">
+    <input id="TxtVerif" type="hidden">
+  </div>
+
+  <div class="mb-3">
+    <input id="TxtID" type="hidden">
+  </div>
+
+  <div class="mb-3">
+    <input id="TxtSortieID" type="hidden">
+  </div>
+
+  <span class="note">
+    Une copie du papier du document de la justification qui motive la sortie de caisse est obligatoire pour
+    accompagner le formulaire de Regularisation de la sortie de caisse (fonctionnement dégradé).
+  </span>
+  </fieldset>
 
   </div>
 

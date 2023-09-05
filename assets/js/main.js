@@ -1,4 +1,120 @@
-var arrMenu = [
+var main = main || {};
+
+main.arrMenu1 = [
+  {
+    id: "dmd_conge_new",
+    title: "Demande de congé",
+    icon: "fa fa-2x fa-globe",
+    url: "/tools/pages/conge/add.aspx",
+    target: "ffcMainFormContainer",
+    arrsmenu: [
+      {
+        offcanvas: {
+          id: "dmd_conge_new",
+          title: "Congés",
+          url: "/tools/pages/conge/add.aspx",
+          target: "ffcMainFormContainer",
+          dataInfo: "conge",
+        },
+        link: false,
+      },
+      {
+        offcanvas: {
+          id: "dmd_autorisationAbsence_new",
+          title: "Absence",
+          url: "tools/pages/autorisationAbsence/add.aspx",
+          target: "ffcMainFormContainer",
+          dataInfo: "autorisationAbsence",
+        },
+        link: false,
+      },
+      {
+        offcanvas: {
+          id: "dmd_gadget_new",
+          title: "Gadget",
+          url: "tools/pages/gadget/add.aspx",
+          target: "ffcMainFormContainer",
+          dataInfo: "gadget",
+        },
+        link: false,
+      },
+      {
+        offcanvas: {
+          id: "dmd_materiel_new",
+          title: "Materiel",
+          url: "tools/pages/materiel/add.aspx",
+          target: "ffcMainFormContainer",
+          dataInfo: "materiel",
+        },
+        link: false,
+      },
+      {
+        offcanvas: {
+          id: "dmd_vehicule_new",
+          title: "Vehicule",
+          url: "tools/pages/vehicule/add.aspx",
+          target: "ffcMainFormContainer",
+          dataInfo: "vehicule",
+        },
+        link: false,
+      },
+
+      {
+        offcanvas: {
+          id: "dmd_sortieCaisse_new",
+          title: "Sortie de caisse",
+          url: "tools/pages/sortieCaisse/add.aspx",
+          target: "ffcMainFormContainer",
+          dataInfo: "sortieCaisse",
+        },
+        link: false,
+      },
+      {
+        offcanvas: {
+          id: "dmd_regularisationSortieCaisse_new",
+          title: "Regularisation sortie de caisse",
+          url: "tools/pages/regularisationSortieCaisse/add.aspx",
+          target: "ffcMainFormContainer",
+          dataInfo: "regularisationSortieCaisse",
+        },
+        link: false,
+      },
+      {
+        offcanvas: {
+          id: "dmd_fraismission_new",
+          title: "Frais de mission",
+          url: "tools/pages/fraisMission/add.aspx",
+          target: "ffcMainFormContainer",
+          dataInfo: "fraisMission",
+        },
+        link: false,
+      },
+
+      {
+        offcanvas: {
+          id: "dmd_regularisationFinMission_new",
+          title: "Regularisation Frais de mission",
+          url: "tools/pages/regularisationFraisMission/add.aspx",
+          target: "ffcMainFormContainer",
+          dataInfo: "regularisationFraisMission",
+        },
+        link: false,
+      },
+      {
+        offcanvas: false,
+        link: {
+          id: "admin_new",
+          title: "Gestion des utilisateurs",
+          url: "/tools/pages/admin/agent.aspx",
+          target: "DivMainPageContainer",
+          dataInfo: "admin",
+        },
+      },
+    ],
+  },
+];
+
+main.arrMenu = [
   {
     id: "dmd_conge",
     title: "Demande de congé",
@@ -8,8 +124,8 @@ var arrMenu = [
         offcanvas: {
           id: "dmd_conge_new",
           title: "Effectuer une demande",
-          url: "/tools1/pages/conge/add.aspx",
-         // url: "/pages/conge/add.html",
+          url: "/tools/pages/conge/add.aspx",
+          // url: "/pages/conge/add.html",
           target: "ffcMainFormContainer",
         },
         link: false,
@@ -20,7 +136,7 @@ var arrMenu = [
         link: {
           id: "dmd_conge_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/conge/list.aspx?t=E", 
+          url: "tools/pages/conge/list.aspx?t=E",
           target: "DivMainPageContainer",
         },
       },
@@ -29,7 +145,7 @@ var arrMenu = [
         link: {
           id: "dmd_conge_list_validee",
           title: "Demandes validées",
-          url: "tools1/pages/conge/list.aspx?t=V",
+          url: "tools/pages/conge/list.aspx?t=V",
           target: "DivMainPageContainer",
         },
       },
@@ -39,7 +155,7 @@ var arrMenu = [
         link: {
           id: "dmd_conge_list_rejetee",
           title: "Demandes réjetées",
-          url: "tools1/pages/conge/list.aspx?t=R",
+          url: "tools/pages/conge/list.aspx?t=R",
           target: "DivMainPageContainer",
         },
       },
@@ -48,7 +164,7 @@ var arrMenu = [
         link: {
           id: "dmd_conge_list_modification",
           title: "Demandes à modifier",
-          url: "tools1/pages/conge/list.aspx?t=M",
+          url: "tools/pages/conge/list.aspx?t=M",
           target: "DivMainPageContainer",
         },
       },
@@ -64,7 +180,7 @@ var arrMenu = [
         offcanvas: {
           id: "dmd_autorisationAbsence_new",
           title: "Effectuer une demande",
-          url: "tools1/pages/autorisationAbsence/add.aspx",
+          url: "tools/pages/autorisationAbsence/add.aspx",
           target: "ffcMainFormContainer",
         },
         link: false,
@@ -75,7 +191,7 @@ var arrMenu = [
         link: {
           id: "dmd_autorisationAbsence_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/autorisationAbsence/list.aspx?t=E",
+          url: "tools/pages/autorisationAbsence/list.aspx?t=E",
           target: "DivMainPageContainer",
         },
       },
@@ -84,7 +200,7 @@ var arrMenu = [
         link: {
           id: "dmd_autorisationAbsence_list_validee",
           title: "Demandes validées",
-          url: "tools1/pages/autorisationAbsence/list.aspx?t=V",
+          url: "tools/pages/autorisationAbsence/list.aspx?t=V",
           target: "DivMainPageContainer",
         },
       },
@@ -94,17 +210,23 @@ var arrMenu = [
         link: {
           id: "dmd_autorisationAbsence_list_rejetee",
           title: "Demandes réjetées",
-          url: "tools1/pages/autorisationAbsence/list.aspx?t=R",
+          url: "tools/pages/autorisationAbsence/list.aspx?t=R",
+          target: "DivMainPageContainer",
+        },
+      },
+
+      {
+        offcanvas: false,
+        link: {
+          id: "dmd_autorisationAbsence_list_modifier",
+          title: "Demandes à modifier",
+          url: "tools/pages/autorisationAbsence/list.aspx?t=M",
           target: "DivMainPageContainer",
         },
       },
     ],
   },
 
-
-
-
-  
   {
     id: "dmd_fraismission",
     title: "Demande de frais de mission",
@@ -114,8 +236,7 @@ var arrMenu = [
         offcanvas: {
           id: "dmd_fraismission_new",
           title: "Effectuer une demande",
-          // url: "/pages/fraisMission/add.aspx",
-          url: "tools1/pages/fraisMission/add.aspx",
+          url: "tools/pages/fraisMission/add.aspx",
           target: "ffcMainFormContainer",
         },
         link: false,
@@ -126,7 +247,7 @@ var arrMenu = [
         link: {
           id: "dmd_fraismission_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/fraisMission/list.aspx?t=E",
+          url: "tools/pages/fraisMission/list.aspx?t=E",
           target: "DivMainPageContainer",
         },
       },
@@ -135,7 +256,7 @@ var arrMenu = [
         link: {
           id: "dmd_fraismission_list_validee",
           title: "Demandes validées",
-          url: "tools1/pages/fraisMission/list.aspx?t=V",
+          url: "tools/pages/fraisMission/list.aspx?t=V",
           target: "DivMainPageContainer",
         },
       },
@@ -145,12 +266,22 @@ var arrMenu = [
         link: {
           id: "dmd_fraismission_list_rejetee",
           title: "Demandes réjetées",
-          url: "tools1/pages/fraisMission/list.aspx?t=R",
+          url: "tools/pages/fraisMission/list.aspx?t=R",
+          target: "DivMainPageContainer",
+        },
+      },
+
+      {
+        offcanvas: false,
+        link: {
+          id: "dmd_fraismission_list_modifier",
+          title: "Demandes à modifier",
+          url: "tools/pages/fraisMission/list.aspx?t=M",
           target: "DivMainPageContainer",
         },
       },
     ],
-  },  
+  },
 
   {
     id: "dmd_sortieCaisse",
@@ -161,8 +292,7 @@ var arrMenu = [
         offcanvas: {
           id: "dmd_sortieCaisse_new",
           title: "Effectuer une demande",
-          url: "tools1/pages/sortieCaisse/add.aspx",
-         // url: "/pages/sortieCaisse/add.aspx",
+          url: "tools/pages/sortieCaisse/add.aspx",
           target: "ffcMainFormContainer",
         },
         link: false,
@@ -173,7 +303,7 @@ var arrMenu = [
         link: {
           id: "dmd_sortieCaisse_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/sortieCaisse/list.aspx?t=E", 
+          url: "tools/pages/sortieCaisse/list.aspx?t=E",
           target: "DivMainPageContainer",
         },
       },
@@ -182,7 +312,7 @@ var arrMenu = [
         link: {
           id: "dmd_sortieCaisse_list_validee",
           title: "Demandes validées",
-          url: "tools1/pages/sortieCaisse/list.aspx?t=V", 
+          url: "tools/pages/sortieCaisse/list.aspx?t=V",
           target: "DivMainPageContainer",
         },
       },
@@ -192,7 +322,17 @@ var arrMenu = [
         link: {
           id: "dmd_sortieCaisse_list_rejetee",
           title: "Demandes réjetées",
-          url: "tools1/pages/sortieCaisse/list.aspx?t=R", 
+          url: "tools/pages/sortieCaisse/list.aspx?t=R",
+          target: "DivMainPageContainer",
+        },
+      },
+
+      {
+        offcanvas: false,
+        link: {
+          id: "dmd_sortieCaisse_list_modifier",
+          title: "Demandes à modifier",
+          url: "tools/pages/sortieCaisse/list.aspx?t=M",
           target: "DivMainPageContainer",
         },
       },
@@ -208,7 +348,7 @@ var arrMenu = [
         offcanvas: {
           id: "dmd_regularisationSortieCaisse_new",
           title: "Effectuer une demande",
-          url: "tools1/pages/regularisationSortieCaisse/add.aspx",
+          url: "tools/pages/regularisationSortieCaisse/add.aspx",
           target: "ffcMainFormContainer",
         },
         link: false,
@@ -219,7 +359,7 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationSortieCaisse_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/regularisationSortieCaisse/list.aspx?t=E", 
+          url: "tools/pages/regularisationSortieCaisse/list.aspx?t=E",
           target: "DivMainPageContainer",
         },
       },
@@ -228,7 +368,7 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationSortieCaisse_list_validee",
           title: "Demandes validées",
-          url: "tools1/pages/regularisationSortieCaisse/list.aspx?t=V", 
+          url: "tools/pages/regularisationSortieCaisse/list.aspx?t=V",
           target: "DivMainPageContainer",
         },
       },
@@ -238,13 +378,22 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationSortieCaisse_list_rejetee",
           title: "Demandes réjetées",
-          url: "tools1/pages/regularisationSortieCaisse/list.aspx?t=R", 
+          url: "tools/pages/regularisationSortieCaisse/list.aspx?t=R",
+          target: "DivMainPageContainer",
+        },
+      },
+
+      {
+        offcanvas: false,
+        link: {
+          id: "dmd_regularisationSortieCaisse_list_modifier",
+          title: "Demandes à modifier",
+          url: "tools/pages/regularisationSortieCaisse/list.aspx?t=M",
           target: "DivMainPageContainer",
         },
       },
     ],
   },
-
 
   {
     id: "dmd_gadget",
@@ -255,8 +404,7 @@ var arrMenu = [
         offcanvas: {
           id: "dmd_gadget_new",
           title: "Effectuer une demande",
-          url: "tools1/pages/gadget/add.aspx",
-          //url: "/pages/gadget/add.html",
+          url: "tools/pages/gadget/add.aspx",
           target: "ffcMainFormContainer",
         },
         link: false,
@@ -267,7 +415,7 @@ var arrMenu = [
         link: {
           id: "dmd_gadget_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/gadget/list.aspx?t=E",
+          url: "tools/pages/gadget/list.aspx?t=E",
 
           target: "DivMainPageContainer",
         },
@@ -277,7 +425,7 @@ var arrMenu = [
         link: {
           id: "dmd_gadget_list_validee",
           title: "Demandes validées",
-          url: "tools1/pages/gadget/list.aspx?t=V",
+          url: "tools/pages/gadget/list.aspx?t=V",
 
           target: "DivMainPageContainer",
         },
@@ -288,14 +436,23 @@ var arrMenu = [
         link: {
           id: "dmd_gadget_list_rejetee",
           title: "Demandes réjetées",
-          url: "tools1/pages/gadget/list.aspx?t=R",
-          
+          url: "tools/pages/gadget/list.aspx?t=R",
+
+          target: "DivMainPageContainer",
+        },
+      },
+      {
+        offcanvas: false,
+        link: {
+          id: "dmd_gadget_list_modification",
+          title: "Demandes à modifier",
+          url: "tools/pages/gadget/list.aspx?t=M",
+
           target: "DivMainPageContainer",
         },
       },
     ],
   },
-
 
   {
     id: "dmd_materiel",
@@ -306,8 +463,7 @@ var arrMenu = [
         offcanvas: {
           id: "dmd_materiel_new",
           title: "Effectuer une demande",
-          url: "tools1/pages/materiel/add.aspx",
-          //url: "/pages/materiel/add.html",
+          url: "tools/pages/materiel/add.aspx",
           target: "ffcMainFormContainer",
         },
         link: false,
@@ -318,7 +474,7 @@ var arrMenu = [
         link: {
           id: "dmd_materiel_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/materiel/list.aspx?t=E",
+          url: "tools/pages/materiel/list.aspx?t=E",
 
           target: "DivMainPageContainer",
         },
@@ -328,8 +484,8 @@ var arrMenu = [
         link: {
           id: "dmd_materiel_list_validee",
           title: "Demandes validées",
-          url: "tools1/pages/materiel/list.aspx?t=V",
-          
+          url: "tools/pages/materiel/list.aspx?t=V",
+
           target: "DivMainPageContainer",
         },
       },
@@ -339,8 +495,19 @@ var arrMenu = [
         link: {
           id: "dmd_materiel_list_rejetee",
           title: "Demandes réjetées",
-          url: "tools1/pages/materiel/list.aspx?t=R",
-          
+          url: "tools/pages/materiel/list.aspx?t=R",
+
+          target: "DivMainPageContainer",
+        },
+      },
+
+      {
+        offcanvas: false,
+        link: {
+          id: "dmd_materiel_list_modification",
+          title: "Demandes de modification",
+          url: "tools/pages/materiel/list.aspx?t=M",
+
           target: "DivMainPageContainer",
         },
       },
@@ -356,8 +523,8 @@ var arrMenu = [
         offcanvas: {
           id: "dmd_vehicule_new",
           title: "Effectuer une demande",
-          url: "tools1/pages/vehicule/add.aspx",
-         
+          url: "tools/pages/vehicule/add.aspx",
+
           target: "ffcMainFormContainer",
         },
         link: false,
@@ -368,7 +535,7 @@ var arrMenu = [
         link: {
           id: "dmd_vehicule_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/vehicule/list.aspx?t=E",
+          url: "tools/pages/vehicule/list.aspx?t=E",
 
           target: "DivMainPageContainer",
         },
@@ -378,7 +545,7 @@ var arrMenu = [
         link: {
           id: "dmd_vehicule_list_validee",
           title: "Demandes validées",
-          url: "tools1/pages/vehicule/list.aspx?t=V",
+          url: "tools/pages/vehicule/list.aspx?t=V",
 
           target: "DivMainPageContainer",
         },
@@ -389,7 +556,18 @@ var arrMenu = [
         link: {
           id: "dmd_vehicule_list_rejetee",
           title: "Demandes réjetées",
-          url: "tools1/pages/vehicule/list.aspx?t=R",
+          url: "tools/pages/vehicule/list.aspx?t=R",
+
+          target: "DivMainPageContainer",
+        },
+      },
+
+      {
+        offcanvas: false,
+        link: {
+          id: "dmd_vehicule_list_modifier",
+          title: "Demandes à modifier",
+          url: "tools/pages/vehicule/list.aspx?t=M",
 
           target: "DivMainPageContainer",
         },
@@ -406,8 +584,7 @@ var arrMenu = [
         offcanvas: {
           id: "dmd_regularisationFinMission_new",
           title: "Effectuer une demande",
-          url: "tools1/pages/regularisationFraisMission/add.aspx",
-         // url: "/pages/regularisationFraisMission/add.html",
+          url: "tools/pages/regularisationFraisMission/add.aspx",
           target: "ffcMainFormContainer",
         },
         link: false,
@@ -418,7 +595,7 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationFinMission_list_en_cours",
           title: "Demande en cours",
-          url: "tools1/pages/regularisationFraisMission/list.aspx?t=E",
+          url: "tools/pages/regularisationFraisMission/list.aspx?t=E",
           target: "DivMainPageContainer",
         },
       },
@@ -427,7 +604,7 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationFinMission_list_validee",
           title: "Demandes validées",
-          url: "tools1/pages/regularisationFraisMission/list.aspx?t=V",
+          url: "tools/pages/regularisationFraisMission/list.aspx?t=V",
           target: "DivMainPageContainer",
         },
       },
@@ -437,7 +614,17 @@ var arrMenu = [
         link: {
           id: "dmd_regularisationFinMission_list_rejetee",
           title: "Demandes réjetées",
-          url: "tools1/pages/regularisationFraisMission/list.aspx?t=R",
+          url: "tools/pages/regularisationFraisMission/list.aspx?t=R",
+          target: "DivMainPageContainer",
+        },
+      },
+
+      {
+        offcanvas: false,
+        link: {
+          id: "dmd_regularisationFinMission_list_modifier",
+          title: "Demandes à modifier",
+          url: "tools/pages/regularisationFraisMission/list.aspx?t=M",
           target: "DivMainPageContainer",
         },
       },
@@ -454,46 +641,33 @@ var arrMenu = [
         link: {
           id: "admin_new",
           title: "Gestion des utilisateurs",
-          url: "/tools1/pages/admin/agent.aspx",
-          target: "DivMainPageContainer",
-        }
-      },
-
-      /*
-
-      {
-        offcanvas: false,
-        link: {
-          id: "admin_list_en_cours",
-          title: "Gestion des types de congés",
-          url: "tools1/pages/admin/typeconge.aspx",
+          url: "/tools/pages/admin/agent.aspx",
           target: "DivMainPageContainer",
         },
       },
-
-      */
-
     ],
   },
-
 ];
 
+// function loadMainSideBarMenu() {
+//   let view = {};
+//   view.menus = arrMenu;
+//   appHelper.navigation(null, '/tools/pages/index.aspx');
+//   appHelper.renderTemplate('tmpl_side_main_menu_drop', 'accSideMainMenuDrop', view);
+// }
 
+main.loadMainSideBarMenu = function () {
+  main.view = {};
+  main.view1 = {};
+  main.view.menus = main.arrMenu;
+  main.view1.menus = main.arrMenu1;
+  appHelper.navigation(null, `/${appHelper.ListName.AppListe}/pages/index.aspx`);
+  //appHelper.renderTemplate('tmpl_side_main_menu', 'accSideMainMenu', main.view);
+};
 
-
-
-function loadMainSideBarMenu() {
-  let view = {};
-  view.menus = arrMenu;
-  appHelper.renderTemplate('tmpl_side_main_menu', 'accSideMainMenu', view);
-  appHelper.navigation(null, '/tools1/pages/index.aspx');
-}
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  loadMainSideBarMenu();
-  appHelper.listenNavigationLink2('linkMainNavigation2');
-  appHelper.listenNavigationLink('linkMainNavigation');
+document.addEventListener("DOMContentLoaded", function () {
+  main.loadMainSideBarMenu();
+  appHelper.listenNavigationLink2("linkMainNavigation2");
+  appHelper.listenNavigationLink("linkMainNavigation");
   appHelper.listenNavigationOffCanvas("linkOffCanvasNavigation", "ffcMainForm");
 });

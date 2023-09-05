@@ -1,13 +1,11 @@
-# Copies tous les fichier  Schema.xml de toutes tes listes dans un dossier
-# Renommes les � chaque fois
 
 Add-Type -Path "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.dll"
 Add-Type -Path "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Runtime.dll"
 Add-Type -Path "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Taxonomy.dll"
 
-$url = "http://ci08vmmitest/"
-$login = "etisalat-africa.net\Consultant_INOVA"
-$pwdstring = "G@dPas4wrd01"
+$url = "http://vminsideweb01/sites/proc/"
+$login = "etisalat-africa.net\svc_spadmin02"
+$pwdstring = "P@ssw0rd02"
 $listName = "tools"
 $localFolder= Get-Location
 $subFolder = "";

@@ -14,6 +14,7 @@ showFraisMission.InitializePage = function () {
 
   appSpHelper.GetMyProperties(function () {
     showFraisMission.ShowDetails(Id);
+    showFraisMission.ShowFirst(Id);
     showFraisMission.ShowFichierJoint(Id);
     showFraisMission.ShowValidation(Id);
     if (tacheId) {
@@ -260,6 +261,21 @@ showFraisMission.ShowValidation = function (demandeid) {
 
 }
 
+function ajouterEspacesEntreChiffres(nombre) {
+  if(nombre>999){
+    // Convertir le nombre en une chaîne de caractères
+    var nombreString = nombre.toString();
+   
+    // Utiliser une expression régulière pour ajouter des espaces entre les chiffres
+    var nombreAvecEspaces = nombreString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    
+    return nombreAvecEspaces;
+  }
+  else{
+   return nombre;
+  }
+ }
+
 showFraisMission.ShowDetails = function (demandeid) {
 
   let oList = showFraisMission.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Mission);
@@ -267,17 +283,68 @@ showFraisMission.ShowDetails = function (demandeid) {
 
   showFraisMission.clientContext.load(It);
   showFraisMission.clientContext.executeQueryAsync(function () {
+
+    
     if (It) {
+      let demandeurField = It.get_item('Demandeur');
+      let superieurField = It.get_item('ResponsableN1');
+      let demandeurName = demandeurField.get_lookupValue();
+      let superieurName = superieurField.get_lookupValue();
+      let mont = ajouterEspacesEntreChiffres(It.get_item('CoutTotal'));
       let view = {
+        regul :  (It.get_item('Statut') == 'VALIDEE' ? demandeid : false ) ,
+        id :  (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false ) ,
         title: It.get_item('Title') != null ? It.get_item('Title') : '',
         datedepart: It.get_item('DateDebut') != null ? new Date(It.get_item('DateDebut')).toLocaleDateString() : '',
         dateretour: It.get_item('DateFin') != null ? It.get_item('DateFin').toLocaleDateString() : '',
         motif: It.get_item('Motif') != null ? It.get_item('Motif') : '',
         destination: It.get_item('Destination') != null ? It.get_item('Destination') : '',
-        cout: It.get_item('CoutTotal') != null ? It.get_item('CoutTotal') : '',
+        cout: mont,
+        //cout: It.get_item('CoutTotal') != null ? It.get_item('CoutTotal') : '',
+        demandeur: demandeurName,
+        demandeuremail: It.get_item('DemandeurEmail') != null ? It.get_item('DemandeurEmail') : '',
+        superieur: superieurName,
+        caisse: It.get_item('CaissePaiement') != null ? It.get_item('CaissePaiement') : '',
+        mode: It.get_item('ModePaiement') != null ? It.get_item('ModePaiement') : '',
+        zone: It.get_item('ZoneGeographique') != null ? It.get_item('ZoneGeographique') : '',
         etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
       };
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
+
+    }
+  }, appSpHelper.writeError);
+}
+
+showFraisMission.ShowFirst = function (demandeid) {
+
+  let oList = showFraisMission.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Mission);
+  let It = oList.getItemById(demandeid);
+
+  showFraisMission.clientContext.load(It);
+  showFraisMission.clientContext.executeQueryAsync(function () {
+
+    
+    if (It) {
+      console.log("test showFirst");
+
+      let createdValue = It.get_item('Created');
+      let formattedTime = '';
+
+      let createdDate = new Date(createdValue);
+
+      var options = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
+      formattedTime = createdDate.toLocaleTimeString(undefined, options);
+
+      let creeerpar = It.get_item('Author');
+      let creer = creeerpar.get_lookupValue();
+      console.log(creer);
+      let viewData = {
+        id: It.get_item("ID"),
+        heure: formattedTime,
+        create: creer,
+        requestdate: It.get_item('Created') != null ? new Date(It.get_item('Created')).toLocaleDateString() : '',
+      };
+      appHelper.renderTemplate("tmpl_form_first", "SectionFirst", viewData);
 
     }
   }, appSpHelper.writeError);

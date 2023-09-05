@@ -13,6 +13,7 @@ showRegularisationFraisMission.InitializePage = function () {
 
   appSpHelper.GetMyProperties(function () {
     showRegularisationFraisMission.ShowDetails(Id);
+    showRegularisationFraisMission.ShowFirst(Id);
     showRegularisationFraisMission.ShowFichierJoint(Id);
     showRegularisationFraisMission.ShowValidation(Id);
     if (tacheId) {
@@ -259,25 +260,94 @@ showRegularisationFraisMission.ShowValidation = function (demandeid) {
 
 }
 
+function ajouterEspacesEntreChiffres(nombre) {
+  if(nombre>999){
+    // Convertir le nombre en une chaîne de caractères
+    var nombreString = nombre.toString();
+   
+    // Utiliser une expression régulière pour ajouter des espaces entre les chiffres
+    var nombreAvecEspaces = nombreString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    
+    return nombreAvecEspaces;
+  }
+  else{
+   return nombre;
+  }
+ }
+
+
 showRegularisationFraisMission.ShowDetails = function (demandeid) {
+
+  let oList = showRegularisationFraisMission.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.RegularisationFraisMission);
+  let It = oList.getItemById(demandeid);
+
+  
+
+  showRegularisationFraisMission.clientContext.load(It);
+  showRegularisationFraisMission.clientContext.executeQueryAsync(function () {
+    if (It) {
+      let demandeurField = It.get_item('Demandeur');
+      let superieurField = It.get_item('ResponsableN1');
+      let demandeurName = demandeurField.get_lookupValue();
+      let superieurName = superieurField.get_lookupValue();
+      let nbre = ajouterEspacesEntreChiffres(It.get_item('Nombre'));
+      let forf = ajouterEspacesEntreChiffres(It.get_item('Forfait'));
+      let tot = ajouterEspacesEntreChiffres(It.get_item('Total'));
+      let view = {
+        id :  (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false ) ,
+        title: It.get_item('Title') != null ? It.get_item('Title') : '',
+        choix: It.get_item('Etat') != null ? It.get_item('Etat') : '',
+        datedepart: It.get_item('DateDebut') != null ? new Date(It.get_item('DateDebut')).toLocaleDateString() : '',
+        dateretour: It.get_item('DateFin') != null ? It.get_item('DateFin').toLocaleDateString() : '',
+        //nombre: It.get_item('Nombre') != null ? It.get_item('Nombre') : '',
+        //forfait: It.get_item('Forfait') != null ? It.get_item('Forfait') : '',
+        //total: It.get_item('Total') != null ? It.get_item('Total') : '',
+        sortie: It.get_item('Mission') != null ? It.get_item('Mission') : '',
+        sortieid: It.get_item('MissionID') != null ? It.get_item('MissionID') : '',
+        nombre: nbre,
+        forfait: forf,
+        total: tot,
+        demandeur: demandeurName,
+        demandeuremail: It.get_item('DemandeurEmail') != null ? It.get_item('DemandeurEmail') : '',
+        superieur: superieurName,
+        etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
+      };
+      appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
+
+    }
+  }, appSpHelper.writeError);
+}
+
+showRegularisationFraisMission.ShowFirst = function (demandeid) {
 
   let oList = showRegularisationFraisMission.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.RegularisationFraisMission);
   let It = oList.getItemById(demandeid);
 
   showRegularisationFraisMission.clientContext.load(It);
   showRegularisationFraisMission.clientContext.executeQueryAsync(function () {
+
+
     if (It) {
-      let view = {
-        title: It.get_item('Title') != null ? It.get_item('Title') : '',
-        choix: It.get_item('Etat') != null ? It.get_item('Etat') : '',
-        datedepart: It.get_item('DateDebut') != null ? new Date(It.get_item('DateDebut')).toLocaleDateString() : '',
-        dateretour: It.get_item('DateFin') != null ? It.get_item('DateFin').toLocaleDateString() : '',
-        nombre: It.get_item('Nombre') != null ? It.get_item('Nombre') : '',
-        forfait: It.get_item('Forfait') != null ? It.get_item('Forfait') : '',
-        total: It.get_item('Total') != null ? It.get_item('Total') : '',
-        etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
+      console.log("test showFirst");
+
+      let createdValue = It.get_item('Created');
+      let formattedTime = '';
+
+      let createdDate = new Date(createdValue);
+
+      var options = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
+      formattedTime = createdDate.toLocaleTimeString(undefined, options);
+
+      let creeerpar = It.get_item('Author');
+      let creer = creeerpar.get_lookupValue();
+      console.log(creer);
+      let viewData = {
+        id: It.get_item("ID"),
+        heure: formattedTime,
+        create: creer,
+        requestdate: It.get_item('Created') != null ? new Date(It.get_item('Created')).toLocaleDateString() : '',
       };
-      appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
+      appHelper.renderTemplate("tmpl_form_first", "SectionFirst", viewData);
 
     }
   }, appSpHelper.writeError);

@@ -1,19 +1,22 @@
 var appSpHelper = appSpHelper || {};
 
 appSpHelper.writeError = function (sender, args) {
-  console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
-}
+  appHelper.Log(
+    "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+  );
+};
 
 appSpHelper.GetPeoplePickerVal = function (peoplePickerId) {
   var finalusers = new Array();
   var peoplePickerTopId = peoplePickerId + "_TopSpan";
-  var peoplePicker = window.SPClientPeoplePicker.SPClientPeoplePickerDict[peoplePickerTopId];
+  var peoplePicker =
+    window.SPClientPeoplePicker.SPClientPeoplePickerDict[peoplePickerTopId];
   var users = peoplePicker.GetAllUserInfo();
   for (var i = 0; i < users.length; i++) {
     finalusers.push(window.SP.FieldUserValue.fromUser(users[i].Key));
   }
   return finalusers;
-}
+};
 
 appSpHelper.GetPeoplePickerValLogin = function (peoplePickerId) {
   //var peoplePicker = SPClientPeoplePicker.SPClientPeoplePickerDict.peoplePickerDiv_TopSpan;
@@ -21,7 +24,8 @@ appSpHelper.GetPeoplePickerValLogin = function (peoplePickerId) {
   var finalusersLogin = "";
 
   var peoplePickerTopId = peoplePickerId + "_TopSpan";
-  var peoplePicker = window.SPClientPeoplePicker.SPClientPeoplePickerDict[peoplePickerTopId];
+  var peoplePicker =
+    window.SPClientPeoplePicker.SPClientPeoplePickerDict[peoplePickerTopId];
   //var peoplePicker = peoplePickerID_TopSpan;
   var users = peoplePicker.GetAllUserInfo();
   // Get user keys.
@@ -30,13 +34,12 @@ appSpHelper.GetPeoplePickerValLogin = function (peoplePickerId) {
     //var arryuser = users[i];
     if (i === 0) {
       finalusersLogin = users[i].Key;
-    }
-    else {
+    } else {
       finalusersLogin += "##ZL##" + users[i].Key;
     }
   }
   return finalusersLogin;
-}
+};
 
 appSpHelper.GetTPeoplePicker = function (peoplePickerId) {
   var t = ["FUValue", "Email", "Login", "Name"];
@@ -45,7 +48,8 @@ appSpHelper.GetTPeoplePicker = function (peoplePickerId) {
   var usersLogin = [];
   var usersName = [];
   var peoplePickerTopId = peoplePickerId + "_TopSpan";
-  var peoplePicker = window.SPClientPeoplePicker.SPClientPeoplePickerDict[peoplePickerTopId];
+  var peoplePicker =
+    window.SPClientPeoplePicker.SPClientPeoplePickerDict[peoplePickerTopId];
   var users = peoplePicker.GetAllUserInfo();
 
   for (var i = 0; i < users.length; i++) {
@@ -62,7 +66,7 @@ appSpHelper.GetTPeoplePicker = function (peoplePickerId) {
   t["Name"] = usersName;
 
   return t;
-}
+};
 
 appSpHelper.SetPeoplePickerField = function (peoplePickerId, userAccountName) {
   var peoplePicker = null;
@@ -70,127 +74,156 @@ appSpHelper.SetPeoplePickerField = function (peoplePickerId, userAccountName) {
     //SharePoint 2013
     //var travelPeoplePicker = null;
     var peoplePickerTopId = peoplePickerId + "_TopSpan";
-    peoplePicker = window.SPClientPeoplePicker.SPClientPeoplePickerDict[peoplePickerTopId];
+    peoplePicker =
+      window.SPClientPeoplePicker.SPClientPeoplePickerDict[peoplePickerTopId];
     if (peoplePicker != null) {
       var usrObj = {
-        'Key': userAccountName
+        Key: userAccountName,
       };
       peoplePicker.AddUnresolvedUser(usrObj, true);
       //$("input[title='TravelRequestor']").focus().val(strUserName).attr("size", strUserName.length);
     }
-  }
-  catch (e) {
-    //alert(e);
-  }
-}
+  } catch (e) {
+    appHelper.Log(e,appHelper.LogType.ERROR);
 
-appSpHelper.SetAndResolvePeoplePicker = function (peoplePickerId, userAccountName) {
+  }
+};
 
+appSpHelper.SetAndResolvePeoplePicker = function (
+  peoplePickerId,
+  userAccountName
+) {
   //var _PeoplePicker = $("div[title='" + fieldName + "']");
 
   var peoplePickerTopId = peoplePickerId + "_TopSpan";
 
-  var peoplePickerEditer = $("input[id='" + peoplePickerTopId + "_HiddenInput']");
+  var peoplePickerEditer = $(
+    "input[id='" + peoplePickerTopId + "_HiddenInput']"
+  );
 
   userAccountName.split(";#").forEach(function (part) {
-
     if (part) {
-
       peoplePickerEditer.val(part);
 
-      var peoplePickerOject = window.SPClientPeoplePicker.SPClientPeoplePickerDict[peoplePickerTopId];
+      var peoplePickerOject =
+        window.SPClientPeoplePicker.SPClientPeoplePickerDict[peoplePickerTopId];
 
       peoplePickerOject.AddUnresolvedUserFromEditor(true);
-
     }
-
   });
-
-}
+};
 
 appSpHelper.CheckPplpickerEntry = function (peoplePickerId) {
   var checker = false;
   var peoplePickerTopId = peoplePickerId + "_TopSpan";
-  var peoplePicker = window.SPClientPeoplePicker.SPClientPeoplePickerDict[peoplePickerTopId];
+  var peoplePicker =
+    window.SPClientPeoplePicker.SPClientPeoplePickerDict[peoplePickerTopId];
   //var peoplePicker = PplpickerObject_TopSpan;
   var users = peoplePicker.GetAllUserInfo();
-  if (users.length > 0)
-    checker = true;
+  if (users.length > 0) checker = true;
 
   return checker;
-}
+};
 
-appSpHelper.InitializePeoplePicker = function (peoplePickerElementId, mutipleSelection, width) {
-
+appSpHelper.InitializePeoplePicker = function (
+  peoplePickerElementId,
+  mutipleSelection,
+  width
+) {
   // Create a schema to store picker properties, and set the properties.
-  if (!width) { width = '320px' }
+  if (!width) {
+    width = "320px";
+  }
 
-  if (!mutipleSelection) { mutipleSelection = false }
+  if (!mutipleSelection) {
+    mutipleSelection = false;
+  }
 
   var schema = {};
-  schema['PrincipalAccountType'] = 'User,DL,SecGroup,SPGroup';
-  schema['SearchPrincipalSource'] = 15;
-  schema['ResolvePrincipalSource'] = 15;
-  schema['AllowMultipleValues'] = mutipleSelection;
-  schema['MaximumEntitySuggestions'] = 50;
-  schema['Width'] = width;
+  schema["PrincipalAccountType"] = "User,DL,SecGroup,SPGroup";
+  schema["SearchPrincipalSource"] = 15;
+  schema["ResolvePrincipalSource"] = 15;
+  schema["AllowMultipleValues"] = mutipleSelection;
+  schema["MaximumEntitySuggestions"] = 50;
+  schema["Width"] = width;
 
   // Render and initialize the picker.
   // Pass the ID of the DOM element that contains the picker, an array of initial
   // PickerEntity objects to set the picker value, and a schema that defines
   // picker properties.
-  SPClientPeoplePicker_InitStandaloneControlWrapper(peoplePickerElementId, null, schema);
-}
+  SPClientPeoplePicker_InitStandaloneControlWrapper(
+    peoplePickerElementId,
+    null,
+    schema
+  );
+};
 
-appSpHelper.PeoplePickerOnChangeEvent = function (peoplePickerElementId, callback) {
+appSpHelper.PeoplePickerOnChangeEvent = function (
+  peoplePickerElementId,
+  callback
+) {
+  appHelper.Log("TEST 1");
   var ppId = peoplePickerElementId + "_TopSpan";
   var addOnChanged = function (ctx) {
-    if (window.SPClientPeoplePicker && window.SPClientPeoplePicker.SPClientPeoplePickerDict && window.SPClientPeoplePicker.SPClientPeoplePickerDict[ppId]) {
+    if (
+      window.SPClientPeoplePicker &&
+      window.SPClientPeoplePicker.SPClientPeoplePickerDict &&
+      window.SPClientPeoplePicker.SPClientPeoplePickerDict[ppId]
+    ) {
+      appHelper.Log("TEST 2");
       var picker = window.SPClientPeoplePicker.SPClientPeoplePickerDict[ppId];
+      appHelper.Log("Picker");
+      appHelper.Log(picker);
       picker.oldChanged = picker.OnControlResolvedUserChanged;
       picker.OnControlResolvedUserChanged = function () {
         if (picker.TotalUserCount !== 0) {
+          appHelper.Log("TEST 3");
           setTimeout(function () {
             var tUserInfo = picker.GetAllUserInfo();
             if (tUserInfo.length > 0) {
+              appHelper.Log("TEST 4");
               var user = tUserInfo[tUserInfo.length - 1];
+              appHelper.Log(user.Key);
+              appHelper.Log(user);
               callback(user.Key);
             }
           }, 100);
         }
         picker.oldChanged();
       };
-    }
-    else {
+    } else {
       setTimeout(function () {
         addOnChanged(ctx);
-      }, 100)
+        appHelper.Log("Picker is null");
+      }, 100);
     }
   };
 
   addOnChanged();
-}
+};
 
 appSpHelper.ClearPeopleFieldValue = function (peoplePickerElementId) {
-
-  var listSpanUserSelected = $("#" + peoplePickerElementId + "_TopSpan_ResolvedList > .sp-peoplepicker-userSpan");
+  var listSpanUserSelected = $(
+    "#" +
+      peoplePickerElementId +
+      "_TopSpan_ResolvedList > .sp-peoplepicker-userSpan"
+  );
 
   for (var i = 0; i < listSpanUserSelected.length; i++) {
-    window.SPClientPeoplePickerProcessedUser.DeleteProcessedUser(listSpanUserSelected[0]);
+    window.SPClientPeoplePickerProcessedUser.DeleteProcessedUser(
+      listSpanUserSelected[0]
+    );
   }
 
   $("#" + peoplePickerElementId + "_TopSpan_InitialHelpText").show();
-
-}
+};
 
 appSpHelper.GetProperties = function (prefixControle, userLogin, callBack) {
-
   let clientContext = new SP.ClientContext.get_current();
   let peopleManager = new SP.UserProfiles.PeopleManager(clientContext);
   let personProperties = peopleManager.getPropertiesFor(userLogin);
   clientContext.load(personProperties);
   clientContext.executeQueryAsync(function () {
-
     let selector = `Txt${prefixControle}DisplayName`;
     let input = document.createElement("input");
     input.setAttribute("type", "hidden");
@@ -212,112 +245,115 @@ appSpHelper.GetProperties = function (prefixControle, userLogin, callBack) {
     input.setAttribute("value", "");
     document.body.appendChild(input);
 
-
-
-
-
     let html = `<input type="hidden" id="Txt${prefixControle}DisplayName" value="" />
         <input type="hidden" id="Txt${prefixControle}Login" value="" />
         <input type="hidden" id="Txt${prefixControle}Email" value="" />
         <input type="hidden" id="Txt${prefixControle}Manager" value="" />`;
     document.body.append(html);
-    selector = `Txt${prefixControle}DisplayName`
-    document.getElementById(selector).innerHTML = (personProperties.get_displayName());
+    selector = `Txt${prefixControle}DisplayName`;
+    document.getElementById(selector).innerHTML =
+      personProperties.get_displayName();
     selector = `Txt${prefixControle}Login`;
-    document.getElementById(selector).innerHTML = (personProperties.get_userProfileProperties()['AccountName']);
+    document.getElementById(selector).innerHTML =
+      personProperties.get_userProfileProperties()["AccountName"];
     selector = `Txt${prefixControle}Email`;
-    document.getElementById(selector).innerHTML = (personProperties.get_userProfileProperties()['WorkEmail']);
+    document.getElementById(selector).innerHTML =
+      personProperties.get_userProfileProperties()["WorkEmail"];
 
     if (callBack) {
       callBack();
     }
-
   }, appSpHelper.writeError);
-
 };
 
 appSpHelper.GetMyProperties = function (callBack) {
-
   let clientContext = new SP.ClientContext.get_current();
   let oWeb = clientContext.get_web();
   currentUser = oWeb.get_currentUser();
   clientContext.load(currentUser);
-  clientContext.executeQueryAsync(
-    function () {
+  clientContext.executeQueryAsync(function () {
+    let input = document.createElement("input");
+    input.setAttribute("type", "hidden");
+    input.setAttribute("id", "TxtCurrentUserDisplayName");
+    input.setAttribute("value", "");
+    document.body.appendChild(input);
 
-      let input = document.createElement("input");
-      input.setAttribute("type", "hidden");
-      input.setAttribute("id", "TxtCurrentUserDisplayName");
-      input.setAttribute("value", "");
-      document.body.appendChild(input);
+    input = document.createElement("input");
+    input.setAttribute("type", "hidden");
+    input.setAttribute("id", "TxtCurrentUserLogin");
+    input.setAttribute("value", "");
+    document.body.appendChild(input);
 
-      input = document.createElement("input");
-      input.setAttribute("type", "hidden");
-      input.setAttribute("id", "TxtCurrentUserLogin");
-      input.setAttribute("value", "");
-      document.body.appendChild(input);
+    input = document.createElement("input");
+    input.setAttribute("type", "hidden");
+    input.setAttribute("id", "TxtCurrentUserEmail");
+    input.setAttribute("value", "");
+    document.body.appendChild(input);
 
-      input = document.createElement("input");
-      input.setAttribute("type", "hidden");
-      input.setAttribute("id", "TxtCurrentUserEmail");
-      input.setAttribute("value", "");
-      document.body.appendChild(input);
+    document.getElementById("TxtCurrentUserLogin").value =
+      currentUser.get_loginName();
+    document.getElementById("TxtCurrentUserDisplayName").value =
+      currentUser.get_title();
+    document.getElementById("TxtCurrentUserEmail").value =
+      currentUser.get_email();
 
-      document.getElementById('TxtCurrentUserLogin').value = currentUser.get_loginName();
-      document.getElementById('TxtCurrentUserDisplayName').value = currentUser.get_title();
-      document.getElementById('TxtCurrentUserEmail').value = currentUser.get_email();
-
-
-      if (callBack) {
-        callBack();
-      }
-
+    if (callBack) {
+      callBack();
     }
-    , appSpHelper.writeError);
-
-}
-
+  }, appSpHelper.writeError);
+};
 
 appSpHelper.GetEmploye = function (listeName, login, callBack) {
   let targetList = clientContext.get_web().get_lists().getByTitle(listeName);
   let camlQuery = new SP.CamlQuery();
 
-  if (login.indexOf('\\') > -1) {
-    login = login.split('\\')[1];
+  appHelper.Log("IN GETEMPLOYE");
+  appHelper.Log(listeName, login);
+
+  if (login.indexOf("\\") > -1) {
+    login = login.split("\\")[1];
     login = login.trim();
   }
 
-  let q = '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + login + '</Value></Eq></Where></Query></View>';
+  let q =
+    '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+    login +
+    "</Value></Eq></Where></Query></View>";
   camlQuery.set_viewXml(q);
   let collListItemInfo = targetList.getItems(camlQuery);
   clientContext.load(collListItemInfo);
   clientContext.executeQueryAsync(function (s, a) {
     let listItemEnumerator = collListItemInfo.getEnumerator();
     let oListItem = null;
+    appHelper.Log(listItemEnumerator);
     while (listItemEnumerator.moveNext()) {
       oListItem = listItemEnumerator.get_current();
     }
-    if (callBack) { callBack(oListItem); }
+    if (callBack) {
+      callBack(oListItem);
+    }
   }, appSpHelper.writeError);
-}
+};
 
 appSpHelper.LoadUserCongeParam = function (listeName, login, callBack) {
   let targetList = clientContext.get_web().get_lists().getByTitle(listeName);
   let camlQuery = new SP.CamlQuery();
 
-  if (login.indexOf('|') > -1) {
-    login = login.split('|')[1];
+  if (login.indexOf("|") > -1) {
+    login = login.split("|")[1];
     login = login.trim();
   }
 
-  let q = '<View><Query><Where><Eq><FieldRef Name="EmpLogin" /><Value Type="Text">' + login + '</Value></Eq></Where></Query></View>';
+  let q =
+    '<View><Query><Where><Eq><FieldRef Name="EmpLogin" /><Value Type="Text">' +
+    login +
+    "</Value></Eq></Where></Query></View>";
   camlQuery.set_viewXml(q);
   let collListItemInfo = targetList.getItems(camlQuery);
   clientContext.load(collListItemInfo);
   clientContext.executeQueryAsync(function (s, a) {
     var listItemEnumerator = collListItemInfo.getEnumerator();
     {
-
       let input = document.createElement("input");
       input.setAttribute("type", "hidden");
       input.setAttribute("id", "TxtSpUserNbreJrsAcquis");
@@ -329,7 +365,6 @@ appSpHelper.LoadUserCongeParam = function (listeName, login, callBack) {
       input.setAttribute("id", "TxtSpUserNbreJrsAcquisHLeave");
       input.setAttribute("value", "");
       document.body.appendChild(input);
-
 
       input = document.createElement("input");
       input.setAttribute("type", "hidden");
@@ -413,63 +448,74 @@ appSpHelper.LoadUserCongeParam = function (listeName, login, callBack) {
       while (listItemEnumerator.moveNext()) {
         oListItem = listItemEnumerator.get_current();
 
-        mail = oListItem.get_item("EmpMail") != null ? oListItem.get_item("EmpMail") : '';
-        nbrejrsAcquis = oListItem.get_item("NombreJoursAcquis") != null ? oListItem.get_item("NombreJoursAcquis") : 0;
+        mail =
+          oListItem.get_item("EmpMail") != null
+            ? oListItem.get_item("EmpMail")
+            : "";
+        nbrejrsAcquis =
+          oListItem.get_item("NombreJoursAcquis") != null
+            ? oListItem.get_item("NombreJoursAcquis")
+            : 0;
         gender = oListItem.get_item("Gender") ? 1 : 0;
-        employeeId = oListItem.get_item("ID") != null ? oListItem.get_item("ID") : 0;
-        depId = oListItem.get_item("DepartementID") != null ? oListItem.get_item("DepartementID") : 0;
-        matricule = oListItem.get_item("EmpMatricule") != null ? oListItem.get_item("EmpMatricule") : '0000';
+        employeeId =
+          oListItem.get_item("ID") != null ? oListItem.get_item("ID") : 0;
+        depId =
+          oListItem.get_item("DepartementID") != null
+            ? oListItem.get_item("DepartementID")
+            : 0;
+        matricule =
+          oListItem.get_item("EmpMatricule") != null
+            ? oListItem.get_item("EmpMatricule")
+            : "0000";
 
         break;
       }
 
+      document.getElementById("TxtSpEmpMail").value = mail;
+      document.getElementById("TxtSpUserMatricule").value = matricule;
+      document.getElementById("TxtSpUserNbreJrsAcquis").value = nbrejrsAcquis;
+      document.getElementById("TxtSpEmployeeID").value = employeeId;
+      document.getElementById("TxtSpDepartementID").value = depId;
+      document.getElementById("TxtGender").value = gender;
 
-      document.getElementById('TxtSpEmpMail').value = (mail);
-      document.getElementById('TxtSpUserMatricule').value = (matricule);
-      document.getElementById('TxtSpUserNbreJrsAcquis').value = (nbrejrsAcquis);
-      document.getElementById('TxtSpEmployeeID').value = (employeeId);
-      document.getElementById('TxtSpDepartementID').value = (depId);
-      document.getElementById('TxtGender').value = (gender);
-
-      appSpHelper.GetEmployeeManagerLogin('N1', oListItem.get_item("EmpManager"), function () {
-        if (callBack) {
-          callBack();
+      appSpHelper.GetEmployeeManagerLogin(
+        "N1",
+        oListItem.get_item("EmpManager"),
+        function () {
+          if (callBack) {
+            callBack();
+          }
         }
-      });
-
-
-
+      );
     }
   }, appSpHelper.writeError);
-}
+};
 
 appSpHelper.GetEmployeeManagerLogin = function (niveau, manager, callBack) {
   if (manager != null) {
     var user = clientContext.get_web().ensureUser(manager.get_lookupValue());
     clientContext.load(user);
-    clientContext.executeQueryAsync(
-      function () {
+    clientContext.executeQueryAsync(function () {
+      if (niveau == "N1") {
+        document.getElementById("TxtSpManagerN1Login").value =
+          user.get_loginName();
+        document.getElementById("TxtSpManagerN1Email").value = user.get_email();
+      }
 
-        if (niveau == 'N1') {
-          document.getElementById('TxtSpManagerN1Login').value = (user.get_loginName());
-          document.getElementById('TxtSpManagerN1Email').value = (user.get_email());
-        }
+      if (niveau == "N2") {
+        document.getElementById("TxtSpManagerN2Login").value =
+          user.get_loginName();
+        document.getElementById("TxtSpManagerN2Email").value = user.get_email();
+      }
 
-        if (niveau == 'N2') {
-          document.getElementById('TxtSpManagerN2Login').value = (user.get_loginName());
-          document.getElementById('TxtSpManagerN2Email').value = (user.get_email());
-        }
-
-        if (callBack) {
-          callBack();
-        }
-
-      }, appSpHelper.writeError);
+      if (callBack) {
+        callBack();
+      }
+    }, appSpHelper.writeError);
   }
-}
+};
 
 appSpHelper.CheckAttachmentFolder = function (ctx, id, listName, callBack) {
-
   let oWeb = ctx.get_web();
   let oList = ctx.get_web().get_lists().getByTitle(listName);
 
@@ -479,32 +525,31 @@ appSpHelper.CheckAttachmentFolder = function (ctx, id, listName, callBack) {
     let oListItem = oList.getItemById(id);
     ctx.load(oListItem);
     ctx.executeQueryAsync(function () {
-      if (!oListItem.get_fieldValues()['Attachments']) {
+      if (!oListItem.get_fieldValues()["Attachments"]) {
         //Get attachment folder and attachment folderrurl
-        let attachmentsFolder = oWeb.getFolderByServerRelativeUrl('Lists/' + listName + '/Attachments');
-        let attachmentsFolderURL = oWeb.get_serverRelativeUrl() + 'Lists/' + listName + '/Attachments';
+        let attachmentsFolder = oWeb.getFolderByServerRelativeUrl(
+          "Lists/" + listName + "/Attachments"
+        );
+        let attachmentsFolderURL =
+          oWeb.get_serverRelativeUrl() + "Lists/" + listName + "/Attachments";
 
         //Create Attachment Folder
-        attachmentsFolder = attachmentsFolder.get_folders().add('_' + id);
-        attachmentsFolder.moveTo(attachmentsFolderURL + '/' + id);
+        attachmentsFolder = attachmentsFolder.get_folders().add("_" + id);
+        attachmentsFolder.moveTo(attachmentsFolderURL + "/" + id);
 
         //Load Client Context and execute the batch
         ctx.load(attachmentsFolder);
         ctx.executeQueryAsync(function () {
-
           if (callBack) {
             callBack();
           }
-
         }, appSpHelper.writeError);
       }
-
     }, appSpHelper.writeError);
   }, appSpHelper.writeError);
-}
+};
 
-appSpHelper.SaveNotification = function (ctx, objNotification) {
-
+appSpHelper.SaveNotification = function (ctx, objNotification, callBack) {
   let oList = ctx
     .get_web()
     .get_lists()
@@ -522,10 +567,11 @@ appSpHelper.SaveNotification = function (ctx, objNotification) {
   oListItem.update();
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
-
+    if (callBack) {
+      callBack();
+    }
   }, appSpHelper.writeError);
-
-}
+};
 
 appSpHelper.getGroupMembersEmail = function (groupName) {
   var ctx = new SP.ClientContext.get_current();
@@ -549,7 +595,7 @@ appSpHelper.getGroupMembersEmail = function (groupName) {
       }
     );
   });
-}
+};
 
 appSpHelper.getGroupMembersLoginNames = function (groupName) {
   var ctx = new SP.ClientContext.get_current();
@@ -565,7 +611,7 @@ appSpHelper.getGroupMembersLoginNames = function (groupName) {
         var userEnumerator = users.getEnumerator();
         while (userEnumerator.moveNext()) {
           var user = userEnumerator.get_current();
-          loginNames.push(user.get_loginName().replace('i:0#.w|', ''));
+          loginNames.push(user.get_loginName().replace("i:0#.w|", ""));
         }
         resolve(loginNames);
       },
@@ -574,7 +620,7 @@ appSpHelper.getGroupMembersLoginNames = function (groupName) {
       }
     );
   });
-}
+};
 
 appSpHelper.getAssignedToEmail = function (taskId) {
   var listName = appHelper.ListName.Validation;
@@ -613,10 +659,7 @@ appSpHelper.getAssignedToEmail = function (taskId) {
       }
     );
   });
-
-
-}
-
+};
 
 appSpHelper.queryEmployeesByLoginNames = function (arrLoginNames) {
   var ctx = new SP.ClientContext.get_current();
@@ -631,7 +674,9 @@ appSpHelper.queryEmployeesByLoginNames = function (arrLoginNames) {
           <In>
             <FieldRef Name='EmpLogin' />
             <Values>
-              ${arrLoginNames.map(name => `<Value Type='Text'>${name}</Value>`).join('')}
+              ${arrLoginNames
+                .map((name) => `<Value Type='Text'>${name}</Value>`)
+                .join("")}
             </Values>
           </In>
         </Where>
@@ -658,22 +703,18 @@ appSpHelper.queryEmployeesByLoginNames = function (arrLoginNames) {
       }
     );
   });
-}
+};
 
-
-
-appSpHelper.SendNotificationTask = function (ctx, taskItem) {
+appSpHelper.SendNotificationTask = function (ctx, taskItem, callBack) {
   let obj = {};
   obj.to = "";
   obj.numero = "";
   obj.body = "";
   obj.objet = "";
 
-
   let WriteObject = function (t) {
-
-    const _titre = 'MOOVINSIDE - TACHE DE VALIDATION ';
-    switch ((t['Parent'] != null ? t['Parent'].toString() : "")) {
+    const _titre = "MOOVINSIDE - TACHE DE VALIDATION ";
+    switch (t["Parent"] != null ? t["Parent"].toString() : "") {
       case appHelper.AppCode.VEHICULE:
         return _titre;
         break;
@@ -689,25 +730,31 @@ appSpHelper.SendNotificationTask = function (ctx, taskItem) {
       case appHelper.AppCode.ABSENCE:
         return _titre;
         break;
-      default: return _titre;
+      default:
+        return _titre;
         break;
     }
-  }
+  };
 
   let WriteBody = function (t) {
-    let titre = 'Bonjour, ';
-    titre += '<br><br>';
-    titre += 'Une ' + (t['Parent'] != null ? t['Parent'].toString() : "").trim().toLowerCase() + ' vous a été soumis pour approbation';
-    titre += '<br>';
-    titre += '<a href="' + appHelper.AppConstante.SiteJsUrl + '/index.aspx"> Suivez ce lien pour accéder au centre d\'application. </a>';
-    titre += '<br><br>';
-    titre += 'Cordialement,';
-    titre += '<br>';
-    titre += '<b>Equipe Moov Inside</b>';
-    titre += '<br><br>';
+    let titre = "Bonjour, ";
+    titre += "<br><br>";
+    titre +=
+      "Une " +
+      (t["Parent"] != null ? t["Parent"].toString() : "").trim().toLowerCase() +
+      " vous a été soumis pour approbation";
+    titre += "<br>";
+    titre +=
+      '<a href="' +
+      appHelper.AppConstante.SiteJsUrl +
+      "/index.aspx\"> Suivez ce lien pour accéder au centre d'application. </a>";
+    titre += "<br><br>";
+    titre += "Cordialement,";
+    titre += "<br>";
+    titre += "<b>Equipe Moov Inside</b>";
+    titre += "<br><br>";
     return titre;
-
-  }
+  };
 
   let GetAssignAdress = function (t, callBack) {
     let arrAdresse = [];
@@ -718,13 +765,15 @@ appSpHelper.SendNotificationTask = function (ctx, taskItem) {
           arrAdresse.push(assignedToEmail);
           callBack(arrAdresse.concat());
         } else {
-          callBack('');
+          callBack("");
         }
       })
       .catch(function (error) {
-        console.error("Error: " + error);
+        appHelper.Log ( error, appHelper.LogType.ERROR);
         let grp =
-          t.get_item("AssignedTo") != null ? t.get_item("AssignedTo")[0].get_lookupValue() : "";
+          t.get_item("AssignedTo") != null
+            ? t.get_item("AssignedTo")[0].get_lookupValue()
+            : "";
         appSpHelper
           .getGroupMembersLoginNames(grp)
           .then(function (arrUserLogin) {
@@ -741,34 +790,81 @@ appSpHelper.SendNotificationTask = function (ctx, taskItem) {
                   }
                 });
 
-                console.log(arrAdresse);
+                appHelper.Log(arrAdresse);
                 callBack(arrAdresse.concat());
               })
-              .catch(function (error) { console.error("Error: " + error); });
+              .catch(function (error) {
+                appHelper.Log ( error, appHelper.LogType.ERROR);
+              });
           })
-          .catch(function (error) { console.error("Error: " + error); });
+          .catch(function (error) {
+            appHelper.Log ( error, appHelper.LogType.ERROR);
+          });
       });
   };
-
-
-
 
   GetAssignAdress(taskItem, function (a) {
     obj.objet = WriteObject(taskItem);
     obj.body = WriteBody(taskItem);
     obj.to = a;
-    obj.to = obj.to.toString();
+    obj.from = appHelper.AppConstante.MIMailSender;
 
-    console.log(obj);
-    appSpHelper.SaveNotification(ctx, obj);
+    appHelper.Log (obj);
 
+    appSpHelper.sendEmail(
+      obj.from,
+      obj.to,
+      [],
+      obj.body,
+      obj.objet,
+      function () {
+        obj.to = obj.to.toString();
+        appHelper.Log(obj);
+        appSpHelper.SaveNotification(ctx, obj, callBack);
+      }
+    );
   });
+};
 
+appSpHelper.sendEmail = function (from, to, cc, body, subject, callback) {
+  //var siteurl = ;
+  var urlTemplate = `${appHelper.AppConstante.SiteUrl}_api/SP.Utilities.Utility.SendEmail`;
+  // var urlTemplate = window._spPageContextInfo.webServerRelativeUrl + "/_api/SP.Utilities.Utility.SendEmail";
+  $.ajax({
+    contentType: "application/json",
+    url: urlTemplate,
+    type: "POST",
+    data: JSON.stringify({
+      properties: {
+        __metadata: {
+          type: "SP.Utilities.EmailProperties",
+        },
+        From: from,
+        To: {
+          results: to,
+        },
 
+        CC: {
+          results: cc,
+        },
 
-
-
-
-
-
+        Body: body,
+        Subject: subject,
+      },
+    }),
+    headers: {
+      Accept: "application/json;odata=verbose",
+      "content-type": "application/json;odata=verbose",
+      "X-RequestDigest": document.getElementById("__REQUESTDIGEST").value
+    },
+    success: function (data) {
+      if (callback) {
+        appHelper.Log(data, appHelper.LogType.INFO);
+        callback.call();
+      }
+    },
+    error: function (err) {
+      appHelper.Log (  err, appHelper.LogType.ERROR, "Erreur lors de l'envoi du mail: " );
+    },
+  });
 };

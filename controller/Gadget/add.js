@@ -1,59 +1,74 @@
 var appGadget = appGadget || {};
 var clientContext;
+//const appUrlrecup = '';
 appGadget.clientContext;
 
 appGadget.InitializePage = function () {
   appGadget.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
-    //appSpHelper.LoadUserCongeParam(appHelper.ListName.Employe, "ETISALAT-AFRICA\pouattara", App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
-      //document.getElementById("TxtCurrentUserLogin").value,
-      //function () {
-        //appSpHelper.GetEmploye(appHelper.ListName.Employe, document.getElementById("TxtSpManagerN1Login").value,
-          //function (item) {
-            //console.log(item);
-            //appSpHelper.GetEmployeeManagerLogin("N2",item.get_item("EmpManager"),
-              //function () {
-
-              // span= document.getElementById('spanSolde');
-              // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
-
-              //  appGadget.initCmbTypeConge(function(){
-                  //appGadget.List();
-              //  });
-              //}
-            //);
-          //}
-        //);
-      //}
-    //);
+    
       document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
       document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
       document.getElementById("TxtEmail").value = App.CurrentUser.Email;
+
+      appGadget.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function(){});
   
   });
+
+  var monInput = document.getElementById("TxtQuantite");
+    
+    var autoNumeric = new AutoNumeric(monInput, {
+      decimalPlaces: 0,
+      digitGroupSeparator: ' ',
+      unformatOnSubmit: true,
+    });
+
+    //window.globale = autoNumeric;
 
   // const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
 
-
-
-  // BtnAdd.addEventListener("click", function () {
-  //   // setTimeout(function () {
-  //   //   appSpHelper.InitializePeoplePicker(
-  //   //     "plePickerInterimaireDiv",
-  //   //     false,
-  //   //     "350px"
-  //   //   );
-  //   // }, 2000);
-
-  // });
+  
 
   BtnSave.addEventListener("click", function () {
-    appGadget.Add (function(){
-      location.reload();
-    });
+    let gadget = document.getElementById("TxtArticle").value;
+    let qte = document.getElementById("TxtQuantite").value;
+    let motif = document.getElementById("TxtMotif").value;
+    if(gadget!="" && motif!="" && qte!=0)
+    {
+    let verif = document.getElementById("TxtVerif").value;
+    if(verif=="Edit")
+    {
+      let valID = document.getElementById("TxtID").value;
+      console.log(valID);
+      appGadget.Edit (valID, function(a){
+        //location.reload();
+        const appUrl = '/pages/gadget/show.aspx?ID=' + a.get_id();
+        const url = "/tools1"+appUrl;
+        appHelper.navigation("DivMainPageContainer", url);
+        var closeButton = document.querySelector('[aria-label="Close"]');
+        closeButton.click();
+      });
+    }
+    else{
+      appGadget.Add (function(a){
+        //location.reload();
+        const appUrl = '/pages/gadget/show.aspx?ID=' + a.get_id();
+        const url = "/tools1"+appUrl;
+        appHelper.navigation("DivMainPageContainer", url);
+        var closeButton = document.querySelector('[aria-label="Close"]');
+        closeButton.click();
+        
+      });
+    }
+  }
+  else{
+    alert("Veillez renseigner correctement les champs");
+  }
   });
+
+  
 
 };
 
@@ -61,58 +76,41 @@ function getRating (str){
   document.getElementById('TxtNature').value = str;
 }
 
-appGadget.initCmbTypeGadget = function (callBack) {
-  ListerMotif(function(){
-    let cmb = document.getElementById("cmbTypeConge");
-    let txtColor = document.getElementById("TxtTypeCongeColeur");
-    let txtText = document.getElementById("TxtTypeCongeText");
-    cmb.addEventListener("change", function () {
-      let selectedOption = this.options[this.selectedIndex];
-      let color = selectedOption.getAttribute("data-color");
-      txtColor.value = color;
-      txtText.value = selectedOption.text;
-    });
-
-    if(callBack){
-      callBack();
-    }
-  });
-
-};
-
-
-
-
-function ListerMotif( callBack) {
-  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.TypeConge);
-  let q = '<View><Query><Where>' +
-               '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
-          '</Where></Query></View>';
-  let camlQuery = new SP.CamlQuery();
-  camlQuery.set_viewXml(q);
-  let listItemMotif = oList.getItems(camlQuery);
-  clientContext.load(listItemMotif);
-  clientContext.executeQueryAsync(
-      function () {
-          var listItemEnumerator = listItemMotif.getEnumerator();
-
-          while (listItemEnumerator.moveNext()) {
-              let oListItemTp = listItemEnumerator.get_current();
-              let opt = document.createElement("option");
-              opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
-              opt.setAttribute("data-color", oListItemTp.get_item('Background'));
-              opt.setAttribute("value", oListItemTp.get_id());
-              opt.innerHTML = oListItemTp.get_item('Title');
-              document.getElementById('cmbTypeConge').appendChild(opt);
-          }
-
-
-          if(callBack){
-            callBack();
-          }
-      },
-      function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
+function use_number(node) {
+  var empty_val = false;
+  const value = node.value;
+  if (node.value == '')
+      empty_val = true;
+  node.type = 'number';
+  if (!empty_val){
+    node.value = Number(value.replace(/./g, '')); 
+    use_text(node);
+  }
 }
+
+function use_text(node) {
+  var empty_val = false;
+  const value = Number(node.value);
+  if (node.value == '')
+      empty_val = true;
+  node.type = 'text';
+  if (!empty_val)
+      node.value = value.toLocaleString('fr');
+}
+
+function number(nombre){
+  var empty_val = false;
+  const value = node.value;
+  if (node.value == '')
+      empty_val = true;
+  node.type = 'number';
+  if (!empty_val){
+    node.value = Number(value.replace(/./g, '')); 
+    
+  }
+}
+
+
 
 appGadget.List = function () {
   let oList = appGadget.clientContext
@@ -174,6 +172,32 @@ appGadget.Add = function ( callBack) {
 
   let endDate = startDate.addDays(2);
 
+  var Input = document.getElementById("TxtQuantite");
+
+  var autoNumericObject = AutoNumeric.getAutoNumericElement(Input);
+
+  var qte = autoNumericObject.getNumber();
+  console.log(qte);
+
+
+  /*var maqte = new AutoNumeric(Input);
+  var valqte = maqte.getNumber();
+  console.log(valqte);*/
+
+  /*let recup = window.globale;
+  var valqte = recup.getFormatted();
+  console.log(valqte);*/
+
+  console.log("TEST");
+
+  /*var inputElement = document.getElementById("TxtQuantite");
+  var autoNumericObject = new AutoNumeric(inputElement);
+
+  var formattedValueAsNumber = autoNumericObject.getNumber();*/
+
+  // let qte = document.getElementById("TxtQuantite").value;
+  // console.log(qte);
+
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
 
@@ -187,11 +211,72 @@ appGadget.Add = function ( callBack) {
 
   oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
 
-  oListItem.set_item("Quantite", parseInt(document.getElementById("TxtQuantite").value));
+  //oListItem.set_item("Quantite", parseInt(valqte));
+  oListItem.set_item("Quantite", qte);
 
-  oListItem.set_item("NombreJours", parseInt(document.getElementById("TxtQuantite").value));
+  oListItem.set_item("NombreJours", qte);
 
-  oListItem.set_item("NombreJourAccorde", parseInt(document.getElementById("TxtQuantite").value));
+  oListItem.set_item("NombreJourAccorde", qte);
+
+  oListItem.set_item("DemandeurEmail",App.CurrentUser.Email);
+ 
+  oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
+
+  oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
+  oListItem.set_item("ResponsableN2", App.CurrentUser.ManagerPersonne2);
+
+  oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
+  oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
+
+  
+  oListItem.update();
+  clientContext.load(oListItem);
+  clientContext.executeQueryAsync(function () {
+
+  const appUrl = '/pages/gadget/show.aspx?ID=' + oListItem.get_id();
+      let WF = new WFManager(appHelper.AppCode.GADGET,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      
+      if(callBack){
+        callBack(oListItem);
+      }
+
+  }, appSpHelper.writeError);
+  
+};
+
+appGadget.Edit = function (demandeid, callBack) {
+
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Gadget);
+  let oListItem = oList.getItemById(demandeid);
+
+  /*let oList = appGadget.clientContext
+    .get_web()
+    .get_lists()
+    .getByTitle(appHelper.ListName.Gadget);
+  let itemCreateInfo = new window.SP.ListItemCreationInformation();
+  let oListItem = oList.addItem(itemCreateInfo);
+  */
+
+
+  var Input = document.getElementById("TxtQuantite");
+
+  var autoNumericObject = AutoNumeric.getAutoNumericElement(Input);
+
+  var qte = autoNumericObject.getNumber();
+  console.log(qte);
+
+
+  oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
+  oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
+
+  oListItem.set_item("Title", document.getElementById("TxtArticle").value);
+
+  oListItem.set_item("Nature", document.getElementById("TxtArticle").value);
+
+  oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
+
+  oListItem.set_item("Quantite", qte);
 
   oListItem.set_item("DemandeurEmail",App.CurrentUser.Email);
  
@@ -207,14 +292,41 @@ appGadget.Add = function ( callBack) {
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
-const appUrl = '/pages/gadget/show.aspx?ID=' + oListItem.get_id();
+  const appUrl = '/pages/gadget/show.aspx?ID=' + oListItem.get_id();
+      console.log(appUrl);
       let WF = new WFManager(appHelper.AppCode.GADGET,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
       WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      
       if(callBack){
         callBack(oListItem);
       }
   }, appSpHelper.writeError);
 };
+
+appGadget.ShowDetails = function (demandeid, callBack) {
+
+  let oList = appGadget.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Gadget);
+  let It = oList.getItemById(demandeid);
+  console.log(demandeid);
+  console.log("IN ShowDetails");
+
+  appGadget.clientContext.load(It);
+  appGadget.clientContext.executeQueryAsync(function () {
+    if (It) {
+      
+        document.getElementById("TxtArticle").value = It.get_item('Title') != null ? It.get_item('Title') : ''; 
+        document.getElementById("TxtMotif").value = It.get_item('Motif') != null ? It.get_item('Motif') : '';
+        document.getElementById("TxtQuantite").value = It.get_item('Quantite') != null ? It.get_item('Quantite') : '';
+        document.getElementById("TxtVerif").value = 'Edit';
+        document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;
+        
+if(callBack){callBack();}
+
+    }else{if(callBack){callBack();}}
+  }, appSpHelper.writeError);
+}
+
+
 
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appGadget.InitializePage);
 // document.addEventListener("DOMContentLoaded", () => {

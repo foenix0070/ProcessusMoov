@@ -14,6 +14,7 @@ showMateriel.InitializePage = function () {
 
   appSpHelper.GetMyProperties(function () {
     showMateriel.ShowDetails(Id);
+    showMateriel.ShowFirst(Id);
     showMateriel.ShowFichierJoint(Id);
     showMateriel.ShowValidation(Id);
     if (tacheId) {
@@ -261,6 +262,21 @@ showMateriel.ShowValidation = function (demandeid) {
 
 }
 
+function ajouterEspacesEntreChiffres(nombre) {
+  if(nombre>999){
+    // Convertir le nombre en une chaîne de caractères
+    var nombreString = nombre.toString();
+   
+    // Utiliser une expression régulière pour ajouter des espaces entre les chiffres
+    var nombreAvecEspaces = nombreString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    
+    return nombreAvecEspaces;
+  }
+  else{
+   return nombre;
+  }
+ }
+
 showMateriel.ShowDetails = function (demandeid) {
 
   let oList = showMateriel.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Materiel);
@@ -269,18 +285,63 @@ showMateriel.ShowDetails = function (demandeid) {
   showMateriel.clientContext.load(It);
   showMateriel.clientContext.executeQueryAsync(function () {
     if (It) {
+      let demandeurField = It.get_item('Demandeur');
+      let superieurField = It.get_item('ResponsableN1');
+      let demandeurName = demandeurField.get_lookupValue();
+      let superieurName = superieurField.get_lookupValue();
+      let qte = ajouterEspacesEntreChiffres(It.get_item('Quantite'));
       let view = {
+        id :  (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false ) ,
         title: It.get_item('Title') != null ? It.get_item('Title') : '',
         //nbrejour: It.get_item('NombreJourAccorde') != null ? It.get_item('NombreJourAccorde') : '',
         datedepart: It.get_item('DateDepart') != null ? new Date(It.get_item('DateDepart')).toLocaleDateString() : '',
-        quantite: It.get_item('Quantite') != null ? It.get_item('Quantite') : '',
+        quantite: qte,
+        //quantite: It.get_item('Quantite') != null ? It.get_item('Quantite') : '',
         //interimaire: It.get_item('Demandeur') != null ? It.get_item('Demandeur').get_lookupValue() : '',
         motif: It.get_item('Motif') != null ? It.get_item('Motif') : '',
+        demandeur: demandeurName,
+        demandeuremail: It.get_item('DemandeurEmail') != null ? It.get_item('DemandeurEmail') : '',
+        superieur: superieurName,
         etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
 
         //quantite: It.get_item('Quantite') != null ? It.get_item('Quantite') : ''
       };
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
+
+    }
+  }, appSpHelper.writeError);
+}
+
+showMateriel.ShowFirst = function (demandeid) {
+
+  let oList = showMateriel.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Materiel);
+  let It = oList.getItemById(demandeid);
+
+  showMateriel.clientContext.load(It);
+  showMateriel.clientContext.executeQueryAsync(function () {
+
+
+    if (It) {
+      console.log("test showFirst");
+
+      let createdValue = It.get_item('Created');
+      let formattedTime = '';
+
+      let createdDate = new Date(createdValue);
+
+      var options = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
+      formattedTime = createdDate.toLocaleTimeString(undefined, options);
+
+      let creeerpar = It.get_item('Author');
+      let creer = creeerpar.get_lookupValue();
+      console.log(creer);
+      let viewData = {
+        id: It.get_item("ID"),
+        heure: formattedTime,
+        create: creer,
+        requestdate: It.get_item('Created') != null ? new Date(It.get_item('Created')).toLocaleDateString() : '',
+      };
+      appHelper.renderTemplate("tmpl_form_first", "SectionFirst", viewData);
 
     }
   }, appSpHelper.writeError);

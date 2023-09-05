@@ -9,14 +9,15 @@ showConge.InitializePage = function () {
 
   let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
   let Id = appHelper.GetQueryStringFromAjaxQuery('id');
-  console.log(tacheId, Id);
+  appHelper.Log(tacheId, Id);
 
   appSpHelper.CheckAttachmentFolder(showConge.clientContext, Id, appHelper.ListName.Conge, null);
 
   appSpHelper.GetMyProperties(function () {
 
-    console.log(tacheId, Id);
+    appHelper.Log(tacheId, Id);
     showConge.ShowDetails(Id);
+    showConge.ShowFirst(Id);
     showConge.ShowFichierJoint(Id);
     showConge.ShowValidation(Id);
     if (tacheId) {
@@ -26,7 +27,7 @@ showConge.InitializePage = function () {
 }
 
 showConge.TestShowForm = function (tacheId, demandeid) {
-  console.log(tacheId, demandeid);
+  appHelper.Log(tacheId, demandeid);
   let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Validation);
   let It = oList.getItemById(tacheId);
   clientContext.load(It);
@@ -53,7 +54,7 @@ showConge.ShowForm = function (tacheId, demandeid) {
 
   BtnOK.addEventListener("click", function () {
     WF.goToNextTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function (nextTask) {
-      console.log(nextTask);
+      appHelper.Log(nextTask);
       showConge.UpDateItemStatus(nextTask, demandeid, function () {
         location.reload();
       });
@@ -62,7 +63,7 @@ showConge.ShowForm = function (tacheId, demandeid) {
 
   BtnNOK.addEventListener("click", function () {
     WF.goToRefusedTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function (nextTask) {
-      console.log(nextTask);
+      appHelper.Log(nextTask);
       showConge.UpDateItemStatusRejet(true, demandeid, function () {
         location.reload();
       });
@@ -71,7 +72,7 @@ showConge.ShowForm = function (tacheId, demandeid) {
 
   BtnMod.addEventListener("click", function () {
     WF.goToRefusedTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function (nextTask) {
-      console.log(nextTask);
+      appHelper.Log(nextTask);
       showConge.UpDateItemStatusRejet(false, demandeid, function () {
         location.reload();
       });
@@ -130,14 +131,14 @@ showConge.ShowFichierJoint = function (demandeid) {
   let appName = appHelper.ListName.Conge;
   let id = demandeid;
   let folderPath = `/Lists/${appName}/Attachments/${id}/`;
-  console.log(folderPath);
+  appHelper.Log(folderPath);
   let attachmentFolder = clientContext.get_web().getFolderByServerRelativeUrl(folderPath);
   let attachmentFiles = attachmentFolder.get_files();
   clientContext.load(attachmentFiles);
   clientContext.executeQueryAsync(function () {
     if (attachmentFiles) {
       if (attachmentFiles.get_count() > 0) {
-        console.log('111');
+        appHelper.Log('111');
         view.fichiers = [];
 
         for (var i = 0; i < attachmentFiles.get_count(); i++) {
@@ -175,7 +176,7 @@ showConge.ShowUploadForm = function (demandeid, view) {
         showConge.AttachFile(demandeid, e.target.result, file.name)
       }
       reader.onerror = function (e) {
-        console.log(e.target.error);
+        appHelper.Log(e.target.error);
       }
       reader.readAsArrayBuffer(file);
     }
@@ -190,7 +191,7 @@ showConge.AttachFile = function (demandeid, arrayBuffer, fileName) {
   var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Conge);
   var urlToAttach = '/Lists/' + appHelper.ListName.Conge + '/Attachments/' + demandeid + '/'
   var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
-  console.log(attachmentFolder);
+  appHelper.Log(attachmentFolder);
   //Convert the file contents into base64 data
   var bytes = new Uint8Array(arrayBuffer);
   var i, length, out = '';
@@ -269,11 +270,19 @@ showConge.ShowDetails = function (demandeid) {
 
   let oList = showConge.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Conge);
   let It = oList.getItemById(demandeid);
-  console.log("IN ShowDetails");
+  appHelper.Log("IN ShowDetails");
 
   showConge.clientContext.load(It);
   showConge.clientContext.executeQueryAsync(function () {
     if (It) {
+      let demandeurField = It.get_item('Demandeur');
+      let directeurField = It.get_item('ResponsableN2');
+      let superieurField = It.get_item('ResponsableN1');
+      let interimaireField = It.get_item('Interimaire') != null ?  It.get_item('Interimaire').get_lookupValue() : '';
+      let demandeurName = demandeurField.get_lookupValue();
+      let directeurName = directeurField.get_lookupValue();
+      let superieurName = superieurField.get_lookupValue();
+      //let interimaireName = interimaireField.get_lookupValue();
       showConge.isSoldeImpact = (It.get_item('TypeCongeID') != null ? It.get_item('TypeCongeID') : 0)
       let view = {
         id :  (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false ) ,
@@ -282,14 +291,18 @@ showConge.ShowDetails = function (demandeid) {
         datedepart: It.get_item('DateDepart') != null ? new Date(It.get_item('DateDepart')).toLocaleDateString() : '',
         dateretour: It.get_item('DateRetour') != null ? new Date(It.get_item('DateRetour')).toLocaleDateString() : '',
         datereprise: It.get_item('DateReprise') != null ? new Date(It.get_item('DateReprise')).toLocaleDateString() : '',
-        interimaire: It.get_item('Interimaire') != null ? It.get_item('Interimaire').get_lookupValue() : '',
+        interimaire: interimaireField,
+        demandeur: demandeurName,
         domicile: It.get_item('DomicileConge') != null ? It.get_item('DomicileConge') : '',
         telephone: It.get_item('CongeTelephone') != null ? It.get_item('CongeTelephone') : '',
         personne: It.get_item('CongeContact') != null ? It.get_item('CongeContact') : '',
+        superieur: superieurName,
+        directeur: directeurName,
+        demandeuremail: It.get_item('DemandeurEmail') != null ? It.get_item('DemandeurEmail') : '',
         etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
       };
 
-      console.log("OUT ShowDetails");
+      appHelper.Log("OUT ShowDetails");
 
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
 
@@ -300,6 +313,41 @@ showConge.ShowDetails = function (demandeid) {
         OpenFileUpload('FpUploadAttachement');
       });
 
+
+    }
+  }, appSpHelper.writeError);
+}
+
+showConge.ShowFirst = function (demandeid) {
+
+  let oList = showConge.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Conge);
+  let It = oList.getItemById(demandeid);
+
+  showConge.clientContext.load(It);
+  showConge.clientContext.executeQueryAsync(function () {
+
+
+    if (It) {
+      appHelper.Log("test showFirst");
+
+      let createdValue = It.get_item('Created');
+      let formattedTime = '';
+
+      let createdDate = new Date(createdValue);
+
+      var options = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
+      formattedTime = createdDate.toLocaleTimeString(undefined, options);
+
+      let creeerpar = It.get_item('Author');
+      let creer = creeerpar.get_lookupValue();
+      appHelper.Log(creer);
+      let viewData = {
+        id: It.get_item("ID"),
+        heure: formattedTime,
+        create: creer,
+        requestdate: It.get_item('Created') != null ? new Date(It.get_item('Created')).toLocaleDateString() : '',
+      };
+      appHelper.renderTemplate("tmpl_form_first", "SectionFirst", viewData);
 
     }
   }, appSpHelper.writeError);

@@ -19,17 +19,15 @@ ListMateriel.InitializePage = function () {
     case 'R' :  ListMateriel.ListMateriel('REJETEE');
     x.innerHTML = " Listes des demandes de materiel rejétées";
     break;
+    case 'M' :  ListMateriel.ListMateriel('DEMANDEMODIFICATION');
+    x.innerHTML = " Listes des demandes de materiel à modifier";
+    break;
     default : ListMateriel.ListMateriel('ENCOURS');
     x.innerHTML = " Listes des demandes de materiel en cours";
     break;
   }
 
-
 };
-
-
-
-
 
 ListMateriel.ListMateriel = function (T) {
   let oList = ListMateriel.clientContext

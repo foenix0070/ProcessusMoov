@@ -6,56 +6,60 @@ appMateriel.InitializePage = function () {
   appMateriel.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
-    //appSpHelper.LoadUserCongeParam(
-      //appHelper.ListName.Employe, "ETISALAT-AFRICA\pouattara", App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
-      //document.getElementById("TxtCurrentUserLogin").value,
-      //function () {
-        //appSpHelper.GetEmploye(appHelper.ListName.Employe,document.getElementById("TxtSpManagerN1Login").value,
-          //function (item) {
-            //console.log(item);
-            //appSpHelper.GetEmployeeManagerLogin("N2",item.get_item("EmpManager"),
-              //function () {
-                // span= document.getElementById('spanSolde');
-                // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
-                //  appMateriel.initCmbTypeConge(function(){
-                //appMateriel.List();
-                //  });
-              //}
-            //);
-          //}
-        //);
-      //}
-    //);
-
 
     document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
     document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
     document.getElementById("TxtEmail").value = App.CurrentUser.Email;
 
+    appMateriel.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function () { });
+
+
+  });
+
+  var monInput = document.getElementById("TxtQuantite");
+
+  var autoNumeric = new AutoNumeric(monInput, {
+    digitGroupSeparator: " ",
+    decimalPlaces: 0,
+    unformatOnSubmit: true,
   });
 
   //const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
 
 
-
-  /*
-  BtnAdd.addEventListener("click", function () {
-    // setTimeout(function () {
-    //   appSpHelper.InitializePeoplePicker(
-    //     "plePickerInterimaireDiv",
-    //     false,
-    //     "350px"
-    //   );
-    // }, 2000);
-
-  });
-  */
-
   BtnSave.addEventListener("click", function () {
-    appMateriel.Add(function () {
-      location.reload();
-    });
+    let materiel = document.getElementById("TxtMateriel").value;
+    let qte = document.getElementById("TxtQuantite").value;
+    let motif = document.getElementById("TxtMotif").value;
+    if (materiel != "" && motif != "" && qte != 0) {
+      let verif = document.getElementById("TxtVerif").value;
+      if (verif == "Edit") {
+        let valID = document.getElementById("TxtID").value;
+        console.log(valID);
+        appMateriel.Edit(valID, function (a) {
+          //location.reload();
+          const appUrl = '/pages/materiel/show.aspx?ID=' + a.get_id();
+          const url = "/tools1" + appUrl;
+          appHelper.navigation("DivMainPageContainer", url);
+          var closeButton = document.querySelector('[aria-label="Close"]');
+          closeButton.click();
+        });
+      }
+      else {
+        appMateriel.Add(function (a) {
+          //location.reload();
+          const appUrl = '/pages/materiel/show.aspx?ID=' + a.get_id();
+          const url = "/tools1" + appUrl;
+          appHelper.navigation("DivMainPageContainer", url);
+          var closeButton = document.querySelector('[aria-label="Close"]');
+          closeButton.click();
+        });
+      }
+    }
+    else {
+      alert("Veillez renseigner correctement les champs");
+    }
   });
 
 };
@@ -180,6 +184,13 @@ appMateriel.Add = function (callBack) {
 
   let endDate = startDate.addDays(2);
 
+  var Input = document.getElementById("TxtQuantite");
+
+  var autoNumericObject = AutoNumeric.getAutoNumericElement(Input);
+
+  var qte = autoNumericObject.getNumber();
+  console.log(qte);
+
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
 
@@ -187,35 +198,18 @@ appMateriel.Add = function (callBack) {
   oListItem.set_item("DateRetour", endDate);
   oListItem.set_item("DateReprise", repDate);
 
-  /*
-  oListItem.set_item(
-    "Title",
-    document.getElementById("TxtArticle").value
-  );
-
-  oListItem.set_item(
-    "Nature",
-    document.getElementById("TxtArticle").value
-  );
-
-  oListItem.set_item(
-    "Motif",
-    document.getElementById("TxtMotif").value
-  );
-  */
-
-  oListItem.set_item("Title",document.getElementById("TxtMateriel").value);
+  oListItem.set_item("Title", document.getElementById("TxtMateriel").value);
 
 
-  oListItem.set_item("Quantite",document.getElementById("TxtQuantite").value);
+  oListItem.set_item("Quantite", qte);
 
 
-  oListItem.set_item("Nature",document.getElementById("TxtMateriel").value);
+  oListItem.set_item("Nature", document.getElementById("TxtMateriel").value);
 
-  oListItem.set_item("Motif",document.getElementById("TxtMotif").value);
+  oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
 
-  oListItem.set_item("NombreJours",parseInt(document.getElementById("TxtQuantite").value));
-  oListItem.set_item("NombreJourAccorde",parseInt(document.getElementById("TxtQuantite").value));
+  oListItem.set_item("NombreJours", qte);
+  oListItem.set_item("NombreJourAccorde", qte);
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
 
   // oListItem.set_item("Historique", "#");
@@ -240,6 +234,76 @@ appMateriel.Add = function (callBack) {
     }
   }, appSpHelper.writeError);
 };
+
+appMateriel.Edit = function (demandeid, callBack) {
+
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Materiel);
+  let oListItem = oList.getItemById(demandeid);
+
+  var Input = document.getElementById("TxtQuantite");
+
+  var autoNumericObject = AutoNumeric.getAutoNumericElement(Input);
+
+  var qte = autoNumericObject.getNumber();
+  console.log(qte);
+
+  oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
+  oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
+
+  oListItem.set_item("Title", document.getElementById("TxtMateriel").value);
+
+  oListItem.set_item("Nature", document.getElementById("TxtMateriel").value);
+
+  oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
+
+  oListItem.set_item("Quantite", qte);
+
+  oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
+
+  oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
+
+  oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
+  oListItem.set_item("ResponsableN2", App.CurrentUser.ManagerPersonne2);
+
+  oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
+  oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
+
+  oListItem.update();
+  clientContext.load(oListItem);
+  clientContext.executeQueryAsync(function () {
+
+    const appUrl = '/pages/materiel/show.aspx?ID=' + oListItem.get_id();
+    console.log(appUrl);
+    let WF = new WFManager(appHelper.AppCode.MATERIEL, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.MATERIEL, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+    if (callBack) {
+      callBack(oListItem);
+    }
+  }, appSpHelper.writeError);
+};
+
+appMateriel.ShowDetails = function (demandeid, callBack) {
+
+  let oList = appMateriel.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Materiel);
+  let It = oList.getItemById(demandeid);
+  console.log(demandeid);
+  console.log("IN ShowDetails");
+
+  appMateriel.clientContext.load(It);
+  appMateriel.clientContext.executeQueryAsync(function () {
+    if (It) {
+
+      document.getElementById("TxtMateriel").value = It.get_item('Title') != null ? It.get_item('Title') : '';
+      document.getElementById("TxtMotif").value = It.get_item('Motif') != null ? It.get_item('Motif') : '';
+      document.getElementById("TxtQuantite").value = It.get_item('Quantite') != null ? It.get_item('Quantite') : '';
+      document.getElementById("TxtVerif").value = 'Edit';
+      document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;
+
+      if (callBack) { callBack(); }
+
+    } else { if (callBack) { callBack(); } }
+  }, appSpHelper.writeError);
+}
 
 
 //document.addEventListener("DOMContentLoaded", () => {

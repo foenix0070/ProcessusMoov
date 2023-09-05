@@ -36,9 +36,8 @@
 
           <div class="mb-3">
             <label  class="form-label">Nombre de Jours</label>
-              <input type="number" id="TxtNbreJour"  class="numeric form-control" style="width:200px;" name="TxtNbreJour" placeholder="" />
+              <input type="number" id="TxtNbreJour" min="1"  class="numeric form-control" style="width:200px;" name="TxtNbreJour"  />
           </div>
-
 
           <div class="mb-3">
             <label  class="form-label"> Date de depart souhait&eacute;</label>
@@ -67,6 +66,14 @@
         <div class="mb-3">
           <label  class="form-label"> Email</label>
           <input type="text" class="form-control" id="TxtIntEmail" placeholder="" />
+        </div>
+
+        <div class="mb-3">
+          <input id="TxtVerif" type="hidden">
+        </div>
+
+        <div class="mb-3">
+          <input id="TxtID" type="hidden">
         </div>
 
         <span class="note">
@@ -103,8 +110,10 @@
       </fieldset>
   </div>
 
+  <div id="DivErreurMessage"></div>
+
   <div class="input-optn">
-      <button class="Submit" id="BtnSave" type="button"> Valider </button>
+      <button class="Submit" id="BtnSave" type="button" > Valider </button>
   </div>
 </form>
 
