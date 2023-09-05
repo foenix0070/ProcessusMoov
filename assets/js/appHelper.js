@@ -274,7 +274,7 @@ appHelper.listenNavigationLink = function (lienNavigation) {
       try {
         url = target.getAttribute("data-url");
         if(url.valueOf.toString().indexOf(appHelper.AppConstante.SiteUrl) < 0){
-         url = appHelper.AppConstante.SiteUrl + url;
+         url =  url;
         }
       } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationLink");}
 

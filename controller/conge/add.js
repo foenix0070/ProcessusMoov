@@ -112,7 +112,10 @@ let str = '';
  }
 
 
-
+ if (parseInt(nbreJour) > App.CurrentUser.NombreJoursAcquis) {
+  str +=  ("Votre solde de congé est inférieur à votre demande. <br>");
+    v= false; // Empêche l'envoi du formulaire
+}
 
  let div = document.getElementById('DivErreurMessage');
  div.innerHTML = '';
