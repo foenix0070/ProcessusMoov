@@ -4,17 +4,17 @@
         <fieldset class="form-elts">
             <legend>Demandeur</legend>
             <div class="mb-3">
-              <label  class="form-label">Nom & Prenoms</label>
+              <label  class="form-label">Nom & Prenoms <span class="asterix">*</span></label>
                 <input type="text" id="TxtNom" disabled class="  form-control" value="" placeholder="" />
             </div>
       
             <div class="mb-3">
-              <label  class="form-label">Matricule</label>
+              <label  class="form-label">Matricule <span class="asterix">*</span></label>
                 <input type="text" id="TxtMatricule" disabled class="  form-control" name="" placeholder="" />
             </div>
       
             <div class="mb-3">
-              <label  class="form-label">Email</label>
+              <label  class="form-label">Email <span class="asterix">*</span></label>
                 <input type="text" id="TxtEmail" disabled class="  form-control" name="" placeholder="" />
             </div>
       
@@ -24,19 +24,19 @@
             <legend>Demande</legend>
 
             <div class="mb-3">
-                <label class="form-label"> Gadget</label>
+                <label class="form-label"> Gadget <span class="asterix">*</span> </label>
                 <input type="text" class="form-control" name="TxtArticle" id="TxtArticle"
                     placeholder="ex: Ordinateur portable" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label"> Quantite</label>
+                <label class="form-label"> Quantit&eacute; <span class="asterix">*</span></label>
                 <input type="text" class="form-control" name="TxtQuantite" id="TxtQuantite"/>
                 <!--<input type="number" class="form-control" name="TxtQuantite" id="TxtQuantite" oninput="use_text(this)"  onfocus="use_number(this)" onblur="use_text(this)"/>-->
             </div>
 
             <div class="mb-3">
-                <label class="form-label"> Description</label>
+                <label class="form-label"> Description <span class="asterix">*</span></label>
                 <textarea type="text" class="form-control" name="TxtMotif" id="TxtMotif" cols="30"
                     placeholder=""></textarea>
             </div>
@@ -48,33 +48,11 @@
                 <input id="TxtID" type="hidden" >
             </div>
 
-            <!--<label style="display: block;">
-                Materiel
-                <input type="text" name="TxtArticle" placeholder="ex: Ordinateur portable" id="TxtArticle">
-            </label>
-            <div class="form-elts__block" style="display: block;">
-                <label style="display: inline-block;">
-                    Quantit&eacute;
-                    <input type="number" name="TxtQuantite" placeholder="" id="TxtQuantite">
-                </label>
-
-
-            </div>
-            <div class="form-elts__block" style="display: block;">
-
-                <label>
-                    Description
-                    <textarea name="TxtMotif" style="width: 100%;" id="TxtMotif" cols="30" rows="10"></textarea>
-                </label>
-
-            </div>-->
-
-
         </fieldset>
 
-
-
     </div>
+
+    <div id="DivErreurMessage"></div>
 
     <div class="input-optn">
         <button class="Submit" id="BtnSave" type="button"> Valider </button>

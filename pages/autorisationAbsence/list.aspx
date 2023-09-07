@@ -38,7 +38,7 @@
           <td>{{id}}</td>
           <td>{{startdate}}</td>
           <td>{{nbre}}</td>
-          <td><a href="/tools1/pages/autorisationAbsence/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/autorisationAbsence/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+          <td><a href="/tools/pages/autorisationAbsence/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools/pages/autorisationAbsence/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
           <td><span class="{{classe}}">{{status}}</span></td>
         </tr>
         {{/absences}}

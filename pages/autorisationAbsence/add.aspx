@@ -4,17 +4,17 @@
     <fieldset class="form-elts">
       <legend>Demandeur</legend>
       <div class="mb-3">
-        <label class="form-label">Nom & Prenoms</label>
+        <label class="form-label">Nom & Prenoms <span class="asterix">*</span></label>
         <input type="text" id="TxtNom" disabled class="  form-control" value="" placeholder="" />
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Matricule</label>
+        <label class="form-label">Matricule <span class="asterix">*</span></label>
         <input type="text" id="TxtMatricule" disabled class="  form-control" name="" placeholder="" />
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Email</label>
+        <label class="form-label">Email <span class="asterix">*</span></label>
         <input type="text" id="TxtEmail" disabled class="  form-control" name="" placeholder="" />
       </div>
 
@@ -28,18 +28,18 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label"> Nom</label>
-        <input type="text" class="form-control" id="TxtIntName" placeholder="" />
+        <label class="form-label"> Nom </label>
+        <input type="text" class="form-control" id="TxtIntName" placeholder="" disabled/>
       </div>
 
       <div class="mb-3">
-        <label class="form-label"> Matricule</label>
-        <input type="text" class="form-control" id="TxtIntMatricule" placeholder="" />
+        <label class="form-label"> Matricule </label>
+        <input type="text" class="form-control" id="TxtIntMatricule" placeholder="" disabled/>
       </div>
 
       <div class="mb-3">
-        <label class="form-label"> Email</label>
-        <input type="text" class="form-control" id="TxtIntEmail" placeholder="" />
+        <label class="form-label"> Email </label>
+        <input type="text" class="form-control" id="TxtIntEmail" placeholder="" disabled/>
       </div>
 
       <span class="note">
@@ -54,7 +54,7 @@
 
       <div class="mb-3">
 
-        <label class="form-label"> Nature de l'absence</label>
+        <label class="form-label"> Nature de l'absence <span class="asterix">*</span></label>
         <select id="cmbTypeAbsence" name="cmbTypeAbsence" class="form-control">
           <option value="0" data-color="#000">Choisir le type de absence</option>
         </select>
@@ -64,24 +64,24 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Motif</label>
+        <label class="form-label">Motif <span class="asterix">*</span></label>
         <input type="text" class="form-control" id="TxtMotif" placeholder="" />
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Durée</label>
+        <label class="form-label">Dur&eacute;e <span class="asterix">*</span></label>
         <input type="number" class="form-control" id="TxtDuree" placeholder="Jours" />
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Date de debut</label>
+        <label class="form-label">Date de debut <span class="asterix">*</span></label>
         <input type="date" class="form-control" id="DateDebut" placeholder="" />
       </div>
 
-      <div class="mb-3">
-        <label class="form-label">Date de reprise</label>
+      <!-- <div class="mb-3">
+        <label class="form-label">Date de reprise <span class="asterix">*</span></label>
         <input type="date" class="form-control" id="DateReprise" placeholder="" />
-      </div>
+      </div> -->
 
       <div class="mb-3">
         <label class="form-label">Doc justificatifs</label>
@@ -97,15 +97,15 @@
       </div>
 
       <span class="note">
-        NB : Le nombre total de jours accordés au titre des Permissions exceptionnelles est limité à 10 jours
-        ouvrables par employé et par an
+        NB : Le nombre total de jours accord&eacute;s au titre des Permissions exceptionnelles est limit&eacute; &aacute; 10 jours
+        ouvrables par employ&eacute; et par an
       </span>
 
     </fieldset>
 
-
-
   </div>
+
+  <div id="DivErreurMessage"></div>
 
   <div class="input-optn">
     <button class="Submit" id="BtnSave" type="button"> Valider </button>

@@ -88,7 +88,7 @@ class WFManager {
   ) {
     const WF = this.getWFSchema();
     const cWF = WF[0]["step"];
-    const appUrl = this.WFRunSite + "/tools1" + _appUrl;
+    const appUrl = this.WFRunSite + "/tools" + _appUrl;
 
     let tasks = [];
     let i = 0;

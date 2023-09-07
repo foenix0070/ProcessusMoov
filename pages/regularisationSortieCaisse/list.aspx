@@ -39,7 +39,7 @@
             <td>{{observation}}</td>
             <td>{{montant}}</td>
             <td>{{solde}}</td>
-            <td><a href="tools1/pages/regularisationSortieCaisse/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/regularisationSortieCaisse/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+            <td><a href="tools/pages/regularisationSortieCaisse/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools/pages/regularisationSortieCaisse/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
             <td><span class="{{classe}}">{{status}}</span></td>
           </tr>
           {{/sortiecaisse}}

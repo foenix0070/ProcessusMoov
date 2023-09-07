@@ -295,6 +295,10 @@ showSortieCaisse.ShowDetails = function (demandeid) {
       let demandeurName = demandeurField.get_lookupValue();
       let superieurName = superieurField.get_lookupValue();
       let mont = ajouterEspacesEntreChiffres(It.get_item('Montant'));
+
+      let test = It.get_item('ObjetReglement') != null ? It.get_item('ObjetReglement') : '';
+      console.log(test);
+
       let view = {
         regul :  (It.get_item('Statut') == 'VALIDEE' ? demandeid : false ) ,
         id :  (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false ) ,

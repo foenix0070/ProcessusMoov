@@ -736,13 +736,15 @@ appSpHelper.SendNotificationTask = function (ctx, taskItem, callBack) {
     }
   };
 
+
+  //" +
+  //(t["Parent"] != null ? t["Parent"].toString() : "").trim().toLowerCase() +
+  //"
   let WriteBody = function (t) {
     let titre = "Bonjour, ";
     titre += "<br><br>";
     titre +=
-      "Une " +
-      (t["Parent"] != null ? t["Parent"].toString() : "").trim().toLowerCase() +
-      " vous a été soumis pour approbation";
+      "Une demande vous a été soumise pour approbation";
     titre += "<br>";
     titre +=
       '<a href="' +
@@ -761,6 +763,7 @@ appSpHelper.SendNotificationTask = function (ctx, taskItem, callBack) {
     appSpHelper
       .getAssignedToEmail(t.get_item("ID"))
       .then(function (assignedToEmail) {
+        appHelper.Log(assignedToEmail, appHelper.LogType.WARN, 'getAssignedToEmail(t.get_item("ID"))');
         if (assignedToEmail) {
           arrAdresse.push(assignedToEmail);
           callBack(arrAdresse.concat());
@@ -777,11 +780,16 @@ appSpHelper.SendNotificationTask = function (ctx, taskItem, callBack) {
         appSpHelper
           .getGroupMembersLoginNames(grp)
           .then(function (arrUserLogin) {
+
+            appHelper.Log(arrUserLogin, appHelper.LogType.WARN, ' appSpHelper.getGroupMembersLoginNames(grp)');
             appSpHelper
               .queryEmployeesByLoginNames(arrUserLogin)
               .then(function (empUsers) {
+
+                appHelper.Log(empUsers, appHelper.LogType.ERROR, ".queryEmployeesByLoginNames(arrUserLogin)");
+
                 empUsers.forEach(function (empUser, idx) {
-                  let EmpMail =
+                  let EmpMail = 
                     empUser.get_item("EmpMail") != null
                       ? empUser.get_item("EmpMail").toString().trim()
                       : "";

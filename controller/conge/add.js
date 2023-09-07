@@ -98,7 +98,15 @@ let str = '';
  var typeConge = document.getElementById("cmbTypeConge").value;
  var nbreJour = document.getElementById("TxtNbreJour").value;
  var dateDepart = document.getElementById("TxtDateDepart").value;
- var isImpact = appHelper. parseBool(document.getElementById("cmbTypeConge").getAttribute("data-impact"));
+
+ e = document.getElementById("cmbTypeConge"); 
+ value = e.value; 
+ text = e.options[e.selectedIndex].getAttribute('data-impact'); 
+ var isImpact = appHelper. parseBool(text);
+
+ var startDate = new Date(document.getElementById("TxtDateDepart").value);
+
+ var todaydate = new Date();
 
  // Vérifier si les champs obligatoires sont vides
  if (nom === "" || matricule === "" || email === "" || typeConge === "0" || nbreJour === "" || dateDepart === "") {
@@ -111,6 +119,12 @@ let str = '';
    str +=  ("Le nombre de jours doit être supérieur ou égal à 1. <br>");
      v= false; // Empêche l'envoi du formulaire
  }
+
+ // Verifier si la date est supérieure ou égales à celle d'aujourd'hui
+ if (startDate < todaydate) {
+  str +=  ("La date choisit n'est pas valide. <br>");
+    v= false; // Empêche l'envoi du formulaire
+}
 
 
  if (isImpact) {
@@ -250,6 +264,7 @@ appConge.List = function () {
 };
 
 appConge.Add = function (callBack) {
+
   let oList = appConge.clientContext
     .get_web()
     .get_lists()
@@ -270,6 +285,10 @@ appConge.Add = function (callBack) {
       .plePickerInterimaireDiv_TopSpan;
   let userKeys = pickerDict.GetAllUserKeys();
 
+  e = document.getElementById("cmbTypeConge"); 
+  value = e.value; 
+  text = e.options[e.selectedIndex].getAttribute('data-impact'); 
+
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
 
@@ -284,11 +303,11 @@ appConge.Add = function (callBack) {
   );
   oListItem.set_item(
     "IsSoldeImpact",
-    document.getElementById("cmbTypeConge").getAttribute("data-impact")
+    e.options[e.selectedIndex].getAttribute('data-impact')
   );
   oListItem.set_item(
     "Background",
-    document.getElementById("cmbTypeConge").getAttribute("data-color")
+    e.options[e.selectedIndex].getAttribute("data-color")
   );
   oListItem.set_item(
     "NombreJours",
@@ -323,10 +342,10 @@ appConge.Add = function (callBack) {
     document.getElementById("TxtTypeCongeText").value
   );
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
-  oListItem.set_item(
-    "Couleur",
-    document.getElementById("TxtTypeCongeColeur").value
-  );
+  // oListItem.set_item(
+  //   "Couleur",
+  //   document.getElementById("TxtTypeCongeColeur").value
+  // );
   oListItem.set_item("Historique", "#");
 
   oListItem.set_item(
@@ -348,6 +367,7 @@ appConge.Add = function (callBack) {
         SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys()
       )
     );
+    appHelper.Log("ok interimaire");
   }
 
   oListItem.update();

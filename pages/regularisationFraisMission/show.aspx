@@ -186,7 +186,7 @@
                   <table>
                     <tr>
                       <td style="text-align:left;" class="fw-bold" width="200px" >Mission :</td>
-                      <td style="text-align:left;"><a href="tools1/pages/fraisMission/show.aspx?id={{missionid}}"  class="linkMainNavigation" data-url="tools1/pages/fraisMission/show.aspx?id={{missionid}}" data-target="DivMainPageContainer">{{mission}}</a></td>
+                      <td style="text-align:left;"><a href="tools/pages/fraisMission/show.aspx?id={{missionid}}"  class="linkMainNavigation" data-url="tools/pages/fraisMission/show.aspx?id={{missionid}}" data-target="DivMainPageContainer">{{mission}}</a></td>
                     </tr>
                       <tr>
                         <td style="text-align:left;" class="fw-bold" width="300px" >Intitule :</td>

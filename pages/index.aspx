@@ -29,8 +29,8 @@
     </div>
   </div>
   <div class="col-8 mt-3">
-    <button class="btn btn-secondary"><a href="/tools1/pages/demande.aspx" class="linkMainNavigation"
-        data-url="tools1/pages/demande.aspx" data-target="DivMainPageContainer"
+    <button class="btn btn-secondary"><a href="/tools/pages/demande.aspx" class="linkMainNavigation"
+        data-url="tools/pages/demande.aspx" data-target="DivMainPageContainer"
         style="text-decoration: none; color: white;"> Voir toutes mes demandes </a></button>
 
   </div>
@@ -115,7 +115,7 @@
           <td>{{create}}</td>
           <td>{{requestdate}}</td>
           <th>{{nomdemande}}</th>
-          <td><a href="tools1/pages/{{repertoire}}/show.aspx?id={{id}}" class="linkMainNavigation" data-url="tools1/pages/{{repertoire}}/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+          <td><a href="tools/pages/{{repertoire}}/show.aspx?id={{id}}" class="linkMainNavigation" data-url="tools/pages/{{repertoire}}/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
           <td><span class="{{classe}}">{{status}}</span></td>
           <td>{{demandeur}}</td>
         </tr>
@@ -146,7 +146,7 @@
           <td>{{create}}</td>
           <td>{{requestdate}}</td>
           <th>{{nomdemande}}</th>
-          <td><a href="tools1/pages/{{repertoire}}/show.aspx?id={{id}}" class="linkMainNavigation" data-url="tools1/pages/{{repertoire}}/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+          <td><a href="tools/pages/{{repertoire}}/show.aspx?id={{id}}" class="linkMainNavigation" data-url="tools/pages/{{repertoire}}/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
           <td><span class="{{classe}}">{{status}}</span></td>
           <td>{{demandeur}}</td>
         </tr>
@@ -177,7 +177,7 @@
           <td>{{create}}</td>
           <td>{{requestdate}}</td>
           <th>{{nomdemande}}</th>
-          <td><a href="tools1/pages/{{repertoire}}/show.aspx?id={{id}}" class="linkMainNavigation" data-url="tools1/pages/{{repertoire}}/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+          <td><a href="tools/pages/{{repertoire}}/show.aspx?id={{id}}" class="linkMainNavigation" data-url="tools/pages/{{repertoire}}/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
           <td><span class="{{classe}}">{{status}}</span></td>
           <td>{{demandeur}}</td>
         </tr>

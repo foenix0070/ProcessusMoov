@@ -203,6 +203,38 @@ appHelper.navigation = function (container, url) {
 };
 
 
+
+appHelper.navigation2 = function (container, url) {
+
+  url = url;
+  sessionStorage.setItem("ajax_url", url);
+  container = container ? container : "DivMainPageContainer";
+
+  appHelper.startSkeleton (container);
+  fetch(url)
+    .then((response) => response.text())
+    .then((data) => {
+      let elm =  document.getElementById(container);
+      document.getElementById(container).innerHTML = data;
+
+      Array.from(elm.querySelectorAll("script"))
+      .forEach( oldScriptEl => {
+        const newScriptEl = document.createElement("script");
+        Array.from(oldScriptEl.attributes).forEach( attr => {
+          newScriptEl.setAttribute(attr.name, attr.value)
+        });
+        const scriptText = document.createTextNode(oldScriptEl.innerHTML);
+        newScriptEl.appendChild(scriptText);
+        oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
+    });
+
+    })
+    .catch((error) => {
+      appHelper.Log(  error,appHelper.LogType.ERROR, "Une erreur s'est produite lors de la navigation: ");
+
+    });
+};
+
 appHelper.listenNavigationOffCanvas = function (lienNavigation, offCanvasid) {
 
   document.addEventListener("click", function (event) {
@@ -256,7 +288,7 @@ appHelper.listenNavigationLink2 = function (lienNavigation) {
 
       } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationLink2");}
 
-      appHelper.navigation(container, url);
+      appHelper.navigation2(container, url);
     }
     }
   });

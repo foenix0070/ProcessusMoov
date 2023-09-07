@@ -21,8 +21,9 @@ appVehicule.InitializePage = function () {
   BtnSave.addEventListener("click", function () {
     let objet = document.getElementById("TxtObjet").value;
     let motif = document.getElementById("TxtMotif").value;
-    if(objet!="" && motif!="")
+    if(appVehicule.TestFields())
     {
+      BtnSave.disabled = true;
     let verif = document.getElementById("TxtVerif").value;
     if(verif=="Edit")
     {
@@ -31,7 +32,7 @@ appVehicule.InitializePage = function () {
       appVehicule.Edit (valID, function(a){
         // location.reload();
         const appUrl = '/pages/vehicule/show.aspx?ID=' + a.get_id();
-        const url = "/tools1"+appUrl;
+        const url = "/tools"+appUrl;
         appHelper.navigation("DivMainPageContainer", url);
         var closeButton = document.querySelector('[aria-label="Close"]');
         closeButton.click();
@@ -41,18 +42,44 @@ appVehicule.InitializePage = function () {
       appVehicule.Add (function(a){
         // location.reload();
         const appUrl = '/pages/vehicule/show.aspx?ID=' + a.get_id();
-        const url = "/tools1"+appUrl;
+        const url = "/tools"+appUrl;
         appHelper.navigation("DivMainPageContainer", url);
         var closeButton = document.querySelector('[aria-label="Close"]');
         closeButton.click();
       });
     }
   }
-  else{
-    alert("Veillez renseigner correctement les champs");
-  }
   });
 
+};
+
+appVehicule.TestFields = function(){
+
+  let v = true;
+  let str = '';
+  
+   // Récupérer les valeurs des champs
+   var nom = document.getElementById("TxtNom").value;
+    var matricule = document.getElementById("TxtMatricule").value;
+    var email = document.getElementById("TxtEmail").value;
+   let objet = document.getElementById("TxtObjet").value;
+   let motif = document.getElementById("TxtMotif").value;
+  
+  
+   // Vérifier si les champs obligatoires sont vides
+   if (nom === "" || matricule === "" || email === "" || objet === "" || motif === "" ) {
+     str += ("Veuillez remplir tous les champs obligatoires. <br>");
+       v= false; // Empêche l'envoi du formulaire
+   }
+  
+   let div = document.getElementById('DivErreurMessage');
+   div.innerHTML = '';
+   if(v==false){
+    str = `<div style="border:2px solid red; background:#ffe6ff;padding:3px;color:#330033;margin:3px;">${str}</div>`;
+    div.innerHTML = str;
+   }
+  
+   return v;
 };
 
 function getRating (str){

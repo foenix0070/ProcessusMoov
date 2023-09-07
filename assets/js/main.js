@@ -10,6 +10,27 @@ main.arrMenu1 = [
     arrsmenu: [
       {
         offcanvas: {
+          id: "dmd_sortieCaisse_new",
+          title: "Sortie de caisse",
+          url: "tools/pages/sortieCaisse/add.aspx",
+          target: "ffcMainFormContainer",
+          dataInfo: "sortieCaisse",
+        },
+        link: false,
+      },
+      {
+        offcanvas: {
+          id: "dmd_regularisationSortieCaisse_new",
+          title: "Regularisation sortie de caisse",
+          url: "tools/pages/regularisationSortieCaisse/add.aspx",
+          target: "ffcMainFormContainer",
+          dataInfo: "regularisationSortieCaisse",
+        },
+        link: false,
+      },
+      
+      {
+        offcanvas: {
           id: "dmd_conge_new",
           title: "Congés",
           url: "/tools/pages/conge/add.aspx",
@@ -59,26 +80,7 @@ main.arrMenu1 = [
         link: false,
       },
 
-      {
-        offcanvas: {
-          id: "dmd_sortieCaisse_new",
-          title: "Sortie de caisse",
-          url: "tools/pages/sortieCaisse/add.aspx",
-          target: "ffcMainFormContainer",
-          dataInfo: "sortieCaisse",
-        },
-        link: false,
-      },
-      {
-        offcanvas: {
-          id: "dmd_regularisationSortieCaisse_new",
-          title: "Regularisation sortie de caisse",
-          url: "tools/pages/regularisationSortieCaisse/add.aspx",
-          target: "ffcMainFormContainer",
-          dataInfo: "regularisationSortieCaisse",
-        },
-        link: false,
-      },
+      
       {
         offcanvas: {
           id: "dmd_fraismission_new",

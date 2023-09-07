@@ -8,29 +8,6 @@ appRegularisationSortieCaisse.InitializePage = function () {
   clientContext = SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
 
-    // let param = sessionStorage.getItem("ajax_url");
-    // console.log(param);
-    //appSpHelper.LoadUserCongeParam(
-    //appHelper.ListName.Employe, "ETISALAT-AFRICA\pouattara", App.CurrentUser.Login, CurrentUser.Matricule, CurrentUser.Email, CurrentUser.Nom,
-    //document.getElementById("TxtCurrentUserLogin").value,
-    //function () {
-    //appSpHelper.GetEmploye(appHelper.ListName.Employe,document.getElementById("TxtSpManagerN1Login").value,
-    //function (item) {
-    //console.log(item);
-    //appSpHelper.GetEmployeeManagerLogin("N2",item.get_item("EmpManager"),
-    //function () {
-    // span= document.getElementById('spanSolde');
-    // span.innerHTML =document.getElementById('TxtSpUserNbreJrsAcquis').value;
-    //  appRegularisationSortieCaisse.initCmbTypeConge(function(){
-    //appRegularisationSortieCaisse.List();
-    //  });
-    //}
-    //);
-    //}
-    //);
-    //}
-    //);
-
     var elementsWithDataInfo = document.querySelectorAll('[data-info]');
 
     // Loop through the selected elements
@@ -49,12 +26,6 @@ appRegularisationSortieCaisse.InitializePage = function () {
         appRegularisationSortieCaisse.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function () { });
       }
     });
-
-    // var btnRegularisation = document.getElementById("BtnRegularisation");
-    // var info = btnRegularisation.getAttribute("data-info");
-    // console.log(info);
-
-    
 
 
     document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
@@ -83,10 +54,7 @@ appRegularisationSortieCaisse.InitializePage = function () {
   const BtnSave = document.querySelector("#BtnSave");
 
   BtnSave.addEventListener("click", function () {
-    //let sortie = document.getElementById("cmbSortie").value;
-    let montant = document.getElementById("TxtMontant").value;
-    let Solde = document.getElementById("TxtSolde").value;
-    if(montant!="" && Solde!=0)
+    if(appRegularisationSortieCaisse.TestFields())
     {
     let verif = document.getElementById("TxtVerif").value;
     if (verif == "Edit") {
@@ -95,7 +63,7 @@ appRegularisationSortieCaisse.InitializePage = function () {
       appRegularisationSortieCaisse.Edit(valID, function (a) {
         // location.reload();
         const appUrl = '/pages/regularisationSortieCaisse/show.aspx?ID=' + a.get_id();
-        const url = "/tools1" + appUrl;
+        const url = "/tools" + appUrl;
         appHelper.navigation("DivMainPageContainer", url);
         var closeButton = document.querySelector('[aria-label="Close"]');
         closeButton.click();
@@ -105,18 +73,52 @@ appRegularisationSortieCaisse.InitializePage = function () {
       appRegularisationSortieCaisse.Add(function (a) {
         //location.reload();
         const appUrl = '/pages/regularisationSortieCaisse/show.aspx?ID=' + a.get_id();
-        const url = "/tools1" + appUrl;
+        const url = "/tools" + appUrl;
         appHelper.navigation("DivMainPageContainer", url);
         var closeButton = document.querySelector('[aria-label="Close"]');
         closeButton.click();
       });
     }
   }
-  else{
-    alert("Veillez renseigner correctement les champs");
-  }
   });
 };
+
+appRegularisationSortieCaisse.TestFields = function(){
+
+  let v = true;
+  let str = '';
+  
+   // Récupérer les valeurs des champs
+   var nom = document.getElementById("TxtNom").value;
+    var matricule = document.getElementById("TxtMatricule").value;
+    var email = document.getElementById("TxtEmail").value;
+   let solde = document.getElementById("TxtSolde").value;
+   let montant = document.getElementById("TxtMontant").value;
+   let titre = document.getElementById("TxtTitle").value;
+   let objet = document.getElementById("TxtObservation").value;
+  
+   // Vérifier si les champs obligatoires sont vides
+   if (nom === "" || matricule === "" || email === "" || montant === "0" || solde === "" || titre === "" || objet === "" ) {
+     str += ("Veuillez remplir tous les champs obligatoires. <br>");
+       v= false; // Empêche l'envoi du formulaire
+   }
+  
+   // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
+   if (parseInt(montant) < 1) {
+     str +=  ("Le montant doit être supérieur ou égal à 1. <br>");
+       v= false; // Empêche l'envoi du formulaire
+   }
+  
+   let div = document.getElementById('DivErreurMessage');
+   div.innerHTML = '';
+   if(v==false){
+    str = `<div style="border:2px solid red; background:#ffe6ff;padding:3px;color:#330033;margin:3px;">${str}</div>`;
+    div.innerHTML = str;
+   }
+  
+   return v;
+};
+
 
 appRegularisationSortieCaisse.initCmbSortie = function (callBack) {
   ListerSortie(function () {

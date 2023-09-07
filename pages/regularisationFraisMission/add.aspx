@@ -40,7 +40,7 @@
       </div>
 
       <input type="radio" name="Etat" value="Mission effectuee" id="RadSucces" checked="checked">
-      <label for="RadSucces">Mission effectuee</label> &nbsp;&nbsp;&nbsp;
+      <label for="RadSucces">Mission effectu&eacute;e</label> &nbsp;&nbsp;&nbsp;
       <input type="radio" name="Etat" value="Mission non effectuee" id="RadEchec">
       <label for="RadEchec">Mission non effectuee</label><br><br>
 

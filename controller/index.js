@@ -443,10 +443,13 @@ MoovTools.ListDemandeValider = function (DemandeList, nomdurepertoire, nomduproc
   var q = `<View>
               <Query>
                 <Where>
+                <Or>
                   <And>
                     <Eq><FieldRef ID="Demandeur"/><Value Type="Integer"><UserID/></Value></Eq>
                     <Eq><FieldRef ID="Statut"/><Value Type="Text">VALIDEE</Value></Eq>
                   </And>
+                  <Eq><FieldRef ID="Statut" /><Value Type="Text">ENATTENTEREGULARISATION</Value></Eq>
+                </Or>
                 </Where>
               </Query>
               <RowLimit Paged='False'>5</RowLimit>
@@ -536,6 +539,8 @@ MoovTools.listTache = function () {
       view.taches = [];
       while (listItemEnumerator.moveNext()) {
         var oListItem = listItemEnumerator.get_current();
+        let lien = oListItem.get_item("AppUrl") + '&tacheid=' + oListItem.get_item("ID");
+        console.log(lien);
         view.taches.push({
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Body"),

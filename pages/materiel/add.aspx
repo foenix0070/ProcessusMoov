@@ -4,17 +4,17 @@
         <fieldset class="form-elts">
             <legend>Demandeur</legend>
             <div class="mb-3">
-                <label class="form-label">Nom & Prenoms</label>
+                <label class="form-label">Nom & Prenoms <span class="asterix">*</span></label>
                 <input type="text" id="TxtNom" disabled class="  form-control" value="" placeholder="" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Matricule</label>
+                <label class="form-label">Matricule <span class="asterix">*</span></label>
                 <input type="text" id="TxtMatricule" disabled class="  form-control" name="" placeholder="" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Email</label>
+                <label class="form-label">Email <span class="asterix">*</span></label>
                 <input type="text" id="TxtEmail" disabled class="  form-control" name="" placeholder="" />
             </div>
 
@@ -23,18 +23,18 @@
             <legend>Demande</legend>
 
             <div class="mb-3">
-                <label class="form-label"> Materiel</label>
+                <label class="form-label"> Materiel <span class="asterix">*</span></label>
                 <input type="text" class="form-control" name="TxtMateriel" id="TxtMateriel"
                     placeholder="ex: Ordinateur portable" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label"> Quantit&eacute</label>
+                <label class="form-label"> Quantit&eacute; <span class="asterix">*</span></label>
                 <input type="text" class="form-control" name="TxtQuantite" id="TxtQuantite" placeholder="" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label"> Motif</label>
+                <label class="form-label"> Motif <span class="asterix">*</span></label>
                 <textarea type="text" class="form-control" name="TxtMotif" id="TxtMotif" cols="30"
                     placeholder=""></textarea>
             </div>
@@ -49,9 +49,8 @@
 
         </fieldset>
 
-
-
     </div>
+    <div id="DivErreurMessage"></div>
 
     <div class="input-optn">
         <button class="Submit" id="BtnSave" type="button"> Valider </button>

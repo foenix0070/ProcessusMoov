@@ -27,11 +27,12 @@ appMission.InitializePage = function () {
         });
 
         appMission.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function(){});
-        FraisMission.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function(){});
+        //FraisMission.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function(){});
 
       }, 2000);
 
   });
+
   });
 
   var monInput = document.getElementById("TxtCoutTotal");
@@ -52,12 +53,6 @@ appMission.InitializePage = function () {
     });
   }
 
-  var monInput = document.getElementById("TxtCoutTotal");
-    
-  var autoNumeric = new AutoNumeric(monInput, {
-      digitGroupSeparator: " ",
-  });
-
   const TxtIntName = document.querySelector("#TxtIntName");
 
   TxtIntName.addEventListener("click", function () {
@@ -69,18 +64,18 @@ appMission.InitializePage = function () {
 
   const BtnSave = document.querySelector("#BtnSave");
 
-  BtnSave.addEventListener("click", function () {
-    let zone = document.getElementById("cmbZoneGeo").value;
-    let caisse = document.getElementById("cmbCaisse").value;
-    let mode = document.getElementById("cmbMode").value;
-    let cout = document.getElementById("TxtCoutTotal").value;
-    let nombre = document.getElementById("TxtNombre").value;
-    let forfait = document.getElementById("TxtForfait").value;
-    let startdate = document.getElementById("DateDebut").value;
-    let enddate = document.getElementById("DateFin").value;
+  const BtnAjout = document.querySelector("#ajouterLigne");
 
-    if(zone!="" && caisse!="" && nombre!=0 && forfait!=0 && mode!="" && cout!=0 && startdate!="" && enddate!="")
+  BtnAjout.addEventListener("click", function () {
+    appMission.ajouterLigne();
+  });
+
+  BtnSave.addEventListener("click", function () {
+    
+
+    if(appMission.TestFields())
     {
+      BtnSave.disabled = true;
     let verif = document.getElementById("TxtVerif").value;
     if(verif=="Edit")
     {
@@ -89,7 +84,7 @@ appMission.InitializePage = function () {
       appMission.Edit (valID, function(a){
         //location.reload();
         const appUrl = '/pages/fraisMission/show.aspx?ID=' + a.get_id();
-        const url = "/tools1"+appUrl;
+        const url = "/tools"+appUrl;
         appHelper.navigation("DivMainPageContainer", url);
         var closeButton = document.querySelector('[aria-label="Close"]');
         closeButton.click();
@@ -99,18 +94,104 @@ appMission.InitializePage = function () {
       appMission.Add (function(a){
         //location.reload();
         const appUrl = '/pages/fraisMission/show.aspx?ID=' + a.get_id();
-        const url = "/tools1"+appUrl;
+        const url = "/tools"+appUrl;
         appHelper.navigation("DivMainPageContainer", url);
         var closeButton = document.querySelector('[aria-label="Close"]');
         closeButton.click();
       });
     }
   }
-  else {
-    alert("Veillez renseigner correctement les champs");
-  }
   });
 
+};
+
+appMission.TestFields = function(){
+
+  let v = true;
+  let str = '';
+  
+   // Récupérer les valeurs des champs
+   var nom = document.getElementById("TxtNom").value;
+   var matricule = document.getElementById("TxtMatricule").value;
+   var email = document.getElementById("TxtEmail").value;
+   var zone = document.getElementById("cmbZoneGeo").value;
+   var caisse = document.getElementById("cmbCaisse").value;
+   var mode = document.getElementById("cmbMode").value;
+   var destination = document.getElementById("TxtDestination").value;
+   var motif = document.getElementById("TxtMotif").value;
+   //var cout = document.getElementById("TxtCoutTotal").value;
+   var nombre = document.getElementById("TxtNombre").value;
+   var total = document.getElementById("TxtTotal").value;
+   var forfait = document.getElementById("TxtForfait").value;
+   var startdate = document.getElementById("TxtDateDebut").value;
+   var enddate = document.getElementById("TxtDateFin").value;
+   var startdate1 = document.getElementById("DateDebut").value;
+   var enddate1 = document.getElementById("DateFin").value;
+
+   var Input = document.getElementById("TxtCoutTotal");
+
+  var autoNumericObject = AutoNumeric.getAutoNumericElement(Input);
+
+  var cout = autoNumericObject.getNumber();
+  
+   var debutDate = new Date(document.getElementById("TxtDateDebut").value);
+  
+   var findate = new Date(document.getElementById("TxtDateFin").value);
+
+   var debutDate1 = new Date(document.getElementById("DateDebut").value);
+  
+   var findate1 = new Date(document.getElementById("DateFin").value);
+
+   var todaydate = new Date();
+  
+   // Vérifier si les champs obligatoires sont vides
+   if (nom === "" || matricule === "" || email === "" || cout === "0" || nombre === "0" || forfait === "0" || zone === "" || startdate === "" || enddate === "" || startdate1 === "" || enddate1 === "" || caisse === "" || mode === "" || destination === "" || motif === "") {
+     str += ("Veuillez remplir tous les champs obligatoires. <br>");
+       v= false; // Empêche l'envoi du formulaire
+   }
+  
+   // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
+   if (parseInt(cout) < 1) {
+     str +=  ("Le coût doit être supérieur ou égal à 1. <br>");
+       v= false; // Empêche l'envoi du formulaire
+   }
+
+   // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
+   if (parseInt(forfait) < 1) {
+    str +=  ("Le forfait doit être supérieur ou égal à 1. <br>");
+      v= false; // Empêche l'envoi du formulaire
+  }
+
+  // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
+  if (parseInt(nombre) < 1) {
+    str +=  ("Le nombre doit être supérieur ou égal à 1. <br>");
+      v= false; // Empêche l'envoi du formulaire
+  }
+  
+  if (parseInt(total) > parseInt(cout)) {
+    str +=  ("Le total ne peut pas être supérieur au cout de la mission. <br>");
+      v= false; // Empêche l'envoi du formulaire
+  }
+   // Verifier si la date est supérieure ou égales à celle d'aujourd'hui
+   if (debutDate < todaydate || findate < todaydate || debutDate > findate) {
+    str +=  ("La date choisit n'est pas valide. <br>");
+      v= false; // Empêche l'envoi du formulaire
+  }
+
+  // Verifier si la date est supérieure ou égales à celle d'aujourd'hui
+  if (debutDate1 < todaydate || findate1 < todaydate || debutDate1 > findate1) {
+    str +=  ("La date choisit pour les frais n'est pas valide. <br>");
+      v= false; // Empêche l'envoi du formulaire
+  }
+  
+   let div = document.getElementById('DivErreurMessage');
+   div.innerHTML = '';
+   if(v==false){
+    str = `<div style="border:2px solid red; background:#ffe6ff;padding:3px;color:#330033;margin:3px;">${str}</div>`;
+    div.innerHTML = str;
+   }
+  
+   return v;
 };
 
 function calculTotal() {
@@ -130,24 +211,6 @@ function getRating (str){
   document.getElementById('TxtNature').value = str;
 }
 
-/*Mission.initCmbTypefraisMission = function (callBack) {
-  ListerMotif(function(){
-    let cmb = document.getElementById("cmbTypefraisMission");
-    let txtColor = document.getElementById("TxtTypefraisMissionColeur");
-    let txtText = document.getElementById("TxtTypefraisMissionText");
-    cmb.addEventListener("change", function () {
-      let selectedOption = this.options[this.selectedIndex];
-      let color = selectedOption.getAttribute("data-color");
-      txtColor.value = color;
-      txtText.value = selectedOption.text;
-    });
-
-    if(callBack){
-      callBack();
-    }
-  });
-
-};*/
 
 appMission.initCmbZone = function (callBack) {
   ListerZone(function(){
@@ -301,36 +364,6 @@ function ListerMode( callBack) {
       function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
 }
 
-/*function ListerMotif( callBack) {
-  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.TypefraisMission);
-  let q = '<View><Query><Where>' +
-               '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
-          '</Where></Query></View>';
-  let camlQuery = new SP.CamlQuery();
-  camlQuery.set_viewXml(q);
-  let listItemMotif = oList.getItems(camlQuery);
-  clientContext.load(listItemMotif);
-  clientContext.executeQueryAsync(
-      function () {
-          var listItemEnumerator = listItemMotif.getEnumerator();
-
-          while (listItemEnumerator.moveNext()) {
-              let oListItemTp = listItemEnumerator.get_current();
-              let opt = document.createElement("option");
-              opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
-              opt.setAttribute("data-color", oListItemTp.get_item('Background'));
-              opt.setAttribute("value", oListItemTp.get_id());
-              opt.innerHTML = oListItemTp.get_item('Title');
-              document.getElementById('cmbTypefraisMission').appendChild(opt);
-          }
-
-
-          if(callBack){
-            callBack();
-          }
-      },
-      function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
-}*/
 
 appMission.List = function () {
   let oList = Mission.clientContext
@@ -391,17 +424,17 @@ function afficher() {
   }
 }
 
-function ajouterLigne() {
+appMission.ajouterLigne = function() {
   var table = document.getElementById("TableFraisMission");
   var newRow = table.insertRow(table.rows.length);
   
   //var cell = newRow.insertCell(0);
-  var cell1 = newRow.insertCell(1);
-  var cell2 = newRow.insertCell(2);
-  var cell3 = newRow.insertCell(3);
-  var cell4 = newRow.insertCell(4);
-  var cell5 = newRow.insertCell(5);
-  var cell6 = newRow.insertCell(6);
+  var cell1 = newRow.insertCell(0);
+  var cell2 = newRow.insertCell(1);
+  var cell3 = newRow.insertCell(2);
+  var cell4 = newRow.insertCell(3);
+  var cell5 = newRow.insertCell(4);
+  var cell6 = newRow.insertCell(5);
   
   //cell.innerHTML = '<select class="mt-3" id="CmbPerdieme" name"CmbPerdieme"><option value"Hotel">Hotel</option></select>';
   cell1.innerHTML = '<input type="date" id="DateDebut" name="DateDebut">';
@@ -432,11 +465,11 @@ appMission.Add = function ( callBack) {
   let repDate = new Date();*/
 
   let startDate = new Date(
-    document.getElementById("DateDebut").value
+    document.getElementById("TxtDateDebut").value
     //appHelper.ReturnISODate()
   );
   let endDate = new Date(
-    document.getElementById("DateFin").value
+    document.getElementById("TxtDateFin").value
     //appHelper.ReturnISODate()
   );
 
@@ -448,6 +481,8 @@ appMission.Add = function ( callBack) {
   var autoNumericObject = AutoNumeric.getAutoNumericElement(Input);
 
   var cout = autoNumericObject.getNumber();
+
+  console.log(cout);
 
   //let endDate = startDate.addDays(2);
 
@@ -475,7 +510,7 @@ appMission.Add = function ( callBack) {
   oListItem.set_item("CaissePaiement", document.getElementById("TxtCaisseText").value);
   oListItem.set_item("ModePaiementID",parseInt(document.getElementById("cmbMode").value));
   oListItem.set_item("ModePaiement", document.getElementById("TxtModeText").value);
-  oListItem.set_item("AutreCaissePaiement", parseInt(document.getElementById("TxtAutreCaisse").value));
+  //oListItem.set_item("AutreCaissePaiement", parseInt(document.getElementById("TxtAutreCaisse").value));
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
 
  
@@ -527,11 +562,11 @@ appMission.Edit = function (demandeid, callBack) {
   let oListItem = oList.getItemById(demandeid);
 
   let startDate = new Date(
-    document.getElementById("DateDebut").value
+    document.getElementById("TxtDateDebut").value
     //appHelper.ReturnISODate()
   );
   let endDate = new Date(
-    document.getElementById("DateFin").value
+    document.getElementById("TxtDateFin").value
     //appHelper.ReturnISODate()
   );
 
@@ -570,7 +605,7 @@ appMission.Edit = function (demandeid, callBack) {
   oListItem.set_item("CaissePaiement", document.getElementById("TxtCaisseText").value);
   oListItem.set_item("ModePaiementID",parseInt(document.getElementById("cmbMode").value));
   oListItem.set_item("ModePaiement", document.getElementById("TxtModeText").value);
-  oListItem.set_item("AutreCaissePaiement", parseInt(document.getElementById("TxtAutreCaisse").value));
+  //oListItem.set_item("AutreCaissePaiement", parseInt(document.getElementById("TxtAutreCaisse").value));
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
 
  
@@ -636,7 +671,8 @@ function AddFM (oListItem) {
     data.push(rowData);
   }
 
-  FraisMission.AddFraisMission(data, oListItem);
+  //FraisMission.AddFraisMission(data, oListItem);
+  appMission.AddFraisMission(data, oListItem);
 }
 
 
@@ -659,25 +695,30 @@ function EditFM (demandeid) {
     data.push(rowData);
   }
 
-  FraisMission.EditFraisMission(data, demandeid);
+  appMission.EditFraisMission(data, demandeid);
 }
 
-/*
-function AddFraisMission(data, oListItem) {
+appMission.AddFraisMission = function (data, oListItem) {
 
   for (var i = 0; i < data.length; i++) {
     var item = data[i];
 
-    let oList = FraisMission.clientContext
-    .get_web()
-    .get_lists()
-    .getByTitle(appHelper.ListName.FraisMission);
+    let oList = appMission.clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle(appHelper.ListName.FraisMission);
     let itemCreateInfo = new window.SP.ListItemCreationInformation();
     let oListItem1 = oList.addItem(itemCreateInfo);
 
-    let startDate = new Date();
+    let startDate = new Date(document.getElementById("DateDebut").value);
 
-    let repDate = new Date();
+    let repDate = new Date(document.getElementById("DateFin").value);
+
+    //var fort = parseFloat(item.TxtForfait);
+
+    // console.log(fort);
+    // console.log(item.TxtNombre);
+    // console.log(item.TxtTotal);
 
 
     oListItem1.set_item("DateDebut", startDate);
@@ -686,8 +727,8 @@ function AddFraisMission(data, oListItem) {
     oListItem1.set_item(
       "MissionID", oListItem.get_id());
 
-    oListItem1.set_item(
-      "PerdiemeID", item.CmbPerdieme);
+    // oListItem1.set_item(
+    //   "PerdiemeID", item.CmbPerdieme);
 
     oListItem1.set_item(
       "Forfait", item.TxtForfait);
@@ -701,24 +742,24 @@ function AddFraisMission(data, oListItem) {
     oListItem1.update();
     clientContext.load(oListItem1);
     clientContext.executeQueryAsync(function (callBack) {
-          callBack(oListItem1);
+      callBack(oListItem1);
     });
-    
+
   }
+  console.log("Add FraisMission");
 }
 
-function EditFraisMission(data, demandeid) {
+appMission.EditFraisMission = function (data, demandeid) {
 
   for (var i = 0; i < data.length; i++) {
     var item = data[i];
-    //let demandeid = oListItem.get_id();
 
     let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.FraisMission);
     let oListItem1 = oList.getItemById(demandeid);
 
-    let startDate = new Date();
+    let startDate = new Date(document.getElementById("DateDebut").value);
 
-    let repDate = new Date();
+    let repDate = new Date(document.getElementById("DateFin").value);
 
 
     oListItem1.set_item("DateDebut", startDate);
@@ -742,12 +783,12 @@ function EditFraisMission(data, demandeid) {
     oListItem1.update();
     clientContext.load(oListItem1);
     clientContext.executeQueryAsync(function (callBack) {
-          callBack(oListItem1);
+      callBack(oListItem1);
     });
-    
+
   }
+  console.log("Add FraisMission");
 }
-*/
 
 
 appMission.ShowDetails = function (demandeid, callBack) {
@@ -760,8 +801,6 @@ appMission.ShowDetails = function (demandeid, callBack) {
   appMission.clientContext.executeQueryAsync(function () {
     if (It) {
       
-        //document.getElementById("DateDebut").value = new Date(It.get_item('DateDebut')).toLocaleDateString(); 
-        //document.getElementById("DateFin").value = new Date(It.get_item('DateFin')).toLocaleDateString(); 
         document.getElementById("TxtMotif").value = It.get_item('Motif') != null ? It.get_item('Motif') : '';
         document.getElementById("TxtDestination").value = It.get_item('Destination') != null ? It.get_item('Destination') : '';
         document.getElementById("TxtCommentaire").value = It.get_item('Commentaire') != null ? It.get_item('Commentaire') : '';
@@ -779,11 +818,46 @@ appMission.ShowDetails = function (demandeid, callBack) {
 
         document.getElementById("TxtVerif").value = 'Edit';
         document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;
+
+        //var idmission = It.get_item('ID') != null ? It.get_item('ID') : 0;
        
         appSpHelper.SetPeoplePickerField ('plePickerInterimaireDiv', It.get_item('Interimaire') != null ? It.get_item('Interimaire').get_lookupValue() : '');
+
+        //appMission.ShowDetails1(idmission, function(){});
         
       if(callBack){callBack();}
 
+    }else{if(callBack){callBack();}}
+  }, appSpHelper.writeError);
+}
+
+appMission.ShowDetails1 = function (demandeid, callBack) {
+
+  let oList = appMission.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.FraisMission);
+  //let It = oList.getItemById(demandeid);
+  console.log("IN ShowDetails");
+
+  let camlQuery = new SP.CamlQuery();
+  camlQuery.set_viewXml("<View><Query><Where><Eq><FieldRef Name='MissionID' /><Value Type='Text'>" + demandeid + "</Value></Eq></Where></Query></View>");
+
+  let It = oList.getItems(camlQuery);
+
+  appMission.clientContext.load(It);
+  appMission.clientContext.executeQueryAsync(function () {
+    if (It.get_count() > 0) {
+      //var itemEnumerator = It.getEnumerator();
+      console.log("BOUCLE");
+      //while (itemEnumerator.moveNext()) {
+        let test = new Date(It.get_item('DateDebut')).toLocaleDateString();
+        console.log(test);
+        //document.getElementById("DateDebut").value = new Date(It.get_item('DateDebut')).toLocaleDateString();
+        //document.getElementById("DateFin").value = new Date(It.get_item('DateFin')).toLocaleDateString();
+        document.getElementById("TxtForfait").value = It.get_item('Forfait') != null ? It.get_item('Forfait') : '';
+        document.getElementById("TxtTotal").value = It.get_item('Total') != null ? It.get_item('Total') : '';
+        document.getElementById("TxtNombre").value = It.get_item('Nombre') != null ? It.get_item('Nombre') : '';
+
+      //}
+      if(callBack){callBack();}
     }else{if(callBack){callBack();}}
   }, appSpHelper.writeError);
 }

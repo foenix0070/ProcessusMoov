@@ -169,7 +169,7 @@
                   <table>
                     <tr>
                       <td style="text-align:left;" class="fw-bold" width="200px" >Sortie de caisse :</td>
-                      <td style="text-align:left;"><a href="tools1/pages/sortieCaisse/show.aspx?id={{sortieid}}"  class="linkMainNavigation" data-url="tools1/pages/sortieCaisse/show.aspx?id={{sortieid}}" data-target="DivMainPageContainer">{{sortie}}</a></td>
+                      <td style="text-align:left;"><a href="tools/pages/sortieCaisse/show.aspx?id={{sortieid}}"  class="linkMainNavigation" data-url="tools/pages/sortieCaisse/show.aspx?id={{sortieid}}" data-target="DivMainPageContainer">{{sortie}}</a></td>
                     </tr>
                     <tr>
                       <td style="text-align:left;" class="fw-bold" width="200px" >Titre :</td>

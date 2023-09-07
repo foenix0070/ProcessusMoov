@@ -23,6 +23,12 @@ FraisMission.AddFraisMission = function (data, oListItem) {
 
     let repDate = new Date();
 
+    //var fort = parseFloat(item.TxtForfait);
+
+    // console.log(fort);
+    // console.log(item.TxtNombre);
+    // console.log(item.TxtTotal);
+
 
     oListItem1.set_item("DateDebut", startDate);
     oListItem1.set_item("DateFin", repDate);
@@ -30,8 +36,8 @@ FraisMission.AddFraisMission = function (data, oListItem) {
     oListItem1.set_item(
       "MissionID", oListItem.get_id());
 
-    oListItem1.set_item(
-      "PerdiemeID", item.CmbPerdieme);
+    // oListItem1.set_item(
+    //   "PerdiemeID", item.CmbPerdieme);
 
     oListItem1.set_item(
       "Forfait", item.TxtForfait);

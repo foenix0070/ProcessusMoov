@@ -32,11 +32,10 @@ appGadget.InitializePage = function () {
   
 
   BtnSave.addEventListener("click", function () {
-    let gadget = document.getElementById("TxtArticle").value;
-    let qte = document.getElementById("TxtQuantite").value;
-    let motif = document.getElementById("TxtMotif").value;
-    if(gadget!="" && motif!="" && qte!=0)
+    
+    if(appGadget.TestFields ())
     {
+    BtnSave.disabled = true;
     let verif = document.getElementById("TxtVerif").value;
     if(verif=="Edit")
     {
@@ -45,7 +44,7 @@ appGadget.InitializePage = function () {
       appGadget.Edit (valID, function(a){
         //location.reload();
         const appUrl = '/pages/gadget/show.aspx?ID=' + a.get_id();
-        const url = "/tools1"+appUrl;
+        const url = "/tools"+appUrl;
         appHelper.navigation("DivMainPageContainer", url);
         var closeButton = document.querySelector('[aria-label="Close"]');
         closeButton.click();
@@ -55,7 +54,7 @@ appGadget.InitializePage = function () {
       appGadget.Add (function(a){
         //location.reload();
         const appUrl = '/pages/gadget/show.aspx?ID=' + a.get_id();
-        const url = "/tools1"+appUrl;
+        const url = "/tools"+appUrl;
         appHelper.navigation("DivMainPageContainer", url);
         var closeButton = document.querySelector('[aria-label="Close"]');
         closeButton.click();
@@ -63,13 +62,47 @@ appGadget.InitializePage = function () {
       });
     }
   }
-  else{
-    alert("Veillez renseigner correctement les champs");
-  }
   });
 
   
 
+};
+
+
+appGadget.TestFields = function(){
+
+  let v = true;
+  let str = '';
+  
+   // Récupérer les valeurs des champs
+    var nom = document.getElementById("TxtNom").value;
+    var matricule = document.getElementById("TxtMatricule").value;
+    var email = document.getElementById("TxtEmail").value;
+    let gadget = document.getElementById("TxtArticle").value;
+    let qte = document.getElementById("TxtQuantite").value;
+    let motif = document.getElementById("TxtMotif").value;
+  
+  
+   // Vérifier si les champs obligatoires sont vides
+   if (nom === "" || matricule === "" || email === "" || gadget === "" || qte === "0" || motif === "" ) {
+     str += ("Veuillez remplir tous les champs obligatoires. <br>");
+       v= false; // Empêche l'envoi du formulaire
+   }
+  
+   // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
+   if (parseInt(qte) < 1) {
+     str +=  ("La quantité doit être supérieur ou égal à 1. <br>");
+       v= false; // Empêche l'envoi du formulaire
+   }
+  
+   let div = document.getElementById('DivErreurMessage');
+   div.innerHTML = '';
+   if(v==false){
+    str = `<div style="border:2px solid red; background:#ffe6ff;padding:3px;color:#330033;margin:3px;">${str}</div>`;
+    div.innerHTML = str;
+   }
+  
+   return v;
 };
 
 function getRating (str){
@@ -180,23 +213,7 @@ appGadget.Add = function ( callBack) {
   console.log(qte);
 
 
-  /*var maqte = new AutoNumeric(Input);
-  var valqte = maqte.getNumber();
-  console.log(valqte);*/
-
-  /*let recup = window.globale;
-  var valqte = recup.getFormatted();
-  console.log(valqte);*/
-
   console.log("TEST");
-
-  /*var inputElement = document.getElementById("TxtQuantite");
-  var autoNumericObject = new AutoNumeric(inputElement);
-
-  var formattedValueAsNumber = autoNumericObject.getNumber();*/
-
-  // let qte = document.getElementById("TxtQuantite").value;
-  // console.log(qte);
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");

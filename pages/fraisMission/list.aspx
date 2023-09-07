@@ -37,7 +37,7 @@
           <td>{{startdate}}</td>
           <td>{{enddate}}</td>
           <td>{{destination}}</td>
-          <td><a href="/tools1/pages/fraisMission/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/fraisMission/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+          <td><a href="/tools/pages/fraisMission/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools/pages/fraisMission/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
           <td><span class="{{classe}}">{{status}}</span></td>
         </tr>
         {{/mission}}

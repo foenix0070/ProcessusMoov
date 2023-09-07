@@ -4,17 +4,17 @@
     <fieldset class="form-elts">
       <legend>Demandeur</legend>
       <div class="mb-3">
-        <label class="form-label">Nom</label>
+        <label class="form-label">Nom <span class="asterix">*</span></label>
         <input type="text" id="TxtNom" disabled class="  form-control" value="" placeholder="" />
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Matricule</label>
+        <label class="form-label">Matricule <span class="asterix">*</span></label>
         <input type="text" id="TxtMatricule" disabled class="  form-control" name="" placeholder="" />
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Email</label>
+        <label class="form-label">Email <span class="asterix">*</span></label>
         <input type="text" id="TxtEmail" disabled class="  form-control" name="" placeholder="" />
       </div>
 
@@ -29,17 +29,17 @@
 
       <div class="mb-3">
         <label  class="form-label"> Nom</label>
-        <input type="text" class="form-control"  id="TxtIntName" placeholder="" />
+        <input type="text" class="form-control"  id="TxtIntName" placeholder="" disabled/>
       </div>
 
       <div class="mb-3">
         <label  class="form-label"> Matricule</label>
-        <input type="text" class="form-control" id="TxtIntMatricule" placeholder="" />
+        <input type="text" class="form-control" id="TxtIntMatricule" placeholder="" disabled/>
       </div>
 
       <div class="mb-3">
         <label  class="form-label"> Email</label>
-        <input type="text" class="form-control" id="TxtIntEmail" placeholder="" />
+        <input type="text" class="form-control" id="TxtIntEmail" placeholder="" disabled/>
       </div>
 
     </fieldset>
@@ -49,15 +49,15 @@
 
 
       <div class="mb-3">
-        <label class="form-label"> Période du :</label>
-        <input type="date" id="DateDebut">
+        <label class="form-label"> P&eacute;riode du <span class="asterix">*</span>:</label>
+        <input type="date" id="TxtDateDebut">
 
-        <label class="form-label"> Au:</label>
-        <input type="date" id="DateFin">
+        <label class="form-label"> Au <span class="asterix">*</span>:</label>
+        <input type="date" id="TxtDateFin">
       </div>
 
       <div class="mb-3">
-        <label  class="form-label"> Zone géographique</label>
+        <label  class="form-label"> Zone g&eacute;ographique <span class="asterix">*</span></label>
         <select id="cmbZoneGeo" name="cmbZoneGeo" class="form-control">
           <option value="0" data-color="#000">Choisir la zone geographique</option>
         </select>
@@ -65,11 +65,11 @@
         <input id="TxtZoneGeoText" value="" type="hidden" >
       </div>
       <div class="mb-3">
-        <label class="form-label">Motif :</label>
+        <label class="form-label">Motif <span class="asterix">*</span> :</label>
         <input type="text" id="TxtMotif" class="  form-control">
       </div>
       <div class="mb-3">
-        <label class="form-label">Destination :</label>
+        <label class="form-label">Destination <span class="asterix">*</span> :</label>
         <input type="text" id="TxtDestination" class="  form-control">
       </div>
       <div class="mb-3">
@@ -82,12 +82,12 @@
         <input type="text" id="TxtSite" class="  form-control">
       </div>
       <div class="mb-3">
-        <label class="form-label">Coût Total :</label>
+        <label class="form-label">Co&ucirc;t Total <span class="asterix">*</span> :</label>
         <input type="text" id="TxtCoutTotal" class="  form-control">
       </div>
 
       <div class="mb-3">
-        <label  class="form-label"> Caisse de paiement :</label>
+        <label  class="form-label"> Caisse de paiement <span class="asterix">*</span> :</label>
         <select id="cmbCaisse" name="cmbCaisse" class="form-control" onchange="afficher()">
           <option value="0" data-color="#000">Choisir la Caisse de paiement</option>
         </select>
@@ -97,7 +97,7 @@
 
       <div class="mb-3">
 
-        <label class="form-label">Mode de paiement :</label>
+        <label class="form-label">Mode de paiement <span class="asterix">*</span> :</label>
         <select id="cmbMode" name="cmbMode" class="form-control">
           <option value="0" data-color="#000">Choisir le mode de paiement</option>
         </select>
@@ -108,18 +108,6 @@
         <label class="form-label">Autre Caisse :</label>
         <input type="text" id="TxtAutreCaisse" class="  form-control">
       </div>
-      <!--<div class="mb-3">
-        <label class="form-label">Mode de paiement :</label>
-        <select id="CmbMode">
-          <option value="1">Orange Money</option>
-          <option value="2">Wave</option>
-          <option value="3">Virement</option>
-        </select>
-      </div>-->
-      <!--<div class="mb-3">
-        <label class="form-label">Doc Justificatifs :</label>
-        <input type="text" id="TxtDoc" class="  form-control">
-      </div>-->
 
       <div class="mb-3">
         <input id="TxtVerif" type="hidden">
@@ -136,7 +124,7 @@
       <table id="TableFraisMission">
         <tr>
           <!--<th>Libelle</th>-->
-          <th>Date de début</th>
+          <th>Date de d&eacute;but</th>
           <th>Date de fin</th>
           <th>Nombre</th>
           <th>Forfait</th>
@@ -151,16 +139,21 @@
           <td><input type="number" id="TxtNombre" name="TxtNombre" oninput="calculTotal()"></td>
           <td><input type="number" id="TxtForfait" name="TxtForfait" oninput="calculTotal()"></td>
           <td><input type="number" id="TxtTotal" name="TxtTotal" readonly></td>
+          <!-- <td><input type="number" id="TxtNombre" name="TxtNombre" oninput="calculTotal()"></td>
+          <td><input type="number" id="TxtForfait" name="TxtForfait" oninput="calculTotal()"></td>
+          <td><input type="number" id="TxtTotal" name="TxtTotal" readonly></td> -->
           <!-- <td><input type="button" onclick="supprimerLigne(this)" value="Supprimer"></td> -->
 
         </tr>
       </table>
       <div class="input-optn mt-3">
-        <input type="button" onclick="ajouterLigne()" value="Ajouter une nouvelle ligne">
+        <input type="button" id="ajouterLigne" value="Ajouter une nouvelle ligne">
       </div>
     </fieldset>
 
   </div>
+
+  <div id="DivErreurMessage"></div>
 
   <div class="input-optn mt-3">
     <button class="Submit" id="BtnSave" type="button"> Valider </button>

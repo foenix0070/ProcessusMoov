@@ -39,7 +39,7 @@
           <td>{{title}}</td>
           <td>{{startdate}}</td>
           <td>{{nbre}}</td>
-          <td><a href="tools1/pages/conge/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/conge/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+          <td><a href="tools/pages/conge/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools/pages/conge/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
           <td><span class="{{classe}}">{{status}}</span></td>
         </tr>
         {{/conges}}

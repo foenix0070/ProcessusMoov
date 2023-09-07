@@ -9,9 +9,15 @@ appRegularisationFraisMission.InitializePage = function () {
     appSpHelper.GetMyProperties(function () {
 
 
-        var btnRegularisation = document.getElementById("BtnRegularisation");
-        var info = btnRegularisation.getAttribute("data-info");
-        console.log(info);
+        // var btnRegularisation = document.getElementById("BtnRegularisation");
+        // var info = btnRegularisation.getAttribute("data-info");
+        // console.log(info);
+
+        var elementsWithDataInfo = document.querySelectorAll('[data-info]');
+
+        elementsWithDataInfo.forEach(function (element) {
+            var info = element.getAttribute('data-info');
+            console.log(info);
 
         if (info == "fraisMission") {
             // document.getElementById("cmbSortie").disabled=true;
@@ -24,6 +30,8 @@ appRegularisationFraisMission.InitializePage = function () {
             appRegularisationFraisMission.initCmbMission(function () { });
             //appRegularisationFraisMission.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function () { });
         }
+
+        });
 
 
         document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
@@ -45,7 +53,7 @@ appRegularisationFraisMission.InitializePage = function () {
                 appRegularisationFraisMission.Edit(valID, function (a) {
                     // location.reload();
                     const appUrl = '/pages/regularisationSortieCaisse/show.aspx?ID=' + a.get_id();
-                    const url = "/tools1" + appUrl;
+                    const url = "/tools" + appUrl;
                     appHelper.navigation("DivMainPageContainer", url);
                     var closeButton = document.querySelector('[aria-label="Close"]');
                     closeButton.click();
@@ -55,15 +63,12 @@ appRegularisationFraisMission.InitializePage = function () {
                 appRegularisationFraisMission.Add(function (a) {
                     //location.reload();
                     const appUrl = '/pages/regularisationFraisMission/show.aspx?ID=' + a.get_id();
-                    const url = "/tools1" + appUrl;
+                    const url = "/tools" + appUrl;
                     appHelper.navigation("DivMainPageContainer", url);
                     var closeButton = document.querySelector('[aria-label="Close"]');
                     closeButton.click();
                 });
             }
-        }
-        else{
-          alert("Veillez renseigner correctement les champs");
         }
 
         });

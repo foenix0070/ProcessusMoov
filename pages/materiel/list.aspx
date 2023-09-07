@@ -38,7 +38,7 @@
             <td>{{title}}</td>
             <td>{{startdate}}</td>
             <td>{{motif}}</td>
-          <td><a href="tools1/pages/materiel/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools1/pages/materiel/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
+          <td><a href="tools/pages/materiel/show.aspx?id={{id}}"  class="linkMainNavigation" data-url="tools/pages/materiel/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
             <td><span class="{{classe}}">{{status}}</span></td>
           </tr>
           {{/materiel}}

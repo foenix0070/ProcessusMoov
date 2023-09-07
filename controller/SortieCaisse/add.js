@@ -48,11 +48,9 @@ appSortieCaisse.InitializePage = function () {
   const BtnSave = document.querySelector("#BtnSave");
 
   BtnSave.addEventListener("click", function () {
-    let mode = document.getElementById("cmbMode").value;
-    let payera = document.getElementById("TxtPayerA").value;
-    let caisse = document.getElementById("cmbCaisse").value;
-    let montant = document.getElementById("TxtMontant").value;
-    if (mode != "" && payera != "" && caisse != "" && montant != 0) {
+    
+    if (appSortieCaisse.TestFields()) {
+      BtnSave.disabled = true;
       let verif = document.getElementById("TxtVerif").value;
       if (verif == "Edit") {
         let valID = document.getElementById("TxtID").value;
@@ -60,7 +58,7 @@ appSortieCaisse.InitializePage = function () {
         appSortieCaisse.Edit(valID, function (a) {
           // location.reload();
           const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + a.get_id();
-          const url = "/tools1" + appUrl;
+          const url = "/tools" + appUrl;
           appHelper.navigation("DivMainPageContainer", url);
           var closeButton = document.querySelector('[aria-label="Close"]');
           closeButton.click();
@@ -70,15 +68,12 @@ appSortieCaisse.InitializePage = function () {
         appSortieCaisse.Add(function (a) {
           // location.reload();
           const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + a.get_id();
-          const url = "/tools1" + appUrl;
+          const url = "/tools" + appUrl;
           appHelper.navigation("DivMainPageContainer", url);
           var closeButton = document.querySelector('[aria-label="Close"]');
           closeButton.click();
         });
       }
-    }
-    else {
-      alert("Veillez renseigner correctement les champs");
     }
   });
 
@@ -111,7 +106,7 @@ appSortieCaisse.initSomme = function (callBack) {
 
 
 appSortieCaisse.initCmbCaisse = function (callBack) {
-  ListerCaisse(function () {
+  appSortieCaisse.ListerCaisse(function () {
     let cmb = document.getElementById("cmbCaisse");
     let txtColor = document.getElementById("TxtCaisseColeur");
     let txtText = document.getElementById("TxtCaisseText");
@@ -129,10 +124,46 @@ appSortieCaisse.initCmbCaisse = function (callBack) {
 
 };
 
+appSortieCaisse.TestFields = function(){
 
+  let v = true;
+  let str = '';
+  
+   // Récupérer les valeurs des champs
+   var nom = document.getElementById("TxtNom").value;
+ var matricule = document.getElementById("TxtMatricule").value;
+ var email = document.getElementById("TxtEmail").value;
+   let mode = document.getElementById("cmbMode").value;
+   let payera = document.getElementById("TxtPayerA").value;
+   let caisse = document.getElementById("cmbCaisse").value;
+   let montant = document.getElementById("TxtMontant").value;
+   let titre = document.getElementById("TxtTitle").value;
+   let objet = document.getElementById("TxtObjetReglement").value;
+  
+   // Vérifier si les champs obligatoires sont vides
+   if (nom === "" || matricule === "" || email === "" || mode === "" || montant === "0" || payera === "" || caisse === "" || titre === "" || objet === "" ) {
+     str += ("Veuillez remplir tous les champs obligatoires. <br>");
+       v= false; // Empêche l'envoi du formulaire
+   }
+  
+   // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
+   if (parseInt(montant) < 1) {
+     str +=  ("Le montant doit être supérieur ou égal à 1. <br>");
+       v= false; // Empêche l'envoi du formulaire
+   }
+  
+   let div = document.getElementById('DivErreurMessage');
+   div.innerHTML = '';
+   if(v==false){
+    str = `<div style="border:2px solid red; background:#ffe6ff;padding:3px;color:#330033;margin:3px;">${str}</div>`;
+    div.innerHTML = str;
+   }
+  
+   return v;
+};
 
 appSortieCaisse.initCmbMode = function (callBack) {
-  ListerMode(function () {
+  appSortieCaisse.ListerMode(function () {
     let cmb = document.getElementById("cmbMode");
     let txtColor = document.getElementById("TxtModeColeur");
     let txtText = document.getElementById("TxtModeText");
@@ -151,11 +182,13 @@ appSortieCaisse.initCmbMode = function (callBack) {
 };
 
 
-function ListerCaisse(callBack) {
+appSortieCaisse.ListerCaisse = function (callBack) {
   let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Caisse);
-  let q = '<View><Query><Where>' +
-    '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
-    '</Where></Query></View>';
+  let q = 
+          "<View><Query><Where>" +
+          "<Eq><FieldRef Name='active' /><Value Type='Boolean' >1</Value></Eq>" +
+          "</Where></Query></View>";
+          
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(q);
   let listItemMotif = oList.getItems(camlQuery);
@@ -165,9 +198,10 @@ function ListerCaisse(callBack) {
       var listItemEnumerator = listItemMotif.getEnumerator();
 
       while (listItemEnumerator.moveNext()) {
+        console.log("Donnees existes");
         let oListItemTp = listItemEnumerator.get_current();
         let opt = document.createElement("option");
-        opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
+        //opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
         opt.setAttribute("data-color", oListItemTp.get_item('Background'));
         opt.setAttribute("value", oListItemTp.get_id());
         opt.innerHTML = oListItemTp.get_item('Title');
@@ -182,7 +216,7 @@ function ListerCaisse(callBack) {
     function (sender, args) { console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace()); });
 }
 
-function ListerMode(callBack) {
+appSortieCaisse.ListerMode = function (callBack) {
   let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Mode);
   let q = '<View><Query><Where>' +
     '<Eq><FieldRef Name=\'active\' /><Value Type=\'Boolean\' >1</Value></Eq>' +
@@ -198,7 +232,7 @@ function ListerMode(callBack) {
       while (listItemEnumerator.moveNext()) {
         let oListItemTp = listItemEnumerator.get_current();
         let opt = document.createElement("option");
-        opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
+        // opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
         opt.setAttribute("data-color", oListItemTp.get_item('Background'));
         opt.setAttribute("value", oListItemTp.get_id());
         opt.innerHTML = oListItemTp.get_item('Title');
@@ -335,8 +369,8 @@ appSortieCaisse.ShowDetails = function (demandeid, callBack) {
       document.getElementById("TxtPayerA").value = It.get_item('PayerA') != null ? It.get_item('PayerA') : '';
       document.getElementById("TxtCaisseText").value = It.get_item('CaissePaiement') != null ? It.get_item('CaissePaiement') : '';
       document.getElementById("TxtModeText").value = It.get_item('ModePaiement') != null ? It.get_item('ModePaiement') : '';
-      document.getElementById("cmbCaisse").value = It.get_item('CaissePaiement') != null ? It.get_item('CaissePaiement') : '';
-      document.getElementById("cmbMode").value = It.get_item('ModePaiement') != null ? It.get_item('ModePaiement') : '';
+      document.getElementById("cmbCaisse").value = It.get_item('CaissePaiementID') != null ? It.get_item('CaissePaiementID') : '';
+      document.getElementById("cmbMode").value = It.get_item('ModePaiementID') != null ? It.get_item('ModePaiementID') : '';
       document.getElementById("TxtVerif").value = 'Edit';
       document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;
 

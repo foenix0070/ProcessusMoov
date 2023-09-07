@@ -44,7 +44,7 @@ appAdminUser.clientContext.executeQueryAsync(function (sender, args) {
         matricule : oListItem.get_item("EmpMatricule"),
         login: oListItem.get_item("EmpLogin"),
         email: oListItem.get_item("EmpEmail"),
-        url : '/tools1/pages/admin/agent_edit.aspx?ID=' +oListItem.get_item("ID"),
+        url : '/tools/pages/admin/agent_edit.aspx?ID=' +oListItem.get_item("ID"),
       });
     }
 

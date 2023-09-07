@@ -5,28 +5,28 @@
     <fieldset class="form-elts">
       <legend>Demandeur</legend>
       <div class="mb-3">
-        <label  class="form-label">Nom & Prenoms</label>
+        <label  class="form-label">Nom & Prenoms <span class="asterix">*</span></label>
           <input type="text" id="TxtNom" disabled class="  form-control" value="" placeholder="" />
       </div>
 
       <div class="mb-3">
-        <label  class="form-label">Matricule</label>
+        <label  class="form-label">Matricule <span class="asterix">*</span></label>
           <input type="text" id="TxtMatricule" disabled class="  form-control" name="" placeholder="" />
       </div>
 
       <div class="mb-3">
-        <label  class="form-label">Email</label>
+        <label  class="form-label">Email <span class="asterix">*</span></label>
           <input type="text" id="TxtEmail" disabled class="  form-control" name="" placeholder="" />
       </div>
 
     </fieldset>
 
       <fieldset class="form-elts">
-          <legend>Motif de la demande</legend>
+          <legend>Motif de la demande <span class="asterix">*</span></legend>
 
 
           <div class="mb-3">
-            <label  class="form-label"> Nature du cong&eacute;s</label>
+            <label  class="form-label"> Nature du cong&eacute;s <span class="asterix">*</span></label>
             <select id="cmbTypeConge" name="cmbTypeConge" class="form-control">
               <option value="0" data-color="#000">Choisir le type de cong&eacute;s</option>
             </select>
@@ -35,12 +35,12 @@
           </div>
 
           <div class="mb-3">
-            <label  class="form-label">Nombre de Jours</label>
+            <label  class="form-label">Nombre de Jours <span class="asterix">*</span></label>
               <input type="number" id="TxtNbreJour" min="1"  class="numeric form-control" style="width:200px;" name="TxtNbreJour"  />
           </div>
 
           <div class="mb-3">
-            <label  class="form-label"> Date de depart souhait&eacute;</label>
+            <label  class="form-label"> Date de depart souhait&eacute; <span class="asterix">*</span></label>
             <input type="date" name="TxtDateDepart" class="date form-control" style="width:200px;" id="TxtDateDepart" placeholder="" />
           </div>
 
@@ -55,17 +55,17 @@
 
         <div class="mb-3">
           <label  class="form-label"> Nom</label>
-          <input type="text" class="form-control"  id="TxtIntName" placeholder="" />
+          <input type="text" class="form-control"  id="TxtIntName" placeholder="" disabled/>
         </div>
 
         <div class="mb-3">
           <label  class="form-label"> Matricule</label>
-          <input type="text" class="form-control" id="TxtIntMatricule" placeholder="" />
+          <input type="text" class="form-control" id="TxtIntMatricule" placeholder="" disabled/>
         </div>
 
         <div class="mb-3">
           <label  class="form-label"> Email</label>
-          <input type="text" class="form-control" id="TxtIntEmail" placeholder="" />
+          <input type="text" class="form-control" id="TxtIntEmail" placeholder="" disabled/>
         </div>
 
         <div class="mb-3">
