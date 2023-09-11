@@ -17,14 +17,12 @@ class WFManager {
         WF = JSON.parse(this.WFData);
         return WF;
       } catch (e) {
-
         appHelper.Log(e, appHelper.LogType.ERROR);
 
         try {
           WF = this.WFData;
         } catch (s) {
           appHelper.Log(s, appHelper.LogType.ERROR);
-
         }
       }
 
@@ -160,7 +158,6 @@ class WFManager {
     }, appSpHelper.writeError);
   }
 
-
   goToNextTask(ctx, _tacheid, _parent, _parentid, _commentaire, callBack) {
     const QryGetNextOne =
       "<View><Query><Where>" +
@@ -224,35 +221,36 @@ class WFManager {
             try {
               appSpHelper.SendNotificationTask(ctx, oListItem, function () {
 
-                appHelper.receiptTask(It, function(){
-                  if (callBack) {
-                    callBack(oListItem);
-                  }
-                })
+                  appHelper.receiptTask(It, function () {
+                    WFManager.BackNotification(ctx, _parent, _parentid, appHelper.TacheAction.VALIDATION,  function(){
+                    if (callBack) {
+                      callBack(oListItem);
+                    }
+                  });
+                });
 
               });
             } catch (e) {
               appHelper.Log(e, appHelper.LogType.ERROR);
 
-              appHelper.receiptTask(It, function(){
-                if (callBack) {
-                  callBack(oListItem);
-                }
-              })
-
+                appHelper.receiptTask(It, function () {
+                  WFManager.BackNotification(ctx, _parent, _parentid, appHelper.TacheAction.VALIDATION,  function(){
+                  if (callBack) {
+                    callBack(oListItem);
+                  }
+                });
+              });
             }
           }, appSpHelper.writeError);
         } else {
 
-
-          appHelper.receiptTask(It, function(){
-            if (callBack) {
-              callBack(false);
-            }
-          })
-
-
-
+            appHelper.receiptTask(It, function () {
+              WFManager.BackNotification(ctx, _parent, _parentid, appHelper.TacheAction.VALIDATION,  function(){
+              if (callBack) {
+                callBack(false);
+              }
+            });
+          });
         }
       }, appSpHelper.writeError);
     }, appSpHelper.writeError);
@@ -308,15 +306,89 @@ class WFManager {
           ctx.load(oListItem);
         }
         ctx.executeQueryAsync(function () {
-          appHelper.receiptTask(It, function(){
+
+
+          appHelper.receiptTask(It, function () {
+            WFManager.BackNotification(ctx, _parent, _parentid, appHelper.TacheAction.REJET,  function(){
             if (callBack) {
               callBack(true);
             }
-          })
+          });
+        });
         }, appSpHelper.writeError);
       }, appSpHelper.writeError);
     }, appSpHelper.writeError);
   }
+
+  static BackNotification(ctx, _parent, _parentid, _tacheAction,  callBack) {
+    const QryGetNextOne =
+      "<View><Query><Where>" +
+      "<And>" +
+      "<And>" +
+      '<Eq><FieldRef ID="Parent" /><Value Type="Text">' +
+      _parent +
+      "</Value></Eq>" +
+      '<Eq><FieldRef ID="ParentID0" /><Value Type="Text">' +
+      _parentid +
+      "</Value></Eq>" +
+      "</And>" +
+      '<Eq><FieldRef ID="Status" /><Value Type="Choice">En cours</Value></Eq>' +
+      "</And>" +
+      '</Where><OrderBy><FieldRef Name="ID" Ascending="TRUE"/></OrderBy></Query></View>';
+
+    let oList = ctx
+      .get_web()
+      .get_lists()
+      .getByTitle(appHelper.ListName.Validation);
+
+    let camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(QryGetNextOne);
+    let collListItem = oList.getItems(camlQuery);
+    ctx.load(collListItem);
+    ctx.executeQueryAsync(function () {
+      let listItemEnumerator = collListItem.getEnumerator();
+      let tacheresidu ;
+      let count = 0;
+      while (listItemEnumerator.moveNext()) {
+        tacheresidu =  listItemEnumerator.get_current();
+          count++;
+      }
+
+      appHelper.getDemandeOrigin(_parent, _parentid, function(dIt){
+
+        if(count > 0){
+
+          appSpHelper.SendNotificationDemandeur (dIt, tacheresidu, _tacheAction, function(){
+            if(callBack){
+              callBack();
+            }
+          });
+
+        } else{
+
+          appSpHelper.SendNotificationDemandeur (dIt, null, _tacheAction, function(){
+            if(callBack){
+              callBack();
+            }
+          });
+
+        }
+
+      });
+    }, function (sender, args) {
+      appHelper.Log( "Request failed. " + args.get_message() + "\n" + args.get_stackTrace() );
+
+      if(callBack){
+        callBack();
+      }
+
+    });
+  }
+
+
+
+
+
 
 
 }

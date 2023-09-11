@@ -8,6 +8,12 @@ appHelper.AppConstante = {
   IsDevEnvironment: true
 }
 
+appHelper.TacheAction = {
+  VALIDATION : 'VALIDEE',
+  MODIFICATION : 'DEMANDEMODIFICATION',
+  REJET : 'REJETEE'
+};
+
 appHelper.ListName = {
   Conge: 'ListeConge',
   Gadget: 'ListeGadget',
@@ -94,6 +100,35 @@ appHelper.Log = function (msg, type = appHelper.LogType.LOG, appName = 'MI') {
   }
 }
 
+appHelper.GetMainListNameFromAppCode = function( key){
+
+  switch (key) {
+    case appHelper.AppCode.ABSENCE:
+return appHelper.ListName.Absence;
+      case appHelper.AppCode.CONGE:
+        return appHelper.ListName.Conge;
+      case appHelper.AppCode.FRAISMISSION:
+        return appHelper.ListName.Mission;
+      case appHelper.AppCode.GADGET:
+        return appHelper.ListName.Gadget;
+      case appHelper.AppCode.MATERIEL:
+        return appHelper.ListName.Materiel;
+      case appHelper.AppCode.MISSION:
+        return appHelper.ListName.Mission;
+      case appHelper.AppCode.REGULARISATIONFRAISMISSION:
+        return appHelper.ListName.RegularisationFraisMission;
+      case appHelper.AppCode.REGULARISATIONSORTIECAISSE:
+        return appHelper.ListName.RegularisationSortieCaisse;
+      case appHelper.AppCode.SORTIECAISSE:
+        return appHelper.ListName.SortieCaisse;
+      case appHelper.AppCode.VEHICULE:
+        return appHelper.ListName.Vehicule;
+
+    default:
+      return '';
+  }
+
+};
 
 appHelper.receiptTask = function (it, callBack) {
   let msg = `<div style="padding: 20px;
@@ -108,6 +143,30 @@ appHelper.receiptTask = function (it, callBack) {
     }
   });
 
+}
+
+appHelper.getDemandeOrigin = function(_parent, _parentid, callBack) {
+  let ctx = new SP.ClientContext.get_current();
+  let _list_name = appHelper.GetMainListNameFromAppCode(_parent);
+  appHelper.Log(_list_name);
+
+if (_list_name) {
+    let oList = ctx.get_web().get_lists().getByTitle(_list_name);
+    let It = oList.getItemById(_parentid);
+    It.update();
+    ctx.load(It);
+    appHelper.Log(_parentid, appHelper.LogType.INFO, 'getDemandeOrigin' );
+    ctx.executeQueryAsync(function () {
+      appHelper.Log(It, appHelper.LogType.INFO, 'getDemandeOrigin' );
+      if (callBack) {
+        callBack(It);
+      }
+    }, appSpHelper.writeError);
+  } else {
+    if (callBack) {
+      callBack(null);
+    }
+  }
 }
 
 appHelper.parseBool = function (str) {
@@ -627,11 +686,11 @@ appHelper.ensureAttachmentFolder = function (ctx, listTitle, itemId, success, er
 
         var attachmentsRootFolder = ctx.get_web().getFolderByServerRelativeUrl(attachmentRootFolderUrl);
 
-        //Note: Here is a tricky part.                
-        //Since SharePoint prevents the creation of folder with name that corresponds to item id, we are going to:       
-        //1)create a folder with name in the following format '_<itemid>'              
-        //2)rename a folder from '_<itemid>'' into '<itemid>'               
-        //This allow to bypass the limitation of creating attachment folders               
+        //Note: Here is a tricky part.
+        //Since SharePoint prevents the creation of folder with name that corresponds to item id, we are going to:
+        //1)create a folder with name in the following format '_<itemid>'
+        //2)rename a folder from '_<itemid>'' into '<itemid>'
+        //This allow to bypass the limitation of creating attachment folders
         attachmentsFolder = attachmentsRootFolder.get_folders().add('_' + itemId);
 
         attachmentsFolder.moveTo(attachmentRootFolderUrl + '/' + itemId);
