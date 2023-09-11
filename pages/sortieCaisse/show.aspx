@@ -60,7 +60,7 @@
                         </h2>
                       </div>
                       <div class="sect-card">
-                        <div class="sect-bn"><button class="btn btn-warning btn-sm" id="addfile" onclick="OpenFileUpload('FpUploadAttachement')">Joindre un fichier</button></div>
+                        <div class="sect-bn"><button class="btn btn-warning btn-sm" id="addfile" type="button">Joindre un fichier</button></div>
                         <input type="file" id="FpUploadAttachement" style="display:none;"  name="FpUploadAttachement[]" multiple>
                         <div class='card-head'>
                           <div class='card-item-1'>
@@ -150,6 +150,11 @@
                     </tr>
                   </table></br>
 
+                  {{#regul}}
+                  <div class="sect-bn"><button class="btn btn-primary btn-sm linkOffCanvasNavigation" data-url="/tools/pages/regularisationSortieCaisse/add.aspx?DID={{regul}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" data-info="{{montant}}" id="BtnRegularisation" >Effectuer une regularisation</button></div>
+                  <!--<div class="sect-bn"><button class="btn btn-primary btn-sm linkOffCanvasNavigation" data-url="/tools/pages/regularisationSortieCaisse/add.aspx?DID={{regul}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" data-info="sortieCaisseRegul" id="BtnRegularisation" >Effectuer une regularisation</button></div>-->
+                  {{/regul}}</br>
+
                   <div class="head-titre">
                     <h2>
                       Details de la demande
@@ -158,9 +163,7 @@
                   {{#id}}
                   <div class="sect-bn"><button class="btn btn-warning btn-sm linkOffCanvasNavigation" data-url="/tools/pages/sortieCaisse/add.aspx?DID={{id}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" id="BtnModification" >Modifier la demande</button></div>
                   {{/id}}
-                  {{#regul}}
-                  <div class="sect-bn"><button class="btn btn-primary btn-sm linkOffCanvasNavigation" data-url="/tools/pages/regularisationSortieCaisse/add.aspx?DID={{regul}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" data-info="sortieCaisseRegul" id="BtnRegularisation" >Effectuer une regularisation</button></div>
-                  {{/regul}}
+                  
                 </br>
                   <div>
                     <h3 style="color:#c50000 !important;">
@@ -215,11 +218,4 @@
 <script type="text/javascript">
   //appHelper.loadJSWithNameSpace("showConge", 'showConge', "controller/conge/show.js");
   appHelper.loadJSWithNameSpace("showSortieCaisse", 'showSortieCaisse', "controller/SortieCaisse/show.js");
-</script>
-<script type="text/javascript">
-
-  function OpenFileUpload(str_select) {
-    let transEshowSortieCaisselt = document.getElementById(str_select);
-    transElt.click();
-  }
 </script>

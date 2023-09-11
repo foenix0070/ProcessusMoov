@@ -147,8 +147,12 @@ appVehicule.Add = function ( callBack) {
 
   let endDate = startDate.addDays(2);
 
+  let ref = appHelper.getReference("VHCL");
+
+
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
+  oListItem.set_item("Reference", ref);
 
   oListItem.set_item("DateDepart", startDate);
   oListItem.set_item("DateRetour", endDate);
@@ -180,7 +184,7 @@ appVehicule.Add = function ( callBack) {
 
 const appUrl = '/pages/vehicule/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.VEHICULE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.VEHICULE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.VEHICULE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
       if(callBack){
         callBack(oListItem);
       }
@@ -200,6 +204,8 @@ appVehicule.Edit = function (demandeid, callBack) {
   oListItem.set_item("Nature", document.getElementById("TxtObjet").value);
 
   oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
+  oListItem.set_item("Reference", document.getElementById("TxtRef").value);
+
 
   oListItem.set_item("DemandeurEmail",App.CurrentUser.Email);
  
@@ -218,7 +224,7 @@ appVehicule.Edit = function (demandeid, callBack) {
   const appUrl = '/pages/vehicule/show.aspx?ID=' + oListItem.get_id();
       console.log(appUrl);
       let WF = new WFManager(appHelper.AppCode.VEHICULE,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.VEHICULE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.VEHICULE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
       if(callBack){
         callBack(oListItem);
       }
@@ -240,6 +246,7 @@ appVehicule.ShowDetails = function (demandeid, callBack) {
         document.getElementById("TxtMotif").value = It.get_item('Motif') != null ? It.get_item('Motif') : '';
         document.getElementById("TxtVerif").value = 'Edit';
         document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;
+        document.getElementById("TxtRef").value = It.get_item('Reference') != null ? It.get_item('Reference') : '';
         
 if(callBack){callBack();}
 

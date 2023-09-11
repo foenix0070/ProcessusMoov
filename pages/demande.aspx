@@ -104,7 +104,7 @@
             <td>{{id}}</td>
             <td>{{create}}</td>
             <td>{{requestdate}}</td>
-            <th>{{nomdemande}}</th>
+            <th>DEMANDE DE {{create}} POUR {{nomdemande}}</th>
             <td><a href="tools/pages/{{repertoire}}/show.aspx?id={{id}}" class="linkMainNavigation" data-url="tools/pages/{{repertoire}}/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
             <td><span class="{{classe}}">{{status}}</span></td>
             <td>{{demandeur}}</td>

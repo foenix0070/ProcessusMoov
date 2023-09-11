@@ -1,3 +1,5 @@
+# Copies tous les fichier  Schema.xml de toutes tes listes dans un dossier
+# Renommes les � chaque fois
 
 Add-Type -Path "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.dll"
 Add-Type -Path "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Runtime.dll"

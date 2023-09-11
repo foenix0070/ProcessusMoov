@@ -55,7 +55,9 @@ showConge.ShowForm = function (tacheId, demandeid) {
   BtnOK.addEventListener("click", function () {
     WF.goToNextTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function (nextTask) {
       appHelper.Log(nextTask);
+      console.log("Avant");
       showConge.UpDateItemStatus(nextTask, demandeid, function () {
+      console.log("Après");
         location.reload();
       });
     });
@@ -116,6 +118,7 @@ showConge.UpDateItemStatus = function (nextTask, demandeid, callBack) {
   It.update();
   clientContext.load(It);
   clientContext.executeQueryAsync(function () {
+    console.log("UpDateItemStatus OK")
     if (callBack) {
       callBack();
     }
@@ -127,15 +130,14 @@ showConge.UpDateItemStatus = function (nextTask, demandeid, callBack) {
 showConge.ShowFichierJoint = function (demandeid) {
 
   let view = {};
-
   let appName = appHelper.ListName.Conge;
   let id = demandeid;
-  let folderPath = `/Lists/${appName}/Attachments/${id}/`;
+  let folderPath = `Lists/${appName}/Attachments/${id}/`;
   appHelper.Log(folderPath);
-  let attachmentFolder = clientContext.get_web().getFolderByServerRelativeUrl(folderPath);
+  let attachmentFolder = showConge.clientContext.get_web().getFolderByServerRelativeUrl(folderPath);
   let attachmentFiles = attachmentFolder.get_files();
-  clientContext.load(attachmentFiles);
-  clientContext.executeQueryAsync(function () {
+  showConge.clientContext.load(attachmentFiles);
+  showConge.clientContext.executeQueryAsync(function () {
     if (attachmentFiles) {
       if (attachmentFiles.get_count() > 0) {
         appHelper.Log('111');
@@ -147,7 +149,7 @@ showConge.ShowFichierJoint = function (demandeid) {
             dateajout: new Date(attachmentFiles.itemAt(i).get_timeLastModified()).toLocaleString(), //   new Date( attachmentFiles.itemAt(i).get_timeLastModified ()).toLocaleDateString() + ' ' +
             taille: appHelper.ConvertOctetToKo(attachmentFiles.itemAt(i).get_length()),
             auteur: attachmentFiles.itemAt(i).get_author(),
-            url: appHelper.AppConstante.SiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
+            url: appHelper.AppConstante.RootSiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
           });
         }
         showConge.ShowUploadForm(demandeid, view);
@@ -168,8 +170,11 @@ showConge.ShowFichierJoint = function (demandeid) {
 showConge.ShowUploadForm = function (demandeid, view) {
   appHelper.renderTemplate("tmpl_form_fichiers_attaches", "SectionDocumentsJoint", view);
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
+
   FpUploadAttachement.addEventListener('change', (e) => {
     files = e.target.files;
+    appHelper.Log(files);
+
     for (const file of files) {
       let reader = new FileReader();
       reader.onload = function (e) {
@@ -181,15 +186,23 @@ showConge.ShowUploadForm = function (demandeid, view) {
       reader.readAsArrayBuffer(file);
     }
   });
+
+  setTimeout(function() {
+    const addfile = document.getElementById("addfile");
+    addfile.addEventListener("click", function () {
+      showConge.OpenFileUpload('FpUploadAttachement');
+    });
+  }, 1000);
+
 }
 
 showConge.AttachFile = function (demandeid, arrayBuffer, fileName) {
 
   //Get Client Context and Web object.
-  var oWeb = clientContext.get_web();
+  var oWeb = showConge.clientContext.get_web();
   //Get list and Attachment folder where the attachment of a particular list item is stored.
   var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Conge);
-  var urlToAttach = '/Lists/' + appHelper.ListName.Conge + '/Attachments/' + demandeid + '/'
+  var urlToAttach = 'Lists/' + appHelper.ListName.Conge + '/Attachments/' + demandeid + '/'
   var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
   appHelper.Log(attachmentFolder);
   //Convert the file contents into base64 data
@@ -207,9 +220,9 @@ showConge.AttachFile = function (demandeid, arrayBuffer, fileName) {
   //Add the file to the list item
   attachmentFiles = attachmentFolder.get_files().add(createInfo);
   //Load client context and execute the batch
-  clientContext.load(oList);
-  clientContext.load(attachmentFiles);
-  clientContext.executeQueryAsync(function () {
+  showConge.clientContext.load(oList);
+  showConge.clientContext.load(attachmentFiles);
+  showConge.clientContext.executeQueryAsync(function () {
     showConge.ShowFichierJoint(demandeid);
   }, appSpHelper.writeError);
 
@@ -252,14 +265,10 @@ showConge.ShowValidation = function (demandeid) {
           decision: '',
           commentaire: oListItem.get_item('_Comment') != null ? oListItem.get_item('_Comment').toString() : ''
           //etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
-
         });
       }
       appHelper.renderTemplate("tmpl_form_historique_validation", "SectionHistoriqueValidation", view);
     }
-
-
-
 
   }, appSpHelper.writeError);
 
@@ -289,7 +298,7 @@ showConge.ShowDetails = function (demandeid) {
         typeconge: It.get_item('TypeCongeLibelle') != null ? It.get_item('TypeCongeLibelle') : '',
         nbrejour: It.get_item('NombreJours') != null ? It.get_item('NombreJours') : '',
         datedepart: It.get_item('DateDepart') != null ? new Date(It.get_item('DateDepart')).toLocaleDateString() : '',
-        dateretour: It.get_item('DateRetour') != null ? new Date(It.get_item('DateRetour')).toLocaleDateString() : '',
+        //dateretour: It.get_item('DateRetour') != null ? new Date(It.get_item('DateRetour')).toLocaleDateString() : '',
         datereprise: It.get_item('DateReprise') != null ? new Date(It.get_item('DateReprise')).toLocaleDateString() : '',
         interimaire: interimaireField,
         demandeur: demandeurName,
@@ -303,16 +312,7 @@ showConge.ShowDetails = function (demandeid) {
       };
 
       appHelper.Log("OUT ShowDetails");
-
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
-
-
-      const addfile = document.getElementById("addfile");
-      addfile.addEventListener("click", function () {
-
-        OpenFileUpload('FpUploadAttachement');
-      });
-
 
     }
   }, appSpHelper.writeError);
@@ -325,7 +325,6 @@ showConge.ShowFirst = function (demandeid) {
 
   showConge.clientContext.load(It);
   showConge.clientContext.executeQueryAsync(function () {
-
 
     if (It) {
       appHelper.Log("test showFirst");
@@ -353,7 +352,7 @@ showConge.ShowFirst = function (demandeid) {
   }, appSpHelper.writeError);
 }
 
-function OpenFileUpload(str_select) {
+showConge.OpenFileUpload = function(str_select) {
   let transElt = document.getElementById(str_select);
   transElt.click();
 }

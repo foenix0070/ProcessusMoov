@@ -24,7 +24,7 @@
       <legend>Regularisation de la sortie de caisse</legend>
       <label class="form-label"> Sortie de caisse <span class="asterix">*</span> :</label>
       <select id="cmbSortie" name="cmbSortie" class="form-control">
-        <option value="0" data-color="#000">Choisir la sortie de caisse</option>
+        <option value="0" data-color="#000" data-target="0">Choisir la sortie de caisse</option>
       </select>
       <input id="TxtSortieColeur" value="" type="hidden">
       <input id="TxtSortieText" value="" type="hidden">
@@ -36,6 +36,10 @@
   <div class="mb-3">
     <label class="form-label"> Titre <span class="asterix">*</span></label>
     <input type="text" class="form-control" id="TxtTitle" placeholder="" />
+  </div>
+  <div class="mb-3">
+    <label class="form-label"> Montant <span class="asterix">*</span></label>
+    <input type="text" class="form-control" id="TxtMont" placeholder=""  disabled/>
   </div>
   <div class="mb-3">
     <label class="form-label"> Montant utilis&eacute; <span class="asterix">*</span></label>
@@ -53,10 +57,10 @@
     <!-- <input type="text" class="form-control" id="TxtObservation" placeholder="" /> -->
   </div>
 
-  <div class="mb-3">
+  <!-- <div class="mb-3">
     <label class="form-label"> Doc justificatifs</label>
     <input type="file" class="form-control" id="FileDoc" placeholder="" />
-  </div>
+  </div> -->
 
   <div class="mb-3">
     <input id="TxtVerif" type="hidden">
@@ -70,6 +74,14 @@
     <input id="TxtSortieID" type="hidden">
   </div>
 
+  <div class="mb-3">
+    <input id="TxtRef" type="hidden">
+  </div>
+
+  <div class="mb-3">
+    <input id="TxtMontantSortie" type="hidden">
+  </div>
+
   <span class="note">
     Une copie du papier du document de la justification qui motive la sortie de caisse est obligatoire pour
     accompagner le formulaire de Regularisation de la sortie de caisse (fonctionnement d&eacute;grad&eacute;).
@@ -77,6 +89,8 @@
   </fieldset>
 
   </div>
+
+  <div id="DivErreurMessage"></div>
 
   <div class="input-optn">
     <button class="Submit" id="BtnSave" type="button"> Valider </button>

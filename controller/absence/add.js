@@ -18,7 +18,7 @@ appAbsence.InitializePage = function () {
           appAbsence.GetInterimData(key);
         });
 
-        appAbsence.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function(){});
+        appAbsence.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function () { });
 
       }, 2000);
 
@@ -32,9 +32,6 @@ appAbsence.InitializePage = function () {
       }
 
     });
-
-  
-
   });
 
   const TxtIntName = document.querySelector("#TxtIntName");
@@ -46,34 +43,28 @@ appAbsence.InitializePage = function () {
   });
 
 
-  //const BtnAdd = document.querySelector("#demande");
-
-
-
   BtnSave.addEventListener("click", function () {
-    
-    if(appAbsence.TestFields())
-    {
+
+    if (appAbsence.TestFields()) {
       BtnSave.disabled = true;
       let verif = document.getElementById("TxtVerif").value;
-      if(verif=="Edit")
-      {
+      if (verif == "Edit") {
         let valID = document.getElementById("TxtID").value;
         appHelper.Log(valID);
-        appAbsence.Edit (valID, function(a){
+        appAbsence.Edit(valID, function (a) {
           //location.reload();
           const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + a.get_id();
-          const url = "/tools"+appUrl;
+          const url = "/tools" + appUrl;
           appHelper.navigation("DivMainPageContainer", url);
           var closeButton = document.querySelector('[aria-label="Close"]');
           closeButton.click();
         });
       }
-      else{
-        appAbsence.Add (function(a){
+      else {
+        appAbsence.Add(function (a) {
           //location.reload();
           const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + a.get_id();
-          const url = "/tools"+appUrl;
+          const url = "/tools" + appUrl;
           appHelper.navigation("DivMainPageContainer", url);
           var closeButton = document.querySelector('[aria-label="Close"]');
           closeButton.click();
@@ -86,52 +77,52 @@ appAbsence.InitializePage = function () {
 
 };
 
-appAbsence.TestFields = function(){
+appAbsence.TestFields = function () {
 
   let v = true;
   let str = '';
-  
-   // Récupérer les valeurs des champs
-   var nom = document.getElementById("TxtNom").value;
-   var matricule = document.getElementById("TxtMatricule").value;
-   var email = document.getElementById("TxtEmail").value;
-   var nature = document.getElementById("cmbTypeAbsence").value;
-    var motif = document.getElementById("TxtMotif").value;
-    var duree = document.getElementById("TxtDuree").value;
-    var startdate = document.getElementById("DateDebut").value;
-    //var enddate = document.getElementById("DateReprise").value;
-  
-   var todaydate = new Date();
-  
-   // Vérifier si les champs obligatoires sont vides
-   if (nom === "" || matricule === "" || email === "" || duree === "0" || nature === "" || motif === "" || startdate === "") {
-     str += ("Veuillez remplir tous les champs obligatoires. <br>");
-       v= false; // Empêche l'envoi du formulaire
-   }
-  
-   // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
-   if (parseInt(duree) < 1) {
-     str +=  ("Le nombre de jours doit être supérieur ou égal à 1. <br>");
-       v= false; // Empêche l'envoi du formulaire
-   }
 
-    var debutDate = new Date(document.getElementById("DateDebut").value);
+  // Récupérer les valeurs des champs
+  var nom = document.getElementById("TxtNom").value;
+  var matricule = document.getElementById("TxtMatricule").value;
+  var email = document.getElementById("TxtEmail").value;
+  var nature = document.getElementById("cmbTypeAbsence").value;
+  var motif = document.getElementById("TxtMotif").value;
+  var duree = document.getElementById("TxtDuree").value;
+  var startdate = document.getElementById("DateDebut").value;
+  //var enddate = document.getElementById("DateReprise").value;
 
-  
-   // Verifier si la date est supérieure ou égales à celle d'aujourd'hui
-   if (debutDate < todaydate) {
-    str +=  ("La date choisit n'est pas valide. <br>");
-      v= false; // Empêche l'envoi du formulaire
-    }
-  
-   let div = document.getElementById('DivErreurMessage');
-   div.innerHTML = '';
-   if(v==false){
+  var todaydate = new Date();
+
+  // Vérifier si les champs obligatoires sont vides
+  if (nom === "" || matricule === "" || email === "" || duree === "0" || nature === "" || motif === "" || startdate === "") {
+    str += ("Veuillez remplir tous les champs obligatoires. <br>");
+    v = false; // Empêche l'envoi du formulaire
+  }
+
+  // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
+  if (parseInt(duree) < 1) {
+    str += ("Le nombre de jours doit être supérieur ou égal à 1. <br>");
+    v = false; // Empêche l'envoi du formulaire
+  }
+
+  var debutDate = new Date(document.getElementById("DateDebut").value);
+
+
+  // Verifier si la date est supérieure ou égales à celle d'aujourd'hui
+  if (debutDate < todaydate) {
+    str += ("La date choisit n'est pas valide. <br>");
+    v = false; // Empêche l'envoi du formulaire
+  }
+
+  let div = document.getElementById('DivErreurMessage');
+  div.innerHTML = '';
+  if (v == false) {
     str = `<div style="border:2px solid red; background:#ffe6ff;padding:3px;color:#330033;margin:3px;">${str}</div>`;
     div.innerHTML = str;
-   }
-  
-   return v;
+  }
+
+  return v;
 };
 
 function getRating(str) {
@@ -261,18 +252,15 @@ appAbsence.Add = function (callBack) {
     repDate.setDate(repDate.getDate() + 1);
   }
 
-  //let repDate = new Date(document.getElementById("DateReprise").value);
+  let ref = appHelper.getReference("ABS");
 
-
-  //let endDate = startDate.addDays(parseInt(document.getElementById("TxtDuree").value));
-
-  //let repDate = endDate.addDays(1);
 
   let pickerDict = SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan;
   let userKeys = pickerDict.GetAllUserKeys();
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
+  oListItem.set_item("Reference", ref);
   oListItem.set_item("DateDepart", startDate);
   oListItem.set_item("DateRetour", endDate);
   oListItem.set_item("DateReprise", repDate);
@@ -290,8 +278,7 @@ appAbsence.Add = function (callBack) {
   oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
   oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
 
-  if(userKeys.length >0)
-  {
+  if (userKeys.length > 0) {
     oListItem.set_item("Interimaire", SP.FieldUserValue.fromUser(SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys()));
   }
 
@@ -301,7 +288,7 @@ appAbsence.Add = function (callBack) {
 
     const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + oListItem.get_id();
     let WF = new WFManager(appHelper.AppCode.ABSENCE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.ABSENCE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.ABSENCE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function () { })
     if (callBack) {
       callBack(oListItem);
     }
@@ -355,6 +342,7 @@ appAbsence.Edit = function (demandeid, callBack) {
   oListItem.set_item("DateReprise", repDate);
 
   oListItem.set_item("Title", document.getElementById("TxtTypeAbsenceText").value);
+  oListItem.set_item("Reference", document.getElementById("TxtRef").value);
 
   oListItem.set_item("Nature", document.getElementById("TxtTypeAbsenceText").value);
 
@@ -378,8 +366,7 @@ appAbsence.Edit = function (demandeid, callBack) {
   oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
   oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
 
-  if(userKeys.length >0)
-  {
+  if (userKeys.length > 0) {
     oListItem.set_item("Interimaire", SP.FieldUserValue.fromUser(SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan.GetAllUserKeys()));
   }
 
@@ -411,27 +398,28 @@ appAbsence.ShowDetails = function (demandeid, callBack) {
   appAbsence.clientContext.executeQueryAsync(function () {
     if (It) {
 
-        document.getElementById("cmbTypeAbsence").value = It.get_item('TypeAbsenceID') != null ? It.get_item('TypeAbsenceID') : '';
-        document.getElementById("TxtTypeAbsenceText").value = It.get_item('Title') != null ? It.get_item('Title') : '';
-        document.getElementById("TxtDuree").value = It.get_item('NombreJours') != null ? It.get_item('NombreJours') : 0;
-        document.getElementById("DateDebut").value = It.get_item('DateDepart') != null ? It.get_item('DateDepart') : '';
-        //document.getElementById("DateReprise").value = It.get_item('DateReprise') != null ? It.get_item('DateReprise') : '';
-        document.getElementById("TxtMotif").value = It.get_item('Motif') != null ? It.get_item('Motif') : '';
-        document.getElementById("TxtVerif").value = 'Edit';
-        document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;
-appHelper.Log( It.get_item("Interimaire") != null
-? It.get_item("Interimaire").get_lookupValue()
-: "");
-        appSpHelper.SetPeoplePickerField(
-          "plePickerInterimaireDiv",
-          It.get_item("Interimaire") != null
-            ? It.get_item("Interimaire").get_lookupValue()
-            : ""
-        );
+      document.getElementById("DateDebut").value = new Date(It.get_item("DateDepart")).toISOString().split('T')[0];
 
-if(callBack){callBack();}
+      document.getElementById("cmbTypeAbsence").value = It.get_item('TypeAbsenceID') != null ? It.get_item('TypeAbsenceID') : '';
+      document.getElementById("TxtTypeAbsenceText").value = It.get_item('Title') != null ? It.get_item('Title') : '';
+      document.getElementById("TxtDuree").value = It.get_item('NombreJours') != null ? It.get_item('NombreJours') : 0;
+      document.getElementById("TxtMotif").value = It.get_item('Motif') != null ? It.get_item('Motif') : '';
+      document.getElementById("TxtRef").value = It.get_item('Reference') != null ? It.get_item('Reference') : '';
+      document.getElementById("TxtVerif").value = 'Edit';
+      document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;
+      appHelper.Log(It.get_item("Interimaire") != null
+        ? It.get_item("Interimaire").get_lookupValue()
+        : "");
+      appSpHelper.SetPeoplePickerField(
+        "plePickerInterimaireDiv",
+        It.get_item("Interimaire") != null
+          ? It.get_item("Interimaire").get_lookupValue()
+          : ""
+      );
 
-    }else{if(callBack){callBack();}}
+      if (callBack) { callBack(); }
+
+    } else { if (callBack) { callBack(); } }
   }, appSpHelper.writeError);
 };
 

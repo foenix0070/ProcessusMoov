@@ -125,7 +125,7 @@ showRegularisationFraisMission.ShowFichierJoint = function (demandeid) {
 
   let appName = appHelper.ListName.RegularisationFraisMission;
   let id = demandeid;
-  let folderPath = `/Lists/${appName}/Attachments/${id}/`;
+  let folderPath = `Lists/${appName}/Attachments/${id}/`;
   console.log(folderPath);
   let attachmentFolder = clientContext.get_web().getFolderByServerRelativeUrl(folderPath);
   let attachmentFiles = attachmentFolder.get_files();
@@ -142,7 +142,7 @@ showRegularisationFraisMission.ShowFichierJoint = function (demandeid) {
             dateajout: new Date(attachmentFiles.itemAt(i).get_timeLastModified()).toLocaleString(), //   new Date( attachmentFiles.itemAt(i).get_timeLastModified ()).toLocaleDateString() + ' ' +
             taille: appHelper.ConvertOctetToKo(attachmentFiles.itemAt(i).get_length()),
             auteur: attachmentFiles.itemAt(i).get_author(),
-            url: appHelper.AppConstante.SiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
+            url: appHelper.AppConstante.RootSiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
           });
         }
         showRegularisationFraisMission.ShowUploadForm(demandeid, view);
@@ -176,6 +176,13 @@ showRegularisationFraisMission.ShowUploadForm = function (demandeid, view) {
       reader.readAsArrayBuffer(file);
     }
   });
+
+  setTimeout(function() {
+    const addfile = document.getElementById("addfile");
+    addfile.addEventListener("click", function () {
+      showRegularisationFraisMission.OpenFileUpload('FpUploadAttachement');
+    });
+  }, 1000);
 }
 
 showRegularisationFraisMission.AttachFile = function (demandeid, arrayBuffer, fileName) {
@@ -184,7 +191,7 @@ showRegularisationFraisMission.AttachFile = function (demandeid, arrayBuffer, fi
   var oWeb = clientContext.get_web();
   //Get list and Attachment folder where the attachment of a particular list item is stored.
   var oList = oWeb.get_lists().getByTitle(appHelper.ListName.RegularisationFraisMission);
-  var urlToAttach = '/Lists/' + appHelper.ListName.RegularisationFraisMission + '/Attachments/' + demandeid + '/'
+  var urlToAttach = 'Lists/' + appHelper.ListName.RegularisationFraisMission + '/Attachments/' + demandeid + '/'
   var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
   console.log(attachmentFolder);
   //Convert the file contents into base64 data
@@ -264,10 +271,10 @@ function ajouterEspacesEntreChiffres(nombre) {
   if(nombre>999){
     // Convertir le nombre en une chaîne de caractères
     var nombreString = nombre.toString();
-   
+
     // Utiliser une expression régulière pour ajouter des espaces entre les chiffres
     var nombreAvecEspaces = nombreString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-    
+
     return nombreAvecEspaces;
   }
   else{
@@ -281,7 +288,7 @@ showRegularisationFraisMission.ShowDetails = function (demandeid) {
   let oList = showRegularisationFraisMission.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.RegularisationFraisMission);
   let It = oList.getItemById(demandeid);
 
-  
+
 
   showRegularisationFraisMission.clientContext.load(It);
   showRegularisationFraisMission.clientContext.executeQueryAsync(function () {
@@ -313,6 +320,9 @@ showRegularisationFraisMission.ShowDetails = function (demandeid) {
         etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
       };
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
+
+
+      
 
     }
   }, appSpHelper.writeError);
@@ -352,5 +362,11 @@ showRegularisationFraisMission.ShowFirst = function (demandeid) {
     }
   }, appSpHelper.writeError);
 }
+
+showRegularisationFraisMission.OpenFileUpload = function(str_select) {
+  let transElt = document.getElementById(str_select);
+  transElt.click();
+}
+
 
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showRegularisationFraisMission.InitializePage);

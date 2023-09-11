@@ -37,22 +37,27 @@
         <select id="cmbMode" name="cmbMode" class="form-control">
           <option value="0" data-color="#000">Choisir le mode de paiement</option>
         </select>
-        <input id="TxtModeColeur" value="" type="hidden" >
-        <input id="TxtModeText" value="" type="hidden" >
+        <input id="TxtModeColeur" value="" type="hidden">
+        <input id="TxtModeText" value="" type="hidden">
       </div>
 
       <div class="mb-3">
         <label class="form-label"> Payer &aacute; <span class="asterix">*</span></label>
-        <input type="text" class="form-control" id="TxtPayerA" placeholder="" />
+        <div id="plePickerInterimaireDiv"></div>
       </div>
 
+      <!-- <div class="mb-3">
+        <label class="form-label"> Nom & Pr&eacute;nom(s) <span class="asterix">*</span></label>
+        <input type="text" class="form-control" id="TxtPayerA" placeholder="" disabled />
+      </div> -->
+
       <div class="mb-3">
-        <label  class="form-label"> Caisse de paiement <span class="asterix">*</span> :</label>
+        <label class="form-label"> Caisse de paiement <span class="asterix">*</span> :</label>
         <select id="cmbCaisse" name="cmbCaisse" class="form-control">
           <option value="0" data-color="#000">Choisir la Caisse de paiement</option>
         </select>
-        <input id="TxtCaisseColeur" value="" type="hidden" >
-        <input id="TxtCaisseText" value="" type="hidden" >
+        <input id="TxtCaisseColeur" value="" type="hidden">
+        <input id="TxtCaisseText" value="" type="hidden">
       </div>
 
       <div class="mb-3">
@@ -62,17 +67,21 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label"> Doc justificatifs</label>
-        <input type="file" class="form-control" id="FileDoc" placeholder="" />
+        <label class="form-label"> Document justificatif</label>
+        <input type="file" class="form-control fileUpload" id="FileDoc" placeholder="" />
       </div>
 
       <div class="mb-3">
-        <input id="TxtVerif" type="hidden" >
-    </div>
+        <input id="TxtVerif" type="hidden">
+      </div>
 
-    <div class="mb-3">
-        <input id="TxtID" type="hidden" >
-    </div>
+      <div class="mb-3">
+        <input id="TxtID" type="hidden">
+      </div>
+
+      <div class="mb-3">
+        <input id="TxtRef" type="hidden">
+      </div>
 
       <span class="note">
         L'interim ne concerne que les validations dans Moovinside.

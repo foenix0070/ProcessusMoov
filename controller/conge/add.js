@@ -10,6 +10,7 @@ appConge.InitializePage = function () {
       document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
       document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
       document.getElementById("TxtEmail").value = App.CurrentUser.Email;
+      document.getElementById("bSolde").innerText = App.CurrentUser.NombreJoursAcquis;
 
       setTimeout(function () {
         appSpHelper.InitializePeoplePicker(
@@ -27,7 +28,7 @@ appConge.InitializePage = function () {
 
         appConge.ShowDetails(
           appHelper.GetQueryStringFromAjaxQuery("DID"),
-          function () {}
+          function () { }
         );
       }, 2000);
     });
@@ -47,7 +48,7 @@ appConge.InitializePage = function () {
   const TxtIntName = document.querySelector("#TxtIntName");
   const CmbType = document.getElementById("cmbTypeConge");
 
-  CmbType.addEventListener("change", function () {});
+  CmbType.addEventListener("change", function () { });
 
   TxtIntName.addEventListener("click", function () {
     // document.querySelector("#TxtIntName").value = 'Consultant INOVA';
@@ -57,7 +58,7 @@ appConge.InitializePage = function () {
     let nature = document.getElementById("cmbTypeConge").value;
     let duree = document.getElementById("TxtNbreJour").value;
     let startdate = document.getElementById("TxtDateDepart").value;
-    if (appConge.TestFields ()) {
+    if (appConge.TestFields()) {
       BtnSave.disabled = true;
 
       let verif = document.getElementById("TxtVerif").value;
@@ -86,62 +87,62 @@ appConge.InitializePage = function () {
   });
 };
 
-appConge.TestFields = function(){
+appConge.TestFields = function () {
 
-let v = true;
-let str = '';
+  let v = true;
+  let str = '';
 
- // Récupérer les valeurs des champs
- var nom = document.getElementById("TxtNom").value;
- var matricule = document.getElementById("TxtMatricule").value;
- var email = document.getElementById("TxtEmail").value;
- var typeConge = document.getElementById("cmbTypeConge").value;
- var nbreJour = document.getElementById("TxtNbreJour").value;
- var dateDepart = document.getElementById("TxtDateDepart").value;
+  // Récupérer les valeurs des champs
+  var nom = document.getElementById("TxtNom").value;
+  var matricule = document.getElementById("TxtMatricule").value;
+  var email = document.getElementById("TxtEmail").value;
+  var typeConge = document.getElementById("cmbTypeConge").value;
+  var nbreJour = document.getElementById("TxtNbreJour").value;
+  var dateDepart = document.getElementById("TxtDateDepart").value;
 
- e = document.getElementById("cmbTypeConge"); 
- value = e.value; 
- text = e.options[e.selectedIndex].getAttribute('data-impact'); 
- var isImpact = appHelper. parseBool(text);
+  e = document.getElementById("cmbTypeConge");
+  value = e.value;
+  text = e.options[e.selectedIndex].getAttribute('data-impact');
+  var isImpact = appHelper.parseBool(text);
 
- var startDate = new Date(document.getElementById("TxtDateDepart").value);
+  var startDate = new Date(document.getElementById("TxtDateDepart").value);
 
- var todaydate = new Date();
+  var todaydate = new Date();
 
- // Vérifier si les champs obligatoires sont vides
- if (nom === "" || matricule === "" || email === "" || typeConge === "0" || nbreJour === "" || dateDepart === "") {
-   str += ("Veuillez remplir tous les champs obligatoires. <br>");
-     v= false; // Empêche l'envoi du formulaire
- }
+  // Vérifier si les champs obligatoires sont vides
+  if (nom === "" || matricule === "" || email === "" || typeConge === "0" || nbreJour === "" || dateDepart === "") {
+    str += ("Veuillez remplir tous les champs obligatoires. <br>");
+    v = false; // Empêche l'envoi du formulaire
+  }
 
- // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
- if (parseInt(nbreJour) < 1) {
-   str +=  ("Le nombre de jours doit être supérieur ou égal à 1. <br>");
-     v= false; // Empêche l'envoi du formulaire
- }
+  // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
+  if (parseInt(nbreJour) < 1) {
+    str += ("Le nombre de jours doit être supérieur ou égal à 1. <br>");
+    v = false; // Empêche l'envoi du formulaire
+  }
 
- // Verifier si la date est supérieure ou égales à celle d'aujourd'hui
- if (startDate < todaydate) {
-  str +=  ("La date choisit n'est pas valide. <br>");
-    v= false; // Empêche l'envoi du formulaire
-}
+  // Verifier si la date est supérieure ou égales à celle d'aujourd'hui
+  if (startDate < todaydate) {
+    str += ("La date choisit n'est pas valide. <br>");
+    v = false; // Empêche l'envoi du formulaire
+  }
 
 
- if (isImpact) {
-   if (parseInt(nbreJour) > App.CurrentUser.NombreJoursAcquis) {
-     str += "Votre solde de congé est inférieur à votre demande. <br>";
-     v = false; // Empêche l'envoi du formulaire
-   }
- }
+  if (isImpact) {
+    if (parseInt(nbreJour) > App.CurrentUser.NombreJoursAcquis) {
+      str += "Votre solde de congé est inférieur à votre demande. <br>";
+      v = false; // Empêche l'envoi du formulaire
+    }
+  }
 
- let div = document.getElementById('DivErreurMessage');
- div.innerHTML = '';
- if(v==false){
-  str = `<div style="border:2px solid red; background:#ffe6ff;padding:3px;color:#330033;margin:3px;">${str}</div>`;
-  div.innerHTML = str;
- }
+  let div = document.getElementById('DivErreurMessage');
+  div.innerHTML = '';
+  if (v == false) {
+    str = `<div style="border:2px solid red; background:#ffe6ff;padding:3px;color:#330033;margin:3px;">${str}</div>`;
+    div.innerHTML = str;
+  }
 
- return v;
+  return v;
 };
 
 appConge.initCmbTypeConge = function (callBack) {
@@ -225,8 +226,8 @@ appConge.List = function () {
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(
     "<View><Query><Where>" +
-      '<Eq><FieldRef ID="Demandeur" /><Value Type="Integer"><UserID/></Value></Eq>' +
-      "</Where></Query></View>"
+    '<Eq><FieldRef ID="Demandeur" /><Value Type="Integer"><UserID/></Value></Eq>' +
+    "</Where></Query></View>"
   );
   let collListItem = oList.getItems(camlQuery);
   appConge.clientContext.load(collListItem);
@@ -276,26 +277,39 @@ appConge.Add = function (callBack) {
     document.getElementById("TxtDateDepart").value
     //appHelper.ReturnISODate()
   );
-  let endDate = startDate.addDays(
-    parseInt(document.getElementById("TxtNbreJour").value)
-  );
+
+
+  let duree = parseInt(document.getElementById("TxtNbreJour").value);
+  let endDate = new Date(startDate);
+  endDate.setDate(startDate.getDate() + duree);
+
+  let repDate = new Date(endDate);
+  repDate.setDate(endDate.getDate() + 1);
+
+  if (repDate.getDay() === 6) {
+    repDate.setDate(repDate.getDate() + 2);
+  } else if (endDate.getDay() === 0) {
+    repDate.setDate(repDate.getDate() + 1);
+  }
 
   let pickerDict =
     SPClientPeoplePicker.SPClientPeoplePickerDict
       .plePickerInterimaireDiv_TopSpan;
   let userKeys = pickerDict.GetAllUserKeys();
 
-  e = document.getElementById("cmbTypeConge"); 
-  value = e.value; 
-  text = e.options[e.selectedIndex].getAttribute('data-impact'); 
+  e = document.getElementById("cmbTypeConge");
+  value = e.value;
+  text = e.options[e.selectedIndex].getAttribute('data-impact');
+  let ref = appHelper.getReference("CNG");
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
+  oListItem.set_item("Reference", ref);
 
   oListItem.set_item("DateDepart", startDate);
   oListItem.set_item("DateRetour", endDate);
   oListItem.set_item("DateReprise", endDate);
-  oListItem.set_item("DateRetourPrevisionnelle", endDate);
+  oListItem.set_item("DateRetourPrevisionnelle", repDate);
 
   oListItem.set_item(
     "Title",
@@ -387,6 +401,7 @@ appConge.Add = function (callBack) {
       oListItem.get_id(),
       App.CurrentUser.Manager.Login,
       App.CurrentUser.Manager2.Login,
+      ref,
       function () {
         if (callBack) {
           callBack(oListItem);
@@ -428,6 +443,8 @@ appConge.Edit = function (demandeid, callBack) {
     "Title",
     document.getElementById("TxtTypeCongeText").value
   );
+
+  oListItem.set_item("Reference", document.getElementById("TxtRef").value);
 
   oListItem.set_item(
     "NombreJours",
@@ -526,9 +543,11 @@ appConge.ShowDetails = function (demandeid, callBack) {
   appConge.clientContext.load(It);
   appConge.clientContext.executeQueryAsync(function () {
     if (It) {
+
       document.getElementById("TxtDateDepart").value = new Date(
         It.get_item("DateDepart")
-      ).toLocaleDateString();
+      ).toISOString().split('T')[0];
+
       document.getElementById("TxtTypeCongeText").value =
         It.get_item("TypeCongeLibelle") != null
           ? It.get_item("TypeCongeLibelle")
@@ -555,6 +574,8 @@ appConge.ShowDetails = function (demandeid, callBack) {
       document.getElementById("TxtTypeCongeColeur").value =
         It.get_item("Couleur") != null ? It.get_item("Couleur") : "";
 
+      document.getElementById("TxtRef").value = It.get_item('Reference') != null ? It.get_item('Reference') : '';
+      
       document.getElementById("TxtVerif").value = "Edit";
       document.getElementById("TxtID").value =
         It.get_item("ID") != null ? It.get_item("ID") : 0;
@@ -565,6 +586,7 @@ appConge.ShowDetails = function (demandeid, callBack) {
           ? It.get_item("Interimaire").get_lookupValue()
           : ""
       );
+
 
       if (callBack) {
         callBack();

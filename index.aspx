@@ -51,11 +51,13 @@
                 <script src="/sites/proc/tools/assets/js/autoNumeric.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/selectize.min.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/bootstrap.bundle.min.js?t=1"></script>
+                <script src="/sites/proc/tools/assets/js/bootbox.all.min.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/plugins/DataTables/datatables.min.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/workflow_template.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/SpGroupConstante.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/extensions.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/appSpHelper.js?t=1"></script>
+                <script src="/sites/proc/tools/assets/js/spFileHelper.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/WFManager.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/autoNumeric.min.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/mustache.js?t=1"></script>

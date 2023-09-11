@@ -221,10 +221,14 @@ appMateriel.Add = function (callBack) {
   var autoNumericObject = AutoNumeric.getAutoNumericElement(Input);
 
   var qte = autoNumericObject.getNumber();
+
+  let ref = appHelper.getReference("MTRL");
+
   console.log(qte);
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
+  oListItem.set_item("Reference", ref);
 
   oListItem.set_item("DateDepart", startDate);
   oListItem.set_item("DateRetour", endDate);
@@ -260,7 +264,7 @@ appMateriel.Add = function (callBack) {
 
     const appUrl = '/pages/materiel/show.aspx?ID=' + oListItem.get_id();
     let WF = new WFManager(appHelper.AppCode.MATERIEL, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.MATERIEL, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.MATERIEL, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function () { })
     if (callBack) {
       callBack(oListItem);
     }
@@ -287,6 +291,7 @@ appMateriel.Edit = function (demandeid, callBack) {
   oListItem.set_item("Nature", document.getElementById("TxtMateriel").value);
 
   oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
+  oListItem.set_item("Reference", document.getElementById("TxtRef").value);
 
   oListItem.set_item("Quantite", qte);
 
@@ -328,6 +333,8 @@ appMateriel.ShowDetails = function (demandeid, callBack) {
       document.getElementById("TxtMateriel").value = It.get_item('Title') != null ? It.get_item('Title') : '';
       document.getElementById("TxtMotif").value = It.get_item('Motif') != null ? It.get_item('Motif') : '';
       document.getElementById("TxtQuantite").value = It.get_item('Quantite') != null ? It.get_item('Quantite') : '';
+      document.getElementById("TxtRef").value = It.get_item('Reference') != null ? It.get_item('Reference') : '';
+
       document.getElementById("TxtVerif").value = 'Edit';
       document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;
 

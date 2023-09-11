@@ -47,6 +47,10 @@
                 <input id="TxtID" type="hidden" >
             </div>
 
+            <div class="mb-3">
+                <input id="TxtRef" type="hidden">
+            </div>
+
         </fieldset>
 
     </div>

@@ -126,7 +126,7 @@ showGadget.ShowFichierJoint = function (demandeid) {
 
   let appName = appHelper.ListName.Gadget;
   let id = demandeid;
-  let folderPath = `/Lists/${appName}/Attachments/${id}/`;
+  let folderPath = `Lists/${appName}/Attachments/${id}/`;
   console.log(folderPath);
   let attachmentFolder = clientContext.get_web().getFolderByServerRelativeUrl(folderPath);
   let attachmentFiles = attachmentFolder.get_files();
@@ -143,7 +143,7 @@ showGadget.ShowFichierJoint = function (demandeid) {
             dateajout: new Date(attachmentFiles.itemAt(i).get_timeLastModified()).toLocaleString(), //   new Date( attachmentFiles.itemAt(i).get_timeLastModified ()).toLocaleDateString() + ' ' +
             taille: appHelper.ConvertOctetToKo(attachmentFiles.itemAt(i).get_length()),
             auteur: attachmentFiles.itemAt(i).get_author(),
-            url: appHelper.AppConstante.SiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
+            url: appHelper.AppConstante.RootSiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
           });
         }
         showGadget.ShowUploadForm(demandeid, view);
@@ -177,6 +177,13 @@ showGadget.ShowUploadForm = function (demandeid, view) {
       reader.readAsArrayBuffer(file);
     }
   });
+
+  setTimeout(function() {
+    const addfile = document.getElementById("addfile");
+    addfile.addEventListener("click", function () {
+      OpenFileUpload('FpUploadAttachement');
+    });
+  }, 1000);
 }
 
 showGadget.AttachFile = function (demandeid, arrayBuffer, fileName) {
@@ -185,7 +192,7 @@ showGadget.AttachFile = function (demandeid, arrayBuffer, fileName) {
   var oWeb = clientContext.get_web();
   //Get list and Attachment folder where the attachment of a particular list item is stored.
   var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Gadget);
-  var urlToAttach = '/Lists/' + appHelper.ListName.Gadget + '/Attachments/' + demandeid + '/'
+  var urlToAttach = 'Lists/' + appHelper.ListName.Gadget + '/Attachments/' + demandeid + '/'
   var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
   console.log(attachmentFolder);
   //Convert the file contents into base64 data
@@ -266,10 +273,10 @@ function ajouterEspacesEntreChiffres(nombre) {
  if(nombre>999){
    // Convertir le nombre en une chaîne de caractères
    var nombreString = nombre.toString();
-  
+
    // Utiliser une expression régulière pour ajouter des espaces entre les chiffres
    var nombreAvecEspaces = nombreString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-   
+
    return nombreAvecEspaces;
  }
  else{
@@ -308,6 +315,8 @@ showGadget.ShowDetails = function (demandeid) {
       };
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
 
+      
+
     }
   }, appSpHelper.writeError);
 }
@@ -345,6 +354,11 @@ showGadget.ShowFirst = function (demandeid) {
 
     }
   }, appSpHelper.writeError);
+}
+
+function OpenFileUpload(str_select) {
+  let transElt = document.getElementById(str_select);
+  transElt.click();
 }
 
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showGadget.InitializePage);

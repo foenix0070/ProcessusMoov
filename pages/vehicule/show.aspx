@@ -53,32 +53,32 @@
 
 <script id="tmpl_form_fichiers_attaches" type="x-tmpl-mustache">
 
-                  <div class="head-titre">
-                    <h2>
-                      Documents attach&eacute;s
-                    </h2>
-                  </div>
-                  <div class="sect-card">
-                    <div class="sect-bn"><button class="btn btn-warning btn-sm" id="addfile" onclick="OpenFileUpload('FpUploadAttachement')">Joindre un fichier</button></div>
-                    <input type="file" id="FpUploadAttachement" style="display:none;"  name="FpUploadAttachement[]" multiple>
-                    <div class='card-head'>
-                      <div class='card-item-1'>
-                        <span class='elt'>Nom</span>
-                      </div>
-                      <span class='card-item-date'>Date cr&eacute;ation</span>
-                      <span class='card-item-size'>Taille</span>
-                    </div>
-                    {{#fichiers}}
-                    <div class='card'>
-                      <div class='card-item-1'>
-                       <a target="_blank" href="{{url}}"> <span class='elt'>{{nom}}</span> </a>
-                      </div>
-                      <span class='card-item-date'>{{dateajout}}</span>
-                      <span class='card-item-size'>{{taille}}</span>
-                    </div>
-                    {{/fichiers}}
-                  </div>
-                </script>
+  <div class="head-titre">
+    <h2>
+      Documents attach&eacute;s
+    </h2>
+  </div>
+  <div class="sect-card">
+    <div class="sect-bn"><button class="btn btn-warning btn-sm" id="addfile" type="button">Joindre un fichier</button></div>
+    <input type="file" id="FpUploadAttachement" style="display:none;"  name="FpUploadAttachement[]" multiple>
+    <div class='card-head'>
+      <div class='card-item-1'>
+        <span class='elt'>Nom</span>
+      </div>
+      <span class='card-item-date'>Date cr&eacute;ation</span>
+      <span class='card-item-size'>Taille</span>
+    </div>
+    {{#fichiers}}
+    <div class='card'>
+      <div class='card-item-1'>
+       <a target="_blank" href="{{url}}"> <span class='elt'>{{nom}}</span> </a>
+      </div>
+      <span class='card-item-date'>{{dateajout}}</span>
+      <span class='card-item-size'>{{taille}}</span>
+    </div>
+    {{/fichiers}}
+  </div>
+</script>
 
 <script id="tmpl_form_historique_validation" type="x-tmpl-mustache">
 
@@ -187,8 +187,6 @@
                       </tr>
                   </table>
                 </script>
-
-<!--<script src="http://ci08vmmitest/tools1/controller/Vehicule/show.js"></script>-->
 
 <script type="text/javascript">
   appHelper.loadJSWithNameSpace("showVehicule", 'showVehicule', "controller/Vehicule/show.js");

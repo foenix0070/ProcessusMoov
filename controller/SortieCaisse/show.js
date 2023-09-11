@@ -129,7 +129,7 @@ showSortieCaisse.ShowFichierJoint = function (demandeid) {
 
   let appName = appHelper.ListName.SortieCaisse;
   let id = demandeid;
-  let folderPath = `/Lists/${appName}/Attachments/${id}/`;
+  let folderPath = `Lists/${appName}/Attachments/${id}/`;
   console.log(folderPath);
   let attachmentFolder = clientContext.get_web().getFolderByServerRelativeUrl(folderPath);
   let attachmentFiles = attachmentFolder.get_files();
@@ -146,7 +146,7 @@ showSortieCaisse.ShowFichierJoint = function (demandeid) {
             dateajout: new Date(attachmentFiles.itemAt(i).get_timeLastModified()).toLocaleString(), //   new Date( attachmentFiles.itemAt(i).get_timeLastModified ()).toLocaleDateString() + ' ' +
             taille: appHelper.ConvertOctetToKo(attachmentFiles.itemAt(i).get_length()),
             auteur: attachmentFiles.itemAt(i).get_author(),
-            url: appHelper.AppConstante.SiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
+            url: appHelper.AppConstante.RootSiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
           });
         }
         showSortieCaisse.ShowUploadForm(demandeid, view);
@@ -180,6 +180,13 @@ showSortieCaisse.ShowUploadForm = function (demandeid, view) {
       reader.readAsArrayBuffer(file);
     }
   });
+
+  setTimeout(function() {
+    const addfile = document.getElementById("addfile");
+    addfile.addEventListener("click", function () {
+     showSortieCaisse.OpenFileUpload('FpUploadAttachement');
+    });
+  }, 1000);
 }
 
 showSortieCaisse.AttachFile = function (demandeid, arrayBuffer, fileName) {
@@ -188,7 +195,7 @@ showSortieCaisse.AttachFile = function (demandeid, arrayBuffer, fileName) {
   var oWeb = clientContext.get_web();
   //Get list and Attachment folder where the attachment of a particular list item is stored.
   var oList = oWeb.get_lists().getByTitle(appHelper.ListName.SortieCaisse);
-  var urlToAttach = '/Lists/' + appHelper.ListName.SortieCaisse + '/Attachments/' + demandeid + '/'
+  var urlToAttach = 'Lists/' + appHelper.ListName.SortieCaisse + '/Attachments/' + demandeid + '/'
   var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
   console.log(attachmentFolder);
   //Convert the file contents into base64 data
@@ -292,8 +299,10 @@ showSortieCaisse.ShowDetails = function (demandeid) {
     if (It) {
       let demandeurField = It.get_item('Demandeur');
       let superieurField = It.get_item('ResponsableN1');
+      let personneField = It.get_item('Beneficiaire');
       let demandeurName = demandeurField.get_lookupValue();
       let superieurName = superieurField.get_lookupValue();
+      let personneName = personneField.get_lookupValue();
       let mont = ajouterEspacesEntreChiffres(It.get_item('Montant'));
 
       let test = It.get_item('ObjetReglement') != null ? It.get_item('ObjetReglement') : '';
@@ -308,6 +317,7 @@ showSortieCaisse.ShowDetails = function (demandeid) {
         titre: It.get_item('Title') != null ? It.get_item('Title') : '',
         modePaiement: It.get_item('ModePaiement') != null ? It.get_item('ModePaiement') : '',
         payerA: It.get_item('PayerA') != null ? It.get_item('PayerA') : '',
+        payerA: personneName,
         caissePaiement: It.get_item('CaissePaiement') != null ? It.get_item('CaissePaiement') : '',
         objetReglement: It.get_item('ObjetReglement') != null ? It.get_item('ObjetReglement') : '',
         demandeur: demandeurName,
@@ -359,7 +369,7 @@ showSortieCaisse.ShowFirst = function (demandeid) {
   }, appSpHelper.writeError);
 }
 
-function OpenFileUpload(str_select) {
+showSortieCaisse.OpenFileUpload = function(str_select) {
   let transElt = document.getElementById(str_select);
   transElt.click();
 }

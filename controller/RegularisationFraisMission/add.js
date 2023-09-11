@@ -19,17 +19,17 @@ appRegularisationFraisMission.InitializePage = function () {
             var info = element.getAttribute('data-info');
             console.log(info);
 
-        if (info == "fraisMission") {
-            // document.getElementById("cmbSortie").disabled=true;
-            document.getElementById("cmbMission").style.display = "none";
-            document.getElementById("TxtMission").style.display = "block";
-            appRegularisationFraisMission.ShowSortie(appHelper.GetQueryStringFromAjaxQuery('DID'), function () { });
-        }
-        else {
-            // appRegularisationSortieCaisse.initCmbSortie(function () { });
-            appRegularisationFraisMission.initCmbMission(function () { });
-            //appRegularisationFraisMission.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function () { });
-        }
+            if (info == "fraisMission") {
+                // document.getElementById("cmbSortie").disabled=true;
+                document.getElementById("cmbMission").style.display = "none";
+                document.getElementById("TxtMission").style.display = "block";
+                appRegularisationFraisMission.ShowSortie(appHelper.GetQueryStringFromAjaxQuery('DID'), function () { });
+            }
+            else {
+                // appRegularisationSortieCaisse.initCmbSortie(function () { });
+                appRegularisationFraisMission.initCmbMission(function () { });
+                //appRegularisationFraisMission.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function () { });
+            }
 
         });
 
@@ -71,7 +71,7 @@ appRegularisationFraisMission.InitializePage = function () {
             }
         }
 
-        });
+    });
 
 
 
@@ -226,11 +226,14 @@ appRegularisationFraisMission.Add = function (callBack) {
             }
 
             let verifid = document.getElementById("TxtMissionID").value;
+            let ref = appHelper.getReference("RFDM");
+
             if (verifid) {
                 oListItem.set_item("MissionID", parseInt(document.getElementById("TxtMissionID").value));
                 oListItem.set_item("Mission", document.getElementById("TxtMission").value);
                 oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
                 oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
+                oListItem.set_item("Reference", ref);
 
                 oListItem.set_item("DateDebut", item.DateDebut);
                 oListItem.set_item("DateFin", item.DateFin);
@@ -266,7 +269,7 @@ appRegularisationFraisMission.Add = function (callBack) {
 
                     const appUrl = '/pages/regularisationFraisMission/show.aspx?ID=' + oListItem.get_id();
                     let WF = new WFManager(appHelper.AppCode.REGULARISATIONFRAISMISSION, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-                    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONFRAISMISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+                    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONFRAISMISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function () { })
 
                     appRegularisationFraisMission.UpDateStatusFraisMission(verifid, function () { });
 
@@ -281,6 +284,8 @@ appRegularisationFraisMission.Add = function (callBack) {
 
                 oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
                 oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
+                oListItem.set_item("Reference", ref);
+
 
                 oListItem.set_item("DateDebut", item.DateDebut);
                 oListItem.set_item("DateFin", item.DateFin);

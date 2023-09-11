@@ -126,7 +126,7 @@ showAbsence.ShowFichierJoint = function (demandeid) {
 
   let appName = appHelper.ListName.Absence;
   let id = demandeid;
-  let folderPath = `/Lists/${appName}/Attachments/${id}/`;
+  let folderPath = `Lists/${appName}/Attachments/${id}/`;
   appHelper.Log(folderPath);
   let attachmentFolder = clientContext.get_web().getFolderByServerRelativeUrl(folderPath);
   let attachmentFiles = attachmentFolder.get_files();
@@ -185,7 +185,7 @@ showAbsence.AttachFile = function (demandeid, arrayBuffer, fileName) {
   var oWeb = clientContext.get_web();
   //Get list and Attachment folder where the attachment of a particular list item is stored.
   var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Absence);
-  var urlToAttach = '/Lists/' + appHelper.ListName.Absence + '/Attachments/' + demandeid + '/'
+  var urlToAttach = 'Lists/' + appHelper.ListName.Absence + '/Attachments/' + demandeid + '/'
   var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
   appHelper.Log(attachmentFolder);
   //Convert the file contents into base64 data
@@ -281,7 +281,7 @@ showAbsence.ShowDetails = function (demandeid) {
         title: It.get_item('Title') != null ? It.get_item('Title') : '',
         nbrejour: It.get_item('NombreJourAccorde') != null ? It.get_item('NombreJourAccorde') : '',
         datedepart: It.get_item('DateDepart') != null ? new Date(It.get_item('DateDepart')).toLocaleDateString() : '',
-        dateretour: It.get_item('DateRetour') != null ? new Date(It.get_item('DateRetour')).toLocaleDateString() : '',
+        //dateretour: It.get_item('DateRetour') != null ? new Date(It.get_item('DateRetour')).toLocaleDateString() : '',
         datereprise: It.get_item('DateReprise') != null ? new Date(It.get_item('DateReprise')).toLocaleDateString() : '',
         interimaire: interimaireField,
         demandeur: demandeurName,
@@ -292,6 +292,13 @@ showAbsence.ShowDetails = function (demandeid) {
         etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
       };
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
+
+      setTimeout(function() {
+        const addfile = document.getElementById("addfile");
+        addfile.addEventListener("click", function () {
+          showAbsence.OpenFileUpload('FpUploadAttachement');
+        });
+      }, 1000);
 
     }
   }, appSpHelper.writeError);
@@ -330,6 +337,11 @@ showAbsence.ShowFirst = function (demandeid) {
 
     }
   }, appSpHelper.writeError);
+}
+
+showAbsence.OpenFileUpload = function(str_select) {
+  let transElt = document.getElementById(str_select);
+  transElt.click();
 }
 
 //document.addEventListener("DOMContentLoaded", () => {

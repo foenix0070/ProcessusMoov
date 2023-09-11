@@ -83,10 +83,10 @@
         <input type="date" class="form-control" id="DateReprise" placeholder="" />
       </div> -->
 
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <label class="form-label">Doc justificatifs</label>
         <input type="file" class="form-control" id="DocJustificatif" placeholder="" />
-      </div>
+      </div> -->
 
       <div class="mb-3">
         <input id="TxtVerif" type="hidden">
@@ -94,6 +94,10 @@
 
       <div class="mb-3">
         <input id="TxtID" type="hidden">
+      </div>
+
+      <div class="mb-3">
+        <input id="TxtRef" type="hidden">
       </div>
 
       <span class="note">

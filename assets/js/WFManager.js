@@ -84,6 +84,7 @@ class WFManager {
     _parentid,
     managerN1,
     managerN2,
+    _ref,
     callBack
   ) {
     const WF = this.getWFSchema();
@@ -99,6 +100,7 @@ class WFManager {
         code: element["id"],
         title: element["value"],
         parent: _parent,
+        reference: _ref,
         detail:
           "Demande de " +
           document.getElementById("TxtCurrentUserDisplayName").value +
@@ -130,11 +132,8 @@ class WFManager {
       oListItem.set_item("ParentID0", e.parentid);
       oListItem.set_item("TacheTemplateCode", e.code);
       oListItem.set_item("AppUrl", appUrl);
-      // oListItem.set_item('MailObject', taskItem.mailObject);
-      // oListItem.set_item('Mail', body);
-      // oListItem.set_item('TypeTache', taskItem.typeTache);
       oListItem.set_item("Body", e.detail);
-      // oListItem.set_item('Url', taskItem.url);
+      oListItem.set_item("Reference", e.reference);
       if (e.status == "En cours") {
         oListItemEnCours = oListItem;
       }
@@ -160,6 +159,7 @@ class WFManager {
       //  alert('okkk');
     }, appSpHelper.writeError);
   }
+
 
   goToNextTask(ctx, _tacheid, _parent, _parentid, _commentaire, callBack) {
     const QryGetNextOne =
@@ -208,7 +208,13 @@ class WFManager {
         let oListItem;
         while (listItemEnumerator.moveNext()) {
           oListItem = listItemEnumerator.get_current();
+          let startDate = new Date();
+          let endDate = startDate.addDays(2);
+
           oListItem.set_item("Status", "En cours");
+          oListItem.set_item("StartDate", new Date());
+          oListItem.set_item("DueDate", endDate);
+
           break;
         }
         if (oListItem) {
@@ -217,21 +223,36 @@ class WFManager {
           ctx.executeQueryAsync(function () {
             try {
               appSpHelper.SendNotificationTask(ctx, oListItem, function () {
-                if (callBack) {
-                  callBack(oListItem);
-                }
+
+                appHelper.receiptTask(It, function(){
+                  if (callBack) {
+                    callBack(oListItem);
+                  }
+                })
+
               });
             } catch (e) {
               appHelper.Log(e, appHelper.LogType.ERROR);
-              if (callBack) {
-                callBack(oListItem);
-              }
+
+              appHelper.receiptTask(It, function(){
+                if (callBack) {
+                  callBack(oListItem);
+                }
+              })
+
             }
           }, appSpHelper.writeError);
         } else {
-          if (callBack) {
-            callBack(false);
-          }
+
+
+          appHelper.receiptTask(It, function(){
+            if (callBack) {
+              callBack(false);
+            }
+          })
+
+
+
         }
       }, appSpHelper.writeError);
     }, appSpHelper.writeError);
@@ -261,7 +282,7 @@ class WFManager {
     It.set_item("PercentComplete", 1);
     It.set_item(
       "_Comment",
-      "Refus apporté par : " +
+      "Rejet apporté par : " +
         document.getElementById("TxtCurrentUserDisplayName").value +
         " le " +
         appHelper.ToLocalDateString(new Date()) +
@@ -287,11 +308,15 @@ class WFManager {
           ctx.load(oListItem);
         }
         ctx.executeQueryAsync(function () {
-          if (callBack) {
-            callBack(true);
-          }
+          appHelper.receiptTask(It, function(){
+            if (callBack) {
+              callBack(true);
+            }
+          })
         }, appSpHelper.writeError);
       }, appSpHelper.writeError);
     }, appSpHelper.writeError);
   }
+
+
 }

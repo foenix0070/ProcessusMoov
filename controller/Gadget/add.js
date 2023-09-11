@@ -144,7 +144,6 @@ function number(nombre){
 }
 
 
-
 appGadget.List = function () {
   let oList = appGadget.clientContext
     .get_web()
@@ -210,6 +209,9 @@ appGadget.Add = function ( callBack) {
   var autoNumericObject = AutoNumeric.getAutoNumericElement(Input);
 
   var qte = autoNumericObject.getNumber();
+
+  let ref = appHelper.getReference("GDT");
+
   console.log(qte);
 
 
@@ -217,6 +219,7 @@ appGadget.Add = function ( callBack) {
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
+  oListItem.set_item("Reference", ref);
 
   oListItem.set_item("DateDepart", startDate);
   oListItem.set_item("DateRetour", endDate);
@@ -252,7 +255,7 @@ appGadget.Add = function ( callBack) {
 
   const appUrl = '/pages/gadget/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.GADGET,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
       
       if(callBack){
         callBack(oListItem);
@@ -266,15 +269,6 @@ appGadget.Edit = function (demandeid, callBack) {
 
   let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Gadget);
   let oListItem = oList.getItemById(demandeid);
-
-  /*let oList = appGadget.clientContext
-    .get_web()
-    .get_lists()
-    .getByTitle(appHelper.ListName.Gadget);
-  let itemCreateInfo = new window.SP.ListItemCreationInformation();
-  let oListItem = oList.addItem(itemCreateInfo);
-  */
-
 
   var Input = document.getElementById("TxtQuantite");
 
@@ -292,6 +286,7 @@ appGadget.Edit = function (demandeid, callBack) {
   oListItem.set_item("Nature", document.getElementById("TxtArticle").value);
 
   oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
+  oListItem.set_item("Reference", document.getElementById("TxtRef").value);
 
   oListItem.set_item("Quantite", qte);
 
@@ -312,7 +307,7 @@ appGadget.Edit = function (demandeid, callBack) {
   const appUrl = '/pages/gadget/show.aspx?ID=' + oListItem.get_id();
       console.log(appUrl);
       let WF = new WFManager(appHelper.AppCode.GADGET,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
       
       if(callBack){
         callBack(oListItem);
@@ -334,6 +329,7 @@ appGadget.ShowDetails = function (demandeid, callBack) {
         document.getElementById("TxtArticle").value = It.get_item('Title') != null ? It.get_item('Title') : ''; 
         document.getElementById("TxtMotif").value = It.get_item('Motif') != null ? It.get_item('Motif') : '';
         document.getElementById("TxtQuantite").value = It.get_item('Quantite') != null ? It.get_item('Quantite') : '';
+        document.getElementById("TxtRef").value = It.get_item('Reference') != null ? It.get_item('Reference') : '';
         document.getElementById("TxtVerif").value = 'Edit';
         document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;
         

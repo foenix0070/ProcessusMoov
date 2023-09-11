@@ -122,14 +122,13 @@ showRegularisationSortieCaisse.UpDateItemStatus = function (nextTask, demandeid,
 }
 
 
-
 showRegularisationSortieCaisse.ShowFichierJoint = function (demandeid) {
 
   let view = {};
 
   let appName = appHelper.ListName.RegularisationSortieCaisse;
   let id = demandeid;
-  let folderPath = `/Lists/${appName}/Attachments/${id}/`;
+  let folderPath = `Lists/${appName}/Attachments/${id}/`;
   console.log(folderPath);
   let attachmentFolder = clientContext.get_web().getFolderByServerRelativeUrl(folderPath);
   let attachmentFiles = attachmentFolder.get_files();
@@ -146,7 +145,7 @@ showRegularisationSortieCaisse.ShowFichierJoint = function (demandeid) {
             dateajout: new Date(attachmentFiles.itemAt(i).get_timeLastModified()).toLocaleString(), //   new Date( attachmentFiles.itemAt(i).get_timeLastModified ()).toLocaleDateString() + ' ' +
             taille: appHelper.ConvertOctetToKo(attachmentFiles.itemAt(i).get_length()),
             auteur: attachmentFiles.itemAt(i).get_author(),
-            url: appHelper.AppConstante.SiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
+            url: appHelper.AppConstante.RootSiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
           });
         }
         showRegularisationSortieCaisse.ShowUploadForm(demandeid, view);
@@ -180,6 +179,14 @@ showRegularisationSortieCaisse.ShowUploadForm = function (demandeid, view) {
       reader.readAsArrayBuffer(file);
     }
   });
+
+  setTimeout(function() {
+    const addfile = document.getElementById("addfile");
+    addfile.addEventListener("click", function () {
+     showRegularisationSortieCaisse.OpenFileUpload('FpUploadAttachement');
+    });
+  }, 1000);
+
 }
 
 showRegularisationSortieCaisse.AttachFile = function (demandeid, arrayBuffer, fileName) {
@@ -188,7 +195,7 @@ showRegularisationSortieCaisse.AttachFile = function (demandeid, arrayBuffer, fi
   var oWeb = clientContext.get_web();
   //Get list and Attachment folder where the attachment of a particular list item is stored.
   var oList = oWeb.get_lists().getByTitle(appHelper.ListName.RegularisationSortieCaisse);
-  var urlToAttach = '/Lists/' + appHelper.ListName.SortieCaisse + '/Attachments/' + demandeid + '/'
+  var urlToAttach = 'Lists/' + appHelper.ListName.SortieCaisse + '/Attachments/' + demandeid + '/'
   var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
   console.log(attachmentFolder);
   //Convert the file contents into base64 data
@@ -275,7 +282,7 @@ function ajouterEspacesEntreChiffres(nombre) {
   else{
    return nombre;
   }
- }
+}
 
 showRegularisationSortieCaisse.ShowDetails = function (demandeid) {
 
@@ -300,8 +307,6 @@ showRegularisationSortieCaisse.ShowDetails = function (demandeid) {
         sortieid: It.get_item('SortieID') != null ? It.get_item('SortieID') : '',
         titre: It.get_item('Title') != null ? It.get_item('Title') : '',
         date: It.get_item('Created').toLocaleDateString() != null ? It.get_item('Created').toLocaleDateString() : '',
-        //montant: It.get_item('Montant') != null ? It.get_item('Montant') : '',
-        //solde: It.get_item('Solde') != null ? It.get_item('Solde') : '',
         montant: mont,
         solde: sold,
         demandeur: demandeurName,
@@ -351,7 +356,7 @@ showRegularisationSortieCaisse.ShowFirst = function (demandeid) {
   }, appSpHelper.writeError);
 }
 
-function OpenFileUpload(str_select) {
+showRegularisationSortieCaisse.OpenFileUpload = function(str_select) {
   let transElt = document.getElementById(str_select);
   transElt.click();
 }

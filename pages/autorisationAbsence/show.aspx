@@ -39,7 +39,7 @@
         <td style="text-align:left; font-weight: 700; font-size: 26px;"><h3><b>DEMANDE D'ABSENCE</h3></b></td>
       </tr>
     </div></br>
-    
+
     <table class="col-12">
       <tr>
         <td style="text-align:left;"><h4><b>NUMERO DE LA DEMANDE : {{id}}</h5></b></td>
@@ -59,7 +59,7 @@
     </h2>
   </div>
   <div class="sect-card">
-    <div class="sect-bn"><button class="btn btn-warning btn-sm" id="addfile" onclick="OpenFileUpload('FpUploadAttachement')">Joindre un fichier</button></div>
+    <div class="sect-bn"><button class="btn btn-warning btn-sm" id="addfile" type="button">Joindre un fichier</button></div>
     <input type="file" id="FpUploadAttachement" style="display:none;"  name="FpUploadAttachement[]" multiple>
     <div class='card-head'>
       <div class='card-item-1'>
@@ -161,7 +161,7 @@
                   {{#id}}
                   <div class="sect-bn"><button class="btn btn-warning btn-sm linkOffCanvasNavigation" data-url="/tools/pages/autorisationAbsence/add.aspx?DID={{id}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" id="BtnModification" >Modifier la demande</button></div>
                   {{/id}}
-                  
+
                   <div>
                     <h3 style="color:#c50000 !important;">
                       <b>
@@ -169,7 +169,7 @@
                       </b>
                     </h3>
                   </div></br>
-                  
+
                   <table>
                       <tr>
                         <td style="text-align:left;" class="fw-bold" width="200px" >Nature</td>
@@ -179,11 +179,6 @@
                       <tr>
                         <td style="text-align:left;" class="fw-bold" width="200px">Date de depart</td>
                         <td style="text-align:left;">{{datedepart}}</td>
-                      </tr>
-
-                      <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Date de retour</td>
-                        <td style="text-align:left;">{{dateretour}}</td>
                       </tr>
 
                       <tr>
@@ -206,18 +201,11 @@
                         <td style="text-align:left;"> {{interimaire}}  </td>
                       </tr>
 
-                      
-                      
+
+
                   </table>
                 </script>
 
 <script type="text/javascript">
   appHelper.loadJSWithNameSpace("showAbsence", 'showAbsence', "controller/absence/show.js");
-</script>
-<script type="text/javascript">
-
-  function OpenFileUpload(str_select) {
-    let transElt = document.getElementById(str_select);
-    transElt.click();
-  }
 </script>

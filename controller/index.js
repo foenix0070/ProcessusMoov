@@ -36,7 +36,7 @@ MoovTools.InitializePage = function () {
                 document.getElementById("demenattente").innerHTML = MoovTools.totalDemandesEnt;
                 MoovTools.ListDemandeEnAttente(appHelper.ListName.Mission, "fraisMission", "MISSION", function () {
                   document.getElementById("demenattente").innerHTML = MoovTools.totalDemandesEnt;
-                  MoovTools.ListDemandeEnAttente(appHelper.ListName.RegularisationFraisMission, "regularisationFraisMission", "REGULARISATION MISSION", function () {
+                  MoovTools.ListDemandeEnAttente(appHelper.ListName.RegularisationFraisMission, "regularisationFraisMission", "REGULARISATION FRAIS DE MISSION", function () {
                     document.getElementById("demenattente").innerHTML = MoovTools.totalDemandesEnt;
                     MoovTools.ListDemandeEnAttente(appHelper.ListName.RegularisationSortieCaisse, "regularisationSortieCaisse", "REGULARISATION DE SORTIE DE CAISSE", function () {
                       document.getElementById("demenattente").innerHTML = MoovTools.totalDemandesEnt;
@@ -357,6 +357,7 @@ MoovTools.ListDemandeEnAttente = function (DemandeList, nomdurepertoire, nomdupr
         MoovTools.view.demandesEnt.push({
           date: oListItem.get_item("Created"),
           demandeur: demandeurName,
+          reference: oListItem.get_item("Reference"),
           create: creer,
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Title"),
@@ -537,16 +538,27 @@ MoovTools.listTache = function () {
       var listItemEnumerator = collListItem.getEnumerator();
       let view = {};
       view.taches = [];
+      let _i = 1;
       while (listItemEnumerator.moveNext()) {
         var oListItem = listItemEnumerator.get_current();
         let lien = oListItem.get_item("AppUrl") + '&tacheid=' + oListItem.get_item("ID");
+        let creeerpar = oListItem.get_item('Author');
+        let creer = creeerpar.get_lookupValue();
         console.log(lien);
+
         view.taches.push({
+          //demandeur: demandeurName,
+          i : _i,
           id: oListItem.get_item("ID"),
           title: oListItem.get_item("Body"),
+          reference: oListItem.get_item("Reference"),
+          author: creer,
+          requestdate: new Date(oListItem.get_item("Created")).toLocaleDateString(),
+          //requestdate: new Date(oListItem.get_item("Created")).toLocaleDateString(),
           startdate: new Date(oListItem.get_item("StartDate")).toLocaleDateString(),
           url: oListItem.get_item("AppUrl") + '&tacheid=' + oListItem.get_item("ID")
         });
+        _i++;
       }
 
       document.getElementById("divListTaches").style.display = "block";

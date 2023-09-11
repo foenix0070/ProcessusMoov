@@ -126,7 +126,7 @@ showMateriel.ShowFichierJoint = function (demandeid) {
 
   let appName = appHelper.ListName.Materiel;
   let id = demandeid;
-  let folderPath = `/Lists/${appName}/Attachments/${id}/`;
+  let folderPath = `Lists/${appName}/Attachments/${id}/`;
   console.log(folderPath);
   let attachmentFolder = clientContext.get_web().getFolderByServerRelativeUrl(folderPath);
   let attachmentFiles = attachmentFolder.get_files();
@@ -143,7 +143,7 @@ showMateriel.ShowFichierJoint = function (demandeid) {
             dateajout: new Date(attachmentFiles.itemAt(i).get_timeLastModified()).toLocaleString(), //   new Date( attachmentFiles.itemAt(i).get_timeLastModified ()).toLocaleDateString() + ' ' +
             taille: appHelper.ConvertOctetToKo(attachmentFiles.itemAt(i).get_length()),
             auteur: attachmentFiles.itemAt(i).get_author(),
-            url: appHelper.AppConstante.SiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
+            url: appHelper.AppConstante.RootSiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
           });
         }
         showMateriel.ShowUploadForm(demandeid, view);
@@ -177,6 +177,13 @@ showMateriel.ShowUploadForm = function (demandeid, view) {
       reader.readAsArrayBuffer(file);
     }
   });
+
+  setTimeout(function() {
+    const addfile = document.getElementById("addfile");
+    addfile.addEventListener("click", function () {
+      OpenFileUpload('FpUploadAttachement');
+    });
+  }, 1000);
 }
 
 showMateriel.AttachFile = function (demandeid, arrayBuffer, fileName) {
@@ -185,7 +192,7 @@ showMateriel.AttachFile = function (demandeid, arrayBuffer, fileName) {
   var oWeb = clientContext.get_web();
   //Get list and Attachment folder where the attachment of a particular list item is stored.
   var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Materiel);
-  var urlToAttach = '/Lists/' + appHelper.ListName.Materiel + '/Attachments/' + demandeid + '/'
+  var urlToAttach = 'Lists/' + appHelper.ListName.Materiel + '/Attachments/' + demandeid + '/'
   var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
   console.log(attachmentFolder);
   //Convert the file contents into base64 data
@@ -266,10 +273,10 @@ function ajouterEspacesEntreChiffres(nombre) {
   if(nombre>999){
     // Convertir le nombre en une chaîne de caractères
     var nombreString = nombre.toString();
-   
+
     // Utiliser une expression régulière pour ajouter des espaces entre les chiffres
     var nombreAvecEspaces = nombreString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-    
+
     return nombreAvecEspaces;
   }
   else{
@@ -307,6 +314,8 @@ showMateriel.ShowDetails = function (demandeid) {
         //quantite: It.get_item('Quantite') != null ? It.get_item('Quantite') : ''
       };
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
+
+      
 
     }
   }, appSpHelper.writeError);
@@ -346,6 +355,12 @@ showMateriel.ShowFirst = function (demandeid) {
     }
   }, appSpHelper.writeError);
 }
+
+function OpenFileUpload(str_select) {
+  let transElt = document.getElementById(str_select);
+  transElt.click();
+}
+
 
 //document.addEventListener("DOMContentLoaded", () => {
 //ExecuteOrDelayUntilScriptLoaded(function(){

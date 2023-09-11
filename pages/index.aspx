@@ -10,7 +10,7 @@
   <div class="col-12" style="display: none;" id="divListTaches">
     <div class="head-titre">
       <h2>
-        Mes taches
+        Mes taches a faire
       </h2>
     </div>
     <!-- <Table /> -->
@@ -31,7 +31,7 @@
   <div class="col-8 mt-3">
     <button class="btn btn-secondary"><a href="/tools/pages/demande.aspx" class="linkMainNavigation"
         data-url="tools/pages/demande.aspx" data-target="DivMainPageContainer"
-        style="text-decoration: none; color: white;"> Voir toutes mes demandes </a></button>
+        style="text-decoration: none; color: white;"> Voir la liste de mes demandes </a></button>
 
   </div>
   <div class="col-4 mt-4 text-right" id="accSideMainMenuItem">
@@ -77,16 +77,23 @@
       <thead style="border-bottom:1px solid rgba(255,255,255,0.7);">
         <tr>
           <th>N*</th>
+          <th>Reference</th>
+          <th>Demandeur</th>
           <th>Intitul&eacute</th>
-          <th>Date pr&eacutevue </th>
+          <th>Date de reception </th>
+          <th>Date de creation </th>
         </tr>
       </thead>
       <tbody style="border-bottom:1px solid #b4a7a7;">
         {{#taches}}
         <tr class="">
-          <td>{{id}}</td>
+          <td>{{i}}</td>
+          <td>{{reference}}</td>
+          <td>{{author}}</td>
           <td><a href="#" class=" linkMainNavigation2" data-target="DivMainPageContainer"   data-url="{{url}}">{{title}}</b></td>
           <td>{{startdate}}</td>
+          <td>{{requestdate}}</td>
+
         </tr>
         {{/taches}}
       </tbody>
@@ -162,6 +169,7 @@
       <thead style="border-bottom:1px solid rgba(255,255,255,0.7);">
         <tr>
           <th>N*</th>
+          <th>Reference</th>
           <th>Createur</th>
           <th>Date</th>
           <th>Type</th>
@@ -174,9 +182,10 @@
         {{#demandesEnt}}
         <tr class="" >
           <td>{{id}}</td>
+          <td>{{reference}}</td>
           <td>{{create}}</td>
           <td>{{requestdate}}</td>
-          <th>{{nomdemande}}</th>
+          <th>DEMANDE DE {{create}} POUR {{nomdemande}}</th>
           <td><a href="tools/pages/{{repertoire}}/show.aspx?id={{id}}" class="linkMainNavigation" data-url="tools/pages/{{repertoire}}/show.aspx?id={{id}}" data-target="DivMainPageContainer">{{title}} </a></td>
           <td><span class="{{classe}}">{{status}}</span></td>
           <td>{{demandeur}}</td>
@@ -210,8 +219,6 @@
           </div>
   {{/menus}}
 </script>
-
-
 
 <script id="tmpl_table_demande" type="x-tmpl-mustache">
     <div class="table-container">

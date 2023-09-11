@@ -460,10 +460,6 @@ appMission.Add = function ( callBack) {
   let itemCreateInfo = new window.SP.ListItemCreationInformation();
   let oListItem = oList.addItem(itemCreateInfo);
 
-  /*let startDate = new Date();
-
-  let repDate = new Date();*/
-
   let startDate = new Date(
     document.getElementById("TxtDateDebut").value
     //appHelper.ReturnISODate()
@@ -482,12 +478,15 @@ appMission.Add = function ( callBack) {
 
   var cout = autoNumericObject.getNumber();
 
+  let ref = appHelper.getReference("FDM");
+
   console.log(cout);
 
   //let endDate = startDate.addDays(2);
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
+  oListItem.set_item("Reference", ref);
 
   oListItem.set_item("DateDebut", startDate);
   //oListItem.set_item("DateRetour", endDate);
@@ -538,7 +537,7 @@ appMission.Add = function ( callBack) {
     {
       const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
       if(callBack){
         callBack(oListItem);
       }
@@ -547,7 +546,7 @@ appMission.Add = function ( callBack) {
     {
       const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW1  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
       if(callBack){
         callBack(oListItem);
       }
@@ -633,7 +632,7 @@ appMission.Edit = function (demandeid, callBack) {
     {
       const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
       if(callBack){
         callBack(oListItem);
       }
@@ -642,7 +641,7 @@ appMission.Edit = function (demandeid, callBack) {
     {
       const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW1  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function(){}   )
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
       if(callBack){
         callBack(oListItem);
       }
@@ -714,21 +713,12 @@ appMission.AddFraisMission = function (data, oListItem) {
 
     let repDate = new Date(document.getElementById("DateFin").value);
 
-    //var fort = parseFloat(item.TxtForfait);
-
-    // console.log(fort);
-    // console.log(item.TxtNombre);
-    // console.log(item.TxtTotal);
-
 
     oListItem1.set_item("DateDebut", startDate);
     oListItem1.set_item("DateFin", repDate);
 
     oListItem1.set_item(
       "MissionID", oListItem.get_id());
-
-    // oListItem1.set_item(
-    //   "PerdiemeID", item.CmbPerdieme);
 
     oListItem1.set_item(
       "Forfait", item.TxtForfait);
@@ -764,6 +754,8 @@ appMission.EditFraisMission = function (data, demandeid) {
 
     oListItem1.set_item("DateDebut", startDate);
     oListItem1.set_item("DateFin", repDate);
+    oListItem1.set_item("Reference", document.getElementById("TxtRef").value);
+
 
     oListItem1.set_item(
       "MissionID", demandeid);
@@ -815,6 +807,9 @@ appMission.ShowDetails = function (demandeid, callBack) {
 
         document.getElementById("cmbMode").value = It.get_item('ModePaiementID') != null ? It.get_item('ModePaiementID') : '';
         document.getElementById("TxtModeText").value =  It.get_item('ModePaiement') != null ? It.get_item('ModePaiement') : '';
+
+        document.getElementById("TxtRef").value = It.get_item('Reference') != null ? It.get_item('Reference') : '';
+
 
         document.getElementById("TxtVerif").value = 'Edit';
         document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;

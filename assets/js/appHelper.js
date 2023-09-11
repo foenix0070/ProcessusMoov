@@ -1,76 +1,77 @@
 ﻿var appHelper = appHelper || {};
 
 appHelper.AppConstante = {
-  SiteUrl : 'http://vminsideweb01/sites/proc/',
-  SiteJsUrl : 'http://vminsideweb01/sites/proc/tools/',
-  MIMailSender : "no-reply-MI@moov-africa.ci",
-  IsDevEnvironment : true
+  RootSiteUrl: 'http://vminsideweb01/',
+  SiteUrl: 'http://vminsideweb01/sites/proc/',
+  SiteJsUrl: 'http://vminsideweb01/sites/proc/tools/',
+  MIMailSender: "no-reply-MI@moov-africa.ci",
+  IsDevEnvironment: true
 }
 
 appHelper.ListName = {
-Conge : 'ListeConge',
-Gadget : 'ListeGadget',
-Vehicule : 'ListeVehicule',
-Materiel : 'ListeMateriel',
-Absence : 'ListeAbsence',
-Employe : 'ListeEmploye',
-TypeConge : 'ListeTypeConge',
-TypeAbsence : 'ListeTypeAbsence',
-Validation : 'TachesValidation',
-Notification : 'ListeNotification',
-Mission : 'ListeMission',
-FraisMission : 'ListeFraisMission',
-RegularisationFraisMission : 'ListeRegularisationFraisMission',
-SortieCaisse : 'ListeSortieCaisse',
-RegularisationSortieCaisse : 'ListeRegularisationSortieCaisse',
-Zone : 'ListeZoneGeographique',
-Caisse : 'ListeCaissePaiement',
-AppListe : 'tools',
-Mode : 'ListeModePaiement'
+  Conge: 'ListeConge',
+  Gadget: 'ListeGadget',
+  Vehicule: 'ListeVehicule',
+  Materiel: 'ListeMateriel',
+  Absence: 'ListeAbsence',
+  Employe: 'ListeEmploye',
+  TypeConge: 'ListeTypeConge',
+  TypeAbsence: 'ListeTypeAbsence',
+  Validation: 'TachesValidation',
+  Notification: 'ListeNotification',
+  Mission: 'ListeMission',
+  FraisMission: 'ListeFraisMission',
+  RegularisationFraisMission: 'ListeRegularisationFraisMission',
+  SortieCaisse: 'ListeSortieCaisse',
+  RegularisationSortieCaisse: 'ListeRegularisationSortieCaisse',
+  Zone: 'ListeZoneGeographique',
+  Caisse: 'ListeCaissePaiement',
+  AppListe: 'tools',
+  Mode: 'ListeModePaiement'
 };
 
 appHelper.Status = {
-  ENATTENTE : 'ENATTENTE',
-  VALIDEE : 'VALIDEE',
-  REJETEE : 'REJETEE',
-  DEMANDEMODIFICATION : 'DEMANDEMODIFICATION',
-  ENCOURS : 'ENCOURS',
-  ENCONGE : 'ENCONGE',
-  RETOURCONGE : 'RETOURCONGE',
-  TERMINEE : 'TERMINEE',
+  ENATTENTE: 'ENATTENTE',
+  VALIDEE: 'VALIDEE',
+  REJETEE: 'REJETEE',
+  DEMANDEMODIFICATION: 'DEMANDEMODIFICATION',
+  ENCOURS: 'ENCOURS',
+  ENCONGE: 'ENCONGE',
+  RETOURCONGE: 'RETOURCONGE',
+  TERMINEE: 'TERMINEE',
 
-  GetClass : function ( statut){
-      switch(statut.toString()){
-        case appHelper.Status.VALIDEE : return 'succed'; break;
-        case appHelper.Status.REJETEE : return 'closed'; break;
-        case appHelper.Status.ENCOURS : return 'wait'; break;
-        case appHelper.Status.ENCONGE : return 'wait'; break;
-        case appHelper.Status.RETOURCONGE : return 'wait'; break;
-        case appHelper.Status.TERMINEE : return 'gray'; break;
-        case appHelper.Status.ENATTENTE : return 'gray'; break;
-      }
+  GetClass: function (statut) {
+    switch (statut.toString()) {
+      case appHelper.Status.VALIDEE: return 'succed'; break;
+      case appHelper.Status.REJETEE: return 'closed'; break;
+      case appHelper.Status.ENCOURS: return 'wait'; break;
+      case appHelper.Status.ENCONGE: return 'wait'; break;
+      case appHelper.Status.RETOURCONGE: return 'wait'; break;
+      case appHelper.Status.TERMINEE: return 'gray'; break;
+      case appHelper.Status.ENATTENTE: return 'gray'; break;
+    }
   }
 };
 
 appHelper.AppCode = {
-  VEHICULE : 'VEHICULE',
-  MATERIEL : 'MATERIEL',
-  GADGET : 'GADGET',
-  CONGE : 'CONGE',
-  ABSENCE : 'ABSENCE',
-  MISSION : 'MISSION',
+  VEHICULE: 'VEHICULE',
+  MATERIEL: 'MATERIEL',
+  GADGET: 'GADGET',
+  CONGE: 'CONGE',
+  ABSENCE: 'ABSENCE',
+  MISSION: 'MISSION',
   //MISSION500000 : 'MISSION500000',
-  FRAISMISSION : 'FRAISMISSION',
-  REGULARISATIONFRAISMISSION : 'REGULARISATIONFRAISMISSION',
-  SORTIECAISSE : 'SORTIECAISSE',
-  REGULARISATIONSORTIECAISSE : 'REGULARISATIONSORTIECAISSE'
+  FRAISMISSION: 'FRAISMISSION',
+  REGULARISATIONFRAISMISSION: 'REGULARISATIONFRAISMISSION',
+  SORTIECAISSE: 'SORTIECAISSE',
+  REGULARISATIONSORTIECAISSE: 'REGULARISATIONSORTIECAISSE'
 }
 
 appHelper.LogType = {
-INFO : 'INFO',
-ERROR : 'ERROR',
-WARN : 'WARNING',
-LOG : 'LOG'
+  INFO: 'INFO',
+  ERROR: 'ERROR',
+  WARN: 'WARNING',
+  LOG: 'LOG'
 };
 
 
@@ -93,12 +94,39 @@ appHelper.Log = function (msg, type = appHelper.LogType.LOG, appName = 'MI') {
   }
 }
 
-appHelper. parseBool = function(str) {
+
+appHelper.receiptTask = function (it, callBack) {
+  let msg = `<div style="padding: 20px;
+  background-color: #2eb886;
+  color: white;
+  margin-bottom: 15px;">
+  Votre requête a bien été pris en compte.
+ </div>`;
+  bootbox.alert(msg, function () {
+    if (callBack) {
+      callBack();
+    }
+  });
+
+}
+
+appHelper.parseBool = function (str) {
   return /^(true|1)$/i.test(str);
 }
 
+appHelper.getReference = function (code) {
+  const date = new Date();
+  const annee = date.getFullYear();
+  const mois = (date.getMonth() + 1).toString().padStart(2, "0");
+  const jour = date.getDate().toString().padStart(2, "0");
+  const composantAleatoire = Math.floor(Math.random() * 1000)
+    .toString()
+    .padStart(3, "0");
+  const referenceFacture = code + `-${annee}${mois}${jour}-${composantAleatoire}`;
+  return referenceFacture;
+};
 
-appHelper.isArray = function(myArray) {
+appHelper.isArray = function (myArray) {
   return myArray.constructor.toString().indexOf("Array") > -1;
 }
 
@@ -106,31 +134,31 @@ appHelper.GetQueryStringFromAjaxQuery = function (param) {
   var vars = {};
   param = param.trim().toLocaleLowerCase();
   sessionStorage.getItem("ajax_url").replace(location.hash, '').replace(
-  /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-  function (m, key, value) { // callback
-    key= key.toLocaleLowerCase();
+    /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+    function (m, key, value) { // callback
+      key = key.toLocaleLowerCase();
       vars[key] = value !== undefined ? value : '';
-  }
-);
+    }
+  );
   if (param) {
-      return vars[param] ? decodeURI(vars[param]) : null;
+    return vars[param] ? decodeURI(vars[param]) : null;
   }
   return vars;
 }
 
-appHelper.getQueryStringParameter =  function (paramToRetrieve) {
+appHelper.getQueryStringParameter = function (paramToRetrieve) {
   paramToRetrieve = paramToRetrieve.trim().toLocaleLowerCase();
   var params = document.URL.toLocaleLowerCase().split("?")[1].split("&");
   var strParams = "";
   for (var i = 0; i < params.length; i = i + 1) {
-      var singleParam = params[i].split("=");
-      if (singleParam[0] == paramToRetrieve) {
-          return singleParam[1];
-      }
+    var singleParam = params[i].split("=");
+    if (singleParam[0] == paramToRetrieve) {
+      return singleParam[1];
+    }
   }
 }
 
-appHelper.startSkeleton = function(container){
+appHelper.startSkeleton = function (container) {
 
   let content = document.getElementById(container);
   content.innerHTML = `
@@ -145,14 +173,14 @@ appHelper.startSkeleton = function(container){
 `;
 }
 
-appHelper.LisetenOffCanvas = function (offCavasId, openCallBack, closeCallBack){
+appHelper.LisetenOffCanvas = function (offCavasId, openCallBack, closeCallBack) {
 
   document.addEventListener('shown.bs.offcanvas', function (event) {
     var offcanvas = event.target;
     var offcanvasId = offcanvas.getAttribute('id');
 
-    if(offcanvasId == offCavasId ){
-      if(openCallBack){
+    if (offcanvasId == offCavasId) {
+      if (openCallBack) {
         openCallBack();
       }
     }
@@ -162,8 +190,8 @@ appHelper.LisetenOffCanvas = function (offCavasId, openCallBack, closeCallBack){
   document.addEventListener('hidden.bs.offcanvas', function (event) {
     var offcanvas = event.target;
     var offcanvasId = offcanvas.getAttribute('id');
-    if(offcanvasId == offCavasId ){
-      if(closeCallBack){
+    if (offcanvasId == offCavasId) {
+      if (closeCallBack) {
         closeCallBack();
       }
     }
@@ -177,27 +205,27 @@ appHelper.navigation = function (container, url) {
   sessionStorage.setItem("ajax_url", url);
   container = container ? container : "DivMainPageContainer";
 
-  appHelper.startSkeleton (container);
+  appHelper.startSkeleton(container);
   fetch(url)
     .then((response) => response.text())
     .then((data) => {
-      let elm =  document.getElementById(container);
+      let elm = document.getElementById(container);
       document.getElementById(container).innerHTML = data;
 
       Array.from(elm.querySelectorAll("script"))
-      .forEach( oldScriptEl => {
-        const newScriptEl = document.createElement("script");
-        Array.from(oldScriptEl.attributes).forEach( attr => {
-          newScriptEl.setAttribute(attr.name, attr.value)
+        .forEach(oldScriptEl => {
+          const newScriptEl = document.createElement("script");
+          Array.from(oldScriptEl.attributes).forEach(attr => {
+            newScriptEl.setAttribute(attr.name, attr.value)
+          });
+          const scriptText = document.createTextNode(oldScriptEl.innerHTML);
+          newScriptEl.appendChild(scriptText);
+          oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
         });
-        const scriptText = document.createTextNode(oldScriptEl.innerHTML);
-        newScriptEl.appendChild(scriptText);
-        oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
-    });
 
     })
     .catch((error) => {
-      appHelper.Log(  error,appHelper.LogType.ERROR, "Une erreur s'est produite lors de la navigation: ");
+      appHelper.Log(error, appHelper.LogType.ERROR, "Une erreur s'est produite lors de la navigation: ");
 
     });
 };
@@ -210,27 +238,27 @@ appHelper.navigation2 = function (container, url) {
   sessionStorage.setItem("ajax_url", url);
   container = container ? container : "DivMainPageContainer";
 
-  appHelper.startSkeleton (container);
+  appHelper.startSkeleton(container);
   fetch(url)
     .then((response) => response.text())
     .then((data) => {
-      let elm =  document.getElementById(container);
+      let elm = document.getElementById(container);
       document.getElementById(container).innerHTML = data;
 
       Array.from(elm.querySelectorAll("script"))
-      .forEach( oldScriptEl => {
-        const newScriptEl = document.createElement("script");
-        Array.from(oldScriptEl.attributes).forEach( attr => {
-          newScriptEl.setAttribute(attr.name, attr.value)
+        .forEach(oldScriptEl => {
+          const newScriptEl = document.createElement("script");
+          Array.from(oldScriptEl.attributes).forEach(attr => {
+            newScriptEl.setAttribute(attr.name, attr.value)
+          });
+          const scriptText = document.createTextNode(oldScriptEl.innerHTML);
+          newScriptEl.appendChild(scriptText);
+          oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
         });
-        const scriptText = document.createTextNode(oldScriptEl.innerHTML);
-        newScriptEl.appendChild(scriptText);
-        oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
-    });
 
     })
     .catch((error) => {
-      appHelper.Log(  error,appHelper.LogType.ERROR, "Une erreur s'est produite lors de la navigation: ");
+      appHelper.Log(error, appHelper.LogType.ERROR, "Une erreur s'est produite lors de la navigation: ");
 
     });
 };
@@ -244,27 +272,27 @@ appHelper.listenNavigationOffCanvas = function (lienNavigation, offCanvasid) {
 
       let container = false;
       let url = false;
-      appHelper.Log( target.classList, lienNavigation, '_8_');
-     if (target.classList.contains(lienNavigation)) {
+      appHelper.Log(target.classList, lienNavigation, '_8_');
+      if (target.classList.contains(lienNavigation)) {
 
-      event.preventDefault(); // Empêcher le comportement par défaut du lien
-      appHelper.LisetenOffCanvas(offCanvasid, function(){
+        event.preventDefault(); // Empêcher le comportement par défaut du lien
+        appHelper.LisetenOffCanvas(offCanvasid, function () {
 
-        try {
-          container = target.getAttribute("data-target");
-        } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationOffCanvas"); }
+          try {
+            container = target.getAttribute("data-target");
+          } catch (e) { appHelper.Log(e, appHelper.LogType.ERROR, "appHelper.listenNavigationOffCanvas"); }
 
-        try {
-          url = target.getAttribute("data-url");
-          url = url;
-        } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationOffCanvas"); }
+          try {
+            url = target.getAttribute("data-url");
+            url = url;
+          } catch (e) { appHelper.Log(e, appHelper.LogType.ERROR, "appHelper.listenNavigationOffCanvas"); }
 
-        appHelper.Log(container, url );
-        appHelper.navigation(container, url);
+          appHelper.Log(container, url);
+          appHelper.navigation(container, url);
 
-      }, null)
+        }, null)
 
-    }
+      }
     }
   });
 };
@@ -277,19 +305,19 @@ appHelper.listenNavigationLink2 = function (lienNavigation) {
 
       let container = false;
       let url = false;
-     if (target.classList.contains(lienNavigation)) {
-      event.preventDefault();
-      try {
-        container = target.getAttribute("data-target");
-      } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationLink2"); }
+      if (target.classList.contains(lienNavigation)) {
+        event.preventDefault();
+        try {
+          container = target.getAttribute("data-target");
+        } catch (e) { appHelper.Log(e, appHelper.LogType.ERROR, "appHelper.listenNavigationLink2"); }
 
-      try {
-        url = target.getAttribute("data-url");
+        try {
+          url = target.getAttribute("data-url");
 
-      } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationLink2");}
+        } catch (e) { appHelper.Log(e, appHelper.LogType.ERROR, "appHelper.listenNavigationLink2"); }
 
-      appHelper.navigation2(container, url);
-    }
+        appHelper.navigation2(container, url);
+      }
     }
   });
 };
@@ -301,21 +329,21 @@ appHelper.listenNavigationLink = function (lienNavigation) {
 
       let container = false;
       let url = false;
-     if (target.classList.contains(lienNavigation)) {
-      event.preventDefault();
-      try {
-        container = target.getAttribute("data-target");
-      } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationLink");}
+      if (target.classList.contains(lienNavigation)) {
+        event.preventDefault();
+        try {
+          container = target.getAttribute("data-target");
+        } catch (e) { appHelper.Log(e, appHelper.LogType.ERROR, "appHelper.listenNavigationLink"); }
 
-      try {
-        url = target.getAttribute("data-url");
-        if(url.valueOf.toString().indexOf(appHelper.AppConstante.SiteUrl) < 0){
-         url =  url;
-        }
-      } catch (e) { appHelper.Log(  e,appHelper.LogType.ERROR, "appHelper.listenNavigationLink");}
+        try {
+          url = target.getAttribute("data-url");
+          if (url.valueOf.toString().indexOf(appHelper.AppConstante.SiteUrl) < 0) {
+            url = url;
+          }
+        } catch (e) { appHelper.Log(e, appHelper.LogType.ERROR, "appHelper.listenNavigationLink"); }
 
-      appHelper.navigation(container, url);
-    }
+        appHelper.navigation(container, url);
+      }
     }
   });
 };
@@ -326,7 +354,7 @@ appHelper.renderTemplate = function (tmplID, contenairID, viewData) {
   document.getElementById(contenairID).innerHTML = o;
 };
 
-appHelper.ConvertOctetToKo = function(octet) {
+appHelper.ConvertOctetToKo = function (octet) {
   return (octet / 1024).toFixed(2) + " Ko";
 }
 
@@ -417,7 +445,7 @@ appHelper.workingDaysBetweenDates = function (d0, d1) {
   var endDate = parseDate(d1);
   // Validate input
   if (endDate < startDate) {
-      return 0;
+    return 0;
   }
   // Calculate days between dates
   var millisecondsPerDay = 86400 * 1000; // Day in milliseconds
@@ -436,21 +464,21 @@ appHelper.workingDaysBetweenDates = function (d0, d1) {
 
   // Remove weekend not previously removed.
   if (startDay - endDay > 1) {
-      days -= 2;
+    days -= 2;
   }
   // Remove start day if span starts on Sunday but ends before Saturday
   if (startDay == 0 && endDay != 6) {
-      days--;
+    days--;
   }
   // Remove end day if span ends on Saturday but starts after Sunday
   if (endDay == 6 && startDay != 0) {
-      days--;
+    days--;
   }
   /* Here is the code */
   for (var i in holidays) {
-      if ((holidays[i] >= d0) && (holidays[i] <= d1)) {
-          days--;
-      }
+    if ((holidays[i] >= d0) && (holidays[i] <= d1)) {
+      days--;
+    }
   }
   return days;
 }
@@ -458,9 +486,9 @@ appHelper.workingDaysBetweenDates = function (d0, d1) {
 appHelper.generateUUID = function () {
   var d = new Date().getTime();
   var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = (d + Math.random() * 16) % 16 | 0;
-      d = Math.floor(d / 16);
-      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    var r = (d + Math.random() * 16) % 16 | 0;
+    d = Math.floor(d / 16);
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
   });
   return uuid;
 };
@@ -468,22 +496,21 @@ appHelper.generateUUID = function () {
 appHelper.nameSpaceExists = function (namespace) {
   var tokens = namespace.split('.');
   return tokens.reduce(function (prev, curr) {
-      return (typeof prev == "undefined") ? prev : prev[curr];
+    return (typeof prev == "undefined") ? prev : prev[curr];
   }, window);
 };
 
-appHelper.loadJSWithNameSpace = function (scriptName, namespace,  scriptUrl) {
+appHelper.loadJSWithNameSpace = function (scriptName, namespace, scriptUrl) {
   let _NameSpace = appHelper.nameSpaceExists(namespace)
   if (_NameSpace) {
-      _NameSpace.InitializePage();
-  } else
-  {
-      var head = document.getElementsByTagName('head').item(0);
-      var js = document.getElementById(scriptName);
-      js = document.createElement('script');
-      js.id = scriptName;
-      js.src = appHelper.AppConstante.SiteJsUrl + scriptUrl + "?time=" + new Date().getTime();
-      document.getElementsByTagName('head')[0].appendChild(js);
+    _NameSpace.InitializePage();
+  } else {
+    var head = document.getElementsByTagName('head').item(0);
+    var js = document.getElementById(scriptName);
+    js = document.createElement('script');
+    js.id = scriptName;
+    js.src = appHelper.AppConstante.SiteJsUrl + scriptUrl + "?time=" + new Date().getTime();
+    document.getElementsByTagName('head')[0].appendChild(js);
   }
 };
 
@@ -492,7 +519,7 @@ appHelper.loadJS = function (scriptName, scriptUrl) {
   var js = document.getElementById(scriptName);
 
   if (js) {
-      appHelper.unloadJS(scriptName);
+    appHelper.unloadJS(scriptName);
   }
   js = document.createElement('script');
   js.id = scriptName;
@@ -511,12 +538,130 @@ appHelper.unloadAllJS = function () {
   var jsArray = new Array();
   jsArray = document.getElementsByTagName('script');
   for (i = 0; i < jsArray.length; i++) {
-      if (jsArray[i].id) {
-          appHelper.unloadJS(jsArray[i].id)
-      } else {
-          jsArray[i].parentNode.removeChild(jsArray[i]);
-      }
+    if (jsArray[i].id) {
+      appHelper.unloadJS(jsArray[i].id)
+    } else {
+      jsArray[i].parentNode.removeChild(jsArray[i]);
+    }
   }
 };
 
+appHelper.GetSelectedFiles = function (id, libraryName, callBack) {
+  var TFiles = [];
+  $(".fileUpload").each(function () {
+    var that = this;
+    if (that.files.length > 0) {
+      TFiles.push(that.files[0]);
+    }
+  });
+  spFileHelper.uploadDocuments(TFiles, true, libraryName, id, null, function () {
+    if (callBack) {
+      callBack();
+    }
+  });
+
+}
+
+appHelper.AttachFile = function (clientContext, demandeid, arrayBuffer, fileName, listName, callBack) {
+
+  //Get Client Context and Web object.
+  var oWeb = clientContext.get_web();
+  appHelper.ensureAttachmentFolder(clientContext, listName, demandeid,
+    function () {
+      //Get list and Attachment folder where the attachment of a particular list item is stored.
+      var oList = oWeb.get_lists().getByTitle(listName);
+      var urlToAttach = 'Lists/' + listName + '/Attachments/' + demandeid + '/'
+      var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
+      console.log(urlToAttach);
+      console.log(attachmentFolder);
+      //Convert the file contents into base64 data
+      var bytes = new Uint8Array(arrayBuffer);
+      var i, length, out = '';
+      for (i = 0, length = bytes.length; i < length; i += 1) {
+        out += String.fromCharCode(bytes[i]);
+      }
+      console.log("Test");
+      var base64 = btoa(out);
+      //Create FileCreationInformation object using the read file data
+      createInfo = new SP.FileCreationInformation();
+      createInfo.set_content(base64);
+      createInfo.set_url(fileName);
+      console.log(fileName);
+      console.log(attachmentFolder.get_files().length);
+      //Add the file to the list item
+      attachmentFiles = attachmentFolder.get_files().add(createInfo);
+      //Load client context and execute the batch
+      clientContext.load(attachmentFiles);
+      clientContext.executeQueryAsync(function () {
+        if (callBack) {
+          callBack();
+        }
+      }, appSpHelper.writeError);
+    },
+    function () { })
+};
+
+
+appHelper.ensureAttachmentFolder = function (ctx, listTitle, itemId, success, error) {
+
+  //var ctx = SP.ClientContext.get_current();
+
+  var web = ctx.get_web();
+
+  var list = web.get_lists().getByTitle(listTitle);
+
+  ctx.load(list, 'RootFolder');
+
+  var item = list.getItemById(itemId);
+
+  ctx.load(item);
+
+  ctx.executeQueryAsync(
+
+    function () {
+
+      var attachmentsFolder;
+
+      if (!item.get_fieldValues()['Attachments']) { /* Attachments folder exists? */
+        var attachmentRootFolderUrl = String.format('{0}/Attachments', list.get_rootFolder().get_serverRelativeUrl());
+
+        var attachmentsRootFolder = ctx.get_web().getFolderByServerRelativeUrl(attachmentRootFolderUrl);
+
+        //Note: Here is a tricky part.                
+        //Since SharePoint prevents the creation of folder with name that corresponds to item id, we are going to:       
+        //1)create a folder with name in the following format '_<itemid>'              
+        //2)rename a folder from '_<itemid>'' into '<itemid>'               
+        //This allow to bypass the limitation of creating attachment folders               
+        attachmentsFolder = attachmentsRootFolder.get_folders().add('_' + itemId);
+
+        attachmentsFolder.moveTo(attachmentRootFolderUrl + '/' + itemId);
+
+        ctx.load(attachmentsFolder);
+
+      }
+      else {
+
+        var attachmentFolderUrl = String.format('{0}/Attachments/{1}', list.get_rootFolder().get_serverRelativeUrl(), itemId);
+
+        attachmentsFolder = ctx.get_web().getFolderByServerRelativeUrl(attachmentFolderUrl);
+
+        ctx.load(attachmentsFolder);
+
+      }
+
+      ctx.executeQueryAsync(
+
+        function () {
+
+          success(attachmentsFolder);
+
+        },
+
+        error);
+
+    },
+
+    error);
+
+}
 

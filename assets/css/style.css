@@ -584,7 +584,7 @@ legend {
 legend {
   font-size: x-large;
   font-weight: 800;
-  text-align: end;
+  text-align: start;
   border: 1px solid #E96805;
   background: bisque;
   padding-right: 5px;
