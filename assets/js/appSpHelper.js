@@ -705,6 +705,21 @@ appSpHelper.queryEmployeesByLoginNames = function (arrLoginNames) {
   });
 };
 
+
+
+appSpHelper.SendNotificationDemandeur = function(Demande, Tache, _tacheAction, callBack ) {
+
+  console.log(Demande, Tache, _tacheAction);
+  appHelper.Log('ENVOI DE MAIL');
+alert('0002');
+if(callBack){
+  callBack();
+}
+
+}
+
+
+
 appSpHelper.SendNotificationTask = function (ctx, taskItem, callBack) {
   let obj = {};
   obj.to = "";
@@ -789,7 +804,7 @@ appSpHelper.SendNotificationTask = function (ctx, taskItem, callBack) {
                 appHelper.Log(empUsers, appHelper.LogType.ERROR, ".queryEmployeesByLoginNames(arrUserLogin)");
 
                 empUsers.forEach(function (empUser, idx) {
-                  let EmpMail = 
+                  let EmpMail =
                     empUser.get_item("EmpMail") != null
                       ? empUser.get_item("EmpMail").toString().trim()
                       : "";
