@@ -582,6 +582,7 @@ appHelper.AttachFile = function (clientContext, demandeid, arrayBuffer, fileName
       }
       console.log("Test");
       var base64 = btoa(out);
+      base64 = 
       //Create FileCreationInformation object using the read file data
       createInfo = new SP.FileCreationInformation();
       createInfo.set_content(base64);
@@ -664,4 +665,141 @@ appHelper.ensureAttachmentFolder = function (ctx, listTitle, itemId, success, er
     error);
 
 }
+
+appHelper.upploadAttachmentFiles = function (inputFileId, itemId, listName, j, callback) {
+
+    // Get test values from the file input and text input page controls.
+
+    var tFiles = document.getElementById(inputFileId).files;
+
+    //var fileInput = jQuery('#inputFileId');
+
+    if (tFiles.length > 0) {
+
+        var tFn = tFiles[j].name.split(".")
+
+        var fExt = tFn.splice((tFn.length - 1), 1)
+
+        var fileName = escape(tFn.toString().replaceAll(",", "")) + "_" + new Date().getTime() + "." + fExt;
+
+        // Get the local file as an array buffer.
+
+        var getFile = getFileBuffer();
+
+        getFile.done(function (arrayBuffer) {
+
+            // Add the file to the SharePoint folder.
+
+            var addFile = addAttachmentFiles(arrayBuffer, fileName);
+
+            addFile.done(function (file, status, xhr) {
+
+                j++;
+
+                if (j < tFiles.length) {
+
+                    appsHelper.upploadAttachmentFiles(inputFileId, itemId, listName, j, callback);
+
+ 
+
+                } else {
+
+                    if (callback) {
+
+                        callback.call();
+
+                    }
+
+                }
+
+            });
+
+            addFile.fail(onError);
+
+        });
+
+        getFile.fail(onError);
+
+    }
+
+    else {
+
+        if (callback) {
+
+            callback.call();
+
+        }
+
+    }
+
+    // Get the local file as an array buffer.
+
+    function getFileBuffer() {
+
+        var deferred = jQuery.Deferred();
+
+        var reader = new FileReader();
+
+        reader.onloadend = function (e) {
+
+            deferred.resolve(e.target.result);
+
+        }
+
+        reader.onerror = function (e) {
+
+            deferred.reject(e.target.error);
+
+        }
+
+        reader.readAsArrayBuffer(tFiles[j]);
+
+        return deferred.promise();
+
+    }
+
+ 
+
+    // Add the file to the file collection in the Shared Documents folder.
+
+    function addAttachmentFiles(arrayBuffer, fname) {
+
+        // Send the request and return the response.
+
+        // This call returns the SharePoint file.
+
+        url = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('" + listName + "')/items(" + itemId + ")/AttachmentFiles/ add(FileName='" + fname + "')";
+
+        return jQuery.ajax({
+
+            url: url,
+
+            type: "POST",
+
+            data: arrayBuffer,
+
+            processData: false,
+
+            headers: {
+
+                "accept": "application/json;odata=verbose",
+
+                "X-RequestDigest": jQuery("#__REQUESTDIGEST").val(),
+
+                "content-length": arrayBuffer.byteLength
+
+            }
+
+        });
+
+    }
+
+    function onError(error) {
+
+        alert(error.responseText);
+
+    }
+
+}
+
 
