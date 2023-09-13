@@ -39,7 +39,7 @@
   </div>
   <div class="mb-3">
     <label class="form-label"> Montant <span class="asterix">*</span></label>
-    <input type="text" class="form-control" id="TxtMont" placeholder=""  disabled/>
+    <input type="text" class="form-control" id="TxtMont" placeholder="" disabled />
   </div>
   <div class="mb-3">
     <label class="form-label"> Montant utilis&eacute; <span class="asterix">*</span></label>
@@ -57,10 +57,10 @@
     <!-- <input type="text" class="form-control" id="TxtObservation" placeholder="" /> -->
   </div>
 
-  <!-- <div class="mb-3">
-    <label class="form-label"> Doc justificatifs</label>
-    <input type="file" class="form-control" id="FileDoc" placeholder="" />
-  </div> -->
+  <div class="mb-3">
+    <label class="form-label"> Document justificatif</label>
+    <input type="file" multiple class="form-control fileUpload" id="FileDoc" placeholder="" />
+  </div>
 
   <div class="mb-3">
     <input id="TxtVerif" type="hidden">

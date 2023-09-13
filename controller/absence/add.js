@@ -286,6 +286,8 @@ appAbsence.Add = function (callBack) {
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
+    appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Absence, 0, function () {
+
     const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + oListItem.get_id();
     let WF = new WFManager(appHelper.AppCode.ABSENCE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
     WF.createWFTask(clientContext, appUrl, appHelper.AppCode.ABSENCE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function () { })
@@ -293,6 +295,7 @@ appAbsence.Add = function (callBack) {
       callBack(oListItem);
     }
   }, appSpHelper.writeError);
+})
 };
 
 

@@ -59,7 +59,7 @@ showVehicule.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
-    WF.goToRefusedTask(showVehicule.clientContext, tacheId, appHelper.AppCode.VEHICULE, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToRefusedTask(showVehicule.clientContext, tacheId, appHelper.AppCode.VEHICULE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
       showVehicule.UpDateItemStatusRejet(true, demandeid, function () {
         location.reload();
@@ -68,7 +68,7 @@ showVehicule.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
-    WF.goToRefusedTask(showVehicule.clientContext, tacheId, appHelper.AppCode.VEHICULE, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToRefusedTask(showVehicule.clientContext, tacheId, appHelper.AppCode.VEHICULE, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
       showVehicule.UpDateItemStatusRejet(false, demandeid, function () {
         location.reload();
@@ -165,19 +165,25 @@ showVehicule.ShowFichierJoint = function (demandeid) {
 showVehicule.ShowUploadForm = function (demandeid, view) {
   appHelper.renderTemplate("tmpl_form_fichiers_attaches", "SectionDocumentsJoint", view);
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
-  FpUploadAttachement.addEventListener('change', (e) => {
-    files = e.target.files;
-    for (const file of files) {
-      let reader = new FileReader();
-      reader.onload = function (e) {
-        showVehicule.AttachFile(demandeid, e.target.result, file.name)
-      }
-      reader.onerror = function (e) {
-        console.log(e.target.error);
-      }
-      reader.readAsArrayBuffer(file);
-    }
+  FpUploadAttachement.addEventListener('change', function () {
+
+    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Vehicule, 0, function () {
+      showVehicule.ShowFichierJoint(demandeid);
+    });
   });
+  // FpUploadAttachement.addEventListener('change', (e) => {
+  //   files = e.target.files;
+  //   for (const file of files) {
+  //     let reader = new FileReader();
+  //     reader.onload = function (e) {
+  //       showVehicule.AttachFile(demandeid, e.target.result, file.name)
+  //     }
+  //     reader.onerror = function (e) {
+  //       console.log(e.target.error);
+  //     }
+  //     reader.readAsArrayBuffer(file);
+  //   }
+  // });
   setTimeout(function() {
     const addfile = document.getElementById("addfile");
     addfile.addEventListener("click", function () {

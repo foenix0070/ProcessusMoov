@@ -95,6 +95,7 @@ DemandeTools.ListDemande = function (DemandeList, nomdurepertoire, nomduprocessu
           title: oListItem.get_item("Title"),
           requestdate: new Date(oListItem.get_item("Created")).toLocaleDateString(),
           status: oListItem.get_item("StatutLibelle"),
+          reference: oListItem.get_item("Reference"),
           classe: appHelper.Status.GetClass(oListItem.get_item("Statut")),
           repertoire: nomdurepertoire,
           nomdemande: nomduprocessus,

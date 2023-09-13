@@ -49,7 +49,7 @@ showFraisMission.ShowForm = function (tacheId, demandeid) {
   const WF = new WFManager(appHelper.AppCode.MISSION, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
 
   BtnOK.addEventListener("click", function () {
-    WF.goToNextTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToNextTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
       showFraisMission.UpDateItemStatus(nextTask, demandeid, function () {
         location.reload();
@@ -58,7 +58,7 @@ showFraisMission.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
-    WF.goToRefusedTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToRefusedTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
       showFraisMission.UpDateItemStatusRejet(true, demandeid, function () {
         location.reload();
@@ -164,19 +164,25 @@ showFraisMission.ShowFichierJoint = function (demandeid) {
 showFraisMission.ShowUploadForm = function (demandeid, view) {
   appHelper.renderTemplate("tmpl_form_fichiers_attaches", "SectionDocumentsJoint", view);
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
-  FpUploadAttachement.addEventListener('change', (e) => {
-    files = e.target.files;
-    for (const file of files) {
-      let reader = new FileReader();
-      reader.onload = function (e) {
-        showFraisMission.AttachFile(demandeid, e.target.result, file.name)
-      }
-      reader.onerror = function (e) {
-        console.log(e.target.error);
-      }
-      reader.readAsArrayBuffer(file);
-    }
+  FpUploadAttachement.addEventListener('change', function () {
+
+    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Mission, 0, function () {
+      showFraisMission.ShowFichierJoint(demandeid);
+    });
   });
+  // FpUploadAttachement.addEventListener('change', (e) => {
+  //   files = e.target.files;
+  //   for (const file of files) {
+  //     let reader = new FileReader();
+  //     reader.onload = function (e) {
+  //       showFraisMission.AttachFile(demandeid, e.target.result, file.name)
+  //     }
+  //     reader.onerror = function (e) {
+  //       console.log(e.target.error);
+  //     }
+  //     reader.readAsArrayBuffer(file);
+  //   }
+  // });
   
   setTimeout(function() {
     const addfile = document.getElementById("addfile");

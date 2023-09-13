@@ -535,21 +535,25 @@ appMission.Add = function ( callBack) {
 
     if(cout < 500000)
     {
-      const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
-      let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
-      if(callBack){
-        callBack(oListItem);
-      }
+      appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Mission, 0, function () {
+        const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
+        let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+        WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
+        if(callBack){
+          callBack(oListItem);
+        }
+      });
     }
     else
     {
-      const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
-      let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW1  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
-      if(callBack){
-        callBack(oListItem);
-      }
+      appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Mission, 0, function () {
+        const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
+        let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW1  );
+        WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
+        if(callBack){
+          callBack(oListItem);
+        }
+      });
     }
 
   
@@ -732,7 +736,9 @@ appMission.AddFraisMission = function (data, oListItem) {
     oListItem1.update();
     clientContext.load(oListItem1);
     clientContext.executeQueryAsync(function (callBack) {
-      callBack(oListItem1);
+      if(callBack){
+        callBack(oListItem1);
+      }
     });
 
   }

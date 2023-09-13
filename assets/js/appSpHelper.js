@@ -84,7 +84,7 @@ appSpHelper.SetPeoplePickerField = function (peoplePickerId, userAccountName) {
       //$("input[title='TravelRequestor']").focus().val(strUserName).attr("size", strUserName.length);
     }
   } catch (e) {
-    appHelper.Log(e,appHelper.LogType.ERROR);
+    appHelper.Log(e, appHelper.LogType.ERROR);
 
   }
 };
@@ -205,8 +205,8 @@ appSpHelper.PeoplePickerOnChangeEvent = function (
 appSpHelper.ClearPeopleFieldValue = function (peoplePickerElementId) {
   var listSpanUserSelected = $(
     "#" +
-      peoplePickerElementId +
-      "_TopSpan_ResolvedList > .sp-peoplepicker-userSpan"
+    peoplePickerElementId +
+    "_TopSpan_ResolvedList > .sp-peoplepicker-userSpan"
   );
 
   for (var i = 0; i < listSpanUserSelected.length; i++) {
@@ -675,8 +675,8 @@ appSpHelper.queryEmployeesByLoginNames = function (arrLoginNames) {
             <FieldRef Name='EmpLogin' />
             <Values>
               ${arrLoginNames
-                .map((name) => `<Value Type='Text'>${name}</Value>`)
-                .join("")}
+      .map((name) => `<Value Type='Text'>${name}</Value>`)
+      .join("")}
             </Values>
           </In>
         </Where>
@@ -707,14 +707,89 @@ appSpHelper.queryEmployeesByLoginNames = function (arrLoginNames) {
 
 
 
-appSpHelper.SendNotificationDemandeur = function(Demande, Tache, _tacheAction, callBack ) {
+appSpHelper.GetMails = function (Demande, Tache, typemail, callBack) {
+  console.log(typemail);
+  // console.log(Demande, Tache, _tacheAction);
+  // appHelper.Log('ENVOI DE MAIL');
+  // alert('0002');
+  // if (callBack) {
+  //   callBack();
+  // }
 
-  console.log(Demande, Tache, _tacheAction);
-  appHelper.Log('ENVOI DE MAIL');
-alert('0002');
-if(callBack){
-  callBack();
-}
+  var cContext = window.SP.ClientContext.get_current();
+  var oList = cContext.get_web().get_lists().getByTitle(appHelper.ListName.Template);
+  var camlQuery = new window.SP.CamlQuery();
+  //alert(_spPageContextInfo.userId);
+  var requete = '<View><Query><Where>';
+  let req = "";
+  let r = "";
+  if (typemail.indexOf("#") != -1) {
+    req = typemail.split("#");
+    for (let i = 0; i <= req.length - 1; i++) {
+
+      r += '<Eq><FieldRef Name=\'TypeMail\' /><Value Type=\'Text\'>' + req[i] + '</Value></Eq>';
+      if (i >= 1) {
+        r = '<Or>' + r + '</Or>';
+      }
+
+    }
+  }
+  else {
+    r += '<Eq><FieldRef Name=\'TypeMail\' /><Value Type=\'Text\'>' + typemail + '</Value></Eq>';
+  }
+
+  requete += r + '</Where></Query></View>';
+  console.log(requete);
+  camlQuery.set_viewXml(requete);
+  var paramItem = oList.getItems(camlQuery);
+  cContext.load(paramItem);
+  cContext.executeQueryAsync(onSuccess, onFailure);
+
+  function onSuccess(sender, args) {
+    var mails = [];
+
+    if (paramItem.get_count() > 0) {
+      var listItemEnumerator = paramItem.getEnumerator();
+      while (listItemEnumerator.moveNext()) {
+        var oListItem = listItemEnumerator.get_current();
+        mails.push({
+          "Sujet": (oListItem.get_item('Sujet') != null ? oListItem.get_item('Sujet') : ""),
+          "Corps": (oListItem.get_item('Corps') != null ? oListItem.get_item('Corps') : ""),
+          "MailTo": (oListItem.get_item('MailTo') != null ? oListItem.get_item('MailTo') : ""),
+          "MailCc": (oListItem.get_item('MailCc') != null ? oListItem.get_item('MailCc') : "")
+        });
+      }
+    }
+
+    mails.forEach(mail => {
+      mail.Sujet = appSpHelper.ReturnMailParam(Demande, Tache, mail.Sujet);
+      mail.Corps = appSpHelper.ReturnMailParam(Demande, Tache, mail.Corps);
+      mail.MailTo = appSpHelper.ReturnMailRecipient(Demande, Tache, mail.MailTo);
+      mail.MailCc = appSpHelper.ReturnMailRecipient(Demande, Tache, mail.MailCc);
+
+      appSpHelper.ReturnMailRecipient(Demande, Tache, mail.MailTo).then((values) => {
+          console.log("values");
+          console.log(values);
+          mail.MailTo = values;
+        });
+    });
+
+    // forEach (let mail in mails) {
+    //   mail.Sujet = appSpHelper.ReturnMailParam(Demande, Tache, mail.Sujet);
+    //   mail.Corps = appSpHelper.ReturnMailParam(Demande, Tache, mail.Corps);
+    //   mail.MailTo = appSpHelper.ReturnMailRecipient(Demande, Tache, mail.MailTo);
+    //   mail.MailCc = appSpHelper.ReturnMailRecipient(Demande, Tache, mail.MailCc);
+    // }
+
+    console.log(mails);
+
+    if (callBack) callBack();
+  }
+  function onFailure(sender, args) {
+    callBack.call();
+    //onComplete(false);
+  }
+
 
 }
 
@@ -787,7 +862,7 @@ appSpHelper.SendNotificationTask = function (ctx, taskItem, callBack) {
         }
       })
       .catch(function (error) {
-        appHelper.Log ( error, appHelper.LogType.ERROR);
+        appHelper.Log(error, appHelper.LogType.ERROR);
         let grp =
           t.get_item("AssignedTo") != null
             ? t.get_item("AssignedTo")[0].get_lookupValue()
@@ -817,11 +892,11 @@ appSpHelper.SendNotificationTask = function (ctx, taskItem, callBack) {
                 callBack(arrAdresse.concat());
               })
               .catch(function (error) {
-                appHelper.Log ( error, appHelper.LogType.ERROR);
+                appHelper.Log(error, appHelper.LogType.ERROR);
               });
           })
           .catch(function (error) {
-            appHelper.Log ( error, appHelper.LogType.ERROR);
+            appHelper.Log(error, appHelper.LogType.ERROR);
           });
       });
   };
@@ -832,7 +907,7 @@ appSpHelper.SendNotificationTask = function (ctx, taskItem, callBack) {
     obj.to = a;
     obj.from = appHelper.AppConstante.MIMailSender;
 
-    appHelper.Log (obj);
+    appHelper.Log(obj);
 
     appSpHelper.sendEmail(
       obj.from,
@@ -887,7 +962,257 @@ appSpHelper.sendEmail = function (from, to, cc, body, subject, callback) {
       }
     },
     error: function (err) {
-      appHelper.Log (  err, appHelper.LogType.ERROR, "Erreur lors de l'envoi du mail: " );
+      appHelper.Log(err, appHelper.LogType.ERROR, "Erreur lors de l'envoi du mail: ");
     },
   });
 };
+
+appSpHelper.ReturnMailParam = function (demande, tache, mailContent) {
+  // var MailTemplate = mailContent;
+  if (mailContent) {
+    let demandeurName = demande.get_item('Demandeur').get_lookupValue();
+    // let demandeurName = demandeurField.get_lookupValue();
+
+    if (mailContent.indexOf("##AUTHOR##") >= 0) {
+      mailContent = mailContent.replaceAll("##AUTHOR##", demandeurName);
+    }
+
+    // if (mailContent.includes("##PERSONTOSEND##")) {
+    if (mailContent.indexOf("##ASSIGNEA##") >= 0) {
+      mailContent = mailContent.replaceAll("##ASSIGNEA##", "");
+    }
+
+
+    //if (mailContent.includes("##TITLE##")) {
+    if (mailContent.indexOf("##TITREDEMANDE##") >= 0) {
+      mailContent = mailContent.replaceAll("##TITREDEMANDE##", (demande.get_item('Title') != null ? demande.get_item('Title') : ""));
+    }
+  }
+  else {
+    mailContent = "Aucun Mail template trouvé";
+  }
+
+  return mailContent;
+}
+
+appSpHelper.ReturnMailRecipient = function (demande, tache, mailRecipient) {
+  var ctx = new SP.ClientContext.get_current();
+  var web = ctx.get_web();
+  var list = web.get_lists().getByTitle(appHelper.ListName.Validation);
+  var assignedToColumnName = "AssignedTo";
+
+
+  // let GetOneAssignTo = function (userid) {
+  //   arrUser[o] = web.get_siteUsers().getById(userId); // Get the user object using the user ID
+  //   ctx.load(arrUser[o]);
+  // }
+
+
+  let BrowseAssignTo = function () {
+    let arrUser = [];
+    var assignedToField = tache.get_item(assignedToColumnName);
+    if (assignedToField) {
+      console.log(assignedToField);
+      assignedToField.forEach(assignto => {
+        let userId = assignto.get_lookupId();
+        arrUser.push(userId);
+      });
+
+      // for (const assignto in assignedToField) {
+      //   let userId = assignto.get_lookupId();
+      //   arrUser.push(userId);
+      // }
+    }
+    return arrUser;
+  };
+
+
+  let DetectAssignTypeByTakeUserMail = function (AssignId) {
+    return new Promise(function (resolve, reject) {
+      ctx.executeQueryAsync(
+        function () {
+          var user = web.get_siteUsers().getById(AssignId); // Get the user object using the user ID
+          ctx.load(user);
+          ctx.executeQueryAsync(
+            function () {
+              assignedToEmail = user.get_email();
+              resolve(assignedToEmail);
+            },
+            function (sender, args) {
+              reject("");
+            }
+          );
+        },
+        function (sender, args) {
+          reject("");
+        }
+      );
+    })
+  }
+
+  let GetGroupEmailAdresses = function (assignId) {
+    return new Promise(function (resolve, reject) {
+      var ctx = new SP.ClientContext.get_current();
+      var web = ctx.get_web();
+      var group = web.get_siteGroups().getById(assignId);
+      var users = group.get_users();
+      ctx.load(users);
+      ctx.executeQueryAsync(
+        function () {
+          var emailAddresses = [];
+          var userEnumerator = users.getEnumerator();
+          while (userEnumerator.moveNext()) {
+            var user = userEnumerator.get_current();
+            emailAddresses.push(user.get_email());
+          }
+          resolve(emailAddresses);
+        },
+        function (sender, args) {
+          reject("");
+        }
+      );
+    });
+
+  }
+
+
+  let GetAllRecipientMails = function () {
+    let userIds = BrowseAssignTo();
+    let PromResult = [];
+    console.log(userIds);
+    userIds.forEach(id => {
+      var Assign = DetectAssignTypeByTakeUserMail(id);
+      var group = GetGroupEmailAdresses(id);
+      Assign.then((values) => {
+        if (values) PromResult.push(Assign);
+      });
+      group.then((values) => {
+        if (values) PromResult.push(group);
+      });
+
+    });
+    console.log("PromResult");
+    console.log(PromResult);
+    return PromResult;
+
+    // Promise.all(PromResult).then((values) => {
+    //   console.log("values");
+    //   console.log(values);
+    //   return values;
+    // });
+
+  }
+
+  switch (mailRecipient) {
+    case appHelper.MailRecipient.ASSIGNEA:
+      assignedToColumnName = "AssignedTo";
+      Promise.resolve(GetAllRecipientMails());
+      // return GetAllRecipientMails();
+
+    case appHelper.MailRecipient.DEMANDEUR:
+      Promise.resolve((demande.get_item("DemandeurEmail") ? demande.get_item("DemandeurEmail") : ''));
+      // return (demande.get_item("DemandeurEmail") ? demande.get_item("DemandeurEmail") : '');
+
+    case appHelper.MailRecipient.N1:
+      Promise.resolve((demande.get_item("ResponsableN1Email") ? demande.get_item("ResponsableN1Email") : ''));
+      // return (demande.get_item("ResponsableN1Email") ? demande.get_item("ResponsableN1Email") : '');
+
+    default:
+      return '';
+
+  }
+
+}
+
+
+// appSpHelper.ReturnMailRecipient = function (demande, tache, mailContent) {
+//   var ctx = new SP.ClientContext.get_current();
+//   var web = ctx.get_web();
+//   var list = web.get_lists().getByTitle(appHelper.ListName.Validation);
+//   var assignedToColumnName = "AssignedTo";
+
+//   // var listItem = list.getItemById(taskId);
+
+//   let GetAssignAdress = function (t, callBack) {
+//     let arrAdresse = [];
+
+//     return new Promise(function (resolve, reject) {
+//       ctx.executeQueryAsync(
+//         function () {
+//           var assignedToField = tache.get_item(assignedToColumnName);
+//           if (assignedToField) {
+//             var userId = assignedToField[0].get_lookupId(); // Get the ID of the user from the "Assigned To" field
+//             var user = web.get_siteUsers().getById(userId); // Get the user object using the user ID
+//             ctx.load(user);
+//             ctx.executeQueryAsync(
+//               function () {
+//                 var assignedToEmail = user.get_email(); // Get the email property from the user object
+//                 resolve(assignedToEmail);
+//               },
+//               function (sender, args) {
+//                 reject(args.get_message());
+//               }
+//             );
+//           } else {
+//             resolve(null); // Assigned To field is empty or not properly configured
+//           }
+//         },
+//         function (sender, args) {
+//           reject(args.get_message());
+//         }
+//       );
+//     });
+
+
+
+//     appSpHelper
+//       .getAssignedToEmail(t.get_item("ID"))
+//       .then(function (assignedToEmail) {
+//         appHelper.Log(assignedToEmail, appHelper.LogType.WARN, 'getAssignedToEmail(t.get_item("ID"))');
+//         if (assignedToEmail) {
+//           arrAdresse.push(assignedToEmail);
+//           callBack(arrAdresse.concat());
+//         } else {
+//           callBack("");
+//         }
+//       })
+//       .catch(function (error) {
+//         appHelper.Log(error, appHelper.LogType.ERROR);
+//         let grp =
+//           t.get_item("AssignedTo") != null
+//             ? t.get_item("AssignedTo")[0].get_lookupValue()
+//             : "";
+//         appSpHelper
+//           .getGroupMembersLoginNames(grp)
+//           .then(function (arrUserLogin) {
+
+//             appHelper.Log(arrUserLogin, appHelper.LogType.WARN, ' appSpHelper.getGroupMembersLoginNames(grp)');
+//             appSpHelper
+//               .queryEmployeesByLoginNames(arrUserLogin)
+//               .then(function (empUsers) {
+
+//                 appHelper.Log(empUsers, appHelper.LogType.ERROR, ".queryEmployeesByLoginNames(arrUserLogin)");
+
+//                 empUsers.forEach(function (empUser, idx) {
+//                   let EmpMail =
+//                     empUser.get_item("EmpMail") != null
+//                       ? empUser.get_item("EmpMail").toString().trim()
+//                       : "";
+//                   if (EmpMail) {
+//                     arrAdresse.push(EmpMail);
+//                   }
+//                 });
+
+//                 appHelper.Log(arrAdresse);
+//                 callBack(arrAdresse.concat());
+//               })
+//               .catch(function (error) {
+//                 appHelper.Log(error, appHelper.LogType.ERROR);
+//               });
+//           })
+//           .catch(function (error) {
+//             appHelper.Log(error, appHelper.LogType.ERROR);
+//           });
+//       });
+//   };
+// }

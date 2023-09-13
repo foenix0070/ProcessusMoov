@@ -167,6 +167,10 @@
                     </tr>
                   </table></br>
 
+                  {{#regul}}
+                  <div class="sect-bn"><button class="btn btn-primary btn-sm linkOffCanvasNavigation" data-url="/tools/pages/regularisationFraisMission/add.aspx?DID={{regul}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" data-info="{{cout}}" id="BtnRegularisation" >Effectuer une regularisation</button></div>
+                  {{/regul}}</br>
+
                   <div class="head-titre">
                     <h2>
                       Details de la demande
@@ -175,9 +179,7 @@
                   {{#id}}
                   <div class="sect-bn"><button class="btn btn-warning btn-sm linkOffCanvasNavigation" data-url="/tools/pages/fraisMission/add.aspx?DID={{id}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" id="BtnModification" >Modifier la demande</button></div>
                   {{/id}}
-                  {{#regul}}
-                  <div class="sect-bn"><button class="btn btn-primary btn-sm linkOffCanvasNavigation" data-url="/tools/pages/regularisationFraisMission/add.aspx?DID={{regul}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" data-info="fraisMission" id="BtnRegularisation" >Effectuer une regularisation</button></div>
-                  {{/regul}}
+                  
                 </br>
                   <div>
                     <h3 style="color:#c50000 !important;">

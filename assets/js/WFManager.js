@@ -10,6 +10,14 @@ class WFManager {
     this.WFCircuitTemplate = [];
   }
 
+  static TacheAction = {
+    NOUVEAU: 'NOUVEAU',
+    ENCOURS: 'ENCOURS',
+    VALIDATION: 'VALIDEE',
+    MODIFICATION: 'DEMANDEMODIFICATION',
+    REJET: 'REJETEE'
+  };
+
   getWFSchemaFile() {
     let WF;
     if (this.WFData) {
@@ -142,11 +150,18 @@ class WFManager {
 
     ctx.executeQueryAsync(function () {
       try {
-        appSpHelper.SendNotificationTask(ctx, oListItemEnCours, function () {
+        WFManager.SendNotification(ctx, oListItemEnCours, _parent, _parentid, WFManager.TacheAction.NOUVEAU, function () {
           if (callBack) {
             callBack();
           }
-        });
+        })
+
+        // appSpHelper.SendNotificationTask(ctx, oListItemEnCours, function () {
+        //   if (callBack) {
+        //     callBack();
+        //   }
+        // });
+
       } catch (e) {
         appHelper.Log(e, appHelper.LogType.ERROR);
         if (callBack) {
@@ -159,20 +174,7 @@ class WFManager {
   }
 
   goToNextTask(ctx, _tacheid, _parent, _parentid, _commentaire, callBack) {
-    const QryGetNextOne =
-      "<View><Query><Where>" +
-      "<And>" +
-      "<And>" +
-      '<Eq><FieldRef ID="Parent" /><Value Type="Text">' +
-      _parent +
-      "</Value></Eq>" +
-      '<Eq><FieldRef ID="ParentID0" /><Value Type="Text">' +
-      _parentid +
-      "</Value></Eq>" +
-      "</And>" +
-      '<Eq><FieldRef ID="Status" /><Value Type="Choice">Non commencé</Value></Eq>' +
-      "</And>" +
-      '</Where><OrderBy><FieldRef Name="ID" Ascending="TRUE"/></OrderBy></Query></View>';
+
     let oList = ctx
       .get_web()
       .get_lists()
@@ -185,79 +187,99 @@ class WFManager {
     It.set_item(
       "_Comment",
       "Approbation apportée par  " +
-        document.getElementById("TxtCurrentUserDisplayName").value +
-        " le " +
-        appHelper.ToLocalDateString(new Date()) +
-        " avec le commentaire < " +
-        _commentaire +
-        " >"
+      document.getElementById("TxtCurrentUserDisplayName").value +
+      " le " +
+      appHelper.ToLocalDateString(new Date()) +
+      " avec le commentaire < " +
+      _commentaire +
+      " >"
     );
 
     It.update();
     ctx.load(It);
     ctx.executeQueryAsync(function () {
-      let camlQuery = new SP.CamlQuery();
-      camlQuery.set_viewXml(QryGetNextOne);
-      let collListItem = oList.getItems(camlQuery);
-      ctx.load(collListItem);
-      ctx.executeQueryAsync(function (sender, args) {
-        let listItemEnumerator = collListItem.getEnumerator();
-        let oListItem;
-        while (listItemEnumerator.moveNext()) {
-          oListItem = listItemEnumerator.get_current();
+      WFManager.GetTaskToStart(ctx, _parent, _parentid, function (task) {
+        if (task) {
           let startDate = new Date();
           let endDate = startDate.addDays(2);
 
-          oListItem.set_item("Status", "En cours");
-          oListItem.set_item("StartDate", new Date());
-          oListItem.set_item("DueDate", endDate);
+          task.set_item("Status", "En cours");
+          task.set_item("StartDate", new Date());
+          task.set_item("DueDate", endDate);
 
-          break;
-        }
-        if (oListItem) {
-          oListItem.update();
-          ctx.load(oListItem);
+          task.update();
+          ctx.load(task);
           ctx.executeQueryAsync(function () {
             try {
-              appSpHelper.SendNotificationTask(ctx, oListItem, function () {
-
-                  appHelper.receiptTask(It, function () {
-                    WFManager.BackNotification(ctx, _parent, _parentid, appHelper.TacheAction.VALIDATION,  function(){
-                    if (callBack) {
-                      callBack(oListItem);
-                    }
-                  });
+              WFManager.SendNotification(ctx, task, _parent, _parentid, WFManager.TacheAction.ENCOURS, function () {
+                appHelper.receiptTask(It, function () {
+                  if (callBack) {
+                    callBack(task);
+                  }
                 });
+              })
 
-              });
+              // appSpHelper.SendNotificationTask(ctx, oListItem, function () {
+
+              //   WFManager.BackNotification(ctx, _parent, _parentid, appHelper.TacheAction.VALIDATION, function () {
+              //     if (callBack) {
+              //       callBack(oListItem);
+              //     }
+              //   });
+              // });
+
             } catch (e) {
               appHelper.Log(e, appHelper.LogType.ERROR);
 
-                appHelper.receiptTask(It, function () {
-                  WFManager.BackNotification(ctx, _parent, _parentid, appHelper.TacheAction.VALIDATION,  function(){
-                  if (callBack) {
-                    callBack(oListItem);
-                  }
-                });
+              appHelper.receiptTask(It, function () {
+                // WFManager.BackNotification(ctx, _parent, _parentid, appHelper.TacheAction.VALIDATION, function () {
+                if (callBack) {
+                  callBack(oListItem);
+                }
+                // });
               });
             }
           }, appSpHelper.writeError);
-        } else {
-
+        }
+        else {
+          WFManager.SendNotification(ctx, task, _parent, _parentid, WFManager.TacheAction.VALIDATION, function () {
             appHelper.receiptTask(It, function () {
-              WFManager.BackNotification(ctx, _parent, _parentid, appHelper.TacheAction.VALIDATION,  function(){
               if (callBack) {
-                callBack(false);
+                callBack(null);
               }
             });
-          });
+          })
+
         }
-      }, appSpHelper.writeError);
+      })
+
     }, appSpHelper.writeError);
   }
 
-  goToRefusedTask(ctx, _tacheid, _parent, _parentid, _commentaire, callBack) {
-    const QryGetNextOne =
+  goToRefusedTask(ctx, _tacheid, _parent, _parentid, _commentaire, typeaction, callBack) {
+    
+    let oList = ctx
+      .get_web()
+      .get_lists()
+      .getByTitle(appHelper.ListName.Validation);
+    let It = oList.getItemById(_tacheid);
+    It.set_item("Status", "Terminé");
+    It.set_item("PercentComplete", 1);
+    It.set_item(
+      "_Comment",
+      "Rejet apporté par : " +
+      document.getElementById("TxtCurrentUserDisplayName").value +
+      " le " +
+      appHelper.ToLocalDateString(new Date()) +
+      " avec le commentaire < " +
+      _commentaire +
+      " >"
+    );
+
+    It.update();
+    ctx.load(It);
+    ctx.executeQueryAsync(function () {
+      const QryGetNextOne =
       "<View><Query><Where>" +
       "<And>" +
       "<And>" +
@@ -271,27 +293,7 @@ class WFManager {
       '<Eq><FieldRef ID="Status" /><Value Type="Choice">Non commencé</Value></Eq>' +
       "</And>" +
       '</Where><OrderBy><FieldRef Name="ID" Ascending="TRUE"/></OrderBy></Query></View>';
-    let oList = ctx
-      .get_web()
-      .get_lists()
-      .getByTitle(appHelper.ListName.Validation);
-    let It = oList.getItemById(_tacheid);
-    It.set_item("Status", "Terminé");
-    It.set_item("PercentComplete", 1);
-    It.set_item(
-      "_Comment",
-      "Rejet apporté par : " +
-        document.getElementById("TxtCurrentUserDisplayName").value +
-        " le " +
-        appHelper.ToLocalDateString(new Date()) +
-        " avec le commentaire < " +
-        _commentaire +
-        " >"
-    );
 
-    It.update();
-    ctx.load(It);
-    ctx.executeQueryAsync(function () {
       let camlQuery = new SP.CamlQuery();
       camlQuery.set_viewXml(QryGetNextOne);
       let collListItem = oList.getItems(camlQuery);
@@ -306,21 +308,30 @@ class WFManager {
           ctx.load(oListItem);
         }
         ctx.executeQueryAsync(function () {
+          let Action = WFManager.TacheAction.REJET;
+          if (typeaction == "MODIFIER") Action = WFManager.TacheAction.MODIFICATION;
+          WFManager.SendNotification(ctx, It, _parent, _parentid, Action, function () {
+            appHelper.receiptTask(It, function () {
+              if (callBack) {
+                callBack();
+              }
+            });
+          })
 
-
-          appHelper.receiptTask(It, function () {
-            WFManager.BackNotification(ctx, _parent, _parentid, appHelper.TacheAction.REJET,  function(){
-            if (callBack) {
-              callBack(true);
-            }
-          });
-        });
+          // appHelper.receiptTask(It, function () {
+          //   WFManager.BackNotification(ctx, _parent, _parentid, appHelper.TacheAction.REJET, function () {
+          //     if (callBack) {
+          //       callBack(true);
+          //     }
+          //   });
+          // });
         }, appSpHelper.writeError);
       }, appSpHelper.writeError);
     }, appSpHelper.writeError);
   }
 
-  static BackNotification(ctx, _parent, _parentid, _tacheAction,  callBack) {
+  static GetCurrentTask(ctx, _parent, _parentid, callBack) {
+    let currenttask = null;
     const QryGetNextOne =
       "<View><Query><Where>" +
       "<And>" +
@@ -347,48 +358,131 @@ class WFManager {
     ctx.load(collListItem);
     ctx.executeQueryAsync(function () {
       let listItemEnumerator = collListItem.getEnumerator();
-      let tacheresidu ;
-      let count = 0;
       while (listItemEnumerator.moveNext()) {
-        tacheresidu =  listItemEnumerator.get_current();
-          count++;
+        currenttask = listItemEnumerator.get_current();
       }
 
-      appHelper.getDemandeOrigin(_parent, _parentid, function(dIt){
+      if (callBack) callBack(currenttask);
 
-        if(count > 0){
-
-          appSpHelper.SendNotificationDemandeur (dIt, tacheresidu, _tacheAction, function(){
-            if(callBack){
-              callBack();
-            }
-          });
-
-        } else{
-
-          appSpHelper.SendNotificationDemandeur (dIt, null, _tacheAction, function(){
-            if(callBack){
-              callBack();
-            }
-          });
-
-        }
-
-      });
     }, function (sender, args) {
-      appHelper.Log( "Request failed. " + args.get_message() + "\n" + args.get_stackTrace() );
+      appHelper.Log("Request failed. " + args.get_message() + "\n" + args.get_stackTrace());
 
-      if(callBack){
-        callBack();
+      if (callBack) {
+        callBack(null);
+      }
+
+    });
+  }
+
+  static GetTaskToStart(ctx, _parent, _parentid, callBack) {
+    let currenttask = null;
+    const QryGetNextOne =
+      "<View><Query><Where>" +
+      "<And>" +
+      "<And>" +
+      '<Eq><FieldRef ID="Parent" /><Value Type="Text">' +
+      _parent +
+      "</Value></Eq>" +
+      '<Eq><FieldRef ID="ParentID0" /><Value Type="Text">' +
+      _parentid +
+      "</Value></Eq>" +
+      "</And>" +
+      '<Eq><FieldRef ID="Status" /><Value Type="Choice">Non commencé</Value></Eq>' +
+      "</And>" +
+      '</Where><OrderBy><FieldRef Name="ID" Ascending="TRUE"/></OrderBy></Query></View>';
+
+    let oList = ctx
+      .get_web()
+      .get_lists()
+      .getByTitle(appHelper.ListName.Validation);
+
+    let camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(QryGetNextOne);
+    let collListItem = oList.getItems(camlQuery);
+    ctx.load(collListItem);
+    ctx.executeQueryAsync(function () {
+      let listItemEnumerator = collListItem.getEnumerator();
+      while (listItemEnumerator.moveNext()) {
+        currenttask = listItemEnumerator.get_current();
+        break;
+      }
+
+      if (callBack) callBack(currenttask);
+
+    }, function (sender, args) {
+      appHelper.Log("Request failed. " + args.get_message() + "\n" + args.get_stackTrace());
+
+      if (callBack) {
+        callBack(null);
       }
 
     });
   }
 
 
+  static SendNotification(ctx, taskitem, _parent, _parentid, _tacheAction, callBack) {
+    let codemail = "";
+    switch (_tacheAction) {
+      case WFManager.TacheAction.NOUVEAU:
+        codemail = "ACTIONVALIDATION#" + _parent + "NOUVEAU";
+        break;
+      case WFManager.TacheAction.ENCOURS:
+        codemail = "ACTIONVALIDATION";
+        break;
+      case WFManager.TacheAction.MODIFICATION:
+        codemail = _parent + "MODIFICATION";
+        break;
+      case WFManager.TacheAction.REJET:
+        codemail = _parent + "REJET";
+        break;
+      case WFManager.TacheAction.VALIDATION:
+        codemail = _parent + "TERMINE";
+        break;
+      default:
+        return "ACTIONVALIDATION";
+    }
+    appHelper.getDemandeOrigin(_parent, _parentid, function (dIt) {
+      if (taskitem) {
+        appSpHelper.GetMails(dIt, taskitem, codemail, function () {
+          if (callBack) {
+            callBack();
+          }
+        });
+      }
+
+      else {
+        WFManager.GetCurrentTask(ctx, _parent, _parentid, function (currenttask) {
+
+
+          if (currenttask) {
+
+            appSpHelper.GetMails(dIt, tacheresidu, _tacheAction, function () {
+              if (callBack) {
+                callBack();
+              }
+            });
+
+          } else {
+
+            appSpHelper.GetMails(dIt, null, _tacheAction, function () {
+              if (callBack) {
+                callBack();
+              }
+            });
+
+          }
+
+        });
+
+
+      }
+    })
 
 
 
+
+
+  }
 
 
 }

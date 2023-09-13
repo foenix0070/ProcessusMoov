@@ -61,7 +61,7 @@ showRegularisationSortieCaisse.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
-    WF.goToRefusedTask(showRegularisationSortieCaisse.clientContext, tacheId, appHelper.AppCode.REGULARISATIONSORTIECAISSE, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToRefusedTask(showRegularisationSortieCaisse.clientContext, tacheId, appHelper.AppCode.REGULARISATIONSORTIECAISSE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
       showRegularisationSortieCaisse.UpDateItemStatusRejet(true, demandeid, function () {
         location.reload();
@@ -70,7 +70,7 @@ showRegularisationSortieCaisse.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
-    WF.goToRefusedTask(showRegularisationSortieCaisse.clientContext, tacheId, appHelper.AppCode.REGULARISATIONSORTIECAISSE, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToRefusedTask(showRegularisationSortieCaisse.clientContext, tacheId, appHelper.AppCode.REGULARISATIONSORTIECAISSE, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
       showRegularisationSortieCaisse.UpDateItemStatusRejet(false, demandeid, function () {
         location.reload();
@@ -166,19 +166,25 @@ showRegularisationSortieCaisse.ShowFichierJoint = function (demandeid) {
 showRegularisationSortieCaisse.ShowUploadForm = function (demandeid, view) {
   appHelper.renderTemplate("tmpl_form_fichiers_attaches", "SectionDocumentsJoint", view);
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
-  FpUploadAttachement.addEventListener('change', (e) => {
-    files = e.target.files;
-    for (const file of files) {
-      let reader = new FileReader();
-      reader.onload = function (e) {
-        showRegularisationSortieCaisse.AttachFile(demandeid, e.target.result, file.name)
-      }
-      reader.onerror = function (e) {
-        console.log(e.target.error);
-      }
-      reader.readAsArrayBuffer(file);
-    }
+  FpUploadAttachement.addEventListener('change', function () {
+
+    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.RegularisationSortieCaisse, 0, function () {
+      showRegularisationSortieCaisse.ShowFichierJoint(demandeid);
+    });
   });
+  // FpUploadAttachement.addEventListener('change', (e) => {
+  //   files = e.target.files;
+  //   for (const file of files) {
+  //     let reader = new FileReader();
+  //     reader.onload = function (e) {
+  //       showRegularisationSortieCaisse.AttachFile(demandeid, e.target.result, file.name)
+  //     }
+  //     reader.onerror = function (e) {
+  //       console.log(e.target.error);
+  //     }
+  //     reader.readAsArrayBuffer(file);
+  //   }
+  // });
 
   setTimeout(function() {
     const addfile = document.getElementById("addfile");

@@ -58,7 +58,7 @@ showGadget.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
-    WF.goToRefusedTask(showGadget.clientContext, tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToRefusedTask(showGadget.clientContext, tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
       showGadget.UpDateItemStatusRejet(true, demandeid, function () {
         location.reload();
@@ -67,7 +67,7 @@ showGadget.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
-    WF.goToRefusedTask(showGadget.clientContext, tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToRefusedTask(showGadget.clientContext, tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
       showGadget.UpDateItemStatusRejet(false, demandeid, function () {
         location.reload();
@@ -118,8 +118,6 @@ showGadget.UpDateItemStatus = function (nextTask, demandeid, callBack) {
   }, appSpHelper.writeError);
 }
 
-
-
 showGadget.ShowFichierJoint = function (demandeid) {
 
   let view = {};
@@ -164,21 +162,27 @@ showGadget.ShowFichierJoint = function (demandeid) {
 showGadget.ShowUploadForm = function (demandeid, view) {
   appHelper.renderTemplate("tmpl_form_fichiers_attaches", "SectionDocumentsJoint", view);
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
-  FpUploadAttachement.addEventListener('change', (e) => {
-    files = e.target.files;
-    for (const file of files) {
-      let reader = new FileReader();
-      reader.onload = function (e) {
-        showGadget.AttachFile(demandeid, e.target.result, file.name)
-      }
-      reader.onerror = function (e) {
-        console.log(e.target.error);
-      }
-      reader.readAsArrayBuffer(file);
-    }
+  // FpUploadAttachement.addEventListener('change', (e) => {
+  FpUploadAttachement.addEventListener('change', function () {
+
+    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Gadget, 0, function () {
+      showGadget.ShowFichierJoint(demandeid);
+    });
+
+    // files = e.target.files;
+    // for (const file of files) {
+    //   let reader = new FileReader();
+    //   reader.onload = function (e) {
+    //     showGadget.AttachFile(demandeid, e.target.result, file.name)
+    //   }
+    //   reader.onerror = function (e) {
+    //     console.log(e.target.error);
+    //   }
+    //   reader.readAsArrayBuffer(file);
+    // }
   });
 
-  setTimeout(function() {
+  setTimeout(function () {
     const addfile = document.getElementById("addfile");
     addfile.addEventListener("click", function () {
       OpenFileUpload('FpUploadAttachement');
@@ -270,18 +274,18 @@ showGadget.ShowValidation = function (demandeid) {
 }
 
 function ajouterEspacesEntreChiffres(nombre) {
- if(nombre>999){
-   // Convertir le nombre en une chaîne de caractères
-   var nombreString = nombre.toString();
+  if (nombre > 999) {
+    // Convertir le nombre en une chaîne de caractères
+    var nombreString = nombre.toString();
 
-   // Utiliser une expression régulière pour ajouter des espaces entre les chiffres
-   var nombreAvecEspaces = nombreString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    // Utiliser une expression régulière pour ajouter des espaces entre les chiffres
+    var nombreAvecEspaces = nombreString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-   return nombreAvecEspaces;
- }
- else{
-  return nombre;
- }
+    return nombreAvecEspaces;
+  }
+  else {
+    return nombre;
+  }
 }
 
 showGadget.ShowDetails = function (demandeid) {
@@ -300,7 +304,7 @@ showGadget.ShowDetails = function (demandeid) {
       let superieurName = superieurField.get_lookupValue();
       let qte = ajouterEspacesEntreChiffres(It.get_item('Quantite'));
       let view = {
-        id :  (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false ) ,
+        id: (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false),
         nature: It.get_item('Title') != null ? It.get_item('Title') : '',
         datedepart: It.get_item('Created') != null ? new Date(It.get_item('Created')).toLocaleDateString() : '',
         quantite: qte,
@@ -315,7 +319,7 @@ showGadget.ShowDetails = function (demandeid) {
       };
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
 
-      
+
 
     }
   }, appSpHelper.writeError);

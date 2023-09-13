@@ -23,23 +23,23 @@
       <legend>INTERIMAIRE</legend>
 
       <div class="mb-3">
-        <label  class="form-label"> Interimaire</label>
-        <div id="plePickerInterimaireDiv" ></div>
+        <label class="form-label"> Interimaire</label>
+        <div id="plePickerInterimaireDiv"></div>
       </div>
 
       <div class="mb-3">
-        <label  class="form-label"> Nom</label>
-        <input type="text" class="form-control"  id="TxtIntName" placeholder="" disabled/>
+        <label class="form-label"> Nom</label>
+        <input type="text" class="form-control" id="TxtIntName" placeholder="" disabled />
       </div>
 
       <div class="mb-3">
-        <label  class="form-label"> Matricule</label>
-        <input type="text" class="form-control" id="TxtIntMatricule" placeholder="" disabled/>
+        <label class="form-label"> Matricule</label>
+        <input type="text" class="form-control" id="TxtIntMatricule" placeholder="" disabled />
       </div>
 
       <div class="mb-3">
-        <label  class="form-label"> Email</label>
-        <input type="text" class="form-control" id="TxtIntEmail" placeholder="" disabled/>
+        <label class="form-label"> Email</label>
+        <input type="text" class="form-control" id="TxtIntEmail" placeholder="" disabled />
       </div>
 
     </fieldset>
@@ -57,12 +57,12 @@
       </div>
 
       <div class="mb-3">
-        <label  class="form-label"> Zone g&eacute;ographique <span class="asterix">*</span></label>
+        <label class="form-label"> Zone g&eacute;ographique <span class="asterix">*</span></label>
         <select id="cmbZoneGeo" name="cmbZoneGeo" class="form-control">
           <option value="0" data-color="#000">Choisir la zone geographique</option>
         </select>
-        <input id="TxtZoneGeoColeur" value="" type="hidden" >
-        <input id="TxtZoneGeoText" value="" type="hidden" >
+        <input id="TxtZoneGeoColeur" value="" type="hidden">
+        <input id="TxtZoneGeoText" value="" type="hidden">
       </div>
       <div class="mb-3">
         <label class="form-label">Motif <span class="asterix">*</span> :</label>
@@ -87,12 +87,12 @@
       </div>
 
       <div class="mb-3">
-        <label  class="form-label"> Caisse de paiement <span class="asterix">*</span> :</label>
+        <label class="form-label"> Caisse de paiement <span class="asterix">*</span> :</label>
         <select id="cmbCaisse" name="cmbCaisse" class="form-control" onchange="afficher()">
           <option value="0" data-color="#000">Choisir la Caisse de paiement</option>
         </select>
-        <input id="TxtCaisseColeur" value="" type="hidden" >
-        <input id="TxtCaisseText" value="" type="hidden" >
+        <input id="TxtCaisseColeur" value="" type="hidden">
+        <input id="TxtCaisseText" value="" type="hidden">
       </div>
 
       <div class="mb-3">
@@ -101,12 +101,17 @@
         <select id="cmbMode" name="cmbMode" class="form-control">
           <option value="0" data-color="#000">Choisir le mode de paiement</option>
         </select>
-        <input id="TxtModeColeur" value="" type="hidden" >
-        <input id="TxtModeText" value="" type="hidden" >
+        <input id="TxtModeColeur" value="" type="hidden">
+        <input id="TxtModeText" value="" type="hidden">
       </div>
       <div class="mb-3" id="AutreCaisse" style="display: none;" class="form-control">
         <label class="form-label">Autre Caisse :</label>
         <input type="text" id="TxtAutreCaisse" class="  form-control">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label"> Document justificatif</label>
+        <input type="file" multiple class="form-control fileUpload" id="FileDoc" placeholder="" />
       </div>
 
       <div class="mb-3">
@@ -120,7 +125,7 @@
       <div class="mb-3">
         <input id="TxtRef" type="hidden">
       </div>
-      
+
     </fieldset>
 
     <fieldset class="form-elts">

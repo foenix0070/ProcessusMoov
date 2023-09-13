@@ -64,7 +64,7 @@ showConge.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
-    WF.goToRefusedTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToRefusedTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       appHelper.Log(nextTask);
       showConge.UpDateItemStatusRejet(true, demandeid, function () {
         location.reload();
@@ -73,7 +73,7 @@ showConge.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
-    WF.goToRefusedTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToRefusedTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value,"MODIFIER", function (nextTask) {
       appHelper.Log(nextTask);
       showConge.UpDateItemStatusRejet(false, demandeid, function () {
         location.reload();
@@ -171,21 +171,28 @@ showConge.ShowUploadForm = function (demandeid, view) {
   appHelper.renderTemplate("tmpl_form_fichiers_attaches", "SectionDocumentsJoint", view);
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
 
-  FpUploadAttachement.addEventListener('change', (e) => {
-    files = e.target.files;
-    appHelper.Log(files);
+  FpUploadAttachement.addEventListener('change', function () {
 
-    for (const file of files) {
-      let reader = new FileReader();
-      reader.onload = function (e) {
-        showConge.AttachFile(demandeid, e.target.result, file.name)
-      }
-      reader.onerror = function (e) {
-        appHelper.Log(e.target.error);
-      }
-      reader.readAsArrayBuffer(file);
-    }
+    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Conge, 0, function () {
+      showConge.ShowFichierJoint(demandeid);
+    });
   });
+
+  // FpUploadAttachement.addEventListener('change', (e) => {
+  //   files = e.target.files;
+  //   appHelper.Log(files);
+
+  //   for (const file of files) {
+  //     let reader = new FileReader();
+  //     reader.onload = function (e) {
+  //       showConge.AttachFile(demandeid, e.target.result, file.name)
+  //     }
+  //     reader.onerror = function (e) {
+  //       appHelper.Log(e.target.error);
+  //     }
+  //     reader.readAsArrayBuffer(file);
+  //   }
+  // });
 
   setTimeout(function() {
     const addfile = document.getElementById("addfile");

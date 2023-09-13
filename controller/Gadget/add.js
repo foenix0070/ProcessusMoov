@@ -256,14 +256,14 @@ appGadget.Add = function ( callBack) {
   appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Gadget, 0, function(){
 
     const appUrl = '/pages/gadget/show.aspx?ID=' + oListItem.get_id();
-      let WF = new WFManager(appHelper.AppCode.GADGET,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
+    let WF = new WFManager(appHelper.AppCode.GADGET,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+    WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){})
       
-      if(callBack){
-        callBack(oListItem);
-      }
+    if(callBack){
+      callBack(oListItem);
+    }
 
-  }, appSpHelper.writeError);
+    }, appSpHelper.writeError);
   })
   
 };
@@ -341,7 +341,6 @@ if(callBack){callBack();}
     }else{if(callBack){callBack();}}
   }, appSpHelper.writeError);
 }
-
 
 
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appGadget.InitializePage);

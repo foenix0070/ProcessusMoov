@@ -58,7 +58,7 @@ showAbsence.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
-    WF.goToRefusedTask(showAbsence.clientContext, tacheId, appHelper.AppCode.ABSENCE, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToRefusedTask(showAbsence.clientContext, tacheId, appHelper.AppCode.ABSENCE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       appHelper.Log(nextTask);
       showAbsence.UpDateItemStatusRejet(true, demandeid, function () {
         location.reload();
@@ -67,7 +67,7 @@ showAbsence.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
-    WF.goToRefusedTask(showAbsence.clientContext, tacheId, appHelper.AppCode.ABSENCE, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToRefusedTask(showAbsence.clientContext, tacheId, appHelper.AppCode.ABSENCE, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       appHelper.Log(nextTask);
       showAbsence.UpDateItemStatusRejet(false, demandeid, function () {
         location.reload();
@@ -164,19 +164,25 @@ showAbsence.ShowFichierJoint = function (demandeid) {
 showAbsence.ShowUploadForm = function (demandeid, view) {
   appHelper.renderTemplate("tmpl_form_fichiers_attaches", "SectionDocumentsJoint", view);
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
-  FpUploadAttachement.addEventListener('change', (e) => {
-    files = e.target.files;
-    for (const file of files) {
-      let reader = new FileReader();
-      reader.onload = function (e) {
-        showAbsence.AttachFile(demandeid, e.target.result, file.name)
-      }
-      reader.onerror = function (e) {
-        appHelper.Log(e.target.error);
-      }
-      reader.readAsArrayBuffer(file);
-    }
+  FpUploadAttachement.addEventListener('change', function () {
+
+    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Absence, 0, function () {
+      showAbsence.ShowFichierJoint(demandeid);
+    });
   });
+  // FpUploadAttachement.addEventListener('change', (e) => {
+  //   files = e.target.files;
+  //   for (const file of files) {
+  //     let reader = new FileReader();
+  //     reader.onload = function (e) {
+  //       showAbsence.AttachFile(demandeid, e.target.result, file.name)
+  //     }
+  //     reader.onerror = function (e) {
+  //       appHelper.Log(e.target.error);
+  //     }
+  //     reader.readAsArrayBuffer(file);
+  //   }
+  // });
 }
 
 showAbsence.AttachFile = function (demandeid, arrayBuffer, fileName) {

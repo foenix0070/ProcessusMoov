@@ -9,9 +9,16 @@ appHelper.AppConstante = {
 }
 
 appHelper.TacheAction = {
-  VALIDATION : 'VALIDEE',
-  MODIFICATION : 'DEMANDEMODIFICATION',
-  REJET : 'REJETEE'
+  NOUVEAU: 'NOUVEAU',
+  VALIDATION: 'VALIDEE',
+  MODIFICATION: 'DEMANDEMODIFICATION',
+  REJET: 'REJETEE'
+};
+
+appHelper.MailRecipient= {
+  ASSIGNEA : 'ASSIGNEA',
+  DEMANDEUR :  'DEMANDEUR',
+  N1: 'DEMANDEURN1'
 };
 
 appHelper.ListName = {
@@ -33,7 +40,8 @@ appHelper.ListName = {
   Zone: 'ListeZoneGeographique',
   Caisse: 'ListeCaissePaiement',
   AppListe: 'tools',
-  Mode: 'ListeModePaiement'
+  Mode: 'ListeModePaiement',
+  Template: 'ListeTemplateMail'
 };
 
 appHelper.Status = {
@@ -100,29 +108,29 @@ appHelper.Log = function (msg, type = appHelper.LogType.LOG, appName = 'MI') {
   }
 }
 
-appHelper.GetMainListNameFromAppCode = function( key){
+appHelper.GetMainListNameFromAppCode = function (key) {
 
   switch (key) {
     case appHelper.AppCode.ABSENCE:
-return appHelper.ListName.Absence;
-      case appHelper.AppCode.CONGE:
-        return appHelper.ListName.Conge;
-      case appHelper.AppCode.FRAISMISSION:
-        return appHelper.ListName.Mission;
-      case appHelper.AppCode.GADGET:
-        return appHelper.ListName.Gadget;
-      case appHelper.AppCode.MATERIEL:
-        return appHelper.ListName.Materiel;
-      case appHelper.AppCode.MISSION:
-        return appHelper.ListName.Mission;
-      case appHelper.AppCode.REGULARISATIONFRAISMISSION:
-        return appHelper.ListName.RegularisationFraisMission;
-      case appHelper.AppCode.REGULARISATIONSORTIECAISSE:
-        return appHelper.ListName.RegularisationSortieCaisse;
-      case appHelper.AppCode.SORTIECAISSE:
-        return appHelper.ListName.SortieCaisse;
-      case appHelper.AppCode.VEHICULE:
-        return appHelper.ListName.Vehicule;
+      return appHelper.ListName.Absence;
+    case appHelper.AppCode.CONGE:
+      return appHelper.ListName.Conge;
+    case appHelper.AppCode.FRAISMISSION:
+      return appHelper.ListName.Mission;
+    case appHelper.AppCode.GADGET:
+      return appHelper.ListName.Gadget;
+    case appHelper.AppCode.MATERIEL:
+      return appHelper.ListName.Materiel;
+    case appHelper.AppCode.MISSION:
+      return appHelper.ListName.Mission;
+    case appHelper.AppCode.REGULARISATIONFRAISMISSION:
+      return appHelper.ListName.RegularisationFraisMission;
+    case appHelper.AppCode.REGULARISATIONSORTIECAISSE:
+      return appHelper.ListName.RegularisationSortieCaisse;
+    case appHelper.AppCode.SORTIECAISSE:
+      return appHelper.ListName.SortieCaisse;
+    case appHelper.AppCode.VEHICULE:
+      return appHelper.ListName.Vehicule;
 
     default:
       return '';
@@ -135,7 +143,7 @@ appHelper.receiptTask = function (it, callBack) {
   background-color: #2eb886;
   color: white;
   margin-bottom: 15px;">
-  Votre requête a bien été pris en compte.
+  Votre action a été enregistrée dans le système !
  </div>`;
   bootbox.alert(msg, function () {
     if (callBack) {
@@ -145,19 +153,19 @@ appHelper.receiptTask = function (it, callBack) {
 
 }
 
-appHelper.getDemandeOrigin = function(_parent, _parentid, callBack) {
+appHelper.getDemandeOrigin = function (_parent, _parentid, callBack) {
   let ctx = new SP.ClientContext.get_current();
   let _list_name = appHelper.GetMainListNameFromAppCode(_parent);
   appHelper.Log(_list_name);
 
-if (_list_name) {
+  if (_list_name) {
     let oList = ctx.get_web().get_lists().getByTitle(_list_name);
     let It = oList.getItemById(_parentid);
     It.update();
     ctx.load(It);
-    appHelper.Log(_parentid, appHelper.LogType.INFO, 'getDemandeOrigin' );
+    appHelper.Log(_parentid, appHelper.LogType.INFO, 'getDemandeOrigin');
     ctx.executeQueryAsync(function () {
-      appHelper.Log(It, appHelper.LogType.INFO, 'getDemandeOrigin' );
+      appHelper.Log(It, appHelper.LogType.INFO, 'getDemandeOrigin');
       if (callBack) {
         callBack(It);
       }
@@ -641,9 +649,9 @@ appHelper.AttachFile = function (clientContext, demandeid, arrayBuffer, fileName
       }
       console.log("Test");
       var base64 = btoa(out);
-      base64 = 
-      //Create FileCreationInformation object using the read file data
-      createInfo = new SP.FileCreationInformation();
+      base64 =
+        //Create FileCreationInformation object using the read file data
+        createInfo = new SP.FileCreationInformation();
       createInfo.set_content(base64);
       createInfo.set_url(fileName);
       console.log(fileName);
@@ -727,138 +735,192 @@ appHelper.ensureAttachmentFolder = function (ctx, listTitle, itemId, success, er
 
 appHelper.upploadAttachmentFiles = function (inputFileId, itemId, listName, j, callback) {
 
-    // Get test values from the file input and text input page controls.
+  // Get test values from the file input and text input page controls.
 
-    var tFiles = document.getElementById(inputFileId).files;
+  var tFiles = document.getElementById(inputFileId).files;
 
-    //var fileInput = jQuery('#inputFileId');
+  //var fileInput = jQuery('#inputFileId');
 
-    if (tFiles.length > 0) {
+  if (tFiles.length > 0) {
 
-        var tFn = tFiles[j].name.split(".")
+    var tFn = tFiles[j].name.split(".")
 
-        var fExt = tFn.splice((tFn.length - 1), 1)
+    var fExt = tFn.splice((tFn.length - 1), 1)
 
-        var fileName = escape(tFn.toString().replaceAll(",", "")) + "_" + new Date().getTime() + "." + fExt;
-
-        // Get the local file as an array buffer.
-
-        var getFile = getFileBuffer();
-
-        getFile.done(function (arrayBuffer) {
-
-            // Add the file to the SharePoint folder.
-
-            var addFile = addAttachmentFiles(arrayBuffer, fileName);
-
-            addFile.done(function (file, status, xhr) {
-
-                j++;
-
-                if (j < tFiles.length) {
-
-                    appsHelper.upploadAttachmentFiles(inputFileId, itemId, listName, j, callback);
-
- 
-
-                } else {
-
-                    if (callback) {
-
-                        callback.call();
-
-                    }
-
-                }
-
-            });
-
-            addFile.fail(onError);
-
-        });
-
-        getFile.fail(onError);
-
-    }
-
-    else {
-
-        if (callback) {
-
-            callback.call();
-
-        }
-
-    }
+    var fileName = escape(tFn.toString().replaceAll(",", "")) + "_" + new Date().getTime() + "." + fExt;
 
     // Get the local file as an array buffer.
 
-    function getFileBuffer() {
+    var getFile = getFileBuffer();
 
-        var deferred = jQuery.Deferred();
+    getFile.done(function (arrayBuffer) {
 
-        var reader = new FileReader();
+      // Add the file to the SharePoint folder.
 
-        reader.onloadend = function (e) {
+      var addFile = addAttachmentFiles(arrayBuffer, fileName);
 
-            deferred.resolve(e.target.result);
+      addFile.done(function (file, status, xhr) {
+
+        j++;
+
+        if (j < tFiles.length) {
+
+          appsHelper.upploadAttachmentFiles(inputFileId, itemId, listName, j, callback);
+
+
+
+        } else {
+
+          if (callback) {
+
+            callback.call();
+
+          }
 
         }
 
-        reader.onerror = function (e) {
+      });
 
-            deferred.reject(e.target.error);
+      addFile.fail(onError);
 
-        }
+    });
 
-        reader.readAsArrayBuffer(tFiles[j]);
+    getFile.fail(onError);
 
-        return deferred.promise();
+  }
 
-    }
+  else {
 
- 
+    if (callback) {
 
-    // Add the file to the file collection in the Shared Documents folder.
-
-    function addAttachmentFiles(arrayBuffer, fname) {
-
-        // Send the request and return the response.
-
-        // This call returns the SharePoint file.
-
-        url = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('" + listName + "')/items(" + itemId + ")/AttachmentFiles/ add(FileName='" + fname + "')";
-
-        return jQuery.ajax({
-
-            url: url,
-
-            type: "POST",
-
-            data: arrayBuffer,
-
-            processData: false,
-
-            headers: {
-
-                "accept": "application/json;odata=verbose",
-
-                "X-RequestDigest": jQuery("#__REQUESTDIGEST").val(),
-
-                "content-length": arrayBuffer.byteLength
-
-            }
-
-        });
+      callback.call();
 
     }
 
-    function onError(error) {
+  }
 
-        alert(error.responseText);
+  // Get the local file as an array buffer.
+
+  function getFileBuffer() {
+
+    var deferred = jQuery.Deferred();
+
+    var reader = new FileReader();
+
+    reader.onloadend = function (e) {
+
+      deferred.resolve(e.target.result);
 
     }
+
+    reader.onerror = function (e) {
+
+      deferred.reject(e.target.error);
+
+    }
+
+    reader.readAsArrayBuffer(tFiles[j]);
+
+    return deferred.promise();
+
+  }
+
+
+
+  // Add the file to the file collection in the Shared Documents folder.
+
+  function addAttachmentFiles(arrayBuffer, fname) {
+
+    // Send the request and return the response.
+
+    // This call returns the SharePoint file.
+
+    url = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('" + listName + "')/items(" + itemId + ")/AttachmentFiles/ add(FileName='" + fname + "')";
+
+    return jQuery.ajax({
+
+      url: url,
+
+      type: "POST",
+
+      data: arrayBuffer,
+
+      processData: false,
+
+      headers: {
+
+        "accept": "application/json;odata=verbose",
+
+        "X-RequestDigest": jQuery("#__REQUESTDIGEST").val(),
+
+        "content-length": arrayBuffer.byteLength
+
+      }
+
+    });
+
+  }
+
+  function onError(error) {
+
+    alert(error.responseText);
+
+  }
 
 }
 
 
+
+// appsHelper.GetMailTemplate = function (to, subject, link, mailCode, item, callBack) {
+//   if (to) {
+//     var cContext = window.SP.ClientContext.get_current();
+//     var oList = cContext.get_web().get_lists().getByTitle("ParamList");
+//     var camlQuery = new window.SP.CamlQuery();
+//     //alert(_spPageContextInfo.userId);
+//     camlQuery.set_viewXml('<View>' +
+//       '<Query>' +
+//       '<Where>' +
+//       '<Eq><FieldRef Name=\'Title\' /><Value Type=\'Text\'>' +
+//       mailCode +
+//       '</Value></Eq>' +
+//       '</Where>' +
+//       '</Query>' +
+//       '</View>');
+//     var paramItem = oList.getItems(camlQuery);
+//     cContext.load(paramItem);
+//     cContext.executeQueryAsync(onSuccess, onFailure);
+
+//     function onSuccess(sender, args) {
+
+//       var mailTemplate = mailCode;
+
+//       if (paramItem.get_count() > 0) {
+//         var listItemEnumerator = paramItem.getEnumerator();
+//         while (listItemEnumerator.moveNext()) {
+//           var oListItem = listItemEnumerator.get_current();
+//           mailTemplate = (oListItem.get_item('ParamValue') != null ? oListItem.get_item('ParamValue') : "");
+//           break;
+//         }
+//       }
+
+//       var mailbody = appsHelper.ReturnMailBody(item, mailTemplate);
+
+//       if (link) {
+//         mailbody += "<br />" + link;
+//       }
+
+//       appsHelper.SaveForSendMail(to,
+//         subject,
+//         mailbody,
+//         true,
+//         callBack);
+//     }
+//     function onFailure(sender, args) {
+//       callBack.call();
+//       //onComplete(false);
+//     }
+//   }
+//   else {
+//     callBack.call();
+//   }
+// }

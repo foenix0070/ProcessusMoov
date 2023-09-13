@@ -426,6 +426,8 @@ appConge.Edit = function (demandeid, callBack) {
     parseInt(document.getElementById("TxtNbreJour").value)
   );
 
+  let ref = document.getElementById("TxtRef").value;
+
   let pickerDict =
     SPClientPeoplePicker.SPClientPeoplePickerDict
       .plePickerInterimaireDiv_TopSpan;
@@ -444,7 +446,7 @@ appConge.Edit = function (demandeid, callBack) {
     document.getElementById("TxtTypeCongeText").value
   );
 
-  oListItem.set_item("Reference", document.getElementById("TxtRef").value);
+  // oListItem.set_item("Reference", document.getElementById("TxtRef").value);
 
   oListItem.set_item(
     "NombreJours",
@@ -523,12 +525,15 @@ appConge.Edit = function (demandeid, callBack) {
       oListItem.get_id(),
       App.CurrentUser.Manager.Login,
       App.CurrentUser.Manager2.Login,
+      ref,
       function () {
         if (callBack) {
           callBack(oListItem);
         }
       }
     );
+
+
   }, appSpHelper.writeError);
 };
 

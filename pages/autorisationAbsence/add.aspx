@@ -29,17 +29,17 @@
 
       <div class="mb-3">
         <label class="form-label"> Nom </label>
-        <input type="text" class="form-control" id="TxtIntName" placeholder="" disabled/>
+        <input type="text" class="form-control" id="TxtIntName" placeholder="" disabled />
       </div>
 
       <div class="mb-3">
         <label class="form-label"> Matricule </label>
-        <input type="text" class="form-control" id="TxtIntMatricule" placeholder="" disabled/>
+        <input type="text" class="form-control" id="TxtIntMatricule" placeholder="" disabled />
       </div>
 
       <div class="mb-3">
         <label class="form-label"> Email </label>
-        <input type="text" class="form-control" id="TxtIntEmail" placeholder="" disabled/>
+        <input type="text" class="form-control" id="TxtIntEmail" placeholder="" disabled />
       </div>
 
       <span class="note">
@@ -83,10 +83,10 @@
         <input type="date" class="form-control" id="DateReprise" placeholder="" />
       </div> -->
 
-      <!-- <div class="mb-3">
-        <label class="form-label">Doc justificatifs</label>
-        <input type="file" class="form-control" id="DocJustificatif" placeholder="" />
-      </div> -->
+      <div class="mb-3">
+        <label class="form-label"> Document justificatif</label>
+        <input type="file" multiple class="form-control fileUpload" id="FileDoc" placeholder="" />
+      </div>
 
       <div class="mb-3">
         <input id="TxtVerif" type="hidden">
@@ -101,7 +101,8 @@
       </div>
 
       <span class="note">
-        NB : Le nombre total de jours accord&eacute;s au titre des Permissions exceptionnelles est limit&eacute; &aacute; 10 jours
+        NB : Le nombre total de jours accord&eacute;s au titre des Permissions exceptionnelles est limit&eacute;
+        &aacute; 10 jours
         ouvrables par employ&eacute; et par an
       </span>
 

@@ -348,39 +348,53 @@ appRegularisationSortieCaisse.Add = function (callBack) {
     oListItem.update();
     clientContext.load(oListItem);
     clientContext.executeQueryAsync(function () {
+      appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.RegularisationSortieCaisse, 0, function () {
+        const appUrl = '/pages/regularisationSortieCaisse/show.aspx?ID=' + oListItem.get_id();
+        let WF = new WFManager(appHelper.AppCode.REGULARISATIONSORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+        WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONSORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
 
-      let FpUploadAttachement = document.getElementById('FileDoc');
-      files = FpUploadAttachement.files;
-      console.log(FpUploadAttachement);
-      console.log(files);
-      for (const file of files) {
-        let reader = new FileReader();
-        reader.onload = function (e) {
-          console.log(file.name);
-          console.log(e.target.result);
-          appHelper.AttachFile(clientContext, oListItem.get_id(), e.target.result, file.name, appHelper.ListName.RegularisationSortieCaisse, function () {
-            const appUrl = '/pages/regularisationSortieCaisse/show.aspx?ID=' + oListItem.get_id();
-            let WF = new WFManager(appHelper.AppCode.REGULARISATIONSORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-            WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONSORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+        let idcmb = document.getElementById("cmbSortie").value;
+        console.log(idcmb);
 
-            let idcmb = document.getElementById("cmbSortie").value;
-            console.log(idcmb);
+        appRegularisationSortieCaisse.UpDateStatusSortieCaisse(idcmb, function () { });
 
-            appRegularisationSortieCaisse.UpDateStatusSortieCaisse(idcmb, function () { });
-
-            if (callBack) {
-              callBack(oListItem);
-            }
-          })
+        if (callBack) {
+          callBack(oListItem);
         }
-        reader.onerror = function (e) {
-          console.log(e.target.error);
-        }
-        reader.readAsArrayBuffer(file);
-      };
+
+        // let FpUploadAttachement = document.getElementById('FileDoc');
+        // files = FpUploadAttachement.files;
+        // console.log(FpUploadAttachement);
+        // console.log(files);
+        // for (const file of files) {
+        //   let reader = new FileReader();
+        //   reader.onload = function (e) {
+        //     console.log(file.name);
+        //     console.log(e.target.result);
+        //     appHelper.AttachFile(clientContext, oListItem.get_id(), e.target.result, file.name, appHelper.ListName.RegularisationSortieCaisse, function () {
+        //       const appUrl = '/pages/regularisationSortieCaisse/show.aspx?ID=' + oListItem.get_id();
+        //       let WF = new WFManager(appHelper.AppCode.REGULARISATIONSORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+        //       WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONSORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+
+        //       let idcmb = document.getElementById("cmbSortie").value;
+        //       console.log(idcmb);
+
+        //       appRegularisationSortieCaisse.UpDateStatusSortieCaisse(idcmb, function () { });
+
+        //       if (callBack) {
+        //         callBack(oListItem);
+        //       }
+        //     })
+        //   }
+        //   reader.onerror = function (e) {
+        //     console.log(e.target.error);
+        //   }
+        //   reader.readAsArrayBuffer(file);
+        // };
 
 
-    }, appSpHelper.writeError);
+      }, appSpHelper.writeError);
+    })
   }
 
 };

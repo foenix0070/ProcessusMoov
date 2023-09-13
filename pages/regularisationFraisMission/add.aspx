@@ -1,4 +1,3 @@
-
 <form action="" method="" class="form" id="form">
   <div class="elts">
 
@@ -20,23 +19,27 @@
       </div>
 
     </fieldset>
-    
+
     <fieldset class="form-elts">
       <legend>REGULATION DE LA MISSION</legend>
 
       <h4>CERTIFICATION DE LA MISSION</h4></br>
 
       <div class="mb-3">
-        <label  class="form-label"> Mission :</label>
+        <label class="form-label"> Mission :</label>
         <select id="cmbMission" name="cmbMission" class="form-control"">
-          <option value="0" data-color="#000">Choisir la mission</option>
+          <option value=" 0" data-color="#000">Choisir la mission</option>
         </select>
-        <input id="TxtMissionColeur" value="" type="hidden" >
-        <input id="TxtMissionText" value="" type="hidden" >
+        <input id="TxtMissionColeur" value="" type="hidden">
+        <input id="TxtMissionText" value="" type="hidden">
       </div></br>
 
       <div class="mb-3">
         <input id="TxtMission" class="form-control" type="text" style="display: none;" disabled>
+      </div>
+
+      <div class="mb-3">
+        <input id="TxtMont" class="form-control" type="text" style="display: none;" disabled>
       </div>
 
       <input type="radio" name="Etat" value="Mission effectuee" id="RadSucces" checked="checked">
@@ -45,7 +48,7 @@
       <label for="RadEchec">Mission non effectuee</label><br><br>
 
       <h4>REMBOURSEMENT DES FRAIS COMPLEMENTAIRES</h4></br>
-     
+
       <table id="TableFraisMission">
         <tr>
           <th>Libelle</th>
@@ -69,6 +72,10 @@
       </table>
       <div class="input-optn mt-3">
         <input type="button" onclick="ajouterLigne()" value="Ajouter une nouvelle ligne">
+      </div>
+      <div class="mb-3">
+        <label class="form-label"> Document justificatif</label>
+        <input type="file" multiple class="form-control fileUpload" id="FileDoc" placeholder="" />
       </div>
 
       <div class="mb-3">

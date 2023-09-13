@@ -8,6 +8,9 @@ appRegularisationFraisMission.InitializePage = function () {
 
     appSpHelper.GetMyProperties(function () {
 
+        document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
+        document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
+        document.getElementById("TxtEmail").value = App.CurrentUser.Email;
 
         // var btnRegularisation = document.getElementById("BtnRegularisation");
         // var info = btnRegularisation.getAttribute("data-info");
@@ -19,11 +22,11 @@ appRegularisationFraisMission.InitializePage = function () {
             var info = element.getAttribute('data-info');
             console.log(info);
 
-            if (info == "fraisMission") {
+            if (info != "regularisationFraisMission") {
                 // document.getElementById("cmbSortie").disabled=true;
                 document.getElementById("cmbMission").style.display = "none";
                 document.getElementById("TxtMission").style.display = "block";
-                appRegularisationFraisMission.ShowSortie(appHelper.GetQueryStringFromAjaxQuery('DID'), function () { });
+                appRegularisationFraisMission.ShowMission(appHelper.GetQueryStringFromAjaxQuery('DID'), info, function () { });
             }
             else {
                 // appRegularisationSortieCaisse.initCmbSortie(function () { });
@@ -33,10 +36,6 @@ appRegularisationFraisMission.InitializePage = function () {
 
         });
 
-
-        document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
-        document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
-        document.getElementById("TxtEmail").value = App.CurrentUser.Email;
     });
 
     const BtnSave = document.querySelector("#BtnSave");
@@ -337,35 +336,49 @@ appRegularisationFraisMission.Add = function (callBack) {
                 oListItem.update();
                 clientContext.load(oListItem);
                 clientContext.executeQueryAsync(function () {
-                    let FpUploadAttachement = document.getElementById('FileDoc');
-                    files = FpUploadAttachement.files;
-                    console.log(FpUploadAttachement);
-                    console.log(files);
-                    for (const file of files) {
-                        let reader = new FileReader();
-                        reader.onload = function (e) {
-                            console.log(file.name);
-                            console.log(e.target.result);
-                            appHelper.AttachFile(clientContext, oListItem.get_id(), e.target.result, file.name, appHelper.ListName.RegularisationFraisMission, function () {
-                                const appUrl = '/pages/regularisationFraisMission/show.aspx?ID=' + oListItem.get_id();
-                                let WF = new WFManager(appHelper.AppCode.REGULARISATIONFRAISMISSION, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-                                WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONFRAISMISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
 
-                                appRegularisationFraisMission.UpDateStatusFraisMission(parseInt(document.getElementById("cmbMission").value), function () { });
+                    appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.RegularisationFraisMission, 0, function () {
 
-                                if (callBack) {
-                                    callBack(oListItem);
-                                }
-                            })
+                        const appUrl = '/pages/regularisationFraisMission/show.aspx?ID=' + oListItem.get_id();
+                        let WF = new WFManager(appHelper.AppCode.REGULARISATIONFRAISMISSION, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+                        WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONFRAISMISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+
+                        appRegularisationFraisMission.UpDateStatusFraisMission(parseInt(document.getElementById("cmbMission").value), function () { });
+
+                        if (callBack) {
+                            callBack(oListItem);
                         }
-                        reader.onerror = function (e) {
-                            console.log(e.target.error);
-                        }
-                        reader.readAsArrayBuffer(file);
-                    };
+
+                        // let FpUploadAttachement = document.getElementById('FileDoc');
+                        // files = FpUploadAttachement.files;
+                        // console.log(FpUploadAttachement);
+                        // console.log(files);
+                        // for (const file of files) {
+                        //     let reader = new FileReader();
+                        //     reader.onload = function (e) {
+                        //         console.log(file.name);
+                        //         console.log(e.target.result);
+                        //         appHelper.AttachFile(clientContext, oListItem.get_id(), e.target.result, file.name, appHelper.ListName.RegularisationFraisMission, function () {
+                        //             const appUrl = '/pages/regularisationFraisMission/show.aspx?ID=' + oListItem.get_id();
+                        //             let WF = new WFManager(appHelper.AppCode.REGULARISATIONFRAISMISSION, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+                        //             WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONFRAISMISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+
+                        //             appRegularisationFraisMission.UpDateStatusFraisMission(parseInt(document.getElementById("cmbMission").value), function () { });
+
+                        //             if (callBack) {
+                        //                 callBack(oListItem);
+                        //             }
+                        //         })
+                        //     }
+                        //     reader.onerror = function (e) {
+                        //         console.log(e.target.error);
+                        //     }
+                        //     reader.readAsArrayBuffer(file);
+                        // };
 
 
-                }, appSpHelper.writeError);
+                    }, appSpHelper.writeError);
+                })
             }
 
 
@@ -488,5 +501,38 @@ appRegularisationFraisMission.UpDateStatusFraisMission = function (demandeid, ca
         }
     }, appSpHelper.writeError);
 }
+
+appRegularisationFraisMission.ShowMission = function (demandeid, info, callBack) {
+
+    let oList = appRegularisationFraisMission.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Mission);
+    let It = oList.getItemById(demandeid);
+    console.log(demandeid);
+    console.log(info);
+    console.log("IN ShowMission");
+  
+    appRegularisationFraisMission.clientContext.load(It);
+    appRegularisationFraisMission.clientContext.executeQueryAsync(function () {
+      if (It) {
+  
+        var montChamp = document.getElementById("TxtMont");
+  
+        var mont = new AutoNumeric(montChamp, {
+          digitGroupSeparator: " ",
+          decimalPlaces: 0,
+          unformatOnSubmit: true,
+        });
+  
+        // Mettre à jour le champ Solde à reverser avec le résultat formaté
+        mont.set(info);
+  
+        //document.getElementById("TxtMont").value = info;
+        document.getElementById("TxtMissionID").value = demandeid;
+        document.getElementById("TxtMission").value = It.get_item('Title') != null ? It.get_item('Title') : '';
+  
+        if (callBack) { callBack(); }
+  
+      } else { if (callBack) { callBack(); } }
+    }, appSpHelper.writeError);
+  }
 
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appRegularisationFraisMission.InitializePage);

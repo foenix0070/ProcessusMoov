@@ -237,6 +237,8 @@ appVehicule.Edit = function (demandeid, callBack) {
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
+  appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Vehicule, 0, function(){
+
     const appUrl = '/pages/vehicule/show.aspx?ID=' + oListItem.get_id();
     console.log(appUrl);
     let WF = new WFManager(appHelper.AppCode.VEHICULE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
@@ -245,6 +247,7 @@ appVehicule.Edit = function (demandeid, callBack) {
       callBack(oListItem);
     }
   }, appSpHelper.writeError);
+})
 };
 
 appVehicule.ShowDetails = function (demandeid, callBack) {

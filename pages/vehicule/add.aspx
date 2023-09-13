@@ -35,6 +35,11 @@
             </div>
 
             <div class="mb-3">
+                <label class="form-label"> Document justificatif</label>
+                <input type="file" multiple class="form-control fileUpload" id="FileDoc" placeholder="" />
+            </div>
+
+            <div class="mb-3">
                 <input id="TxtVerif" type="hidden" >
             </div>
 

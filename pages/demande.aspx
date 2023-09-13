@@ -90,6 +90,7 @@
         <thead style="border-bottom:1px solid rgba(255,255,255,0.7);">
           <tr>
             <th>N*</th>
+            <th>Reference</th>
             <th>Createur</th>
             <th>Date</th>
             <th>Type</th>
@@ -102,6 +103,7 @@
           {{#demandesEn}}
           <tr class="" >
             <td>{{id}}</td>
+            <td>{{reference}}</td>
             <td>{{create}}</td>
             <td>{{requestdate}}</td>
             <th>DEMANDE DE {{create}} POUR {{nomdemande}}</th>

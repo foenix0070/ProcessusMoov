@@ -309,14 +309,17 @@ appMateriel.Edit = function (demandeid, callBack) {
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
-    const appUrl = '/pages/materiel/show.aspx?ID=' + oListItem.get_id();
-    console.log(appUrl);
-    let WF = new WFManager(appHelper.AppCode.MATERIEL, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.MATERIEL, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
-    if (callBack) {
-      callBack(oListItem);
-    }
-  }, appSpHelper.writeError);
+    appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Materiel, 0, function(){
+
+      const appUrl = '/pages/materiel/show.aspx?ID=' + oListItem.get_id();
+      console.log(appUrl);
+      let WF = new WFManager(appHelper.AppCode.MATERIEL, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+      WF.createWFTask(clientContext, appUrl, appHelper.AppCode.MATERIEL, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+      if (callBack) {
+        callBack(oListItem);
+      }
+    }, appSpHelper.writeError);
+  })
 };
 
 appMateriel.ShowDetails = function (demandeid, callBack) {
