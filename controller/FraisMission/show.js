@@ -17,6 +17,7 @@ showFraisMission.InitializePage = function () {
     showFraisMission.ShowFirst(Id);
     showFraisMission.ShowFichierJoint(Id);
     showFraisMission.ShowValidation(Id);
+    showFraisMission.ShowDetailsFraisMission(Id);
     if (tacheId) {
       showFraisMission.TestShowForm(tacheId, Id);
     }
@@ -49,6 +50,7 @@ showFraisMission.ShowForm = function (tacheId, demandeid) {
   const WF = new WFManager(appHelper.AppCode.MISSION, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
 
   BtnOK.addEventListener("click", function () {
+    BtnOK.disabled = true;
     WF.goToNextTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
       showFraisMission.UpDateItemStatus(nextTask, demandeid, function () {
@@ -58,6 +60,7 @@ showFraisMission.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
+    BtnNOK.disabled = true;
     WF.goToRefusedTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
       showFraisMission.UpDateItemStatusRejet(true, demandeid, function () {
@@ -67,6 +70,7 @@ showFraisMission.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
+    BtnMod.disabled = true;
     WF.goToRefusedTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
       showFraisMission.UpDateItemStatusRejet(false, demandeid, function () {
@@ -183,11 +187,11 @@ showFraisMission.ShowUploadForm = function (demandeid, view) {
   //     reader.readAsArrayBuffer(file);
   //   }
   // });
-  
-  setTimeout(function() {
+
+  setTimeout(function () {
     const addfile = document.getElementById("addfile");
     addfile.addEventListener("click", function () {
-     showFraisMission.OpenFileUpload('FpUploadAttachement');
+      showFraisMission.OpenFileUpload('FpUploadAttachement');
     });
   }, 1000);
 }
@@ -275,7 +279,7 @@ showFraisMission.ShowValidation = function (demandeid) {
 }
 
 function ajouterEspacesEntreChiffres(nombre) {
-  if(nombre>999){
+  if (nombre > 999) {
     // Convertir le nombre en une chaîne de caractères
     var nombreString = nombre.toString();
 
@@ -284,10 +288,10 @@ function ajouterEspacesEntreChiffres(nombre) {
 
     return nombreAvecEspaces;
   }
-  else{
-   return nombre;
+  else {
+    return nombre;
   }
- }
+}
 
 showFraisMission.ShowDetails = function (demandeid) {
 
@@ -305,8 +309,8 @@ showFraisMission.ShowDetails = function (demandeid) {
       let superieurName = superieurField.get_lookupValue();
       let mont = ajouterEspacesEntreChiffres(It.get_item('CoutTotal'));
       let view = {
-        regul :  (It.get_item('Statut') == 'VALIDEE' ? demandeid : false ) ,
-        id :  (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false ) ,
+        regul: (It.get_item('Statut') == 'VALIDEE' ? demandeid : false),
+        id: (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false),
         title: It.get_item('Title') != null ? It.get_item('Title') : '',
         datedepart: It.get_item('DateDebut') != null ? new Date(It.get_item('DateDebut')).toLocaleDateString() : '',
         dateretour: It.get_item('DateFin') != null ? It.get_item('DateFin').toLocaleDateString() : '',
@@ -325,7 +329,7 @@ showFraisMission.ShowDetails = function (demandeid) {
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
 
 
-      
+
 
     }
   }, appSpHelper.writeError);
@@ -366,7 +370,62 @@ showFraisMission.ShowFirst = function (demandeid) {
   }, appSpHelper.writeError);
 }
 
-showFraisMission.OpenFileUpload = function(str_select) {
+showFraisMission.ShowDetailsFraisMission = function (demandeid) {
+
+  let oList = showFraisMission.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.FraisMission);
+
+  console.log("demande id dans frais de mission est : "+demandeid);
+
+  let q = `<View><Query><Where>
+              <Eq><FieldRef Name="MissionID"/><Value Type="Text">${demandeid}</Value></Eq>
+          </Where></Query></View>`;
+
+  let camlQuery = new SP.CamlQuery();
+  camlQuery.set_viewXml(q);
+  let It = oList.getItems(camlQuery);
+  showFraisMission.clientContext.load(It);
+  showFraisMission.clientContext.executeQueryAsync(function () {
+    console.log("Nombre : "+ It.get_count());
+    if (It.get_count() > 0) {
+
+      console.log("Frais Mission");
+
+      var listItemEnumerator = It.getEnumerator();
+      let viewFrais = {};
+      viewFrais.Frais = [];
+
+      while (listItemEnumerator.moveNext()) {
+
+        var oListItem = listItemEnumerator.get_current();
+        console.log("oListItem");
+        console.log(oListItem);
+
+        //let nbre = ajouterEspacesEntreChiffres(oListItem.get_item('Nombre'));
+        var forf = ajouterEspacesEntreChiffres(oListItem.get_item('Forfait'));
+        var totalM = ajouterEspacesEntreChiffres(oListItem.get_item('Total'));
+        var dtetdebut = oListItem.get_item('DateDebut').toLocaleDateString();
+        var dtefin = oListItem.get_item('DateFin').toLocaleDateString();
+
+        console.log("forfait, total, debut, fin ");
+        console.log(forf, totalM, dtetdebut, dtefin);
+
+        viewFrais.Frais.push({
+          titre: oListItem.get_item('Title') != null ? oListItem.get_item('Title') : '',
+          debut: dtetdebut,
+          fin: dtefin,
+          nombre: oListItem.get_item('Nombre'),
+          forfait: forf,
+          total: totalM,
+        });
+      }
+
+      appHelper.renderTemplate("tmpl_form_details_frais", "SectionDetailsFrais", viewFrais);
+
+    }
+  }, appSpHelper.writeError);
+}
+
+showFraisMission.OpenFileUpload = function (str_select) {
   let transElt = document.getElementById(str_select);
   transElt.click();
 }

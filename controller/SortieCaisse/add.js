@@ -215,6 +215,13 @@ appSortieCaisse.ListerCaisse = function (callBack) {
   clientContext.executeQueryAsync(
     function () {
       var listItemEnumerator = listItemMotif.getEnumerator();
+      document.getElementById('cmbCaisse').innerHTML= "";
+
+      
+      let opt = document.createElement("option");
+      opt.setAttribute("value", "0");
+      opt.innerHTML = "Choisir la caisse de paiement";
+      document.getElementById("cmbCaisse").appendChild(opt);
 
       while (listItemEnumerator.moveNext()) {
         console.log("Donnees existes");
@@ -248,14 +255,23 @@ appSortieCaisse.ListerMode = function (callBack) {
     function () {
       var listItemEnumerator = listItemMotif.getEnumerator();
 
+      document.getElementById('cmbMode').innerHTML= "";
+
+      let opt = document.createElement("option");
+      opt.setAttribute("value", "0");
+      opt.innerHTML = "Choisir le mode de paiement";
+      document.getElementById("cmbMode").appendChild(opt);
+
       while (listItemEnumerator.moveNext()) {
         let oListItemTp = listItemEnumerator.get_current();
         let opt = document.createElement("option");
-        // opt.setAttribute("data-duree", oListItemTp.get_item('Duree'));
+
+        
         opt.setAttribute("data-color", oListItemTp.get_item('Background'));
         opt.setAttribute("value", oListItemTp.get_id());
         opt.innerHTML = oListItemTp.get_item('Title');
         document.getElementById('cmbMode').appendChild(opt);
+        
       }
 
 
@@ -316,47 +332,33 @@ appSortieCaisse.Add = function (callBack) {
   oListItem.update();
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
+    if (montant < 500000) {
+      appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.SortieCaisse, 0, function () {
 
-    appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.SortieCaisse, 0, function () {
+        const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
+        console.log(ACTIV_WORKFLOW);
+        let WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW2);
+        WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
+        if (callBack) {
+          callBack(oListItem);
+        }
+      }, appSpHelper.writeError);
+    }
 
-      const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
-      console.log(ACTIV_WORKFLOW);
-      let WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-      WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function () { })
-      if (callBack) {
-        callBack(oListItem);
-      }
+    else {
+      appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.SortieCaisse, 0, function () {
 
-      // let FpUploadAttachement = document.getElementById('FileDoc');
-      // files = FpUploadAttachement.files;
-      // console.log(FpUploadAttachement);
-      // console.log(files);
-      // for (const file of files) {
-      //   let reader = new FileReader();
-      //   reader.onload = function (e) {
-      //     console.log(file.name);
-      //     console.log(e.target.result);
-      //     appHelper.AttachFile(clientContext, oListItem.get_id(), e.target.result, file.name, appHelper.ListName.SortieCaisse, function () {
-      //       const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
-      //       console.log(ACTIV_WORKFLOW);
-      //       let WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-      //       //WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function () { })
-      //       if (callBack) {
-      //         callBack(oListItem);
-      //       }
-      //     })
-      //   }
-      //   reader.onerror = function (e) {
-      //     console.log(e.target.error);
-      //   }
-      //   reader.readAsArrayBuffer(file);
-      // };
+        const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
+        console.log(ACTIV_WORKFLOW);
+        let WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+        WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
+        if (callBack) {
+          callBack(oListItem);
+        }
+      }, appSpHelper.writeError);
+    }
 
 
-
-
-
-    }, appSpHelper.writeError);
   })
 };
 
@@ -372,6 +374,7 @@ appSortieCaisse.Edit = function (demandeid, callBack) {
 
   var montant = autoNumericObject.getNumber();
   console.log(montant);
+  let ref = document.getElementById("TxtRef").value;
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
@@ -402,10 +405,18 @@ appSortieCaisse.Edit = function (demandeid, callBack) {
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
+    if (montant < 500000) {
+
+    }
+
+    else {
+
+    }
+
     const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
     console.log(appUrl);
     let WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function () { })
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
     if (callBack) {
       callBack(oListItem);
     }

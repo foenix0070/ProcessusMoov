@@ -11,11 +11,11 @@
       <div class="progress-container">
         <div class="steps">
           <!-- <div class="step active">Toutes mes demandes</div> -->
-          <div class="step active" data-target="DivDemandeENTTableShow">En attente</div>
-          <div class="step" data-target="DivDemandeETableShow">En cours</div>
-          <div class="step" data-target="DivDemandeMTableShow">A modifier</div>
-          <div class="step" data-target="DivDemandeVTableShow">Approuv&eacute;es</div>
-          <div class="step" data-target="DivDemandeRTableShow">R&eacute;jet&eacute;es</div>
+          <div class="step active" data-action="A" data-target="DivDemandeENTTableShow">En attente</div>
+          <div class="step" data-action="E" data-target="DivDemandeETableShow">En cours</div>
+          <div class="step" data-action="M" data-target="DivDemandeMTableShow">A modifier</div>
+          <div class="step" data-action="V" data-target="DivDemandeVTableShow">Approuv&eacute;es</div>
+          <div class="step" data-action="R" data-target="DivDemandeRTableShow">R&eacute;jet&eacute;es</div>
         </div>
 
       </div>
@@ -86,10 +86,9 @@
 
 <script id="tmpl_table_demande" type="x-tmpl-mustache">
     <div class="table-container">
-      <table class="table table-responsive table-striped">
-        <thead style="border-bottom:1px solid rgba(255,255,255,0.7);">
+      <table class="table table-bordered table-responsive table-striped">
+        <thead>
           <tr>
-            <th>N*</th>
             <th>Reference</th>
             <th>Createur</th>
             <th>Date</th>
@@ -99,10 +98,9 @@
             <th>Demandeur</th>
           </tr>
         </thead>
-        <tbody style="border-bottom:1px solid #b4a7a7;">
+        <tbody>
           {{#demandesEn}}
           <tr class="" >
-            <td>{{id}}</td>
             <td>{{reference}}</td>
             <td>{{create}}</td>
             <td>{{requestdate}}</td>

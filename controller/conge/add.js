@@ -182,6 +182,7 @@ appConge.ListerMotif = function (callBack) {
   clientContext.executeQueryAsync(
     function () {
       var listItemEnumerator = listItemMotif.getEnumerator();
+      document.getElementById("cmbTypeConge").innerHTML ="" ;
 
       while (document.getElementById("cmbTypeConge").options.length > 0) {
         document.getElementById("cmbTypeConge").remove(0);
@@ -394,21 +395,12 @@ appConge.Add = function (callBack) {
       appHelper.ListName.Validation,
       ACTIV_WORKFLOW
     );
-    WF.createWFTask(
-      clientContext,
-      appUrl,
-      appHelper.AppCode.CONGE,
-      oListItem.get_id(),
-      App.CurrentUser.Manager.Login,
-      App.CurrentUser.Manager2.Login,
-      ref,
-      function () {
-        if (callBack) {
-          callBack(oListItem);
-        }
-      }
-    );
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.CONGE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
+    if (callBack) {
+      callBack(oListItem);
+    }
   }, appSpHelper.writeError);
+
 };
 
 appConge.Edit = function (demandeid, callBack) {
@@ -523,15 +515,13 @@ appConge.Edit = function (demandeid, callBack) {
       appUrl,
       appHelper.AppCode.CONGE,
       oListItem.get_id(),
-      App.CurrentUser.Manager.Login,
-      App.CurrentUser.Manager2.Login,
+      App.CurrentUser.Manager,
+      App.CurrentUser.Manager2,
       ref,
-      function () {
-        if (callBack) {
-          callBack(oListItem);
-        }
-      }
-    );
+      function () { })
+    if (callBack) {
+      callBack(oListItem);
+    }
 
 
   }, appSpHelper.writeError);
@@ -580,7 +570,7 @@ appConge.ShowDetails = function (demandeid, callBack) {
         It.get_item("Couleur") != null ? It.get_item("Couleur") : "";
 
       document.getElementById("TxtRef").value = It.get_item('Reference') != null ? It.get_item('Reference') : '';
-      
+
       document.getElementById("TxtVerif").value = "Edit";
       document.getElementById("TxtID").value =
         It.get_item("ID") != null ? It.get_item("ID") : 0;

@@ -1,6 +1,7 @@
 var appMission = appMission || {};
 var clientContext;
 appMission.clientContext;
+let rowCount = 1;
 
 appMission.InitializePage = function () {
   appMission.clientContext = SP.ClientContext.get_current();
@@ -67,7 +68,9 @@ appMission.InitializePage = function () {
   const BtnAjout = document.querySelector("#ajouterLigne");
 
   BtnAjout.addEventListener("click", function () {
-    appMission.ajouterLigne();
+    rowCount++;
+    appMission.ajouterLigne(rowCount);
+    // appMission.ajouterLigne();
   });
 
   BtnSave.addEventListener("click", function () {
@@ -194,16 +197,59 @@ appMission.TestFields = function(){
    return v;
 };
 
-function calculTotal() {
-  var nombre = parseFloat(document.getElementById("TxtNombre").value);
-  var forfait = parseFloat(document.getElementById("TxtForfait").value);
+// function calculTotal() {
+//   var nombre = parseFloat(document.getElementById("TxtNombre").value);
+//   // var nombre = parseFloat(document.querySelector("TxtNombre").value);
+//   // var forfait = parseFloat(document.querySelector("TxtForfait").value);
+//   var forfait = parseFloat(document.getElementById("TxtForfait").value);
 
-  if (!isNaN(nombre) && !isNaN(forfait)) {
-      var total = nombre * forfait;
-      document.getElementById("TxtTotal").value = total;
-      //   document.getElementById("TxtTotal").value = total.toFixed(2);
-  } else {
-      document.getElementById("TxtTotal").value = "";
+//   if (!isNaN(nombre) && !isNaN(forfait)) {
+//       var total = nombre * forfait;
+//       document.getElementById("TxtTotal").value = total;
+//       //   document.getElementById("TxtTotal").value = total.toFixed(2);
+//   } else {
+//       document.getElementById("TxtTotal").value = "";
+//   }
+// }
+
+function calculTotal() {
+  const table = document.getElementById('TableFraisMission');
+  const rows = table.getElementsByTagName('tr');
+  let total = 0;
+
+  console.log(rows.length);
+
+  for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      const inputs = row.getElementsByTagName('input');
+      const txtTotal = inputs[5];
+
+      // const nombre = parseFloat(inputs[3].value) || 0;
+      // const forfait = parseFloat(inputs[4].value) || 0;
+      // const ligneTotal = nombre * forfait;
+
+      const nombre = parseFloat(inputs[3].value);
+      const forfait = parseFloat(inputs[4].value);
+
+      console.log(nombre, forfait);
+
+      if (!isNaN(nombre) && !isNaN(forfait)) {
+        const ligneTotal = nombre * forfait;
+        txtTotal.value = ligneTotal;
+        // txtTotal.value = ligneTotal.toFixed(2);
+        total += ligneTotal;
+        } 
+      else {
+        txtTotal.value = 0;
+      }
+
+      // txtTotal.value = ligneTotal.toFixed(2);
+      // total += ligneTotal;
+  }
+
+  const totalGeneralInput = document.getElementById('totalGeneral');
+  if (totalGeneralInput) {
+      totalGeneralInput.value = total;
   }
 }
 
@@ -283,6 +329,12 @@ function ListerZone( callBack) {
   clientContext.executeQueryAsync(
       function () {
           var listItemEnumerator = listItemMotif.getEnumerator();
+          document.getElementById('cmbZoneGeo').innerHTML = "";
+
+          let opt = document.createElement("option");
+          opt.setAttribute("value", "0");
+          opt.innerHTML = "Choisir la zone geographique";
+          document.getElementById("cmbZoneGeo").appendChild(opt);
 
           while (listItemEnumerator.moveNext()) {
               let oListItemTp = listItemEnumerator.get_current();
@@ -314,6 +366,12 @@ function ListerCaisse( callBack) {
   clientContext.executeQueryAsync(
       function () {
           var listItemEnumerator = listItemMotif.getEnumerator();
+          document.getElementById('cmbCaisse').innerHTML = "";
+
+          let opt = document.createElement("option");
+          opt.setAttribute("value", "0");
+          opt.innerHTML = "Choisir la caisse de paiement";
+          document.getElementById("cmbCaisse").appendChild(opt);
 
           while (listItemEnumerator.moveNext()) {
               let oListItemTp = listItemEnumerator.get_current();
@@ -345,6 +403,12 @@ function ListerMode( callBack) {
   clientContext.executeQueryAsync(
       function () {
           var listItemEnumerator = listItemMotif.getEnumerator();
+          document.getElementById('cmbMode').innerHTML = "";
+
+          let opt = document.createElement("option");
+          opt.setAttribute("value", "0");
+          opt.innerHTML = "Choisir le mode de paiement";
+          document.getElementById("cmbMode").appendChild(opt);
 
           while (listItemEnumerator.moveNext()) {
               let oListItemTp = listItemEnumerator.get_current();
@@ -411,38 +475,48 @@ appMission.List = function () {
   }, appSpHelper.writeError);
 };
 
-function afficher() {
-  var selectValue = document.getElementById("CmbCaisse").value;
+// function afficher() {
+//   var selectValue = document.getElementById("CmbCaisse").value;
   
-  var inputMasque = document.getElementById("AutreCaisse");
+//   var inputMasque = document.getElementById("AutreCaisse");
   
-  if (selectValue === "Autre") {
-    //alert("OK");
-    inputMasque.style.display = "block";
-  } else {
-    inputMasque.style.display = "none";
-  }
-}
+//   if (selectValue === "Autre") {
+//     //alert("OK");
+//     inputMasque.style.display = "block";
+//   } else {
+//     inputMasque.style.display = "none";
+//   }
+// }
 
-appMission.ajouterLigne = function() {
+appMission.ajouterLigne = function(indice) {
   var table = document.getElementById("TableFraisMission");
   var newRow = table.insertRow(table.rows.length);
   
-  //var cell = newRow.insertCell(0);
-  var cell1 = newRow.insertCell(0);
-  var cell2 = newRow.insertCell(1);
-  var cell3 = newRow.insertCell(2);
-  var cell4 = newRow.insertCell(3);
-  var cell5 = newRow.insertCell(4);
-  var cell6 = newRow.insertCell(5);
+  var cell = newRow.insertCell(0);
+  var cell1 = newRow.insertCell(1);
+  var cell2 = newRow.insertCell(2);
+  var cell3 = newRow.insertCell(3);
+  var cell4 = newRow.insertCell(4);
+  var cell5 = newRow.insertCell(5);
+  var cell6 = newRow.insertCell(6);
+
+  cell.innerHTML = '<input type="text" id="Txtlibelle' + indice + '" name="Txtlibelle' + indice + '">';
+  cell1.innerHTML = '<input type="date" id="DateDebut' + indice + '" name="DateDebut' + indice + '">';
+  cell2.innerHTML = '<input type="date" id="DateFin' + indice + '" name="DateFin' + indice + '">';
+  cell3.innerHTML = '<input type="number" id="TxtNombre' + indice + '" name="TxtNombre' + indice + '" oninput="calculTotal()">';
+  cell4.innerHTML = '<input type="number" id="TxtForfait' + indice + '" name="TxtForfait' + indice + '" oninput="calculTotal()">';
+  cell5.innerHTML = '<input type="number" id="TxtTotal' + indice + '" name="TxtTotal' + indice + '" readonly>';
+  cell6.innerHTML = '<span class="delete-icon" onclick="supprimerLigne(this)">×</span>';
+  // cell6.innerHTML = '<i class="fas fa-trash-alt" onclick="supprimerLigne(this)"></i>';
+  // cell6.innerHTML = '<button onclick="supprimerLigne(this)">Supprimer</button>';
   
-  //cell.innerHTML = '<select class="mt-3" id="CmbPerdieme" name"CmbPerdieme"><option value"Hotel">Hotel</option></select>';
-  cell1.innerHTML = '<input type="date" id="DateDebut" name="DateDebut">';
-  cell2.innerHTML = '<input type="date" id="DateFin" name="DateFin">';
-  cell3.innerHTML = '<input type="text" id="TxtNombre" name="TxtNombre">';
-  cell4.innerHTML = '<input type="text" id="TxtForfait" name="TxtForfait">';
-  cell5.innerHTML = '<input type="text" id="TxtTotal" name="TxtTotal">';
-  cell6.innerHTML = '<button onclick="supprimerLigne(this)">Supprimer</button>';
+  // cell.innerHTML = '<input type="text" id="Txtlibelle" name"Txtlibelle">';
+  // cell1.innerHTML = '<input type="date" id="DateDebut" name="DateDebut">';
+  // cell2.innerHTML = '<input type="date" id="DateFin" name="DateFin">';
+  // cell3.innerHTML = '<input type="number" id="TxtNombre" name="TxtNombre" oninput="calculTotal()">';
+  // cell4.innerHTML = '<input type="number" id="TxtForfait" name="TxtForfait" oninput="calculTotal()">';
+  // cell5.innerHTML = '<input type="number" id="TxtTotal" name="TxtTotal" readonly>';
+  // cell6.innerHTML = '<button onclick="supprimerLigne(this)">Supprimer</button>';
 }
 
 function supprimerLigne(button) {
@@ -538,7 +612,7 @@ appMission.Add = function ( callBack) {
       appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Mission, 0, function () {
         const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
         let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-        WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
+        WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function(){}   )
         if(callBack){
           callBack(oListItem);
         }
@@ -549,7 +623,7 @@ appMission.Add = function ( callBack) {
       appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Mission, 0, function () {
         const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
         let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW1  );
-        WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
+        WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function(){}   )
         if(callBack){
           callBack(oListItem);
         }
@@ -581,6 +655,7 @@ appMission.Edit = function (demandeid, callBack) {
   var autoNumericObject = AutoNumeric.getAutoNumericElement(Input);
 
   var cout = autoNumericObject.getNumber();
+  let ref = document.getElementById("TxtRef").value;
 
   //let endDate = startDate.addDays(2);
 
@@ -634,21 +709,25 @@ appMission.Edit = function (demandeid, callBack) {
 
     if(cout < 500000)
     {
+      appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Gadget, 0, function(){
       const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function(){}   )
       if(callBack){
         callBack(oListItem);
       }
+    }, appSpHelper.writeError);
     }
     else
     {
+      appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Gadget, 0, function(){
       const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
       let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW1  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function(){}   )
       if(callBack){
         callBack(oListItem);
       }
+    }, appSpHelper.writeError);
     }
 
   
@@ -656,26 +735,46 @@ appMission.Edit = function (demandeid, callBack) {
 };
 
 function AddFM (oListItem) {
-  var table = document.getElementById("TableFraisMission");
-  var data = [];
+  // var table = document.getElementById("TableFraisMission");
+  // var data = [];
 
-  for (var i = 1; i < table.rows.length; i++) { 
-    var row = table.rows[i];
-    var cells = row.getElementsByTagName('td');
-    var rowData = {};
+  // for (var i = 1; i < table.rows.length; i++) { 
+  //   var row = table.rows[i];
+  //   var cells = row.getElementsByTagName('td');
+  //   var rowData = {};
 
-    for (var j = 0; j < cells.length; j++) {
-      var input = cells[j].getElementsByTagName('input')[0];
-      var name = input.getAttribute('name');
-      var value = input.value;
-      rowData[name] = value;
-    }
+  //   for (var j = 0; j < cells.length; j++) {
+  //     var input = cells[j].getElementsByTagName('input')[0];
+  //     var name = input.getAttribute('name');
+  //     var value = input.value;
+  //     rowData[name] = value;
+  //   }
 
-    data.push(rowData);
-  }
+  //   data.push(rowData);
+  // }
 
   //FraisMission.AddFraisMission(data, oListItem);
-  appMission.AddFraisMission(data, oListItem);
+  
+  const table = document.getElementById('TableFraisMission');
+    const rows = table.getElementsByTagName('tr');
+    const data = [];
+
+    for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        const inputs = row.getElementsByTagName('input');
+        const rowData = {};
+
+        rowData.libelle = inputs[0].value;
+        rowData.dateDebut = inputs[1].value;
+        rowData.dateFin = inputs[2].value;
+        rowData.nombre = inputs[3].value;
+        rowData.forfait = inputs[4].value;
+        rowData.total = inputs[5].value;
+
+        data.push(rowData);
+    }
+  
+  appMission.AddFraisMission(data, oListItem, function(){});
 }
 
 
@@ -701,7 +800,7 @@ function EditFM (demandeid) {
   appMission.EditFraisMission(data, demandeid);
 }
 
-appMission.AddFraisMission = function (data, oListItem) {
+appMission.AddFraisMission = function (data, oListItem, callBack) {
 
   for (var i = 0; i < data.length; i++) {
     var item = data[i];
@@ -713,29 +812,27 @@ appMission.AddFraisMission = function (data, oListItem) {
     let itemCreateInfo = new window.SP.ListItemCreationInformation();
     let oListItem1 = oList.addItem(itemCreateInfo);
 
-    let startDate = new Date(document.getElementById("DateDebut").value);
+    let startDate = new Date(item.dateDebut);
 
-    let repDate = new Date(document.getElementById("DateFin").value);
+    let repDate = new Date(item.dateFin);
 
+    oListItem1.set_item("Title", item.libelle);
 
     oListItem1.set_item("DateDebut", startDate);
+    
     oListItem1.set_item("DateFin", repDate);
 
-    oListItem1.set_item(
-      "MissionID", oListItem.get_id());
+    oListItem1.set_item("MissionID", oListItem.get_id());
 
-    oListItem1.set_item(
-      "Forfait", item.TxtForfait);
+    oListItem1.set_item("Forfait", item.forfait);
 
-    oListItem1.set_item(
-      "Total", item.TxtTotal);
+    oListItem1.set_item("Total", item.total);
 
-    oListItem1.set_item(
-      "Nombre", item.TxtNombre);
+    oListItem1.set_item("Nombre", item.nombre);
 
     oListItem1.update();
     clientContext.load(oListItem1);
-    clientContext.executeQueryAsync(function (callBack) {
+    clientContext.executeQueryAsync(function () {
       if(callBack){
         callBack(oListItem1);
       }
@@ -744,6 +841,54 @@ appMission.AddFraisMission = function (data, oListItem) {
   }
   console.log("Add FraisMission");
 }
+
+
+// appMission.AddFraisMission = function (data, oListItem, callBack) {
+
+//   for (var i = 0; i < data.length; i++) {
+//     var item = data[i];
+
+//     let oList = appMission.clientContext
+//       .get_web()
+//       .get_lists()
+//       .getByTitle(appHelper.ListName.FraisMission);
+//     let itemCreateInfo = new window.SP.ListItemCreationInformation();
+//     let oListItem1 = oList.addItem(itemCreateInfo);
+
+//     let startDate = new Date(document.getElementById("DateDebut").value);
+
+//     let repDate = new Date(document.getElementById("DateFin").value);
+
+
+//     oListItem1.set_item("Title", item.Txtlibelle);
+
+
+//     oListItem1.set_item("DateDebut", startDate);
+//     oListItem1.set_item("DateFin", repDate);
+
+//     oListItem1.set_item(
+//       "MissionID", oListItem.get_id());
+
+//     oListItem1.set_item(
+//       "Forfait", item.TxtForfait);
+
+//     oListItem1.set_item(
+//       "Total", item.TxtTotal);
+
+//     oListItem1.set_item(
+//       "Nombre", item.TxtNombre);
+
+//     oListItem1.update();
+//     clientContext.load(oListItem1);
+//     clientContext.executeQueryAsync(function () {
+//       if(callBack){
+//         callBack(oListItem1);
+//       }
+//     });
+
+//   }
+//   console.log("Add FraisMission");
+// }
 
 appMission.EditFraisMission = function (data, demandeid) {
 

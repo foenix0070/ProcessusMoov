@@ -257,7 +257,7 @@ appGadget.Add = function ( callBack) {
 
     const appUrl = '/pages/gadget/show.aspx?ID=' + oListItem.get_id();
     let WF = new WFManager(appHelper.AppCode.GADGET,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-    WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){})
+    WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function(){})
       
     if(callBack){
       callBack(oListItem);
@@ -279,6 +279,7 @@ appGadget.Edit = function (demandeid, callBack) {
 
   var qte = autoNumericObject.getNumber();
   console.log(qte);
+  let ref = document.getElementById("TxtRef").value;
 
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
@@ -289,7 +290,7 @@ appGadget.Edit = function (demandeid, callBack) {
   oListItem.set_item("Nature", document.getElementById("TxtArticle").value);
 
   oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
-  oListItem.set_item("Reference", document.getElementById("TxtRef").value);
+  // oListItem.set_item("Reference", document.getElementById("TxtRef").value);
 
   oListItem.set_item("Quantite", qte);
 
@@ -310,7 +311,7 @@ appGadget.Edit = function (demandeid, callBack) {
   const appUrl = '/pages/gadget/show.aspx?ID=' + oListItem.get_id();
       console.log(appUrl);
       let WF = new WFManager(appHelper.AppCode.GADGET,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function(){}   )
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function(){})
       
       if(callBack){
         callBack(oListItem);

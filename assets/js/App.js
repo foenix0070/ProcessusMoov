@@ -1,6 +1,7 @@
 var App = App || {};
 App.CurrentUser = null;
 App.Counter = 0;
+App.Groups = [];
 
 App.LoadUser = function (callBack) {
     let clientContext = new SP.ClientContext.get_current();
@@ -20,6 +21,7 @@ App.LoadUser = function (callBack) {
 
             let login = "";
 
+            console.log('Donnee Utilisateur', App.CurrentUser.Login,  App.CurrentUser );
             if (App.CurrentUser.Login.indexOf('\\') > -1) {
                 login = App.CurrentUser.Login.split('\\')[1];
                 login = login.trim();
@@ -76,6 +78,8 @@ App.LoadManager = function (manager, callBack) {
     let ManagerUser = {};
     let clientContext = new SP.ClientContext.get_current();
 
+    console.log('Donnee Manager lookup',  manager );
+
     var user = clientContext.get_web().ensureUser(manager.get_lookupValue());
     clientContext.load(user);
     clientContext.executeQueryAsync(
@@ -90,6 +94,7 @@ App.LoadManager = function (manager, callBack) {
                 login = login.split('\\')[1];
                 login = login.trim();
             }
+            console.log('Donnee Manager lookup Login',  login );
 
             let q = '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + login + '</Value></Eq></Where></Query></View>';
             camlQuery.set_viewXml(q);
@@ -136,4 +141,134 @@ App.LoadManager = function (manager, callBack) {
             }, appSpHelper.writeError);
 
         }, appSpHelper.writeError);
+}
+
+
+
+App.GetUser = function (userLogin, callBack) {
+    let UserObject = {};
+    let clientContext = new SP.ClientContext.get_current();
+
+    var user = clientContext.get_web().ensureUser(userLogin);
+    clientContext.load(user);
+    clientContext.executeQueryAsync(
+        function () {
+
+            let targetList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Employe);
+            let camlQuery = new SP.CamlQuery();
+
+            let login = user.get_loginName();
+
+            if (login.indexOf('\\') > -1) {
+                login = login.split('\\')[1];
+                login = login.trim();
+            }
+
+            let q = '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + login + '</Value></Eq></Where></Query></View>';
+            camlQuery.set_viewXml(q);
+            let collListItemInfo = targetList.getItems(camlQuery);
+            clientContext.load(collListItemInfo);
+            clientContext.executeQueryAsync(function (s, a) {
+                let listItemEnumerator = collListItemInfo.getEnumerator();
+                let oListItem = null;
+                while (listItemEnumerator.moveNext()) {
+                    oListItem = listItemEnumerator.get_current();
+                    UserObject.Login = oListItem.get_item('EmpLogin') != null ? oListItem.get_item('EmpLogin') : "";
+                    UserObject.Prenom = oListItem.get_item('EmpPrenom') != null ? oListItem.get_item('EmpPrenom') : "";
+                    UserObject.Nom = oListItem.get_item('EmpNom') != null ? oListItem.get_item('EmpNom') : "";
+                    UserObject.Email = oListItem.get_item('EmpEmail') != null ? oListItem.get_item('EmpEmail') : "";
+                    UserObject.Mail = oListItem.get_item('EmpMail') != null ? oListItem.get_item('EmpMail') : "";
+                    UserObject.MailPersonnel = oListItem.get_item('EmpMailPersonnel') != null ? oListItem.get_item('EmpMailPersonnel') : "";
+                    UserObject.CellPhone = oListItem.get_item('EmpCellPhone') != null ? oListItem.get_item('EmpCellPhone') : "";
+                    UserObject.Phone = oListItem.get_item('EmpPhone') != null ? oListItem.get_item('EmpPhone') : "";
+                    UserObject.Departement = oListItem.get_item('EmpDepartement') != null ? oListItem.get_item('EmpDepartement') : "";
+                    UserObject.Grade = oListItem.get_item('EmpGrade') != null ? oListItem.get_item('EmpGrade') : "";
+                    UserObject.Fonction = oListItem.get_item('EmpFonction') != null ? oListItem.get_item('EmpFonction') : "";
+                    UserObject.ManagerPersonne = oListItem.get_item('EmpManager') != null ? oListItem.get_item('EmpManager') : "";
+                    UserObject.NombreJoursAcquis = oListItem.get_item('NombreJoursAcquis') != null ? oListItem.get_item('NombreJoursAcquis') : "";
+                    UserObject.HomeLeave = oListItem.get_item('HomeLeave') != null ? oListItem.get_item('HomeLeave') : "";
+                    UserObject.SickNoCertified = oListItem.get_item('SickNoCertified') != null ? oListItem.get_item('SickNoCertified') : "";
+                    UserObject.Gender = oListItem.get_item('Gender') != null ? oListItem.get_item('Gender') : 0;
+                    UserObject.DateFinContrat = oListItem.get_item('DateFinContrat') != null ? oListItem.get_item('DateFinContrat') : "";
+                    UserObject.DepartementID = oListItem.get_item('DepartementID') != null ? oListItem.get_item('DepartementID') : 0;
+                    UserObject.Localisation = oListItem.get_item('Localisation') != null ? oListItem.get_item('Localisation') : "";
+                    UserObject.JourtotalConge = oListItem.get_item('JourtotalConge') != null ? oListItem.get_item('JourtotalConge') : 0;
+                    UserObject.TxDateDepartEf = oListItem.get_item('TxDateDepartEf') != null ? oListItem.get_item('TxDateDepartEf') : "";
+                    UserObject.DateFinCertif = oListItem.get_item('DateFinCertif') != null ? oListItem.get_item('DateFinCertif') : "";
+                    UserObject.ContratID = oListItem.get_item('EmpContratID') != null ? oListItem.get_item('EmpContratID') : 0;
+                    UserObject.Contrat = oListItem.get_item('EmpContrat') != null ? oListItem.get_item('EmpContrat') : "";
+                    UserObject.ContactsCC = oListItem.get_item('ContactsCC') != null ? oListItem.get_item('ContactsCC') : "";
+                    UserObject.DateEmbauche = oListItem.get_item('EmpDateEmbauche') != null ? oListItem.get_item('EmpDateEmbauche') : "";
+                    UserObject.Matricule = oListItem.get_item('EmpMatricule') != null ? oListItem.get_item('EmpMatricule') : "0000";
+                    UserObject.HRID = oListItem.get_item('EmpHRID') != null ? oListItem.get_item('EmpHRID') : 0;
+                    UserObject.Directeur = oListItem.get_item('EmpDirecteur') != null ? oListItem.get_item('EmpDirecteur') : "";
+
+                    UserObject.DisplayName = UserObject.Nom + " " + UserObject.Prenom;
+                }
+                if (callBack) { callBack(UserObject); }
+            }, appSpHelper.writeError);
+
+        }, appSpHelper.writeError);
+}
+
+
+App.LoadGroupUsers = function (gp, type, functionCallBack) {
+    var TUsers = [];
+    var UsersInGroup = "";
+    var UsersMailInGroup = "";
+    var context = new SP.ClientContext.get_current();
+    var group = null;
+    switch (type) {
+        case "id": group = context.get_web().get_siteGroups().getById(gp);
+            break;
+        case "name": group = context.get_web().get_siteGroups().getByName(gp);
+            break;
+    };
+    context.load(group);
+    var groupUsers = group.get_users();
+    context.load(groupUsers);
+    context.executeQueryAsync(
+        function (sender, args) {
+            var groupUserEnumerator = groupUsers.getEnumerator();
+            while (groupUserEnumerator.moveNext()) {
+                var groupUser = groupUserEnumerator.get_current();
+                TUsers.push({
+
+                    "UserID": groupUser.get_id(),
+
+                    "UserName": groupUser.get_title(),
+
+                    "UserLogin": groupUser.get_loginName(),
+
+                    "UserMail": (groupUser.get_email() != "" ? groupUser.get_email() : ""),
+
+                    "UserFieldValue": SP.FieldUserValue.fromUser(groupUser.get_title())
+                })
+                UsersInGroup += groupUser.get_loginName() + "#FNX#";
+                UsersMailInGroup += (groupUser.get_email() != "" ? groupUser.get_email() : "") + "#FNX#";
+            }
+            if (functionCallBack != null) { functionCallBack(TUsers); }
+        },
+        function (e, a) { console.log(e,a); });
+};
+
+App.LoadGroup = function (groupid, groups, callBack) {
+    var group = { "groupid": groupid, "users": [] };
+    App.LoadGroupUsers(groupid, "id", function (users) {
+        group.users = users;
+        groups.push(group);
+        if (callBack) callBack(groups);
+    });
+}
+
+App.LoadGroups = function (tabgroup, callBack) {
+    //var groups = [];
+    if (tabgroup.length > 0) {
+        App.LoadGroup(tabgroup[0], App.Groups, function (groups) {
+            tabgroup.shift();
+            App.LoadGroups(tabgroup, callBack);
+
+        })
+    }
+    else if (callBack) callBack(App.Groups);
 }

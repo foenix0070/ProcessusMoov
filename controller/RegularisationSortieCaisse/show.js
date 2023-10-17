@@ -52,6 +52,7 @@ showRegularisationSortieCaisse.ShowForm = function (tacheId, demandeid) {
   const WF = new WFManager(appHelper.AppCode.REGULARISATIONSORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
 
   BtnOK.addEventListener("click", function () {
+    BtnOK.disabled = true;
     WF.goToNextTask(showRegularisationSortieCaisse.clientContext, tacheId, appHelper.AppCode.REGULARISATIONSORTIECAISSE, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
       showRegularisationSortieCaisse.UpDateItemStatus(nextTask, demandeid, function () {
@@ -61,6 +62,7 @@ showRegularisationSortieCaisse.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
+    BtnNOK.disabled = true;
     WF.goToRefusedTask(showRegularisationSortieCaisse.clientContext, tacheId, appHelper.AppCode.REGULARISATIONSORTIECAISSE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
       showRegularisationSortieCaisse.UpDateItemStatusRejet(true, demandeid, function () {
@@ -70,6 +72,7 @@ showRegularisationSortieCaisse.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
+    BtnMod.disabled = true;
     WF.goToRefusedTask(showRegularisationSortieCaisse.clientContext, tacheId, appHelper.AppCode.REGULARISATIONSORTIECAISSE, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
       showRegularisationSortieCaisse.UpDateItemStatusRejet(false, demandeid, function () {

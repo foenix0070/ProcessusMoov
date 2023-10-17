@@ -29,9 +29,16 @@
     </div>
   </div>
   <div class="col-8 mt-3">
-    <button class="btn btn-secondary"><a href="/tools/pages/demande.aspx" class="linkMainNavigation"
-        data-url="tools/pages/demande.aspx" data-target="DivMainPageContainer"
-        style="text-decoration: none; color: white;"> Voir la liste de mes demandes </a></button>
+    <button class="btn btn-secondary">
+      <a href="/tools/pages/demande.aspx" class="linkMainNavigation" data-url="tools/pages/demande.aspx"
+        data-target="DivMainPageContainer" style="text-decoration: none; color: white;">
+        Voir la liste de mes demandes
+      </a>
+    </button>
+    <div class="sect-bn" id="reprise" style="display: none;"><button
+        class="btn btn-warning btn-sm linkOffCanvasNavigation" data-url="/tools/pages/reprise/add.aspx"
+        data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-info="reprise"
+        data-bs-target="#ffcMainForm">Reprise</button></div>
 
   </div>
   <div class="col-4 mt-4 text-right" id="accSideMainMenuItem">
@@ -40,6 +47,16 @@
   <div class="col-12 mt-5">
     <div class="content">
       <div id="DivDemandeENTTableShow">
+        <div style="padding: 10px 0 10px 2px;" class="w3-panel w3-pale-yellow w3-border">
+          <p>Aucun &eacute;l&eacute;ment &agrave; afficher ici.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 mt-5" style="display: none;">
+    <div class="content">
+      <div id="DivRepriseTable">
         <div style="padding: 10px 0 10px 2px;" class="w3-panel w3-pale-yellow w3-border">
           <p>Aucun &eacute;l&eacute;ment &agrave; afficher ici.</p>
         </div>
@@ -106,7 +123,6 @@
     <table class="table table-bordered table-responsive table-striped">
       <thead>
         <tr>
-          <th>N*</th>
           <th>Createur</th>
           <th>Date</th>
           <th>Type</th>
@@ -118,7 +134,6 @@
       <tbody>
         {{#demandesEn}}
         <tr class="" >
-          <td>{{id}}</td>
           <td>{{create}}</td>
           <td>{{requestdate}}</td>
           <th>{{nomdemande}}</th>
@@ -137,7 +152,6 @@
     <table class="table table-bordered table-responsive table-striped">
       <thead>
         <tr>
-          <th>N*</th>
           <th>Createur</th>
           <th>Date</th>
           <th>Type</th>
@@ -149,7 +163,6 @@
       <tbody>
         {{#demandesVal}}
         <tr class="" >
-          <td>{{id}}</td>
           <td>{{create}}</td>
           <td>{{requestdate}}</td>
           <th>{{nomdemande}}</th>
@@ -168,7 +181,6 @@
     <table class="table table-responsive table-striped" style="border:0px;">
       <thead style="border-bottom:1px solid rgba(255,255,255,0.7);">
         <tr>
-          <th>N*</th>
           <th>Reference</th>
           <th>Createur</th>
           <th>Date</th>
@@ -181,7 +193,6 @@
       <tbody style="border-bottom:1px solid #b4a7a7;">
         {{#demandesEnt}}
         <tr class="" >
-          <td>{{id}}</td>
           <td>{{reference}}</td>
           <td>{{create}}</td>
           <td>{{requestdate}}</td>
@@ -202,19 +213,22 @@
               <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Effectuer une demande
               </button>
-              <div class="dropdown-menu dropdown-menu-light" style="background-color: #f8f9fa; border: 1px solid #ced4da;">
-                <li style="margin: 5px 0;">
+              <div class="dropdown-menu dropdown-menu-light" style="background-color: #f8f9fa; border: 1px solid #ced4da; height: 300px ; overflow: auto; ">
+                <ul>
                   {{#arrsmenu}}
-                    {{#offcanvas}}
-                    <a href="{{url}}" id="{{id}}" class="linkOffCanvasNavigation" data-url="{{url}}" data-target="{{target}}" data-info="{{dataInfo}}"  data-bs-toggle="offcanvas"
-                    data-bs-target="#ffcMainForm" aria-controls="ffcMainForm" style="color: black; text-decoration: none; display: block; padding: 5px;" onmouseover="this.style.backgroundColor='#007bff'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='initial';">{{title}}</a>
-                    {{/offcanvas}}
-                    {{#link}}
-                    <a href="{{url}}" data-url="{{url}}" class="linkMainNavigation" data-target="{{target}}" data-info="{{dataInfo}}" id="{{id}}" style="color: black; text-decoration: none; display: block; padding: 5px;" onmouseover="this.style.backgroundColor='#007bff'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='initial';">{{title}}</a>
-                    {{/link}}
-                    <br/>
-                  {{/arrsmenu}}
-              </li>
+
+                  <li style="margin: 0px; border-bottom: 1px solid black; padding:5px; background-color:#f8f9fa; color:#212529; ">
+                      {{#offcanvas}}
+                      <a href="{{url}}" id="{{id}}" class="linkOffCanvasNavigation" data-url="{{url}}" data-target="{{target}}" data-info="{{dataInfo}}" data-menu-id="{{title}}"  data-bs-toggle="offcanvas"
+                      data-bs-target="#ffcMainForm" aria-controls="ffcMainForm" style="color:#212529 ; text-decoration: none; display: block;" onmouseover="this.style.backgroundColor='#007bff'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='initial';">{{title}}</a>
+                      {{/offcanvas}}
+                      {{#link}}
+                      <a href="{{url}}" data-url="{{url}}" class="linkMainNavigation" data-target="{{target}}" data-info="{{dataInfo}}" data-menu-id="{{title}}" id="{{id}}" style="color:#212529; text-decoration: none; display: block;" onmouseover="this.style.backgroundColor='#007bff'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='initial';">{{title}}</a>
+                      {{/link}}
+                </li>
+                {{/arrsmenu}}
+
+              </ul>
               </div>
           </div>
   {{/menus}}
@@ -225,7 +239,7 @@
       <table class="table table-bordered table-responsive table-striped">
         <thead>
           <tr>
-            <th>N*</th>
+            <!--<th>N*</th>-->
             <th>Createur</th>
             <th>Date</th>
             <th>Type</th>
@@ -237,7 +251,7 @@
         <tbody>
           {{#demandes}}
           <tr class="" >
-            <td>{{id}}</td>
+            <!--<td>{{id}}</td>-->
             <td>{{create}}</td>
             <td>{{requestdate}}</td>
             <th>{{nomdemande}}</th>
@@ -249,6 +263,32 @@
         </tbody>
       </table>
     </div>
+</script>
+
+<!--<script id="tmpl_table_reprise" type="x-tmpl-mustache">
+  <div class="table-container">
+    <div class="offcanvas offcanvas-top" id="myOffcanvas">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Reprise de Service</h5>
+      </div>
+      <div class="offcanvas-body">
+        {{#reprise}}
+          <p>Votre de {{create}} de {{title}} de {{create}} nombre de jour à compter du {{create}} au {{create}} a été terminé. <p/>
+            <p>Effectuer votr reprise en cliquant sur Reprise. <p/>
+          {{/reprise}}
+      </div>
+    </div>
+  </div>
+</script>-->
+
+<script id="tmpl_table_reprise" type="x-tmpl-mustache">
+  <div class="table-container">
+        {{#reprise}}
+          <p>Votre {{typerep}} de {{title}} de {{nombre}} jour a debuter le {{startdate}} et pris fin le {{reprisedate}} avec pour interim {{interim}}. <p/>
+          <p>Effectuer votre reprise en cliquant sur Reprise. <p/>
+          <div><button class="btn btn-primary">Reprise</button></div>
+        {{/reprise}}
+  </div>
 </script>
 
 

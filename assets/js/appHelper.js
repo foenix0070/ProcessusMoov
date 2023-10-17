@@ -1,9 +1,10 @@
 ﻿var appHelper = appHelper || {};
 
 appHelper.AppConstante = {
-  RootSiteUrl: 'http://vminsideweb01/',
-  SiteUrl: 'http://vminsideweb01/sites/proc/',
-  SiteJsUrl: 'http://vminsideweb01/sites/proc/tools/',
+  RootSiteUrl: 'https://vminsideweb01/',
+  SiteUrl: 'https://vminsideweb01/sites/proc/',
+  SiteJsUrl: 'https://vminsideweb01/sites/proc/tools/',
+  LienSiteJsUrl: 'https://vminsideweb01/sites/proc/tools//index.aspx',
   MIMailSender: "no-reply-MI@moov-africa.ci",
   IsDevEnvironment: true
 }
@@ -15,10 +16,10 @@ appHelper.TacheAction = {
   REJET: 'REJETEE'
 };
 
-appHelper.MailRecipient= {
-  ASSIGNEA : 'ASSIGNEA',
-  DEMANDEUR :  'DEMANDEUR',
-  N1: 'DEMANDEURN1'
+appHelper.MailRecipient = {
+  ASSIGNEA: 'ASSIGNEA',
+  DEMANDEUR: 'DEMANDEUR',
+  N1: 'DEMANDEURN1'
 };
 
 appHelper.ListName = {
@@ -41,7 +42,9 @@ appHelper.ListName = {
   Caisse: 'ListeCaissePaiement',
   AppListe: 'tools',
   Mode: 'ListeModePaiement',
-  Template: 'ListeTemplateMail'
+  Template: 'ListeTemplateMail',
+  Interim: 'ListeInterimaire',
+  Reprise: 'ListeReprise',
 };
 
 appHelper.Status = {
@@ -78,7 +81,8 @@ appHelper.AppCode = {
   FRAISMISSION: 'FRAISMISSION',
   REGULARISATIONFRAISMISSION: 'REGULARISATIONFRAISMISSION',
   SORTIECAISSE: 'SORTIECAISSE',
-  REGULARISATIONSORTIECAISSE: 'REGULARISATIONSORTIECAISSE'
+  REGULARISATIONSORTIECAISSE: 'REGULARISATIONSORTIECAISSE',
+  REPRISE: 'REPRISE'
 }
 
 appHelper.LogType = {
@@ -131,6 +135,9 @@ appHelper.GetMainListNameFromAppCode = function (key) {
       return appHelper.ListName.SortieCaisse;
     case appHelper.AppCode.VEHICULE:
       return appHelper.ListName.Vehicule;
+    case appHelper.AppCode.REPRISE:
+      return appHelper.ListName.Reprise;
+
 
     default:
       return '';
@@ -747,7 +754,11 @@ appHelper.upploadAttachmentFiles = function (inputFileId, itemId, listName, j, c
 
     var fExt = tFn.splice((tFn.length - 1), 1)
 
-    var fileName = escape(tFn.toString().replaceAll(",", "")) + "_" + new Date().getTime() + "." + fExt;
+    var nouveaunon = tFn.join("").replace(/[^a-zA-Z0-9]+/g, "");
+
+    //var fileName = escape(tFn.toString().replaceAll(",", "")) + "_" + new Date().getTime() + "." + fExt
+    var fileName = nouveaunon + "_" + new Date().getTime() + "." + fExt
+    // var fileName = (tFn.toString().replaceAll("'", "").replaceAll("#", "").replaceAll(",", "").replaceAll("*", "")) + "_" + new Date().getTime() + "." + fExt;
 
     // Get the local file as an array buffer.
 

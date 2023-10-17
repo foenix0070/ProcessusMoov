@@ -50,6 +50,7 @@ showVehicule.ShowForm = function (tacheId, demandeid) {
   const WF = new WFManager(appHelper.AppCode.VEHICULE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
 
   BtnOK.addEventListener("click", function () {
+    BtnOK.disabled = true;
     WF.goToNextTask(showVehicule.clientContext, tacheId, appHelper.AppCode.VEHICULE, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
       showVehicule.UpDateItemStatus(nextTask, demandeid, function () {
@@ -59,6 +60,7 @@ showVehicule.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
+    BtnNOK.disabled = true;
     WF.goToRefusedTask(showVehicule.clientContext, tacheId, appHelper.AppCode.VEHICULE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
       showVehicule.UpDateItemStatusRejet(true, demandeid, function () {
@@ -68,6 +70,7 @@ showVehicule.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
+    BtnMod.disabled = true;
     WF.goToRefusedTask(showVehicule.clientContext, tacheId, appHelper.AppCode.VEHICULE, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
       showVehicule.UpDateItemStatusRejet(false, demandeid, function () {
@@ -118,8 +121,6 @@ showVehicule.UpDateItemStatus = function (nextTask, demandeid, callBack) {
     }
   }, appSpHelper.writeError);
 }
-
-
 
 showVehicule.ShowFichierJoint = function (demandeid) {
 

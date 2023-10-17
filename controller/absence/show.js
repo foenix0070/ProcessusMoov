@@ -49,6 +49,7 @@ showAbsence.ShowForm = function (tacheId, demandeid) {
   const WF = new WFManager(appHelper.AppCode.ABSENCE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
 
   BtnOK.addEventListener("click", function () {
+    BtnOK.disabled = true;
     WF.goToNextTask(showAbsence.clientContext, tacheId, appHelper.AppCode.ABSENCE, demandeid, TxtCommentaire.value, function (nextTask) {
       appHelper.Log(nextTask);
       showAbsence.UpDateItemStatus(nextTask, demandeid, function () {
@@ -58,6 +59,7 @@ showAbsence.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
+    BtnNOK.disabled = true;
     WF.goToRefusedTask(showAbsence.clientContext, tacheId, appHelper.AppCode.ABSENCE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       appHelper.Log(nextTask);
       showAbsence.UpDateItemStatusRejet(true, demandeid, function () {
@@ -67,6 +69,7 @@ showAbsence.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
+    BtnMod.disabled = true;
     WF.goToRefusedTask(showAbsence.clientContext, tacheId, appHelper.AppCode.ABSENCE, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       appHelper.Log(nextTask);
       showAbsence.UpDateItemStatusRejet(false, demandeid, function () {

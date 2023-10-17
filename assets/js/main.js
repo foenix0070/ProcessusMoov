@@ -103,6 +103,16 @@ main.arrMenu1 = [
         link: false,
       },
       {
+        offcanvas: {
+          id: "dmd_reprise_new",
+          title: "Reprise de service",
+          url: "tools/pages/reprise/add.aspx",
+          target: "ffcMainFormContainer",
+          dataInfo: "reprise",
+        },
+        link: false,
+      },
+      /*{
         offcanvas: false,
         link: {
           id: "admin_new",
@@ -111,7 +121,7 @@ main.arrMenu1 = [
           target: "DivMainPageContainer",
           dataInfo: "admin",
         },
-      },
+      },*/
     ],
   },
 ];
