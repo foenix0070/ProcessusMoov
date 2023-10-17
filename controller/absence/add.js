@@ -161,6 +161,13 @@ function ListerMotif(callBack) {
   clientContext.executeQueryAsync(
     function () {
       var listItemEnumerator = listItemMotif.getEnumerator();
+      document.getElementById("cmbTypeAbsence").innerHTML = "";
+
+      
+      let opt = document.createElement("option");
+      opt.setAttribute("value", "0");
+      opt.innerHTML = "Choisir le type d'Absence";
+      document.getElementById("cmbTypeAbsence").appendChild(opt);
 
       while (listItemEnumerator.moveNext()) {
         let oListItemTp = listItemEnumerator.get_current();
@@ -246,10 +253,10 @@ appAbsence.Add = function (callBack) {
   let repDate = new Date(endDate);
   repDate.setDate(endDate.getDate() + 1);
 
-  if (repDate.getDay() === 6) {
-    repDate.setDate(repDate.getDate() + 2);
+  if (endDate.getDay() === 6) {
+    endDate.setDate(endDate.getDate() + 2);
   } else if (endDate.getDay() === 0) {
-    repDate.setDate(repDate.getDate() + 1);
+    endDate.setDate(endDate.getDate() + 1);
   }
 
   let ref = appHelper.getReference("ABS");
@@ -263,7 +270,7 @@ appAbsence.Add = function (callBack) {
   oListItem.set_item("Reference", ref);
   oListItem.set_item("DateDepart", startDate);
   oListItem.set_item("DateRetour", endDate);
-  oListItem.set_item("DateReprise", repDate);
+  oListItem.set_item("DateReprise", endDate);
   oListItem.set_item("Title", document.getElementById("TxtTypeAbsenceText").value);
   oListItem.set_item("Nature", document.getElementById("TxtTypeAbsenceText").value);
   oListItem.set_item("TypeAbsenceID", document.getElementById("cmbTypeAbsence").value);
@@ -288,14 +295,14 @@ appAbsence.Add = function (callBack) {
 
     appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Absence, 0, function () {
 
-    const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + oListItem.get_id();
-    let WF = new WFManager(appHelper.AppCode.ABSENCE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.ABSENCE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function () { })
-    if (callBack) {
-      callBack(oListItem);
-    }
-  }, appSpHelper.writeError);
-})
+      const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + oListItem.get_id();
+      let WF = new WFManager(appHelper.AppCode.ABSENCE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+      WF.createWFTask(clientContext, appUrl, appHelper.AppCode.ABSENCE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
+      if (callBack) {
+        callBack(oListItem);
+      }
+    }, appSpHelper.writeError);
+  })
 };
 
 
@@ -326,23 +333,24 @@ appAbsence.Edit = function (demandeid, callBack) {
   let repDate = new Date(endDate);
   repDate.setDate(endDate.getDate() + 1);
 
-  if (repDate.getDay() === 6) {
-    repDate.setDate(repDate.getDate() + 2);
+  if (endDate.getDay() === 6) {
+    endDate.setDate(repDate.getDate() + 2);
   } else if (endDate.getDay() === 0) {
-    repDate.setDate(repDate.getDate() + 1);
+    endDate.setDate(endDate.getDate() + 1);
   }
 
   //let repDate = endDate.addDays(1);
 
   let pickerDict = SPClientPeoplePicker.SPClientPeoplePickerDict.plePickerInterimaireDiv_TopSpan;
   let userKeys = pickerDict.GetAllUserKeys();
+  let ref = document.getElementById("TxtRef").value;
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
 
   oListItem.set_item("DateDepart", startDate);
   oListItem.set_item("DateRetour", endDate);
-  oListItem.set_item("DateReprise", repDate);
+  oListItem.set_item("DateReprise", endDate);
 
   oListItem.set_item("Title", document.getElementById("TxtTypeAbsenceText").value);
   oListItem.set_item("Reference", document.getElementById("TxtRef").value);
@@ -377,17 +385,17 @@ appAbsence.Edit = function (demandeid, callBack) {
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
-    const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + oListItem.get_id();
-    let WF = new WFManager(appHelper.AppCode.ABSENCE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.ABSENCE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () {
+    appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Gadget, 0, function () {
+      const appUrl = '/pages/autorisationAbsence/show.aspx?ID=' + oListItem.get_id();
+      let WF = new WFManager(appHelper.AppCode.ABSENCE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+      WF.createWFTask(clientContext, appUrl, appHelper.AppCode.ABSENCE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
 
       if (callBack) {
         callBack(oListItem);
       }
 
-    })
-
-  }, appSpHelper.writeError);
+    }, appSpHelper.writeError);
+  })
 };
 
 appAbsence.ShowDetails = function (demandeid, callBack) {

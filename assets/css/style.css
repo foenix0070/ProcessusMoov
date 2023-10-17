@@ -582,14 +582,21 @@ legend {
 */
 
 legend {
-  font-size: x-large;
-  font-weight: 800;
+  /* font-size: x-large; */
+  font-size: large;
+  font-weight: 600;
   text-align: start;
   border: 1px solid #E96805;
   background: bisque;
   padding-right: 5px;
   margin-bottom: 20px;
   margin-top: 10px;
+}
+
+#ffcMainFormTitle {
+  font-size: x-large;
+  font-weight: 800;
+  text-align: start;
 }
 
 
@@ -649,4 +656,10 @@ tbody tr {
 
 .asterix {
   color: #e44002;
+}
+
+.delete-icon {
+  cursor: pointer;
+  color: red;
+  font-size: 20px;
 }

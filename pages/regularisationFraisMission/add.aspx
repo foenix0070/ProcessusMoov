@@ -86,6 +86,10 @@
         <input id="TxtRef" type="hidden">
       </div>
 
+      <div class="mb-3">
+        <input id="TxtVerif" type="hidden">
+      </div>
+
     </fieldset>
 
   </div>

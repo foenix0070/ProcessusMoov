@@ -1,58 +1,60 @@
-var showGadget = showGadget || {};
+var showReprise = showReprise || {};
 var clientContext;
-showGadget.clientContext;
-showGadget.isSoldeImpact = 0;
+showReprise.clientContext;
 
-showGadget.InitializePage = function () {
-  showGadget.clientContext = SP.ClientContext.get_current();
+showReprise.InitializePage = function () {
+  showReprise.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
 
   let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
   let Id = appHelper.GetQueryStringFromAjaxQuery('id');
 
-  appSpHelper.CheckAttachmentFolder(showGadget.clientContext, Id, appHelper.ListName.Gadget, null);
+  appSpHelper.CheckAttachmentFolder(showReprise.clientContext, Id, appHelper.ListName.Reprise, null);
 
   appSpHelper.GetMyProperties(function () {
-    showGadget.ShowDetails(Id);
-    showGadget.ShowFirst(Id);
-    showGadget.ShowFichierJoint(Id);
-    showGadget.ShowValidation(Id);
+
+    console.log(tacheId, Id);
+    showReprise.ShowDetails(Id);
+    showReprise.ShowFirst(Id);
+    showReprise.ShowFichierJoint(Id);
+    showReprise.ShowValidation(Id);
     if (tacheId) {
-      showGadget.TestShowForm(tacheId, Id);
+      showReprise.TestShowForm(tacheId, Id);
     }
   });
 }
 
-showGadget.TestShowForm = function (tacheId, demandeid) {
+showReprise.TestShowForm = function (tacheId, demandeid) {
+  console.log(tacheId, demandeid);
   let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Validation);
   let It = oList.getItemById(tacheId);
   clientContext.load(It);
   clientContext.executeQueryAsync(function () {
     if (It.get_item('Status') == "En cours") {
-      showGadget.ShowForm(tacheId, demandeid);
+      showReprise.ShowForm(tacheId, demandeid);
     }
   }, appSpHelper.writeError);
 }
 
-showGadget.ShowForm = function (tacheId, demandeid) {
+showReprise.ShowForm = function (tacheId, demandeid) {
 
   let view = {};
   view.did = demandeid;
   view.tid = tacheId;
-  view.process = appHelper.AppCode.GADGET;
+  view.process = appHelper.AppCode.REPRISE;
   appHelper.renderTemplate("tmpl_form_validation", "SectionValidation", view);
 
   const TxtCommentaire = document.getElementById("TxtCommentaire");
   const BtnMod = document.getElementById("BtnValidationModification");
   const BtnOK = document.getElementById("BtnValidationOK");
   const BtnNOK = document.getElementById("BtnValidationNOK");
-  const WF = new WFManager(appHelper.AppCode.GADGET, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+  const WF = new WFManager(appHelper.AppCode.REPRISE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOWREP);
 
   BtnOK.addEventListener("click", function () {
     BtnOK.disabled = true;
-    WF.goToNextTask(showGadget.clientContext, tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToNextTask(showReprise.clientContext, tacheId, appHelper.AppCode.REPRISE, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
-      showGadget.UpDateItemStatus(nextTask, demandeid, function () {
+      showReprise.UpDateItemStatus(nextTask, demandeid, function () {
         location.reload();
       });
     });
@@ -60,9 +62,9 @@ showGadget.ShowForm = function (tacheId, demandeid) {
 
   BtnNOK.addEventListener("click", function () {
     BtnNOK.disabled = true;
-    WF.goToRefusedTask(showGadget.clientContext, tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
+    WF.goToRefusedTask(showReprise.clientContext, tacheId, appHelper.AppCode.REPRISE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
-      showGadget.UpDateItemStatusRejet(true, demandeid, function () {
+      showReprise.UpDateItemStatusRejet(true, demandeid, function () {
         location.reload();
       });
     });
@@ -70,18 +72,18 @@ showGadget.ShowForm = function (tacheId, demandeid) {
 
   BtnMod.addEventListener("click", function () {
     BtnMod.disabled = true;
-    WF.goToRefusedTask(showGadget.clientContext, tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
+    WF.goToRefusedTask(showReprise.clientContext, tacheId, appHelper.AppCode.REPRISE, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
-      showGadget.UpDateItemStatusRejet(false, demandeid, function () {
+      showReprise.UpDateItemStatusRejet(false, demandeid, function () {
         location.reload();
       });
     });
   });
 }
 
-showGadget.UpDateItemStatusRejet = function (isRejet, demandeid, callBack) {
+showReprise.UpDateItemStatusRejet = function (isRejet, demandeid, callBack) {
 
-  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Gadget);
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Reprise);
   let It = oList.getItemById(demandeid);
 
   if (isRejet) {
@@ -101,8 +103,8 @@ showGadget.UpDateItemStatusRejet = function (isRejet, demandeid, callBack) {
 
 }
 
-showGadget.UpDateItemStatus = function (nextTask, demandeid, callBack) {
-  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Gadget);
+showReprise.UpDateItemStatus = function (nextTask, demandeid, callBack) {
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Reprise);
   let It = oList.getItemById(demandeid);
 
   if (nextTask) {
@@ -121,11 +123,13 @@ showGadget.UpDateItemStatus = function (nextTask, demandeid, callBack) {
   }, appSpHelper.writeError);
 }
 
-showGadget.ShowFichierJoint = function (demandeid) {
+
+
+showReprise.ShowFichierJoint = function (demandeid) {
 
   let view = {};
 
-  let appName = appHelper.ListName.Gadget;
+  let appName = appHelper.ListName.Reprise;
   let id = demandeid;
   let folderPath = `Lists/${appName}/Attachments/${id}/`;
   console.log(folderPath);
@@ -147,59 +151,46 @@ showGadget.ShowFichierJoint = function (demandeid) {
             url: appHelper.AppConstante.RootSiteUrl + '/' + attachmentFiles.itemAt(i).get_serverRelativeUrl()
           });
         }
-        showGadget.ShowUploadForm(demandeid, view);
+        showReprise.ShowUploadForm(demandeid, view);
 
       } else {
         view.fichiers = [];
-        showGadget.ShowUploadForm(demandeid, view);
+        showReprise.ShowUploadForm(demandeid, view);
       }
     }
   },
 
     function () {
       view.fichiers = [];
-      showGadget.ShowUploadForm(demandeid, view);
+      showReprise.ShowUploadForm(demandeid, view);
     });
 }
 
-showGadget.ShowUploadForm = function (demandeid, view) {
+showReprise.ShowUploadForm = function (demandeid, view) {
   appHelper.renderTemplate("tmpl_form_fichiers_attaches", "SectionDocumentsJoint", view);
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
-  // FpUploadAttachement.addEventListener('change', (e) => {
   FpUploadAttachement.addEventListener('change', function () {
 
-    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Gadget, 0, function () {
-      showGadget.ShowFichierJoint(demandeid);
+    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Reprise, 0, function () {
+      showReprise.ShowFichierJoint(demandeid);
     });
-
-    // files = e.target.files;
-    // for (const file of files) {
-    //   let reader = new FileReader();
-    //   reader.onload = function (e) {
-    //     showGadget.AttachFile(demandeid, e.target.result, file.name)
-    //   }
-    //   reader.onerror = function (e) {
-    //     console.log(e.target.error);
-    //   }
-    //   reader.readAsArrayBuffer(file);
-    // }
   });
 
   setTimeout(function () {
     const addfile = document.getElementById("addfile");
     addfile.addEventListener("click", function () {
-      OpenFileUpload('FpUploadAttachement');
+      showReprise.OpenFileUpload('FpUploadAttachement');
     });
   }, 1000);
 }
 
-showGadget.AttachFile = function (demandeid, arrayBuffer, fileName) {
+showReprise.AttachFile = function (demandeid, arrayBuffer, fileName) {
 
   //Get Client Context and Web object.
   var oWeb = clientContext.get_web();
   //Get list and Attachment folder where the attachment of a particular list item is stored.
-  var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Gadget);
-  var urlToAttach = 'Lists/' + appHelper.ListName.Gadget + '/Attachments/' + demandeid + '/'
+  var oList = oWeb.get_lists().getByTitle(appHelper.ListName.Reprise);
+  var urlToAttach = 'Lists/' + appHelper.ListName.Reprise + '/Attachments/' + demandeid + '/'
   var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
   console.log(attachmentFolder);
   //Convert the file contents into base64 data
@@ -220,21 +211,21 @@ showGadget.AttachFile = function (demandeid, arrayBuffer, fileName) {
   clientContext.load(oList);
   clientContext.load(attachmentFiles);
   clientContext.executeQueryAsync(function () {
-    showGadget.ShowFichierJoint(demandeid);
+    showReprise.ShowFichierJoint(demandeid);
   }, appSpHelper.writeError);
 
 };
 
-showGadget.ShowValidation = function (demandeid) {
+showReprise.ShowValidation = function (demandeid) {
   let view = {};
 
-  let oList = showGadget.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Validation);
+  let oList = showReprise.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Validation);
   var QryGetNextOne = '<View>' +
     '<Query>' +
     '<Where>' +
     '<And>' +
     '<And>' +
-    '<Eq><FieldRef Name="Parent" /><Value Type="Text">' + appHelper.AppCode.GADGET + '</Value></Eq>' +
+    '<Eq><FieldRef Name="Parent" /><Value Type="Text">' + appHelper.AppCode.REPRISE + '</Value></Eq>' +
     '<Eq><FieldRef Name="ParentID0" /><Value Type="Text">' + demandeid + '</Value></Eq>' +
     '</And>' +
     '<Eq><FieldRef Name="Status" /><Value Type="Choice">Terminé</Value></Eq>' +
@@ -246,8 +237,8 @@ showGadget.ShowValidation = function (demandeid) {
   let camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(QryGetNextOne);
   let collListItem = oList.getItems(camlQuery);
-  showGadget.clientContext.load(collListItem);
-  showGadget.clientContext.executeQueryAsync(function (sender, args) {
+  showReprise.clientContext.load(collListItem);
+  showReprise.clientContext.executeQueryAsync(function (sender, args) {
 
     if (collListItem.get_count() > 0) {
       var listItemEnumerator = collListItem.getEnumerator();
@@ -262,7 +253,6 @@ showGadget.ShowValidation = function (demandeid) {
           decision: '',
           commentaire: oListItem.get_item('_Comment') != null ? oListItem.get_item('_Comment').toString() : ''
           //etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
-
         });
       }
       appHelper.renderTemplate("tmpl_form_historique_validation", "SectionHistoriqueValidation", view);
@@ -291,50 +281,50 @@ function ajouterEspacesEntreChiffres(nombre) {
   }
 }
 
-showGadget.ShowDetails = function (demandeid) {
+showReprise.ShowDetails = function (demandeid) {
 
-  let oList = showGadget.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Gadget);
+  let oList = showReprise.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Reprise);
   let It = oList.getItemById(demandeid);
-  console.log(demandeid);
+  console.log("IN ShowDetails");
 
-  showGadget.clientContext.load(It);
-  showGadget.clientContext.executeQueryAsync(function () {
+  showReprise.clientContext.load(It);
+  showReprise.clientContext.executeQueryAsync(function () {
     if (It) {
-      console.log("IN IF");
       let demandeurField = It.get_item('Demandeur');
       let superieurField = It.get_item('ResponsableN1');
       let demandeurName = demandeurField.get_lookupValue();
       let superieurName = superieurField.get_lookupValue();
-      let qte = ajouterEspacesEntreChiffres(It.get_item('Quantite'));
+      //var int = It.get_item("Interimaire") != null ? It.get_item("Interimaire").get_lookupValue() : "";
+
       let view = {
-        id: (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false),
-        nature: It.get_item('Title') != null ? It.get_item('Title') : '',
-        datedepart: It.get_item('Created') != null ? new Date(It.get_item('Created')).toLocaleDateString() : '',
-        quantite: qte,
-        //quantite: It.get_item('Quantite') != null ? It.get_item('Quantite') : '',
-        //datedepart: It.get_item('DateDepart') != null ?  new Date( It.get_item('DateDepart')).toLocaleDateString() : '',
-        //interimaire: It.get_item('Demandeur') != null ?  It.get_item('Demandeur').get_lookupValue() : '',
-        motif: It.get_item('Motif') != null ? It.get_item('Motif') : '',
+        date: It.get_item('Created').toLocaleDateString() != null ? It.get_item('Created').toLocaleDateString() : '',
+        titre: It.get_item('Title') != null ? It.get_item('Title') : '',
+        nombre: It.get_item("NombreJours"),
+        startdate: It.get_item("DateDepart"),
+        reprisedate: It.get_item("DateReprise"),
         demandeur: demandeurName,
+        type : It.get_item("TypeReprise"),
         demandeuremail: It.get_item('DemandeurEmail') != null ? It.get_item('DemandeurEmail') : '',
         superieur: superieurName,
+        interim: It.get_item("Interimaire") ,
         etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
       };
+
+      console.log("OUT ShowDetails");
+
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
-
-
 
     }
   }, appSpHelper.writeError);
 }
 
-showGadget.ShowFirst = function (demandeid) {
+showReprise.ShowFirst = function (demandeid) {
 
-  let oList = showGadget.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Gadget);
+  let oList = showReprise.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Reprise);
   let It = oList.getItemById(demandeid);
 
-  showGadget.clientContext.load(It);
-  showGadget.clientContext.executeQueryAsync(function () {
+  showReprise.clientContext.load(It);
+  showReprise.clientContext.executeQueryAsync(function () {
 
 
     if (It) {
@@ -363,9 +353,13 @@ showGadget.ShowFirst = function (demandeid) {
   }, appSpHelper.writeError);
 }
 
-function OpenFileUpload(str_select) {
+showReprise.OpenFileUpload = function (str_select) {
   let transElt = document.getElementById(str_select);
   transElt.click();
 }
 
-SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showGadget.InitializePage);
+// document.addEventListener("DOMContentLoaded", () => {
+//   ExecuteOrDelayUntilScriptLoaded(function(){
+SP.SOD.executeFunc('sp.js', 'SP.ClientContext', showReprise.InitializePage);
+//   }, "SP.ClientContext");
+// });

@@ -171,9 +171,8 @@
                     <div class="row m-3 p-5" style="border: 1px solid whitesmoke; background-color: whitesmoke">
                       <div class="col-sm-3">
                         <div class="card shadow-md" style="height: 120px; background-color: white;">
-                          <div class="card-body">
+                          <div class="card-body" id="voirlistattente" style="cursor: pointer;">
                             <div class=" d-flex flex-row align-items-center ">
-
                               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="35" fill="currentColor"
                                 class="bi bi-newspaper text-dark" viewBox="0 0 16 16">
                                 <path
@@ -195,7 +194,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="card shadow-md" style="height: 120px; background-color: white;">
-                          <div class="card-body">
+                          <div class="card-body" id="voirlistcours" style="cursor: pointer;">
                             <div class=" d-flex flex-row align-items-center ">
 
                               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="35" fill="currentColor"
@@ -209,7 +208,8 @@
 
                             <div class="d-flex flex-row align-items-center">
                               <div style="width: 25px; height: 35px;"></div>
-                              <p class="ms-2 card-body_2"><b>Vous avez <span id="demcours"></span> demandes en cours</b>
+                              <p class="ms-2 card-body_2"><b>Vous avez <span id="demcours"></span> demandes en
+                                  cours</b>
                               </p>
                             </div>
 
@@ -218,7 +218,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="card shadow-md" style="height: 120px; background-color: white;">
-                          <div class="card-body column">
+                          <div class="card-body column" id="voirlistvalider" style="cursor: pointer;">
                             <div class="d-flex flex-row align-items-center">
 
                               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
@@ -241,7 +241,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="card shadow-md" style="height: 120px; background-color: white;">
-                          <div class="card-body d-flex flex-column">
+                          <div class="card-body d-flex flex-column" id="voirlisttaches" style="cursor: pointer;">
                             <div class="d-flex flex-row align-items-center">
 
                               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="35" fill="currentColor"
@@ -399,5 +399,27 @@
 
                 </SharePoint:SharePointForm>
               </body>
+
+
+              <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                  var attentedetails = document.getElementById("voirlistattente");
+                  var coursdetails = document.getElementById("voirlistcours");
+                  var validerdetails = document.getElementById("voirlistvalider");
+                  var tachesdetails = document.getElementById("voirlisttaches");
+                  attentedetails.addEventListener("click", function () {
+                    appHelper.navigation("DivMainPageContainer", "/tools/pages/demande.aspx?action=Att");
+                  });
+                  coursdetails.addEventListener("click", function () {
+                    appHelper.navigation("DivMainPageContainer", "/tools/pages/demande.aspx?action=E");
+                  });
+                  validerdetails.addEventListener("click", function () {
+                    appHelper.navigation("DivMainPageContainer", "/tools/pages/demande.aspx?action=V");
+                  });
+                  tachesdetails.addEventListener("click", function () {
+                    appHelper.navigation("DivMainPageContainer", "/tools/pages/tache.aspx");
+                  });
+                });
+              </script>
 
               </html>

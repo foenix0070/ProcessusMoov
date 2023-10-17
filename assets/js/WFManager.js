@@ -18,6 +18,10 @@ class WFManager {
     REJET: 'REJETEE'
   };
 
+  static StatutInterim = {
+    ENCOURS: "En cours"
+  };
+
   getWFSchemaFile() {
     let WF;
     if (this.WFData) {
@@ -57,9 +61,9 @@ class WFManager {
     }
   }
 
-  getAssignFromTemplate(assTemplate, n1, n2) {
-    let user = [];
-
+  static getAssignFromTemplate(assTemplate, n1, n2, callBack) {
+    let user = []
+    let userMail = ""; let oTrouver = "";
     for (let index = 0; index < assTemplate.length; index++) {
       const element = assTemplate[index];
       const type = element["type"];
@@ -67,20 +71,46 @@ class WFManager {
       switch (type) {
         case "USER":
           if (value == "#N1") {
-            user.push(SP.FieldUserValue.fromUser(n1));
+            oTrouver = n1.Login;
+            user.push(SP.FieldUserValue.fromUser(n1.Login));
+            userMail += n1.Email ? n1.Email + ";" : "";
           }
           if (value == "#DIRECTEUR") {
-            user.push(SP.FieldUserValue.fromUser(n2));
+            oTrouver = n2.Login;
+            user.push(SP.FieldUserValue.fromUser(n2.Login));
+            userMail += n2.Email ? n2.Email + ";" : "";
           }
           break;
         case "GROUP":
           let fuv = new SP.FieldUserValue();
+          oTrouver = ACTIV_GROUPS[value];
           fuv.set_lookupId(ACTIV_GROUPS[value]);
           user.push(fuv);
+          var gp = App.Groups.find(item => { return item.groupid == ACTIV_GROUPS[value]; });
+          console.log(gp);
+          if (gp) {
+            gp.users.forEach(u => {
+              userMail += u.UserMail ? u.UserMail + ";" : "";
+            });
+          }
           break;
       }
     }
-    return user;
+    //if (callBack) {callBack(user, userMail)};
+    //alert('5');
+    WFManager.CheckInterim(oTrouver, WFManager.StatutInterim.ENCOURS, function (loginInt, emailint) {
+      if (loginInt) {
+        user.push(SP.FieldUserValue.fromUser(loginInt));
+      }
+      if (emailint) {
+        userMail += emailint ? emailint + ";" : "";
+      }
+      console.log(loginInt, emailint);
+      console.log('Interim de ', user, userMail);
+
+      if (callBack) { callBack(user, userMail) };
+    });
+
   }
 
   createWFTask(
@@ -99,78 +129,61 @@ class WFManager {
 
     let tasks = [];
     let i = 0;
-    for (let index = 0; index < cWF.length; index++) {
-      const element = cWF[index];
-      tasks.push({
-        status: i == 0 ? "En cours" : "Non commencé",
-        code: element["id"],
-        title: element["value"],
-        parent: _parent,
-        reference: _ref,
-        detail:
-          "Demande de " +
-          document.getElementById("TxtCurrentUserDisplayName").value +
-          " pour " +
-          _parent.toString().toLowerCase(),
-        parentid: _parentid,
-        assign: this.getAssignFromTemplate(
-          element["actors"],
-          managerN1,
-          managerN2
-        ),
-      });
-      i = 1;
-    }
 
-    let oList = ctx.get_web().get_lists().getByTitle(this.TaskListName);
-    let oListItemEnCours = null;
-    tasks.forEach((e) => {
-      let startDate = new Date();
-      let endDate = startDate.addDays(2);
-      let itemCreateInfo = new window.SP.ListItemCreationInformation();
-      let oListItem = oList.addItem(itemCreateInfo);
-      oListItem.set_item("Title", e.title);
-      oListItem.set_item("StartDate", new Date());
-      oListItem.set_item("DueDate", endDate);
-      oListItem.set_item("Status", e.status);
-      oListItem.set_item("AssignedTo", e.assign);
-      oListItem.set_item("Parent", e.parent);
-      oListItem.set_item("ParentID0", e.parentid);
-      oListItem.set_item("TacheTemplateCode", e.code);
-      oListItem.set_item("AppUrl", appUrl);
-      oListItem.set_item("Body", e.detail);
-      oListItem.set_item("Reference", e.reference);
-      if (e.status == "En cours") {
-        oListItemEnCours = oListItem;
-      }
+    WFManager.GetAssignationWithInterim(0, cWF, tasks, _parent,
+      _parentid,
+      managerN1,
+      managerN2,
+      _ref, function (t) {
+        tasks = t;
 
-      oListItem.update();
-      ctx.load(oListItem);
-    });
 
-    ctx.executeQueryAsync(function () {
-      try {
-        WFManager.SendNotification(ctx, oListItemEnCours, _parent, _parentid, WFManager.TacheAction.NOUVEAU, function () {
-          if (callBack) {
-            callBack();
+        console.log("tasks");
+        console.log(tasks);
+
+        let oList = ctx.get_web().get_lists().getByTitle(appHelper.ListName.Validation);
+        let oListItemEnCours = null;
+        tasks.forEach((e) => {
+          let startDate = new Date();
+          let endDate = startDate.addDays(2);
+          let itemCreateInfo = new window.SP.ListItemCreationInformation();
+          let oListItem = oList.addItem(itemCreateInfo);
+          oListItem.set_item("Title", e.title);
+          oListItem.set_item("StartDate", new Date());
+          oListItem.set_item("DueDate", endDate);
+          oListItem.set_item("Status", e.status);
+          oListItem.set_item("AssignedTo", e.assign);
+          oListItem.set_item("AssigneAMail", e.assignmail);
+          oListItem.set_item("Parent", e.parent);
+          oListItem.set_item("ParentID0", e.parentid);
+          oListItem.set_item("TacheTemplateCode", e.code);
+          oListItem.set_item("AppUrl", appUrl);
+          oListItem.set_item("Body", e.detail);
+          oListItem.set_item("Reference", e.reference);
+          if (e.status == "En cours") {
+            oListItemEnCours = oListItem;
           }
-        })
 
-        // appSpHelper.SendNotificationTask(ctx, oListItemEnCours, function () {
-        //   if (callBack) {
-        //     callBack();
-        //   }
-        // });
+          oListItem.update();
+          ctx.load(oListItem);
+        });
 
-      } catch (e) {
-        appHelper.Log(e, appHelper.LogType.ERROR);
-        if (callBack) {
-          callBack();
-        }
-      }
+        ctx.executeQueryAsync(function () {
+          try {
+            WFManager.SendNotification(ctx, oListItemEnCours, _parent, _parentid, WFManager.TacheAction.NOUVEAU, function () {
+              if (callBack) {
+                callBack();
+              }
+            })
+          } catch (e) {
+            appHelper.Log(e, appHelper.LogType.ERROR);
+            if (callBack) {
+              callBack();
+            }
+          }
 
-      //  alert('okkk');
-    }, appSpHelper.writeError);
+        }, appSpHelper.writeError);
+      });
   }
 
   goToNextTask(ctx, _tacheid, _parent, _parentid, _commentaire, callBack) {
@@ -242,7 +255,7 @@ class WFManager {
           }, appSpHelper.writeError);
         }
         else {
-          WFManager.SendNotification(ctx, task, _parent, _parentid, WFManager.TacheAction.VALIDATION, function () {
+          WFManager.SendNotification(ctx, It, _parent, _parentid, WFManager.TacheAction.VALIDATION, function () {
             appHelper.receiptTask(It, function () {
               if (callBack) {
                 callBack(null);
@@ -257,7 +270,7 @@ class WFManager {
   }
 
   goToRefusedTask(ctx, _tacheid, _parent, _parentid, _commentaire, typeaction, callBack) {
-    
+
     let oList = ctx
       .get_web()
       .get_lists()
@@ -280,19 +293,19 @@ class WFManager {
     ctx.load(It);
     ctx.executeQueryAsync(function () {
       const QryGetNextOne =
-      "<View><Query><Where>" +
-      "<And>" +
-      "<And>" +
-      '<Eq><FieldRef ID="Parent" /><Value Type="Text">' +
-      _parent +
-      "</Value></Eq>" +
-      '<Eq><FieldRef ID="ParentID0" /><Value Type="Text">' +
-      _parentid +
-      "</Value></Eq>" +
-      "</And>" +
-      '<Eq><FieldRef ID="Status" /><Value Type="Choice">Non commencé</Value></Eq>' +
-      "</And>" +
-      '</Where><OrderBy><FieldRef Name="ID" Ascending="TRUE"/></OrderBy></Query></View>';
+        "<View><Query><Where>" +
+        "<And>" +
+        "<And>" +
+        '<Eq><FieldRef ID="Parent" /><Value Type="Text">' +
+        _parent +
+        "</Value></Eq>" +
+        '<Eq><FieldRef ID="ParentID0" /><Value Type="Text">' +
+        _parentid +
+        "</Value></Eq>" +
+        "</And>" +
+        '<Eq><FieldRef ID="Status" /><Value Type="Choice">Non commencé</Value></Eq>' +
+        "</And>" +
+        '</Where><OrderBy><FieldRef Name="ID" Ascending="TRUE"/></OrderBy></Query></View>';
 
       let camlQuery = new SP.CamlQuery();
       camlQuery.set_viewXml(QryGetNextOne);
@@ -317,14 +330,6 @@ class WFManager {
               }
             });
           })
-
-          // appHelper.receiptTask(It, function () {
-          //   WFManager.BackNotification(ctx, _parent, _parentid, appHelper.TacheAction.REJET, function () {
-          //     if (callBack) {
-          //       callBack(true);
-          //     }
-          //   });
-          // });
         }, appSpHelper.writeError);
       }, appSpHelper.writeError);
     }, appSpHelper.writeError);
@@ -443,17 +448,21 @@ class WFManager {
     }
     appHelper.getDemandeOrigin(_parent, _parentid, function (dIt) {
       if (taskitem) {
-        appSpHelper.GetMails(dIt, taskitem, codemail, function () {
-          if (callBack) {
-            callBack();
-          }
+        appSpHelper.GetMails(dIt, taskitem, codemail, function (maillist) {
+          console.log(maillist);
+          // if (callBack) {
+          //   callBack();
+          // }
+          WFManager.SendMail(maillist.slice(), function(){
+            if (callBack) {
+              callBack();
+            }
+          })
         });
       }
 
       else {
         WFManager.GetCurrentTask(ctx, _parent, _parentid, function (currenttask) {
-
-
           if (currenttask) {
 
             appSpHelper.GetMails(dIt, tacheresidu, _tacheAction, function () {
@@ -461,28 +470,153 @@ class WFManager {
                 callBack();
               }
             });
-
           } else {
-
             appSpHelper.GetMails(dIt, null, _tacheAction, function () {
               if (callBack) {
                 callBack();
               }
             });
-
           }
-
         });
-
-
       }
     })
 
+  }
 
-
-
+  static SendMail(ellist, callBack) {
+    if (ellist.length > 0) {
+      var el = ellist[0];
+      if (el.MailTo.endsWith(";")) {
+        el.MailTo = el.MailTo.substr(0, el.MailTo.length - 1);
+      }
+      // if (el.MailCc.endsWith(";")) {
+      //   el.MailCc = el.MailCc.substr(0, el.MailCc.length - 1);
+      // }
+      appSpHelper.sendEmail(appHelper.AppConstante.MIMailSender, el.MailTo, el.Corps, el.Sujet, function () {
+        // appSpHelper.sendEmail(appHelper.AppConstante.MIMailSender, el.MailTo, el.MailCc, el.Corps, el.Sujet, function () {
+        ellist.shift();
+        WFManager.SendMail(ellist, callBack);
+      });
+    }
+    else if (callBack) callBack();
 
   }
 
+  static CheckInterim(loginuser, statut, callBack) {
+    //let absent = null;
+    let login = "";
+    let email = "";
+    let ctx = new SP.ClientContext.get_current();
+    let oList = ctx
+      .get_web()
+      .get_lists()
+      .getByTitle(appHelper.ListName.Interim);
+
+    console.log(loginuser);
+
+    const requete =
+      "<View><Query><Where>" +
+      //'<And>' +
+      // '<And>' +
+      // '<Lt><FieldRef Name=\'DateDebut\' /><Value IncludeTimeValue=\'FALSE\' Type=\'DateTime\'>' + new Date().toISOString() + '</Value></Lt>' +
+      // '<Gt><FieldRef Name=\'DateFin\' /><Value IncludeTimeValue=\'FALSE\' Type=\'DateTime\'>' + new Date().toISOString() + '</Value></Gt>' +
+      // '</And>' +
+      "<And>" +
+      '<Eq><FieldRef ID="AbsentLogin"/><Value Type="Text">' + loginuser + "</Value></Eq>" +
+      '<Eq><FieldRef ID="Statut" /><Value Type="Choice">' + statut + "</Value></Eq>" +
+      "</And>" +
+      //"</And>" +
+      "</Where></Query></View>";
+
+    let camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(requete);
+    let collListItem = oList.getItems(camlQuery);
+    ctx.load(collListItem);
+    ctx.executeQueryAsync(function () {
+      let listItemEnumerator = collListItem.getEnumerator();
+      while (listItemEnumerator.moveNext()) {
+        var absent = listItemEnumerator.get_current();
+        login = absent.get_item('InterimaireLogin') != null ? absent.get_item('InterimaireLogin') : '';
+        email = absent.get_item('InterimaireEmail') != null ? absent.get_item('InterimaireEmail') : '';
+        console.log('Interim trouve', absent)
+        break;
+      }
+
+
+      if (callBack) callBack(login, email);
+
+    }, function (e, a) {
+      console.log(e, a);
+    });
+
+  }
+
+  static GetAssignationWithInterim(index, cWF, tasks, _parent,
+    _parentid,
+    managerN1,
+    managerN2,
+    _ref, callBack) {
+
+    if (index < cWF.length) {
+
+      const element = cWF[index];
+      WFManager.getAssignFromTemplate(element["actors"], managerN1, managerN2, function (user, userMail) {
+        tasks.push({
+          status: index == 0 ? "En cours" : "Non commencé",
+          code: element["id"],
+          title: element["value"],
+          parent: _parent,
+          reference: _ref,
+          detail:
+            "Demande de " +
+            document.getElementById("TxtCurrentUserDisplayName").value +
+            " pour " +
+            _parent.toString().toLowerCase(),
+          parentid: _parentid,
+          assign: user,
+          assignmail: userMail,
+        });
+
+        index += 1;
+        WFManager.GetAssignationWithInterim(index, cWF, tasks, _parent,
+          _parentid,
+          managerN1,
+          managerN2,
+          _ref, callBack);
+      });
+
+    } else {
+      if (callBack) {
+        callBack(tasks);
+      }
+    }
+
+  }
 
 }
+
+
+  // getAssignFromTemplate(assTemplate, n1, n2) {
+  //   let user = [];
+  //   for (let index = 0; index < assTemplate.length; index++) {
+  //     const element = assTemplate[index];
+  //     const type = element["type"];
+  //     const value = element["value"];
+  //     switch (type) {
+  //       case "USER":
+  //         if (value == "#N1") {
+  //           user.push(SP.FieldUserValue.fromUser(n1));
+  //         }
+  //         if (value == "#DIRECTEUR") {
+  //           user.push(SP.FieldUserValue.fromUser(n2));
+  //         }
+  //         break;
+  //       case "GROUP":
+  //         let fuv = new SP.FieldUserValue();
+  //         fuv.set_lookupId(ACTIV_GROUPS[value]);
+  //         user.push(fuv);
+  //         break;
+  //     }
+  //   }
+  //   return user;
+  // }

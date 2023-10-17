@@ -223,6 +223,7 @@ function ListerSortie(callBack) {
   clientContext.executeQueryAsync(
     function () {
       var listItemEnumerator = listItemSortie.getEnumerator();
+      document.getElementById('cmbSortie').innerHTML = "";
 
       while (listItemEnumerator.moveNext()) {
         console.log("IN");
@@ -306,7 +307,7 @@ appRegularisationSortieCaisse.Add = function (callBack) {
           appHelper.AttachFile(clientContext, oListItem.get_id(), e.target.result, file.name, appHelper.ListName.RegularisationSortieCaisse, function () {
             const appUrl = '/pages/regularisationSortieCaisse/show.aspx?ID=' + oListItem.get_id();
             let WF = new WFManager(appHelper.AppCode.REGULARISATIONSORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-            WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONSORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function () { })
+            WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONSORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
 
             appRegularisationSortieCaisse.UpDateStatusSortieCaisse(verifid, function () { });
 
@@ -351,7 +352,7 @@ appRegularisationSortieCaisse.Add = function (callBack) {
       appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.RegularisationSortieCaisse, 0, function () {
         const appUrl = '/pages/regularisationSortieCaisse/show.aspx?ID=' + oListItem.get_id();
         let WF = new WFManager(appHelper.AppCode.REGULARISATIONSORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-        WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONSORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+        WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONSORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, function () { })
 
         let idcmb = document.getElementById("cmbSortie").value;
         console.log(idcmb);
@@ -361,36 +362,6 @@ appRegularisationSortieCaisse.Add = function (callBack) {
         if (callBack) {
           callBack(oListItem);
         }
-
-        // let FpUploadAttachement = document.getElementById('FileDoc');
-        // files = FpUploadAttachement.files;
-        // console.log(FpUploadAttachement);
-        // console.log(files);
-        // for (const file of files) {
-        //   let reader = new FileReader();
-        //   reader.onload = function (e) {
-        //     console.log(file.name);
-        //     console.log(e.target.result);
-        //     appHelper.AttachFile(clientContext, oListItem.get_id(), e.target.result, file.name, appHelper.ListName.RegularisationSortieCaisse, function () {
-        //       const appUrl = '/pages/regularisationSortieCaisse/show.aspx?ID=' + oListItem.get_id();
-        //       let WF = new WFManager(appHelper.AppCode.REGULARISATIONSORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-        //       WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONSORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
-
-        //       let idcmb = document.getElementById("cmbSortie").value;
-        //       console.log(idcmb);
-
-        //       appRegularisationSortieCaisse.UpDateStatusSortieCaisse(idcmb, function () { });
-
-        //       if (callBack) {
-        //         callBack(oListItem);
-        //       }
-        //     })
-        //   }
-        //   reader.onerror = function (e) {
-        //     console.log(e.target.error);
-        //   }
-        //   reader.readAsArrayBuffer(file);
-        // };
 
 
       }, appSpHelper.writeError);
@@ -413,6 +384,7 @@ appRegularisationSortieCaisse.Edit = function (demandeid, callBack) {
 
   var montant = autoNumericObject.getNumber();
   var Solde = autoNumericObjectsolde.getNumber();
+  let ref = document.getElementById("TxtRef").value;
   console.log(montant, Solde);
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
@@ -441,7 +413,7 @@ appRegularisationSortieCaisse.Edit = function (demandeid, callBack) {
 
     const appUrl = '/pages/regularisationSortieCaisse/show.aspx?ID=' + oListItem.get_id();
     let WF = new WFManager(appHelper.AppCode.REGULARISATIONSORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONSORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONSORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
     if (callBack) {
       callBack(oListItem);
     }

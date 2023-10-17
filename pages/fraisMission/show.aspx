@@ -27,6 +27,11 @@
                 <div class="col-6">
                   <section class="sect1" id="SectionDocumentsJoint"> </section>
                 </div>
+
+                <div class="col-6">
+                  <section id="SectionDetailsFrais"> </section>
+                </div>
+
                 <div class="col-12">
 
                   <br><br>
@@ -168,7 +173,7 @@
                   </table></br>
 
                   {{#regul}}
-                  <div class="sect-bn"><button class="btn btn-primary btn-sm linkOffCanvasNavigation" data-url="/tools/pages/regularisationFraisMission/add.aspx?DID={{regul}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" data-info="{{cout}}" id="BtnRegularisation" >Effectuer une regularisation</button></div>
+                  <div class="sect-bn"><button class="btn btn-primary btn-sm linkOffCanvasNavigation" data-url="/tools/pages/regularisationFraisMission/add.aspx?DID={{regul}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" data-info="regul" id="BtnRegularisation" >Effectuer une regularisation</button></div>
                   {{/regul}}</br>
 
                   <div class="head-titre">
@@ -225,7 +230,42 @@
                         <td style="text-align:left;">{{mode}}</td>
                       </tr>
                   </table>
-                </script>
+              </script>
+
+              <script id="tmpl_form_details_frais" type="x-tmpl-mustache">
+              <table>
+                {{#Frais}}
+                  </br>
+                    <tr>
+                      <td style="text-align:left;"class="fw-bold" width="300px">Libelle :</td>
+                      <td style="text-align:left;">{{titre}}</td>
+                    </tr>
+
+                    <tr>
+                      <td style="text-align:left;"class="fw-bold" width="300px">Date de debut :</td>
+                      <td style="text-align:left;">{{debut}}</td>
+                    </tr>
+
+                    <tr>
+                      <td style="text-align:left;"class="fw-bold" width="300px">Date de fin :</td>
+                      <td style="text-align:left;">{{fin}}</td>
+                    </tr>
+
+                    <tr>
+                      <td style="text-align:left;"class="fw-bold" width="300px">Nombre de jour :</td>
+                      <td style="text-align:left;">{{nombre}}</td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:left;"class="fw-bold" width="300px">Forfait :</td>
+                      <td style="text-align:left;">{{forfait}}</td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:left;"class="fw-bold" width="300px">Montant Total :</td>
+                      <td style="text-align:left;">{{total}}</td>
+                    </tr>
+                  {{/Frais}}
+                </table>
+              </script>
 
               <script type="text/javascript">
                 appHelper.loadJSWithNameSpace("showFraisMission", 'showFraisMission', "controller/FraisMission/show.js");

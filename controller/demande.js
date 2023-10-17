@@ -35,18 +35,20 @@ DemandeTools.InitializePage = function () {
                 DemandeTools.ListDemandeRejeter(function () {
                   appHelper.Log("REJETER");
                   DemandeTools.view.demandesEn = [];
+                  $('.table').DataTable();
+                  DemandeTools.Param();
                 });
               });
             });
           });
         });
 
-
       });
       //}
       //);
     });
   });
+  // DemandeTools.Param();
 
 };
 
@@ -103,6 +105,7 @@ DemandeTools.ListDemande = function (DemandeList, nomdurepertoire, nomduprocessu
 
       }
       DemandeTools.view.demandesEn.sort((a, b) => b.date - a.date);
+
     }
 
 
@@ -475,6 +478,34 @@ DemandeTools.ListDemandeRejeter = function (callBack) {
     });
 
   });
+}
+
+DemandeTools.Param = function () {
+
+  var currentURLFonction = appHelper.GetQueryStringFromAjaxQuery("action");
+
+  if (currentURLFonction !== null) {
+    const steps = document.querySelectorAll('.step');
+    const contents = document.querySelectorAll('.content');
+    const navtab = document.getElementById("DivDemandeENTTableShow");
+
+    steps.forEach(step => {
+      const dataAction = step.getAttribute('data-action');
+      if (dataAction === currentURLFonction) {
+        // Affichez le contenu associé
+        const target = step.getAttribute('data-target');
+        const targetContent = document.getElementById(target);
+        if (targetContent) {
+          navtab.style.display = 'none';
+          targetContent.style.display = 'block';
+          steps.forEach(s => s.classList.remove('active'));
+          step.classList.add('active');
+        }
+      }
+    });
+  }
+
+
 }
 
 //document.addEventListener("DOMContentLoaded", () => {

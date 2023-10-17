@@ -22,13 +22,15 @@ appRegularisationFraisMission.InitializePage = function () {
             var info = element.getAttribute('data-info');
             console.log(info);
 
-            if (info != "regularisationFraisMission") {
+            if (info == "regul") {
                 // document.getElementById("cmbSortie").disabled=true;
+                console.log("Test info");
                 document.getElementById("cmbMission").style.display = "none";
                 document.getElementById("TxtMission").style.display = "block";
-                appRegularisationFraisMission.ShowMission(appHelper.GetQueryStringFromAjaxQuery('DID'), info, function () { });
+                document.getElementById("TxtMont").style.display = "block";
+                appRegularisationFraisMission.ShowMission(appHelper.GetQueryStringFromAjaxQuery('DID'), function () { });
             }
-            else {
+            if (info == "regularisationFraisMission") {
                 // appRegularisationSortieCaisse.initCmbSortie(function () { });
                 appRegularisationFraisMission.initCmbMission(function () { });
                 //appRegularisationFraisMission.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function () { });
@@ -122,6 +124,7 @@ function ListerMission(callBack) {
     clientContext.executeQueryAsync(
         function () {
             var listItemEnumerator = listItemMission.getEnumerator();
+            document.getElementById('cmbMission').innerHTML = "";
 
             while (listItemEnumerator.moveNext()) {
                 console.log("IN");
@@ -226,6 +229,11 @@ appRegularisationFraisMission.Add = function (callBack) {
 
             let verifid = document.getElementById("TxtMissionID").value;
             let ref = appHelper.getReference("RFDM");
+            var Input = document.getElementById("TxtMont");
+
+            var autoNumericObject = AutoNumeric.getAutoNumericElement(Input);
+
+            var montant = autoNumericObject.getNumber();
 
             if (verifid) {
                 oListItem.set_item("MissionID", parseInt(document.getElementById("TxtMissionID").value));
@@ -233,6 +241,7 @@ appRegularisationFraisMission.Add = function (callBack) {
                 oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
                 oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
                 oListItem.set_item("Reference", ref);
+                oListItem.set_item("CoutMission", montant);
 
                 oListItem.set_item("DateDebut", item.DateDebut);
                 oListItem.set_item("DateFin", item.DateFin);
@@ -265,36 +274,19 @@ appRegularisationFraisMission.Add = function (callBack) {
                 oListItem.update();
                 clientContext.load(oListItem);
                 clientContext.executeQueryAsync(function () {
+                    appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.RegularisationFraisMission, 0, function () {
+                        const appUrl = '/pages/regularisationFraisMission/show.aspx?ID=' + oListItem.get_id();
+                        let WF = new WFManager(appHelper.AppCode.REGULARISATIONFRAISMISSION, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+                        WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONFRAISMISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function () { })
 
-                    let FpUploadAttachement = document.getElementById('FileDoc');
-                    files = FpUploadAttachement.files;
-                    console.log(FpUploadAttachement);
-                    console.log(files);
-                    for (const file of files) {
-                        let reader = new FileReader();
-                        reader.onload = function (e) {
-                            console.log(file.name);
-                            console.log(e.target.result);
-                            appHelper.AttachFile(clientContext, oListItem.get_id(), e.target.result, file.name, appHelper.ListName.RegularisationFraisMission, function () {
-                                const appUrl = '/pages/regularisationFraisMission/show.aspx?ID=' + oListItem.get_id();
-                                let WF = new WFManager(appHelper.AppCode.REGULARISATIONFRAISMISSION, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-                                WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONFRAISMISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function () { })
+                        appRegularisationFraisMission.UpDateStatusFraisMission(verifid, function () { });
 
-                                appRegularisationFraisMission.UpDateStatusFraisMission(verifid, function () { });
-
-                                if (callBack) {
-                                    callBack(oListItem);
-                                }
-                            })
+                        if (callBack) {
+                            callBack(oListItem);
                         }
-                        reader.onerror = function (e) {
-                            console.log(e.target.error);
-                        }
-                        reader.readAsArrayBuffer(file);
-                    };
 
-
-                }, appSpHelper.writeError);
+                    }, appSpHelper.writeError);
+                })
             }
             else {
                 oListItem.set_item("MissionID", parseInt(document.getElementById("cmbMission").value));
@@ -303,6 +295,7 @@ appRegularisationFraisMission.Add = function (callBack) {
                 oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
                 oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
                 oListItem.set_item("Reference", ref);
+                oListItem.set_item("CoutMission", montant);
 
 
                 oListItem.set_item("DateDebut", item.DateDebut);
@@ -348,34 +341,6 @@ appRegularisationFraisMission.Add = function (callBack) {
                         if (callBack) {
                             callBack(oListItem);
                         }
-
-                        // let FpUploadAttachement = document.getElementById('FileDoc');
-                        // files = FpUploadAttachement.files;
-                        // console.log(FpUploadAttachement);
-                        // console.log(files);
-                        // for (const file of files) {
-                        //     let reader = new FileReader();
-                        //     reader.onload = function (e) {
-                        //         console.log(file.name);
-                        //         console.log(e.target.result);
-                        //         appHelper.AttachFile(clientContext, oListItem.get_id(), e.target.result, file.name, appHelper.ListName.RegularisationFraisMission, function () {
-                        //             const appUrl = '/pages/regularisationFraisMission/show.aspx?ID=' + oListItem.get_id();
-                        //             let WF = new WFManager(appHelper.AppCode.REGULARISATIONFRAISMISSION, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-                        //             WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REGULARISATIONFRAISMISSION, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
-
-                        //             appRegularisationFraisMission.UpDateStatusFraisMission(parseInt(document.getElementById("cmbMission").value), function () { });
-
-                        //             if (callBack) {
-                        //                 callBack(oListItem);
-                        //             }
-                        //         })
-                        //     }
-                        //     reader.onerror = function (e) {
-                        //         console.log(e.target.error);
-                        //     }
-                        //     reader.readAsArrayBuffer(file);
-                        // };
-
 
                     }, appSpHelper.writeError);
                 })
@@ -502,37 +467,59 @@ appRegularisationFraisMission.UpDateStatusFraisMission = function (demandeid, ca
     }, appSpHelper.writeError);
 }
 
-appRegularisationFraisMission.ShowMission = function (demandeid, info, callBack) {
+appRegularisationFraisMission.ShowMission = function (demandeid, callBack) {
 
     let oList = appRegularisationFraisMission.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Mission);
     let It = oList.getItemById(demandeid);
     console.log(demandeid);
-    console.log(info);
+    // console.log(info);
     console.log("IN ShowMission");
-  
+
     appRegularisationFraisMission.clientContext.load(It);
     appRegularisationFraisMission.clientContext.executeQueryAsync(function () {
-      if (It) {
-  
-        var montChamp = document.getElementById("TxtMont");
-  
-        var mont = new AutoNumeric(montChamp, {
-          digitGroupSeparator: " ",
-          decimalPlaces: 0,
-          unformatOnSubmit: true,
-        });
-  
-        // Mettre à jour le champ Solde à reverser avec le résultat formaté
-        mont.set(info);
-  
-        //document.getElementById("TxtMont").value = info;
-        document.getElementById("TxtMissionID").value = demandeid;
-        document.getElementById("TxtMission").value = It.get_item('Title') != null ? It.get_item('Title') : '';
-  
-        if (callBack) { callBack(); }
-  
-      } else { if (callBack) { callBack(); } }
+        if (It) {
+
+            var montChamp = document.getElementById("TxtMont");
+
+            var mont = new AutoNumeric(montChamp, {
+                digitGroupSeparator: " ",
+                decimalPlaces: 0,
+                unformatOnSubmit: true,
+            });
+
+            var Cout = It.get_item('CoutTotal') != null ? It.get_item('CoutTotal') : '';
+
+            // Mettre à jour le champ Solde à reverser avec le résultat formaté
+            mont.set(Cout);
+
+            //document.getElementById("TxtMont").value = info;
+            document.getElementById("TxtMissionID").value = demandeid;
+            document.getElementById("TxtMission").value = It.get_item('Title') != null ? It.get_item('Title') : '';
+
+            if (callBack) { callBack(); }
+
+        } else { if (callBack) { callBack(); } }
     }, appSpHelper.writeError);
-  }
+}
+
+// appRegularisationFraisMission.UpDateStatus = function (demandeid, callBack) {
+//     let oList1 = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Mission);
+//     let It1 = oList1.getItemById(demandeid);
+
+//     console.log("ID UPDATE : " + demandeid);
+
+//     if (It1) {
+//       console.log("test");
+//       It1.set_item("Statut", "ENATTENTEREGULARISATION");
+//       It1.set_item("StatutLibelle", "En attente de regularisation ");
+//     }
+//     It1.update();
+//     clientContext.load(It1);
+//     clientContext.executeQueryAsync(function () {
+//       if (callBack) {
+//         callBack();
+//       }
+//     }, appSpHelper.writeError);
+//   }
 
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appRegularisationFraisMission.InitializePage);

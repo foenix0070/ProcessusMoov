@@ -756,7 +756,7 @@ appSpHelper.GetMails = function (Demande, Tache, typemail, callBack) {
           "Sujet": (oListItem.get_item('Sujet') != null ? oListItem.get_item('Sujet') : ""),
           "Corps": (oListItem.get_item('Corps') != null ? oListItem.get_item('Corps') : ""),
           "MailTo": (oListItem.get_item('MailTo') != null ? oListItem.get_item('MailTo') : ""),
-          "MailCc": (oListItem.get_item('MailCc') != null ? oListItem.get_item('MailCc') : "")
+          //"MailCc": (oListItem.get_item('MailCc') != null ? oListItem.get_item('MailCc') : "")
         });
       }
     }
@@ -765,32 +765,17 @@ appSpHelper.GetMails = function (Demande, Tache, typemail, callBack) {
       mail.Sujet = appSpHelper.ReturnMailParam(Demande, Tache, mail.Sujet);
       mail.Corps = appSpHelper.ReturnMailParam(Demande, Tache, mail.Corps);
       mail.MailTo = appSpHelper.ReturnMailRecipient(Demande, Tache, mail.MailTo);
-      mail.MailCc = appSpHelper.ReturnMailRecipient(Demande, Tache, mail.MailCc);
-
-      appSpHelper.ReturnMailRecipient(Demande, Tache, mail.MailTo).then((values) => {
-          console.log("values");
-          console.log(values);
-          mail.MailTo = values;
-        });
+      //mail.MailCc = appSpHelper.ReturnMailRecipient(Demande, Tache, mail.MailCc);
     });
-
-    // forEach (let mail in mails) {
-    //   mail.Sujet = appSpHelper.ReturnMailParam(Demande, Tache, mail.Sujet);
-    //   mail.Corps = appSpHelper.ReturnMailParam(Demande, Tache, mail.Corps);
-    //   mail.MailTo = appSpHelper.ReturnMailRecipient(Demande, Tache, mail.MailTo);
-    //   mail.MailCc = appSpHelper.ReturnMailRecipient(Demande, Tache, mail.MailCc);
-    // }
 
     console.log(mails);
 
-    if (callBack) callBack();
+    if (callBack) callBack(mails);
   }
   function onFailure(sender, args) {
     callBack.call();
     //onComplete(false);
   }
-
-
 }
 
 
@@ -924,7 +909,8 @@ appSpHelper.SendNotificationTask = function (ctx, taskItem, callBack) {
   });
 };
 
-appSpHelper.sendEmail = function (from, to, cc, body, subject, callback) {
+appSpHelper.sendEmail = function (from, to, body, subject, callback) {
+  // appSpHelper.sendEmail = function (from, to, cc, body, subject, callback) {
   //var siteurl = ;
   var urlTemplate = `${appHelper.AppConstante.SiteUrl}_api/SP.Utilities.Utility.SendEmail`;
   // var urlTemplate = window._spPageContextInfo.webServerRelativeUrl + "/_api/SP.Utilities.Utility.SendEmail";
@@ -939,19 +925,19 @@ appSpHelper.sendEmail = function (from, to, cc, body, subject, callback) {
         },
         From: from,
         To: {
-          results: to,
+          results: to.split(";")
         },
 
-        CC: {
-          results: cc,
-        },
+        // CC: {
+        //   results: cc.split(";")
+        // },
 
         Body: body,
         Subject: subject,
       },
     }),
     headers: {
-      Accept: "application/json;odata=verbose",
+      "Accept": "application/json;odata=verbose",
       "content-type": "application/json;odata=verbose",
       "X-RequestDigest": document.getElementById("__REQUESTDIGEST").value
     },
@@ -970,17 +956,24 @@ appSpHelper.sendEmail = function (from, to, cc, body, subject, callback) {
 appSpHelper.ReturnMailParam = function (demande, tache, mailContent) {
   // var MailTemplate = mailContent;
   if (mailContent) {
-    let demandeurName = demande.get_item('Demandeur').get_lookupValue();
+    let url = `<a href="${appHelper.AppConstante.LienSiteJsUrl}">Suivez ce lien pour accéder à la plateforme MOOVINSIDE.</a>`
+    let demandeurName = demande.get_item('Demandeur') != null ? demande.get_item('Demandeur').get_lookupValue() : "";
+
+    // let demandeAssigne = tache.get_item('AssignedTo') != null ? tache.get_item('AssignedTo').get_lookupValue() : "";
     // let demandeurName = demandeurField.get_lookupValue();
 
     if (mailContent.indexOf("##AUTHOR##") >= 0) {
       mailContent = mailContent.replaceAll("##AUTHOR##", demandeurName);
     }
 
-    // if (mailContent.includes("##PERSONTOSEND##")) {
-    if (mailContent.indexOf("##ASSIGNEA##") >= 0) {
-      mailContent = mailContent.replaceAll("##ASSIGNEA##", "");
+    if (mailContent.indexOf("##LIEN##") >= 0) {
+      mailContent = mailContent.replace("##LIEN##", url);
     }
+
+    // if (mailContent.includes("##PERSONTOSEND##")) {
+    // if (mailContent.indexOf("##ASSIGNEA##") >= 0) {
+    //   mailContent = mailContent.replaceAll("##ASSIGNEA##", demandeAssigne);
+    // }
 
 
     //if (mailContent.includes("##TITLE##")) {
@@ -996,126 +989,17 @@ appSpHelper.ReturnMailParam = function (demande, tache, mailContent) {
 }
 
 appSpHelper.ReturnMailRecipient = function (demande, tache, mailRecipient) {
-  var ctx = new SP.ClientContext.get_current();
-  var web = ctx.get_web();
-  var list = web.get_lists().getByTitle(appHelper.ListName.Validation);
-  var assignedToColumnName = "AssignedTo";
 
-
-  // let GetOneAssignTo = function (userid) {
-  //   arrUser[o] = web.get_siteUsers().getById(userId); // Get the user object using the user ID
-  //   ctx.load(arrUser[o]);
-  // }
-
-
-  let BrowseAssignTo = function () {
-    let arrUser = [];
-    var assignedToField = tache.get_item(assignedToColumnName);
-    if (assignedToField) {
-      console.log(assignedToField);
-      assignedToField.forEach(assignto => {
-        let userId = assignto.get_lookupId();
-        arrUser.push(userId);
-      });
-
-      // for (const assignto in assignedToField) {
-      //   let userId = assignto.get_lookupId();
-      //   arrUser.push(userId);
-      // }
-    }
-    return arrUser;
-  };
-
-
-  let DetectAssignTypeByTakeUserMail = function (AssignId) {
-    return new Promise(function (resolve, reject) {
-      ctx.executeQueryAsync(
-        function () {
-          var user = web.get_siteUsers().getById(AssignId); // Get the user object using the user ID
-          ctx.load(user);
-          ctx.executeQueryAsync(
-            function () {
-              assignedToEmail = user.get_email();
-              resolve(assignedToEmail);
-            },
-            function (sender, args) {
-              reject("");
-            }
-          );
-        },
-        function (sender, args) {
-          reject("");
-        }
-      );
-    })
-  }
-
-  let GetGroupEmailAdresses = function (assignId) {
-    return new Promise(function (resolve, reject) {
-      var ctx = new SP.ClientContext.get_current();
-      var web = ctx.get_web();
-      var group = web.get_siteGroups().getById(assignId);
-      var users = group.get_users();
-      ctx.load(users);
-      ctx.executeQueryAsync(
-        function () {
-          var emailAddresses = [];
-          var userEnumerator = users.getEnumerator();
-          while (userEnumerator.moveNext()) {
-            var user = userEnumerator.get_current();
-            emailAddresses.push(user.get_email());
-          }
-          resolve(emailAddresses);
-        },
-        function (sender, args) {
-          reject("");
-        }
-      );
-    });
-
-  }
-
-
-  let GetAllRecipientMails = function () {
-    let userIds = BrowseAssignTo();
-    let PromResult = [];
-    console.log(userIds);
-    userIds.forEach(id => {
-      var Assign = DetectAssignTypeByTakeUserMail(id);
-      var group = GetGroupEmailAdresses(id);
-      Assign.then((values) => {
-        if (values) PromResult.push(Assign);
-      });
-      group.then((values) => {
-        if (values) PromResult.push(group);
-      });
-
-    });
-    console.log("PromResult");
-    console.log(PromResult);
-    return PromResult;
-
-    // Promise.all(PromResult).then((values) => {
-    //   console.log("values");
-    //   console.log(values);
-    //   return values;
-    // });
-
-  }
 
   switch (mailRecipient) {
     case appHelper.MailRecipient.ASSIGNEA:
-      assignedToColumnName = "AssignedTo";
-      Promise.resolve(GetAllRecipientMails());
-      // return GetAllRecipientMails();
+      return (tache.get_item("AssigneAMail") ? tache.get_item("AssigneAMail") : '');
 
     case appHelper.MailRecipient.DEMANDEUR:
-      Promise.resolve((demande.get_item("DemandeurEmail") ? demande.get_item("DemandeurEmail") : ''));
-      // return (demande.get_item("DemandeurEmail") ? demande.get_item("DemandeurEmail") : '');
+      return (demande.get_item("DemandeurEmail") ? demande.get_item("DemandeurEmail") : '');
 
-    case appHelper.MailRecipient.N1:
-      Promise.resolve((demande.get_item("ResponsableN1Email") ? demande.get_item("ResponsableN1Email") : ''));
-      // return (demande.get_item("ResponsableN1Email") ? demande.get_item("ResponsableN1Email") : '');
+    // case appHelper.MailRecipient.N1:
+    //   return (demande.get_item("ResponsableN1Email") ? demande.get_item("ResponsableN1Email") : '');
 
     default:
       return '';
@@ -1123,6 +1007,135 @@ appSpHelper.ReturnMailRecipient = function (demande, tache, mailRecipient) {
   }
 
 }
+
+// appSpHelper.ReturnMailRecipient = function (demande, tache, mailRecipient) {
+//   var ctx = new SP.ClientContext.get_current();
+//   var web = ctx.get_web();
+//   var list = web.get_lists().getByTitle(appHelper.ListName.Validation);
+//   var assignedToColumnName = "AssignedTo";
+
+
+//   // let GetOneAssignTo = function (userid) {
+//   //   arrUser[o] = web.get_siteUsers().getById(userId); // Get the user object using the user ID
+//   //   ctx.load(arrUser[o]);
+//   // }
+
+
+//   let BrowseAssignTo = function () {
+//     let arrUser = [];
+//     var assignedToField = tache.get_item(assignedToColumnName);
+//     if (assignedToField) {
+//       console.log(assignedToField);
+//       assignedToField.forEach(assignto => {
+//         let userId = assignto.get_lookupId();
+//         arrUser.push(userId);
+//       });
+
+//       // for (const assignto in assignedToField) {
+//       //   let userId = assignto.get_lookupId();
+//       //   arrUser.push(userId);
+//       // }
+//     }
+//     return arrUser;
+//   };
+
+
+//   let DetectAssignTypeByTakeUserMail = function (AssignId) {
+//     return new Promise(function (resolve, reject) {
+//       ctx.executeQueryAsync(
+//         function () {
+//           var user = web.get_siteUsers().getById(AssignId); // Get the user object using the user ID
+//           ctx.load(user);
+//           ctx.executeQueryAsync(
+//             function () {
+//               assignedToEmail = user.get_email();
+//               resolve(assignedToEmail);
+//             },
+//             function (sender, args) {
+//               reject("");
+//             }
+//           );
+//         },
+//         function (sender, args) {
+//           reject("");
+//         }
+//       );
+//     })
+//   }
+
+//   let GetGroupEmailAdresses = function (assignId) {
+//     return new Promise(function (resolve, reject) {
+//       var ctx = new SP.ClientContext.get_current();
+//       var web = ctx.get_web();
+//       var group = web.get_siteGroups().getById(assignId);
+//       var users = group.get_users();
+//       ctx.load(users);
+//       ctx.executeQueryAsync(
+//         function () {
+//           var emailAddresses = [];
+//           var userEnumerator = users.getEnumerator();
+//           while (userEnumerator.moveNext()) {
+//             var user = userEnumerator.get_current();
+//             emailAddresses.push(user.get_email());
+//           }
+//           resolve(emailAddresses);
+//         },
+//         function (sender, args) {
+//           reject("");
+//         }
+//       );
+//     });
+
+//   }
+
+
+//   let GetAllRecipientMails = function () {
+//     let userIds = BrowseAssignTo();
+//     let PromResult = [];
+//     console.log(userIds);
+//     userIds.forEach(id => {
+//       var Assign = DetectAssignTypeByTakeUserMail(id);
+//       var group = GetGroupEmailAdresses(id);
+//       Assign.then((values) => {
+//         if (values) PromResult.push(Assign);
+//       });
+//       group.then((values) => {
+//         if (values) PromResult.push(group);
+//       });
+
+//     });
+//     console.log("PromResult");
+//     console.log(PromResult);
+//     return PromResult;
+
+//     // Promise.all(PromResult).then((values) => {
+//     //   console.log("values");
+//     //   console.log(values);
+//     //   return values;
+//     // });
+
+//   }
+
+//   switch (mailRecipient) {
+//     case appHelper.MailRecipient.ASSIGNEA:
+//       assignedToColumnName = "AssignedTo";
+//       Promise.resolve(GetAllRecipientMails());
+//       // return GetAllRecipientMails();
+
+//     case appHelper.MailRecipient.DEMANDEUR:
+//       Promise.resolve((demande.get_item("DemandeurEmail") ? demande.get_item("DemandeurEmail") : ''));
+//       // return (demande.get_item("DemandeurEmail") ? demande.get_item("DemandeurEmail") : '');
+
+//     case appHelper.MailRecipient.N1:
+//       Promise.resolve((demande.get_item("ResponsableN1Email") ? demande.get_item("ResponsableN1Email") : ''));
+//       // return (demande.get_item("ResponsableN1Email") ? demande.get_item("ResponsableN1Email") : '');
+
+//     default:
+//       return '';
+
+//   }
+
+// }
 
 
 // appSpHelper.ReturnMailRecipient = function (demande, tache, mailContent) {

@@ -49,6 +49,7 @@ showMateriel.ShowForm = function (tacheId, demandeid) {
   const WF = new WFManager(appHelper.AppCode.MATERIEL, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
 
   BtnOK.addEventListener("click", function () {
+    BtnOK.disabled = true;
     WF.goToNextTask(showMateriel.clientContext, tacheId, appHelper.AppCode.MATERIEL, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
       showMateriel.UpDateItemStatus(nextTask, demandeid, function () {
@@ -58,6 +59,7 @@ showMateriel.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
+    BtnNOK.disabled = true;
     WF.goToRefusedTask(showMateriel.clientContext, tacheId, appHelper.AppCode.MATERIEL, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
       showMateriel.UpDateItemStatusRejet(true, demandeid, function () {
@@ -67,6 +69,7 @@ showMateriel.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
+    BtnMod.disabled = true;
     WF.goToRefusedTask(showMateriel.clientContext, tacheId, appHelper.AppCode.MATERIEL, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
       showMateriel.UpDateItemStatusRejet(false, demandeid, function () {
@@ -117,8 +120,6 @@ showMateriel.UpDateItemStatus = function (nextTask, demandeid, callBack) {
     }
   }, appSpHelper.writeError);
 }
-
-
 
 showMateriel.ShowFichierJoint = function (demandeid) {
 

@@ -1359,3 +1359,273 @@ const ACTIV_WORKFLOW1 = {
     },
   ],
 };
+
+const ACTIV_WORKFLOW2 = {
+  processus: [
+    
+    {
+      item: "SORTIECAISSE",
+      step: [
+        {
+          id: "SRTCSE#1",
+          value: "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
+          actors: [
+            {
+              type: "USER",
+              value: "#N1",
+            },
+          ],
+          copies: [],
+          buttons: [
+            {
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "SRTCSE#2",
+            },
+            {
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
+            },
+            {
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
+        },
+        {
+          id: "SRTCSE#2",
+          value: "VALIDATION DE LA DFC ",
+          actors: [
+            {
+              type: "GROUP",
+              value: "GroupDFC",
+            },
+          ],
+          copies: [],
+          buttons: [
+            {
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "SRTCSE#3",
+            },
+            {
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
+            },
+            {
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
+        },
+        {
+          id: "SRTCSE#3",
+          value: "VALIDATION DE LA DRHO",
+          actors: [
+            {
+              type: "GROUP",
+              value: "GroupDRHO",
+            },
+          ],
+          copies: [],
+          buttons: [
+            {
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "SRTCSE#4",
+            },
+            {
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
+            },
+            {
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
+        },
+        {
+          id: "SRTCSE#5",
+          value: "VALIDATION DU SERVICE ENGAGEMENT ",
+          actors: [
+            {
+              type: "GROUP",
+              value: "GroupSE",
+            },
+          ],
+          copies: [],
+          buttons: [
+            {
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "SRTCSE#5",
+            },
+            {
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
+            },
+            {
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const ACTIV_WORKFLOWREP = {
+  processus: [
+    
+    {
+      item: "REPRISE",
+      step: [
+        {
+          id: "REP#1",
+          value: "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
+          actors: [
+            {
+              type: "USER",
+              value: "#N1",
+            },
+          ],
+          copies: [],
+          buttons: [
+            {
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "REP#2",
+            },
+            {
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
+            },
+            {
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
+        },
+        {
+          id: "REP#2",
+          value: "VALIDATION DU SUPERIEUR DIRECTEUR ",
+          actors: [
+            {
+              type: "USER",
+              value: "#DIRECTEUR",
+            },
+          ],
+          copies: [],
+          buttons: [
+            {
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "REP#3",
+            },
+            {
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
+            },
+            {
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
+        },
+        {
+          id: "REP#3",
+          value: "VALIDATION DE LA GAP ",
+          actors: [
+            {
+              type: "GROUP",
+              value: "GroupGAP",
+            },
+          ],
+          copies: [],
+          buttons: [
+            {
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "REP#4",
+            },
+            {
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
+            },
+            {
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
+        },
+        {
+          id: "REP#4",
+          value: "VALIDATION DE LA DRHO",
+          actors: [
+            {
+              type: "GROUP",
+              value: "GroupDRHO",
+            },
+          ],
+          copies: [],
+          buttons: [
+            {
+              text: "APPROUVER",
+              icon: "fa fa-check",
+              url: "",
+              next_step: "REP#5",
+            },
+            {
+              text: "DEMANDER UNE MODIFICATION",
+              icon: "fa fa-mail-reply",
+              url: "",
+              next_step: "0#",
+            },
+            {
+              text: "REJETER",
+              icon: "fa fa-ban",
+              url: "",
+              next_step: "##",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};

@@ -29,8 +29,8 @@ appMateriel.InitializePage = function () {
 
 
   BtnSave.addEventListener("click", function () {
-    
-    if (appMateriel.TestFields ()) {
+
+    if (appMateriel.TestFields()) {
       BtnSave.disabled = true;
       let verif = document.getElementById("TxtVerif").value;
       if (verif == "Edit") {
@@ -60,40 +60,40 @@ appMateriel.InitializePage = function () {
 
 };
 
-appMateriel.TestFields = function(){
+appMateriel.TestFields = function () {
 
   let v = true;
   let str = '';
-  
-   // Récupérer les valeurs des champs
-   var nom = document.getElementById("TxtNom").value;
- var matricule = document.getElementById("TxtMatricule").value;
- var email = document.getElementById("TxtEmail").value;
-    let materiel = document.getElementById("TxtMateriel").value;
-    let qte = document.getElementById("TxtQuantite").value;
-    let motif = document.getElementById("TxtMotif").value;
-  
-  
-   // Vérifier si les champs obligatoires sont vides
-   if (nom === "" || matricule === "" || email === "" || materiel === "" || qte === "0" || motif === "" ) {
-     str += ("Veuillez remplir tous les champs obligatoires. <br>");
-       v= false; // Empêche l'envoi du formulaire
-   }
-  
-   // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
-   if (parseInt(qte) < 1) {
-     str +=  ("La quantité doit être supérieur ou égal à 1. <br>");
-       v= false; // Empêche l'envoi du formulaire
-   }
-  
-   let div = document.getElementById('DivErreurMessage');
-   div.innerHTML = '';
-   if(v==false){
+
+  // Récupérer les valeurs des champs
+  var nom = document.getElementById("TxtNom").value;
+  var matricule = document.getElementById("TxtMatricule").value;
+  var email = document.getElementById("TxtEmail").value;
+  let materiel = document.getElementById("TxtMateriel").value;
+  let qte = document.getElementById("TxtQuantite").value;
+  let motif = document.getElementById("TxtMotif").value;
+
+
+  // Vérifier si les champs obligatoires sont vides
+  if (nom === "" || matricule === "" || email === "" || materiel === "" || qte === "0" || motif === "") {
+    str += ("Veuillez remplir tous les champs obligatoires. <br>");
+    v = false; // Empêche l'envoi du formulaire
+  }
+
+  // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
+  if (parseInt(qte) < 1) {
+    str += ("La quantité doit être supérieur ou égal à 1. <br>");
+    v = false; // Empêche l'envoi du formulaire
+  }
+
+  let div = document.getElementById('DivErreurMessage');
+  div.innerHTML = '';
+  if (v == false) {
     str = `<div style="border:2px solid red; background:#ffe6ff;padding:3px;color:#330033;margin:3px;">${str}</div>`;
     div.innerHTML = str;
-   }
-  
-   return v;
+  }
+
+  return v;
 };
 
 function getRating(str) {
@@ -261,14 +261,16 @@ appMateriel.Add = function (callBack) {
   oListItem.update();
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
+    appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Materiel, 0, function () {
 
-    const appUrl = '/pages/materiel/show.aspx?ID=' + oListItem.get_id();
-    let WF = new WFManager(appHelper.AppCode.MATERIEL, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-    WF.createWFTask(clientContext, appUrl, appHelper.AppCode.MATERIEL, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, ref, function () { })
-    if (callBack) {
-      callBack(oListItem);
-    }
-  }, appSpHelper.writeError);
+      const appUrl = '/pages/materiel/show.aspx?ID=' + oListItem.get_id();
+      let WF = new WFManager(appHelper.AppCode.MATERIEL, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+      WF.createWFTask(clientContext, appUrl, appHelper.AppCode.MATERIEL, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
+      if (callBack) {
+        callBack(oListItem);
+      }
+    }, appSpHelper.writeError);
+  });
 };
 
 appMateriel.Edit = function (demandeid, callBack) {
@@ -282,6 +284,7 @@ appMateriel.Edit = function (demandeid, callBack) {
 
   var qte = autoNumericObject.getNumber();
   console.log(qte);
+  let ref = document.getElementById("TxtRef").value;
 
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
@@ -309,12 +312,12 @@ appMateriel.Edit = function (demandeid, callBack) {
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
 
-    appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Materiel, 0, function(){
+    appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Materiel, 0, function () {
 
       const appUrl = '/pages/materiel/show.aspx?ID=' + oListItem.get_id();
       console.log(appUrl);
       let WF = new WFManager(appHelper.AppCode.MATERIEL, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-      WF.createWFTask(clientContext, appUrl, appHelper.AppCode.MATERIEL, oListItem.get_id(), App.CurrentUser.Manager.Login, App.CurrentUser.Manager2.Login, function () { })
+      WF.createWFTask(clientContext, appUrl, appHelper.AppCode.MATERIEL, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
       if (callBack) {
         callBack(oListItem);
       }

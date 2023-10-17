@@ -132,7 +132,7 @@
       <legend>FRAIS DE MISSION</legend>
       <table id="TableFraisMission">
         <tr>
-          <!--<th>Libelle</th>-->
+          <th>Libelle</th>
           <th>Date de d&eacute;but</th>
           <th>Date de fin</th>
           <th>Nombre</th>
@@ -142,7 +142,7 @@
         </tr>
         <tr>
           <!--<td><select id="CmbPerdieme" name="CmbPerdieme"><option>Hotel</option></select></td>-->
-          <!--<td><input type="text" id="Txtlibelle" name="Txtlibelle"></td>-->
+          <td><input type="text" id="Txtlibelle" name="Txtlibelle"></td>
           <td><input type="date" id="DateDebut" name="DateDebut"></td>
           <td><input type="date" id="DateFin" name="DateFin"></td>
           <td><input type="number" id="TxtNombre" name="TxtNombre" oninput="calculTotal()"></td>
@@ -155,6 +155,11 @@
 
         </tr>
       </table>
+
+      <div class="input-optn mt-3" style="float: right;">
+        <input type="number" id="totalGeneral"  name="totalGeneral" readonly>
+      </div>
+
       <div class="input-optn mt-3">
         <input type="button" id="ajouterLigne" value="Ajouter une nouvelle ligne">
       </div>
