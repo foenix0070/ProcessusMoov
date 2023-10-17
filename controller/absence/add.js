@@ -163,7 +163,7 @@ function ListerMotif(callBack) {
       var listItemEnumerator = listItemMotif.getEnumerator();
       document.getElementById("cmbTypeAbsence").innerHTML = "";
 
-      
+
       let opt = document.createElement("option");
       opt.setAttribute("value", "0");
       opt.innerHTML = "Choisir le type d'Absence";

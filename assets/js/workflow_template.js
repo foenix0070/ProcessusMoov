@@ -1,3 +1,5 @@
+var ACTIV_NAMESPACE = null;
+
 const ACTIV_WORKFLOW = {
   processus: [
     {
@@ -5,6 +7,8 @@ const ACTIV_WORKFLOW = {
       step: [
         {
           id: "ABS#1",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU SUPERIEUR HIERARCHIQUE ",
           actors: [
             {
@@ -36,6 +40,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "ABS#2",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU SUPERIEUR DIRECTEUR ",
           actors: [
             {
@@ -67,7 +73,10 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "ABS#3",
+          action_type: "ACTION",
+          action_url: "/pages/tache/absnc_sgap.html",
           value: "VALIDATION DE LA SECTION GESTION ADMINISTRATIVE DU PERSONNEL",
+
           actors: [
             {
               type: "GROUP",
@@ -98,6 +107,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "ABS#4",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU DRHO",
           actors: [
             {
@@ -134,6 +145,8 @@ const ACTIV_WORKFLOW = {
       step: [
         {
           id: "CNG#1",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU SUPERIEUR HIERARCHIQUE ",
           actors: [
             {
@@ -165,6 +178,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "CNG#2",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU  DIRECTEUR ",
           actors: [
             {
@@ -196,6 +211,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "CNG#3",
+          action_type: "ACTION",
+          action_url: "/pages/tache/conge_sgap.html",
           value: "VALIDATION DE LA SECTION GESTION ADMINISTRATIVE DU PERSONNEL",
           actors: [
             {
@@ -227,6 +244,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "CNG#4",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU DRHO",
           actors: [
             {
@@ -263,6 +282,8 @@ const ACTIV_WORKFLOW = {
       step: [
         {
           id: "GDT#1",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU SUPERIEUR HIERARCHIQUE ",
           actors: [
             {
@@ -294,6 +315,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "GDT#2",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU GESTIONNAIRE DE LA DIVISION COMMUNICATION ",
           actors: [
             {
@@ -325,6 +348,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "GDT#3",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU SOUS DIRECTEUR COMMUNICATION",
           actors: [
             {
@@ -356,6 +381,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "GDT#4",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU DIRECTEUR MARKETING COMMUNICATION DIGITALE",
           actors: [
             {
@@ -387,6 +414,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "GDT#5",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU GESTIONNAIRE DU STOCK MARKETING",
           actors: [
             {
@@ -423,6 +452,8 @@ const ACTIV_WORKFLOW = {
       step: [
         {
           id: "MTRL#1",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           actors: [
             {
@@ -454,6 +485,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "MTRL#2",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU GESTIONNAIRE DE DIVISION INFRASTRUCTURE ",
           actors: [
             {
@@ -485,6 +518,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "MTRL#3",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU CHEF DE DIVISION INFRASTRUCTURE",
           actors: [
             {
@@ -516,6 +551,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "MTRL#4",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU DIRECTEUR SYSTEME INFORMATIQUE",
           actors: [
             {
@@ -547,6 +584,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "MTRL#5",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU GESTIONNAIRE DU STOCK",
           actors: [
             {
@@ -583,6 +622,8 @@ const ACTIV_WORKFLOW = {
       step: [
         {
           id: "VHCL#1",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           actors: [
             {
@@ -614,6 +655,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "VHCL#2",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU GESTIONNAIRE PARK AUTOMOBILE ",
           actors: [
             {
@@ -645,6 +688,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "VHCL#3",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU CHEF DE DIVISION ACHAT ET LOGISTIQUE",
           actors: [
             {
@@ -676,6 +721,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "VHCL#4",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU DAF",
           actors: [
             {
@@ -712,6 +759,8 @@ const ACTIV_WORKFLOW = {
       step: [
         {
           id: "SRTCSE#1",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           actors: [
             {
@@ -743,6 +792,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "SRTCSE#2",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DE LA DFC ",
           actors: [
             {
@@ -774,6 +825,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "SRTCSE#3",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DE LA DRHO",
           actors: [
             {
@@ -805,6 +858,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "SRTCSE#4",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU DG",
           actors: [
             {
@@ -836,6 +891,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "SRTCSE#5",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU SERVICE ENGAGEMENT ",
           actors: [
             {
@@ -872,6 +929,8 @@ const ACTIV_WORKFLOW = {
       step: [
         {
           id: "RGLSRTCSE#1",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           actors: [
             {
@@ -903,6 +962,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "RGLSRTCSE#2",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU CONTROLE INTERNE ",
           actors: [
             {
@@ -934,6 +995,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "RGLSRTCSE#3",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU SERVICE ENGAGEMENT",
           actors: [
             {
@@ -970,6 +1033,8 @@ const ACTIV_WORKFLOW = {
       step: [
         {
           id: "MSN#1",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           actors: [
             {
@@ -1001,6 +1066,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "MSN#2",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DE LA DFC ",
           actors: [
             {
@@ -1032,6 +1099,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "MSN#3",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DE LA DRHO",
           actors: [
             {
@@ -1063,6 +1132,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "MSN#4",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU SERVICE ENGAGEMENT ",
           actors: [
             {
@@ -1099,6 +1170,8 @@ const ACTIV_WORKFLOW = {
       step: [
         {
           id: "REGFMN#1",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           actors: [
             {
@@ -1130,6 +1203,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "REGFMN#2",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU CONTROLE INTERNE ",
           actors: [
             {
@@ -1161,6 +1236,8 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "REGFMN#3",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU SERVICE ENGAGEMENT",
           actors: [
             {
@@ -1202,6 +1279,8 @@ const ACTIV_WORKFLOW1 = {
       step: [
         {
           id: "MSN#1",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           actors: [
             {
@@ -1233,6 +1312,8 @@ const ACTIV_WORKFLOW1 = {
         },
         {
           id: "MSN#2",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DE LA DFC ",
           actors: [
             {
@@ -1264,6 +1345,8 @@ const ACTIV_WORKFLOW1 = {
         },
         {
           id: "MSN#3",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DE LA DRHO",
           actors: [
             {
@@ -1295,6 +1378,8 @@ const ACTIV_WORKFLOW1 = {
         },
         {
           id: "MSN#4",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU DG",
           actors: [
             {
@@ -1326,6 +1411,8 @@ const ACTIV_WORKFLOW1 = {
         },
         {
           id: "MSN#5",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU SERVICE ENGAGEMENT ",
           actors: [
             {
@@ -1362,12 +1449,13 @@ const ACTIV_WORKFLOW1 = {
 
 const ACTIV_WORKFLOW2 = {
   processus: [
-    
     {
       item: "SORTIECAISSE",
       step: [
         {
           id: "SRTCSE#1",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           actors: [
             {
@@ -1399,6 +1487,8 @@ const ACTIV_WORKFLOW2 = {
         },
         {
           id: "SRTCSE#2",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DE LA DFC ",
           actors: [
             {
@@ -1430,6 +1520,8 @@ const ACTIV_WORKFLOW2 = {
         },
         {
           id: "SRTCSE#3",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DE LA DRHO",
           actors: [
             {
@@ -1461,6 +1553,8 @@ const ACTIV_WORKFLOW2 = {
         },
         {
           id: "SRTCSE#5",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU SERVICE ENGAGEMENT ",
           actors: [
             {
@@ -1497,12 +1591,13 @@ const ACTIV_WORKFLOW2 = {
 
 const ACTIV_WORKFLOWREP = {
   processus: [
-    
     {
       item: "REPRISE",
       step: [
         {
           id: "REP#1",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU RESPONSABLE HIERARCHIQUE ",
           actors: [
             {
@@ -1534,6 +1629,8 @@ const ACTIV_WORKFLOWREP = {
         },
         {
           id: "REP#2",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DU SUPERIEUR DIRECTEUR ",
           actors: [
             {
@@ -1565,6 +1662,8 @@ const ACTIV_WORKFLOWREP = {
         },
         {
           id: "REP#3",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DE LA GAP ",
           actors: [
             {
@@ -1596,6 +1695,8 @@ const ACTIV_WORKFLOWREP = {
         },
         {
           id: "REP#4",
+          action_type: "VALIDATION",
+          action_url:  "/pages/tache/validation.html",
           value: "VALIDATION DE LA DRHO",
           actors: [
             {

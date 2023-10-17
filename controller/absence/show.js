@@ -6,7 +6,7 @@ showAbsence.isSoldeImpact = 0;
 showAbsence.InitializePage = function () {
   showAbsence.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
-
+  ACTIV_NAMESPACE = showAbsence;
   let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
   let Id = appHelper.GetQueryStringFromAjaxQuery('id');
 
@@ -77,6 +77,8 @@ showAbsence.ShowForm = function (tacheId, demandeid) {
       });
     });
   });
+
+
 }
 
 showAbsence.UpDateItemStatusRejet = function (isRejet, demandeid, callBack) {

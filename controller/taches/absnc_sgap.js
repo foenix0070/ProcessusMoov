@@ -1,0 +1,1 @@
+var absnc_sgap = absnc_sgap || {};

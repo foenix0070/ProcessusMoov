@@ -137,10 +137,6 @@ class WFManager {
       _ref, function (t) {
         tasks = t;
 
-
-        console.log("tasks");
-        console.log(tasks);
-
         let oList = ctx.get_web().get_lists().getByTitle(appHelper.ListName.Validation);
         let oListItemEnCours = null;
         tasks.forEach((e) => {
@@ -152,6 +148,10 @@ class WFManager {
           oListItem.set_item("StartDate", new Date());
           oListItem.set_item("DueDate", endDate);
           oListItem.set_item("Status", e.status);
+
+          oListItem.set_item("ActionType", e.action_type);
+          oListItem.set_item("ActionUrl", e.action_url);
+
           oListItem.set_item("AssignedTo", e.assign);
           oListItem.set_item("AssigneAMail", e.assignmail);
           oListItem.set_item("Parent", e.parent);
@@ -567,6 +567,8 @@ class WFManager {
           title: element["value"],
           parent: _parent,
           reference: _ref,
+          action_type : element["action_type"],
+          action_url : element["action_url"],
           detail:
             "Demande de " +
             document.getElementById("TxtCurrentUserDisplayName").value +
@@ -594,29 +596,3 @@ class WFManager {
   }
 
 }
-
-
-  // getAssignFromTemplate(assTemplate, n1, n2) {
-  //   let user = [];
-  //   for (let index = 0; index < assTemplate.length; index++) {
-  //     const element = assTemplate[index];
-  //     const type = element["type"];
-  //     const value = element["value"];
-  //     switch (type) {
-  //       case "USER":
-  //         if (value == "#N1") {
-  //           user.push(SP.FieldUserValue.fromUser(n1));
-  //         }
-  //         if (value == "#DIRECTEUR") {
-  //           user.push(SP.FieldUserValue.fromUser(n2));
-  //         }
-  //         break;
-  //       case "GROUP":
-  //         let fuv = new SP.FieldUserValue();
-  //         fuv.set_lookupId(ACTIV_GROUPS[value]);
-  //         user.push(fuv);
-  //         break;
-  //     }
-  //   }
-  //   return user;
-  // }
