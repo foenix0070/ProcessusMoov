@@ -1,0 +1,27 @@
+<div id="DivTaskValidation" style="width: 100%;"></div>
+
+<script type="text/javascript">
+  appHelper.loadJSWithNameSpace("conge_sgap", 'conge_sgap', "controller/taches/conge_sgap.js");
+</script>
+
+<script id="tmpl_form_task_validation" type="x-tmpl-mustache">
+  <br/>
+  <div class="head-titre">
+    <h2>
+      Validation
+    </h2>
+  </div>
+  <form action="" method="" class="formComment" id="formComment">
+    <input type="hidden" name="TxtProcess" id="TxtProcess" value="{{process}}">
+    <input type="hidden" name="TxtDemandeID" id="TxtDemandeID" value="{{did}}">
+    <input type="hidden" name="TxtTaskID" id="TxtTaskID" value="{{tid}}">
+
+    <textarea id="TxtCommentaire" name="TxtCommentaire" rows="10" cols="33"
+      placeholder="Commentaire de validation"></textarea>
+    <div class="formComment-submit">
+      <input type="button" id="BtnValidationOK" value="Valider" data-act="APPROUVER" data-did="{{did}}" data-tid="{{tid}}" data-process="{{process}}" class="btn btn1"></input>
+      <input type="button" id="BtnValidationNOK" value="Rejeter" data-act="REJETER" data-did="{{did}}" data-tid="{{tid}}" data-process="{{process}}" class="btn btn1"></input>
+
+    </div>
+  </form>
+</script>
