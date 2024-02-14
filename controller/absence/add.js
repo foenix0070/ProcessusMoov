@@ -3,6 +3,9 @@ var clientContext;
 appAbsence.clientContext;
 
 appAbsence.InitializePage = function () {
+
+  App.LoadFormNote (appHelper.AppCode.ABSENCE ,'DivNoteFormulaire');
+
   appAbsence.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
@@ -112,6 +115,12 @@ appAbsence.TestFields = function () {
   // Verifier si la date est supérieure ou égales à celle d'aujourd'hui
   if (debutDate < todaydate) {
     str += ("La date choisit n'est pas valide. <br>");
+    v = false; // Empêche l'envoi du formulaire
+  }
+
+
+  if(appHelper.TestIsOverFileMinSize("FileDoc") == false){
+    str += ("Le fichier joint à cette demande ne pas être vide <br>");
     v = false; // Empêche l'envoi du formulaire
   }
 

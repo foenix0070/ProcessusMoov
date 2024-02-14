@@ -3,6 +3,7 @@ var clientContext;
 appConge.clientContext;
 
 appConge.InitializePage = function () {
+  App.LoadFormNote (appHelper.AppCode.CONGE ,'DivNoteFormulaire');
   appConge.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
@@ -10,7 +11,7 @@ appConge.InitializePage = function () {
       document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
       document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
       document.getElementById("TxtEmail").value = App.CurrentUser.Email;
-      document.getElementById("bSolde").innerText = App.CurrentUser.NombreJoursAcquis;
+      //document.getElementById("bSolde").innerText = App.CurrentUser.NombreJoursAcquis;
 
       setTimeout(function () {
         appSpHelper.InitializePeoplePicker(
@@ -122,10 +123,10 @@ appConge.TestFields = function () {
   }
 
   // Verifier si la date est supérieure ou égales à celle d'aujourd'hui
-  if (startDate < todaydate) {
-    str += ("La date choisit n'est pas valide. <br>");
-    v = false; // Empêche l'envoi du formulaire
-  }
+  // if (startDate < todaydate) {
+  //   str += ("La date choisit n'est pas valide. <br>");
+  //   v = false; // Empêche l'envoi du formulaire
+  // }
 
 
   if (isImpact) {
@@ -134,6 +135,8 @@ appConge.TestFields = function () {
       v = false; // Empêche l'envoi du formulaire
     }
   }
+
+
 
   let div = document.getElementById('DivErreurMessage');
   div.innerHTML = '';

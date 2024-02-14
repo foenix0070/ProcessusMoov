@@ -52,7 +52,6 @@ showRegularisationSortieCaisse.ShowForm = function (tacheId, demandeid) {
   const WF = new WFManager(appHelper.AppCode.REGULARISATIONSORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
 
   BtnOK.addEventListener("click", function () {
-    BtnOK.disabled = true;
     WF.goToNextTask(showRegularisationSortieCaisse.clientContext, tacheId, appHelper.AppCode.REGULARISATIONSORTIECAISSE, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
       showRegularisationSortieCaisse.UpDateItemStatus(nextTask, demandeid, function () {
@@ -62,7 +61,6 @@ showRegularisationSortieCaisse.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
-    BtnNOK.disabled = true;
     WF.goToRefusedTask(showRegularisationSortieCaisse.clientContext, tacheId, appHelper.AppCode.REGULARISATIONSORTIECAISSE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
       showRegularisationSortieCaisse.UpDateItemStatusRejet(true, demandeid, function () {
@@ -72,7 +70,6 @@ showRegularisationSortieCaisse.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
-    BtnMod.disabled = true;
     WF.goToRefusedTask(showRegularisationSortieCaisse.clientContext, tacheId, appHelper.AppCode.REGULARISATIONSORTIECAISSE, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
       showRegularisationSortieCaisse.UpDateItemStatusRejet(false, demandeid, function () {
@@ -171,9 +168,17 @@ showRegularisationSortieCaisse.ShowUploadForm = function (demandeid, view) {
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
   FpUploadAttachement.addEventListener('change', function () {
 
-    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.RegularisationSortieCaisse, 0, function () {
-      showRegularisationSortieCaisse.ShowFichierJoint(demandeid);
-    });
+
+
+    if(appHelper.TestIsOverFileMinSize("FpUploadAttachement")){
+      appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.RegularisationSortieCaisse, 0, function () {
+        showRegularisationSortieCaisse.ShowFichierJoint(demandeid);
+      });
+    }else{
+      appHelper.ShowMinusFileSizeMessage();
+    }
+
+
   });
   // FpUploadAttachement.addEventListener('change', (e) => {
   //   files = e.target.files;
@@ -282,10 +287,10 @@ function ajouterEspacesEntreChiffres(nombre) {
   if(nombre>999){
     // Convertir le nombre en une chaîne de caractères
     var nombreString = nombre.toString();
-   
+
     // Utiliser une expression régulière pour ajouter des espaces entre les chiffres
     var nombreAvecEspaces = nombreString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-    
+
     return nombreAvecEspaces;
   }
   else{

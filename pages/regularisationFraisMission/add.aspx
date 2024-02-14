@@ -91,11 +91,15 @@
       </div>
 
     </fieldset>
-
+    <div class="alert alert-dark" role="alert" id="DivNoteFormulaire">   </div>
   </div>
 
   <div class="input-optn mt-3">
     <button class="Submit" id="BtnSave" type="button"> Valider </button>
+    <a href="/tools/pages/suivie/suivie.aspx" class="linkModalNavigation" data-bs-toggle="modal" data-bs-target="#staticModalForm"  data-url="/sites/proc/tools/pages/suivie/suivie.aspx"
+    data-target="staticModalFormContainer" style="text-decoration: none; ">
+    Option de suivie
+  </a>
   </div>
 </form>
 

@@ -110,6 +110,24 @@ header {
 #jumbotron {
   /*background-image: url('../img/bg-jumbotron.jpg');*/
   /* background-image: url('../img/accueil.png'); */
+  /* background: linear-gradient( transparent, #353434), url(../img/accueil.png); */
+  /* background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15%; */
+  background-color: #0d5ebe;
+  height: 50px;
+}
+
+#jumbotron .carousel-content {
+  /*background: #dbd0d07b;*/
+  /* padding: 10px; */
+  color: #fff;
+  /*border: 3px solid var(--pumpkin);*/
+  /* width: 10%; */
+  border-radius: 5px;
+}
+
+/* #jumbotron {
   background: linear-gradient( transparent, #353434), url(../img/accueil.png);
   background-repeat: no-repeat;
   background-position: center;
@@ -118,13 +136,12 @@ header {
 }
 
 #jumbotron .carousel-content {
-  /*background: #dbd0d07b;*/
   padding: 10px;
   color: #fff;
-  /*border: 3px solid var(--pumpkin);*/
   width: 30%;
   border-radius: 5px;
-}
+} */
+
 
 /*End jumbotron*/
 

@@ -9,7 +9,7 @@ Add-Type -Path "c:\Program Files\Common Files\microsoft shared\Web Server Extens
 
 $url = "https://vminsideweb01/sites/proc/"
 $login = "etisalat-africa.net\svc_spadmin02"
-$pwdstring = "P@ssw0rd02"
+$pwdstring = "P@ssw0rd0002"
 $listName = "tools"
 $localFolder= Get-Location
 $subFolder = "";

@@ -6,7 +6,7 @@ showAbsence.isSoldeImpact = 0;
 showAbsence.InitializePage = function () {
   showAbsence.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
-  ACTIV_NAMESPACE = showAbsence;
+
   let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
   let Id = appHelper.GetQueryStringFromAjaxQuery('id');
 
@@ -49,7 +49,6 @@ showAbsence.ShowForm = function (tacheId, demandeid) {
   const WF = new WFManager(appHelper.AppCode.ABSENCE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
 
   BtnOK.addEventListener("click", function () {
-    BtnOK.disabled = true;
     WF.goToNextTask(showAbsence.clientContext, tacheId, appHelper.AppCode.ABSENCE, demandeid, TxtCommentaire.value, function (nextTask) {
       appHelper.Log(nextTask);
       showAbsence.UpDateItemStatus(nextTask, demandeid, function () {
@@ -59,7 +58,6 @@ showAbsence.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
-    BtnNOK.disabled = true;
     WF.goToRefusedTask(showAbsence.clientContext, tacheId, appHelper.AppCode.ABSENCE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       appHelper.Log(nextTask);
       showAbsence.UpDateItemStatusRejet(true, demandeid, function () {
@@ -69,7 +67,6 @@ showAbsence.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
-    BtnMod.disabled = true;
     WF.goToRefusedTask(showAbsence.clientContext, tacheId, appHelper.AppCode.ABSENCE, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       appHelper.Log(nextTask);
       showAbsence.UpDateItemStatusRejet(false, demandeid, function () {
@@ -77,8 +74,6 @@ showAbsence.ShowForm = function (tacheId, demandeid) {
       });
     });
   });
-
-
 }
 
 showAbsence.UpDateItemStatusRejet = function (isRejet, demandeid, callBack) {
@@ -171,9 +166,18 @@ showAbsence.ShowUploadForm = function (demandeid, view) {
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
   FpUploadAttachement.addEventListener('change', function () {
 
-    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Absence, 0, function () {
-      showAbsence.ShowFichierJoint(demandeid);
-    });
+
+
+    if(appHelper.TestIsOverFileMinSize("FpUploadAttachement")){
+      appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Absence, 0, function () {
+        showAbsence.ShowFichierJoint(demandeid);
+      });
+    }else{
+      appHelper.ShowMinusFileSizeMessage();
+    }
+
+
+
   });
   // FpUploadAttachement.addEventListener('change', (e) => {
   //   files = e.target.files;

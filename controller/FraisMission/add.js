@@ -4,10 +4,11 @@ appMission.clientContext;
 let rowCount = 1;
 
 appMission.InitializePage = function () {
+  App.LoadFormNote (appHelper.AppCode.MISSION ,'DivNoteFormulaire');
   appMission.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
 
-  
+
   appSpHelper.GetMyProperties(function () {
 
     appMission.initCmbMode(function () {});
@@ -24,7 +25,7 @@ appMission.InitializePage = function () {
 
         appSpHelper.PeoplePickerOnChangeEvent("plePickerInterimaireDiv", function (key) {
           appMission.GetInterimData(key);
-          
+
         });
 
         appMission.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function(){});
@@ -44,7 +45,7 @@ appMission.InitializePage = function () {
     unformatOnSubmit: true,
   });
 
-  
+
 
   appMission.GetInterimData = function (login) {
     appSpHelper.GetEmploye(appHelper.ListName.Employe, login, function (it) {
@@ -74,7 +75,7 @@ appMission.InitializePage = function () {
   });
 
   BtnSave.addEventListener("click", function () {
-    
+
 
     if(appMission.TestFields())
     {
@@ -112,7 +113,7 @@ appMission.TestFields = function(){
 
   let v = true;
   let str = '';
-  
+
    // Récupérer les valeurs des champs
    var nom = document.getElementById("TxtNom").value;
    var matricule = document.getElementById("TxtMatricule").value;
@@ -136,23 +137,23 @@ appMission.TestFields = function(){
   var autoNumericObject = AutoNumeric.getAutoNumericElement(Input);
 
   var cout = autoNumericObject.getNumber();
-  
+
    var debutDate = new Date(document.getElementById("TxtDateDebut").value);
-  
+
    var findate = new Date(document.getElementById("TxtDateFin").value);
 
    var debutDate1 = new Date(document.getElementById("DateDebut").value);
-  
+
    var findate1 = new Date(document.getElementById("DateFin").value);
 
    var todaydate = new Date();
-  
+
    // Vérifier si les champs obligatoires sont vides
    if (nom === "" || matricule === "" || email === "" || cout === "0" || nombre === "0" || forfait === "0" || zone === "" || startdate === "" || enddate === "" || startdate1 === "" || enddate1 === "" || caisse === "" || mode === "" || destination === "" || motif === "") {
      str += ("Veuillez remplir tous les champs obligatoires. <br>");
        v= false; // Empêche l'envoi du formulaire
    }
-  
+
    // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
    if (parseInt(cout) < 1) {
      str +=  ("Le coût doit être supérieur ou égal à 1. <br>");
@@ -170,7 +171,7 @@ appMission.TestFields = function(){
     str +=  ("Le nombre doit être supérieur ou égal à 1. <br>");
       v= false; // Empêche l'envoi du formulaire
   }
-  
+
   if (parseInt(total) > parseInt(cout)) {
     str +=  ("Le total ne peut pas être supérieur au cout de la mission. <br>");
       v= false; // Empêche l'envoi du formulaire
@@ -186,14 +187,14 @@ appMission.TestFields = function(){
     str +=  ("La date choisit pour les frais n'est pas valide. <br>");
       v= false; // Empêche l'envoi du formulaire
   }
-  
+
    let div = document.getElementById('DivErreurMessage');
    div.innerHTML = '';
    if(v==false){
     str = `<div style="border:2px solid red; background:#ffe6ff;padding:3px;color:#330033;margin:3px;">${str}</div>`;
     div.innerHTML = str;
    }
-  
+
    return v;
 };
 
@@ -238,7 +239,7 @@ function calculTotal() {
         txtTotal.value = ligneTotal;
         // txtTotal.value = ligneTotal.toFixed(2);
         total += ligneTotal;
-        } 
+        }
       else {
         txtTotal.value = 0;
       }
@@ -477,9 +478,9 @@ appMission.List = function () {
 
 // function afficher() {
 //   var selectValue = document.getElementById("CmbCaisse").value;
-  
+
 //   var inputMasque = document.getElementById("AutreCaisse");
-  
+
 //   if (selectValue === "Autre") {
 //     //alert("OK");
 //     inputMasque.style.display = "block";
@@ -491,7 +492,7 @@ appMission.List = function () {
 appMission.ajouterLigne = function(indice) {
   var table = document.getElementById("TableFraisMission");
   var newRow = table.insertRow(table.rows.length);
-  
+
   var cell = newRow.insertCell(0);
   var cell1 = newRow.insertCell(1);
   var cell2 = newRow.insertCell(2);
@@ -509,7 +510,7 @@ appMission.ajouterLigne = function(indice) {
   cell6.innerHTML = '<span class="delete-icon" onclick="supprimerLigne(this)">×</span>';
   // cell6.innerHTML = '<i class="fas fa-trash-alt" onclick="supprimerLigne(this)"></i>';
   // cell6.innerHTML = '<button onclick="supprimerLigne(this)">Supprimer</button>';
-  
+
   // cell.innerHTML = '<input type="text" id="Txtlibelle" name"Txtlibelle">';
   // cell1.innerHTML = '<input type="date" id="DateDebut" name="DateDebut">';
   // cell2.innerHTML = '<input type="date" id="DateFin" name="DateFin">';
@@ -586,7 +587,7 @@ appMission.Add = function ( callBack) {
   //oListItem.set_item("AutreCaissePaiement", parseInt(document.getElementById("TxtAutreCaisse").value));
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
 
- 
+
   oListItem.set_item("Demandeur",SP.FieldUserValue.fromUser(App.CurrentUser.Login));
 
   oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
@@ -622,15 +623,15 @@ appMission.Add = function ( callBack) {
     {
       appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Mission, 0, function () {
         const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
-        let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW1  );
-        WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function(){}   )
+        let WF = new WFManager(appHelper.AppCode.MISSIONSUP500K,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+        WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSIONSUP500K, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function(){}   )
         if(callBack){
           callBack(oListItem);
         }
       });
     }
 
-  
+
   }, appSpHelper.writeError);
 };
 
@@ -686,7 +687,7 @@ appMission.Edit = function (demandeid, callBack) {
   //oListItem.set_item("AutreCaissePaiement", parseInt(document.getElementById("TxtAutreCaisse").value));
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
 
- 
+
   oListItem.set_item("Demandeur",SP.FieldUserValue.fromUser(App.CurrentUser.Login));
 
   oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
@@ -722,15 +723,15 @@ appMission.Edit = function (demandeid, callBack) {
     {
       appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Gadget, 0, function(){
       const appUrl = '/pages/fraisMission/show.aspx?ID=' + oListItem.get_id();
-      let WF = new WFManager(appHelper.AppCode.MISSION,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW1  );
-      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSION, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function(){}   )
+      let WF = new WFManager(appHelper.AppCode.MISSIONSUP500K,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
+      WF.createWFTask(clientContext,appUrl, appHelper.AppCode.MISSIONSUP500K, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function(){}   )
       if(callBack){
         callBack(oListItem);
       }
     }, appSpHelper.writeError);
     }
 
-  
+
   }, appSpHelper.writeError);
 };
 
@@ -738,7 +739,7 @@ function AddFM (oListItem) {
   // var table = document.getElementById("TableFraisMission");
   // var data = [];
 
-  // for (var i = 1; i < table.rows.length; i++) { 
+  // for (var i = 1; i < table.rows.length; i++) {
   //   var row = table.rows[i];
   //   var cells = row.getElementsByTagName('td');
   //   var rowData = {};
@@ -754,7 +755,7 @@ function AddFM (oListItem) {
   // }
 
   //FraisMission.AddFraisMission(data, oListItem);
-  
+
   const table = document.getElementById('TableFraisMission');
     const rows = table.getElementsByTagName('tr');
     const data = [];
@@ -773,7 +774,7 @@ function AddFM (oListItem) {
 
         data.push(rowData);
     }
-  
+
   appMission.AddFraisMission(data, oListItem, function(){});
 }
 
@@ -782,7 +783,7 @@ function EditFM (demandeid) {
   var table = document.getElementById("TableFraisMission");
   var data = [];
 
-  for (var i = 1; i < table.rows.length; i++) { 
+  for (var i = 1; i < table.rows.length; i++) {
     var row = table.rows[i];
     var cells = row.getElementsByTagName('td');
     var rowData = {};
@@ -819,7 +820,7 @@ appMission.AddFraisMission = function (data, oListItem, callBack) {
     oListItem1.set_item("Title", item.libelle);
 
     oListItem1.set_item("DateDebut", startDate);
-    
+
     oListItem1.set_item("DateFin", repDate);
 
     oListItem1.set_item("MissionID", oListItem.get_id());
@@ -943,7 +944,7 @@ appMission.ShowDetails = function (demandeid, callBack) {
   appMission.clientContext.load(It);
   appMission.clientContext.executeQueryAsync(function () {
     if (It) {
-      
+
         document.getElementById("TxtMotif").value = It.get_item('Motif') != null ? It.get_item('Motif') : '';
         document.getElementById("TxtDestination").value = It.get_item('Destination') != null ? It.get_item('Destination') : '';
         document.getElementById("TxtCommentaire").value = It.get_item('Commentaire') != null ? It.get_item('Commentaire') : '';
@@ -966,11 +967,11 @@ appMission.ShowDetails = function (demandeid, callBack) {
         document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;
 
         //var idmission = It.get_item('ID') != null ? It.get_item('ID') : 0;
-       
+
         appSpHelper.SetPeoplePickerField ('plePickerInterimaireDiv', It.get_item('Interimaire') != null ? It.get_item('Interimaire').get_lookupValue() : '');
 
         //appMission.ShowDetails1(idmission, function(){});
-        
+
       if(callBack){callBack();}
 
     }else{if(callBack){callBack();}}
@@ -1011,6 +1012,6 @@ appMission.ShowDetails1 = function (demandeid, callBack) {
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appMission.InitializePage);
 // document.addEventListener("DOMContentLoaded", () => {
 //   ExecuteOrDelayUntilScriptLoaded(function(){
-    
+
 //   }, "SP.ClientContext");
 // });

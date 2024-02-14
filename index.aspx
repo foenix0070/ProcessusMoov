@@ -15,9 +15,10 @@
 
               <head>
                 <SharePoint:FormDigest runat="server" />
-                <meta charset="UTF-8">
+                <meta charset="utf-8">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
                 <title>ESPACE UTILISATEUR</title>
 
                 <!-- SCRIPT SHAREPOINT -->
@@ -64,6 +65,13 @@
                 <script src="/sites/proc/tools/assets/js/App.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/appHelper.js?t=1"></script>
                 <!--END SCRIPT -->
+
+                <style>
+
+                .modal-backdrop.show {
+display: none;
+}
+                </style>
 
               </head>
 
@@ -117,6 +125,23 @@
                         <!--END SIDE MENU CANVAS -->
 
 
+                        <!-- FORM MODAL -->
+                        <div class="modal fade" id="staticModalForm" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="staticModalFormLabel"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+<div id="staticModalFormContainer" ></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--END FORM MODAL -->
+
+
                         <!-- USER MENU -->
                         <div class="dropdown d-flex align-self-lg-end text-end p-2">
                           <span id="h4User" class="text-light pe-1 spanCurrentUserName"></span>
@@ -149,10 +174,10 @@
                   <section class="container-fluid">
                     <div class="jumbotron p-3" id="jumbotron">
                       <div class="container">
-                        <div class="carousel-content ">
+                        <!-- <div class="carousel-content ">
                           <h4 class="display-4">Intranet</h4>
                           <p class="lead fw-bold">Espace applicatif de Moov Africa</p>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </section>

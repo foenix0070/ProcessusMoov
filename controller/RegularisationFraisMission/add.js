@@ -3,6 +3,9 @@ var clientContext;
 appRegularisationFraisMission.clientContext;
 
 appRegularisationFraisMission.InitializePage = function () {
+
+    App.LoadFormNote (appHelper.AppCode.REGULARISATIONFRAISMISSION ,'DivNoteFormulaire');
+
     appRegularisationFraisMission.clientContext = SP.ClientContext.get_current();
     clientContext = SP.ClientContext.get_current();
 

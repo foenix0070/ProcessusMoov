@@ -23,6 +23,7 @@ appHelper.MailRecipient = {
 };
 
 appHelper.ListName = {
+  AppListe: 'tools',
   Conge: 'ListeConge',
   Gadget: 'ListeGadget',
   Vehicule: 'ListeVehicule',
@@ -38,13 +39,19 @@ appHelper.ListName = {
   RegularisationFraisMission: 'ListeRegularisationFraisMission',
   SortieCaisse: 'ListeSortieCaisse',
   RegularisationSortieCaisse: 'ListeRegularisationSortieCaisse',
-  Zone: 'ListeZoneGeographique',
-  Caisse: 'ListeCaissePaiement',
-  AppListe: 'tools',
-  Mode: 'ListeModePaiement',
+
   Template: 'ListeTemplateMail',
   Interim: 'ListeInterimaire',
   Reprise: 'ListeReprise',
+  Preference: 'ListePreferenceSuivie',
+  NoteInformation : 'ListeNoteFormInformation',
+
+  MotifMission :'ListeMissionMotif',
+  Mode: 'ListeModePaiement',
+  Caisse: 'ListeCaissePaiement',
+  Zone: 'ListeZoneGeographique',
+
+
 };
 
 appHelper.Status = {
@@ -77,7 +84,8 @@ appHelper.AppCode = {
   CONGE: 'CONGE',
   ABSENCE: 'ABSENCE',
   MISSION: 'MISSION',
-  //MISSION500000 : 'MISSION500000',
+  SORTIECAISSESUP500K: 'SORTIECAISSESUP500K',
+  MISSIONSUP500K : 'MISSIONSUP500K',
   FRAISMISSION: 'FRAISMISSION',
   REGULARISATIONFRAISMISSION: 'REGULARISATIONFRAISMISSION',
   SORTIECAISSE: 'SORTIECAISSE',
@@ -138,11 +146,9 @@ appHelper.GetMainListNameFromAppCode = function (key) {
     case appHelper.AppCode.REPRISE:
       return appHelper.ListName.Reprise;
 
-
     default:
       return '';
   }
-
 };
 
 appHelper.receiptTask = function (it, callBack) {
@@ -366,6 +372,31 @@ appHelper.listenNavigationOffCanvas = function (lienNavigation, offCanvasid) {
 
         }, null)
 
+      }
+    }
+  });
+};
+
+
+appHelper.listenNavigationModal = function (lienNavigation) {
+  document.addEventListener("click", function (event) {
+    var target = event.target;
+    if (target) {
+
+      let container = false;
+      let url = false;
+      if (target.classList.contains(lienNavigation)) {
+        event.preventDefault();
+        try {
+          container = target.getAttribute("data-target");
+        } catch (e) { appHelper.Log(e, appHelper.LogType.ERROR, "appHelper.listenNavigationModal"); }
+
+        try {
+          url = target.getAttribute("data-url");
+
+        } catch (e) { appHelper.Log(e, appHelper.LogType.ERROR, "appHelper.listenNavigationModal"); }
+
+        appHelper.navigation2(container, url);
       }
     }
   });
@@ -877,10 +908,27 @@ appHelper.upploadAttachmentFiles = function (inputFileId, itemId, listName, j, c
     alert(error.responseText);
 
   }
-
 }
 
 
+appHelper.TestIsOverFileMinSize = function(fileInputID){
+  const uploadField = document.getElementById(fileInputID);
+  if(uploadField.files.length > 0){
+    if(uploadField.files[0].size > 2){
+       return true;
+    }
+  }
+   return false;
+}
+
+appHelper.ShowMinusFileSizeMessage = function(){
+  const addfile = document.getElementById("addfile");
+  let msg = document.createElement('span');
+  msg.id= 'DivMsgMinusFileSize'
+  msg.style.color = 'red';
+  msg.innerText =" Le fichier ne doit pas être vide"
+  if(document.getElementById("DivMsgMinusFileSize")){  }else{addfile.after(msg);}
+}
 
 // appsHelper.GetMailTemplate = function (to, subject, link, mailCode, item, callBack) {
 //   if (to) {

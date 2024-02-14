@@ -100,11 +100,7 @@
         <input id="TxtRef" type="hidden">
       </div>
 
-      <span class="note">
-        NB : Le nombre total de jours accord&eacute;s au titre des Permissions exceptionnelles est limit&eacute;
-        &aacute; 10 jours
-        ouvrables par employ&eacute; et par an
-      </span>
+      <div class="alert alert-dark" role="alert" id="DivNoteFormulaire">   </div>
 
     </fieldset>
 
@@ -116,6 +112,7 @@
     <button class="Submit" id="BtnSave" type="button"> Valider </button>
   </div>
 </form>
+
 
 
 <script type="text/javascript">

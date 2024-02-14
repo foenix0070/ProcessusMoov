@@ -28,7 +28,7 @@ main.arrMenu1 = [
         },
         link: false,
       },
-      
+
       {
         offcanvas: {
           id: "dmd_conge_new",
@@ -80,7 +80,7 @@ main.arrMenu1 = [
         link: false,
       },
 
-      
+
       {
         offcanvas: {
           id: "dmd_fraismission_new",
@@ -112,6 +112,7 @@ main.arrMenu1 = [
         },
         link: false,
       },
+
       /*{
         offcanvas: false,
         link: {
@@ -682,4 +683,5 @@ document.addEventListener("DOMContentLoaded", function () {
   appHelper.listenNavigationLink2("linkMainNavigation2");
   appHelper.listenNavigationLink("linkMainNavigation");
   appHelper.listenNavigationOffCanvas("linkOffCanvasNavigation", "ffcMainForm");
+  appHelper.listenNavigationModal ('linkModalNavigation');
 });

@@ -137,6 +137,9 @@ class WFManager {
       _ref, function (t) {
         tasks = t;
 
+        console.log("tasks");
+        console.log(tasks);
+
         let oList = ctx.get_web().get_lists().getByTitle(appHelper.ListName.Validation);
         let oListItemEnCours = null;
         tasks.forEach((e) => {
@@ -144,14 +147,11 @@ class WFManager {
           let endDate = startDate.addDays(2);
           let itemCreateInfo = new window.SP.ListItemCreationInformation();
           let oListItem = oList.addItem(itemCreateInfo);
+
           oListItem.set_item("Title", e.title);
           oListItem.set_item("StartDate", new Date());
           oListItem.set_item("DueDate", endDate);
           oListItem.set_item("Status", e.status);
-
-          oListItem.set_item("ActionType", e.action_type);
-          oListItem.set_item("ActionUrl", e.action_url);
-
           oListItem.set_item("AssignedTo", e.assign);
           oListItem.set_item("AssigneAMail", e.assignmail);
           oListItem.set_item("Parent", e.parent);
@@ -160,6 +160,7 @@ class WFManager {
           oListItem.set_item("AppUrl", appUrl);
           oListItem.set_item("Body", e.detail);
           oListItem.set_item("Reference", e.reference);
+
           if (e.status == "En cours") {
             oListItemEnCours = oListItem;
           }
@@ -428,11 +429,17 @@ class WFManager {
   static SendNotification(ctx, taskitem, _parent, _parentid, _tacheAction, callBack) {
     let codemail = "";
     switch (_tacheAction) {
+      // case WFManager.TacheAction.NOUVEAU:
+      //   codemail = "ACTIONVALIDATION#" + _parent + "NOUVEAU";
+      //   break;
+      // case WFManager.TacheAction.ENCOURS:
+      //   codemail = "ACTIONVALIDATION";
+      //   break;
       case WFManager.TacheAction.NOUVEAU:
-        codemail = "ACTIONVALIDATION#" + _parent + "NOUVEAU";
+        codemail = "ACTIONVALIDATION"+ _parent +"#" + _parent + "NOUVEAU";
         break;
       case WFManager.TacheAction.ENCOURS:
-        codemail = "ACTIONVALIDATION";
+        codemail = "ACTIONVALIDATION" + _parent;
         break;
       case WFManager.TacheAction.MODIFICATION:
         codemail = _parent + "MODIFICATION";
@@ -502,6 +509,85 @@ class WFManager {
 
   }
 
+
+
+  // static SendNotification(ctx, taskitem, _parent, _parentid, _tacheAction, callBack) {
+  //   let codemail = "";
+  //   switch (_tacheAction) {
+  //     case WFManager.TacheAction.NOUVEAU:
+  //       codemail = "ACTIONVALIDATION#" + _parent + "NOUVEAU";
+  //       break;
+  //     case WFManager.TacheAction.ENCOURS:
+  //       codemail = "ACTIONVALIDATION";
+  //       break;
+  //     case WFManager.TacheAction.MODIFICATION:
+  //       codemail = _parent + "MODIFICATION";
+  //       break;
+  //     case WFManager.TacheAction.REJET:
+  //       codemail = _parent + "REJET";
+  //       break;
+  //     case WFManager.TacheAction.VALIDATION:
+  //       codemail = _parent + "TERMINE";
+  //       break;
+  //     default:
+  //       return "ACTIONVALIDATION";
+  //   }
+  //   appHelper.getDemandeOrigin(_parent, _parentid, function (dIt) {
+  //     if (taskitem) {
+  //       appSpHelper.GetMails(dIt, taskitem, codemail, function (maillist) {
+  //         console.log(maillist);
+  //         if (callBack) {
+  //           callBack();
+  //         }
+  //         // WFManager.SendMail(maillist.slice(), function(){
+  //         //   if (callBack) {
+  //         //     callBack();
+  //         //   }
+  //         // })
+  //       });
+  //     }
+
+  //     else {
+  //       WFManager.GetCurrentTask(ctx, _parent, _parentid, function (currenttask) {
+  //         if (currenttask) {
+
+  //           appSpHelper.GetMails(dIt, tacheresidu, _tacheAction, function () {
+  //             if (callBack) {
+  //               callBack();
+  //             }
+  //           });
+  //         } else {
+  //           appSpHelper.GetMails(dIt, null, _tacheAction, function () {
+  //             if (callBack) {
+  //               callBack();
+  //             }
+  //           });
+  //         }
+  //       });
+  //     }
+  //   })
+
+  // }
+
+  // static SendMail(ellist, callBack) {
+  //   if (ellist.length > 0) {
+  //     var el = ellist[0];
+  //     if (el.MailTo.endsWith(";")) {
+  //       el.MailTo = el.MailTo.substr(0, el.MailTo.length - 1);
+  //     }
+  //     // if (el.MailCc.endsWith(";")) {
+  //     //   el.MailCc = el.MailCc.substr(0, el.MailCc.length - 1);
+  //     // }
+  //     appSpHelper.sendEmail(appHelper.AppConstante.MIMailSender, el.MailTo, el.Corps, el.Sujet, function () {
+  //       // appSpHelper.sendEmail(appHelper.AppConstante.MIMailSender, el.MailTo, el.MailCc, el.Corps, el.Sujet, function () {
+  //       ellist.shift();
+  //       WFManager.SendMail(ellist, callBack);
+  //     });
+  //   }
+  //   else if (callBack) callBack();
+
+  // }
+
   static CheckInterim(loginuser, statut, callBack) {
     //let absent = null;
     let login = "";
@@ -567,8 +653,6 @@ class WFManager {
           title: element["value"],
           parent: _parent,
           reference: _ref,
-          action_type : element["action_type"],
-          action_url : element["action_url"],
           detail:
             "Demande de " +
             document.getElementById("TxtCurrentUserDisplayName").value +
@@ -596,3 +680,29 @@ class WFManager {
   }
 
 }
+
+
+// getAssignFromTemplate(assTemplate, n1, n2) {
+//   let user = [];
+//   for (let index = 0; index < assTemplate.length; index++) {
+//     const element = assTemplate[index];
+//     const type = element["type"];
+//     const value = element["value"];
+//     switch (type) {
+//       case "USER":
+//         if (value == "#N1") {
+//           user.push(SP.FieldUserValue.fromUser(n1));
+//         }
+//         if (value == "#DIRECTEUR") {
+//           user.push(SP.FieldUserValue.fromUser(n2));
+//         }
+//         break;
+//       case "GROUP":
+//         let fuv = new SP.FieldUserValue();
+//         fuv.set_lookupId(ACTIV_GROUPS[value]);
+//         user.push(fuv);
+//         break;
+//     }
+//   }
+//   return user;
+// }

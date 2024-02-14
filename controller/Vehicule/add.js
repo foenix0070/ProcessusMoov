@@ -3,10 +3,10 @@ var clientContext;
 appVehicule.clientContext;
 
 appVehicule.InitializePage = function () {
+  App.LoadFormNote (appHelper.AppCode.VEHICULE ,'DivNoteFormulaire');
   appVehicule.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
-
 
     document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
     document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
@@ -67,6 +67,11 @@ appVehicule.TestFields = function () {
   // Vérifier si les champs obligatoires sont vides
   if (nom === "" || matricule === "" || email === "" || objet === "" || motif === "") {
     str += ("Veuillez remplir tous les champs obligatoires. <br>");
+    v = false; // Empêche l'envoi du formulaire
+  }
+
+  if(appHelper.TestIsOverFileMinSize("FileDoc") == false){
+    str += ("Le fichier joint à cette demande ne pas être vide <br>");
     v = false; // Empêche l'envoi du formulaire
   }
 

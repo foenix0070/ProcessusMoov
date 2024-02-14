@@ -143,8 +143,6 @@ App.LoadManager = function (manager, callBack) {
         }, appSpHelper.writeError);
 }
 
-
-
 App.GetUser = function (userLogin, callBack) {
     let UserObject = {};
     let clientContext = new SP.ClientContext.get_current();
@@ -211,7 +209,6 @@ App.GetUser = function (userLogin, callBack) {
         }, appSpHelper.writeError);
 }
 
-
 App.LoadGroupUsers = function (gp, type, functionCallBack) {
     var TUsers = [];
     var UsersInGroup = "";
@@ -271,4 +268,32 @@ App.LoadGroups = function (tabgroup, callBack) {
         })
     }
     else if (callBack) callBack(App.Groups);
+}
+
+
+
+App.LoadFormNote = function(ProcessCode, containerId){
+
+    document.getElementById(containerId).innerHTML= "";
+    let targetList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.NoteInformation);
+    let camlQuery = new SP.CamlQuery();
+    let q =
+      '<View><Query><Where><Eq><FieldRef Name="CodeProcessus" /><Value Type="Text">' +
+      ProcessCode +  "</Value></Eq></Where></Query></View>";
+    camlQuery.set_viewXml(q);
+    let collListItemInfo = targetList.getItems(camlQuery);
+    clientContext.load(collListItemInfo);
+
+    clientContext.executeQueryAsync(function (s, a) {
+        var listItemEnumerator = collListItemInfo.getEnumerator();
+        {
+            while (listItemEnumerator.moveNext()) {
+                oListItem = listItemEnumerator.get_current();
+                let str =  oListItem.get_item("Details") != null
+                ? oListItem.get_item("Details")
+                : "";
+                document.getElementById(containerId).innerHTML = str;
+            }
+        }
+    }, appSpHelper.writeError);
 }

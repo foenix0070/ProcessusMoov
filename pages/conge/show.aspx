@@ -1,40 +1,58 @@
+<div class="row">
 
+  <div class="col-12">
+    <section id="SectionFirst"> </section>
+  </div>
 
-              <div class="row">
+  <div class="col-6">
+    <section id="SectionDetails"> </section>
+  </div>
 
-                <div class="col-12">
-                  <section id="SectionFirst"> </section>
-                </div>
+  <div class="col-6">
+    <section class="sect1" id="SectionDocumentsJoint"> </section>
+  </div>
 
-                <div class="col-6">
-                  <section id="SectionDetails"> </section>
-                </div>
-
-                <div class="col-6">
-                  <section class="sect1" id="SectionDocumentsJoint"> </section>
-                </div>
-                <div class="col-12">
-
-                  <br><br>
-
-                  <section class="sect1" id="SectionHistoriqueValidation">
-
+  <!--<div class="col-6">
+                  <br>
+                  <section id="SectionDonnees">
+                    <form action="" method="" class="form">
+                      <div class="mb-3">
+                        <label class="form-label">Nombre de Jours acquis<span class="asterix" >*</span></label>
+                        <input type="number" id="TxtNbreJour" min="1" class="numeric form-control" style="width:200px;"
+                        data-toggle="tooltip" data-placement="bottom" title="Renseigner le nombre de jours du congés"  name="TxtNbreJour" />
+                      </div>
+              
+                      <div class="mb-3">
+                        <label class="form-label"> Date de d&eacute;part<span class="asterix">*</span></label>
+                        <input type="date" name="TxtDateDepart" class="date form-control" style="width:200px;" id="TxtDateDepart"
+                        data-toggle="tooltip" data-placement="bottom" title="Renseigner la date de départ"  placeholder="" />
+                      </div>
+                    </form>
                   </section>
+                </div>-->
+
+  <div class="col-12">
+
+    <br><br>
+
+    <section class="sect1" id="SectionHistoriqueValidation">
+
+    </section>
 
 
-                </div>
 
-                <div class="col-12">
-                  <br><br>
-                  <section class="sect2" id="SectionValidation">
+  </div>
 
-                  </section>
-                </div>
+  <div class="col-12">
+    <br><br>
+    <section class="sect2" id="SectionValidation">
 
+    </section>
+  </div>
 
-              </div>
+</div>
 
-              <script id="tmpl_form_first" type="x-tmpl-mustache">
+<script id="tmpl_form_first" type="x-tmpl-mustache">
                 <div class="mb-2" style="background-color: whitesmoke; border-bottom:5px solid #007bff ;">
                   <div>
                     <tr>
@@ -51,10 +69,9 @@
                       </tr>
                   </table><br/>
                 </div>
-              </script>
+</script>
 
-
-              <script id="tmpl_form_fichiers_attaches" type="x-tmpl-mustache">
+<script id="tmpl_form_fichiers_attaches" type="x-tmpl-mustache">
 
                   <div class="head-titre">
                     <h2>
@@ -81,9 +98,9 @@
                     </div>
                     {{/fichiers}}
                   </div>
-                </script>
+</script>
 
-              <script id="tmpl_form_historique_validation" type="x-tmpl-mustache">
+<script id="tmpl_form_historique_validation" type="x-tmpl-mustache">
 
 
                   <div class="head-titre">
@@ -110,16 +127,16 @@
                       </b>
                     </h2>
                   </div>
-                </script>
+</script>
 
-              <script id="tmpl_form_validation" type="x-tmpl-mustache">
+<script id="tmpl_form_validation" type="x-tmpl-mustache">
 <br/>
                   <div class="head-titre">
                     <h2>
                      Validation
                     </h2>
                   </div>
-                  <form action="" method="" class="formComment" id="formComment">
+                  <form action="" method="" class="formComment" id="formComment">              
                     <textarea id="TxtCommentaire" name="TxtCommentaire" rows="10" cols="33"
                       placeholder="Commentaire de validation"></textarea>
                     <div class="formComment-submit">
@@ -128,9 +145,39 @@
                       <input type="button" id="BtnValidationModification" value="Demander une modification" data-act="MODIFIER" data-did="{{did}}" data-tid="{{tid}}" data-process="{{process}}" class="btn btn1"></input>
                     </div>
                   </form>
-                </script>
+</script>
 
-              <script id="tmpl_form_details" type="x-tmpl-mustache">
+<script id="tmpl_form_validationDRHO" type="x-tmpl-mustache">
+                  <br/>
+                  <div class="head-titre">
+                    <h2>Validation</h2>
+                  </div>
+                  <form action="" method="" class="formComment" id="formCommentDRHO">
+                    <div class="mb-3">
+                      <label class="form-label">Nombre de Jours acquis<span class="asterix" >*</span></label>
+                      <input type="number" id="TxtNbreJourAcquis" min="1" class="numeric form-control" style="width:200px;"
+                      data-toggle="tooltip" data-placement="bottom" title="Renseigner le nombre de jours du congés"  name="TxtNbreJour" />
+                    </div>
+            
+                    <div class="mb-3">
+                      <label class="form-label"> Date de d&eacute;part<span class="asterix">*</span></label>
+                      <input type="date" name="TxtDateDepartJourAcquis" class="date form-control" style="width:200px;" id="TxtDateDepartJourAcquis"
+                      data-toggle="tooltip" data-placement="bottom" title="Renseigner la date de depart"  placeholder="" />
+                    </div>
+
+                    <textarea id="TxtCommentaireDRHO" name="TxtCommentaireDRHO" rows="10" cols="33"placeholder="Commentaire de validation">
+
+                    </textarea>
+                    
+                    <div class="formComment-submit">
+                      <input type="button" id="BtnValidationOKDRHO" value="Valider" data-act="APPROUVER" data-did="{{did}}" data-tid="{{tid}}" data-process="{{process}}" class="btn btn1"></input>
+                      <input type="button" id="BtnValidationNOKDRHO" value="Rejeter" data-act="REJETER" data-did="{{did}}" data-tid="{{tid}}" data-process="{{process}}" class="btn btn1"></input>
+                      <!--<input type="button" id="BtnValidationModification" value="Demander une modification" data-act="MODIFIER" data-did="{{did}}" data-tid="{{tid}}" data-process="{{process}}" class="btn btn1"></input>-->
+                    </div>
+                  </form>
+</script>
+
+<script id="tmpl_form_details" type="x-tmpl-mustache">
 
                 <div class="head-titre">
                   <h2>
@@ -182,20 +229,20 @@
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Date de depart</td>
-                        <td style="text-align:left;">{{datedepart}}</td>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Date de d&eacutepart pr&eacutevisionnelle</td>
+                        <td style="text-align:left;">{{datedepartdemande}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Date de reprise</td>
-                        <td style="text-align:left;">{{datereprise}}</td>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Date de reprise pr&eacutevisionnelle</td>
+                        <td style="text-align:left;">{{daterepriseprevi}}</td>
                       </tr>
-
+                      
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Nombre de jours</td>
-                        <td style="text-align:left;">{{nbrejour}}</td>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Nombre de jours demand&eacutes</td>
+                        <td style="text-align:left;">{{nbrejourdemande}}</td>
                       </tr>
-
+                      
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="200px">Adresse pendant les cong&eacute;s </td>
                         <td style="text-align:left;"> Domicile : {{domicile}} <br>  T&eacute;l&eacute;phone : {{telephone}} <br> Personne &agrave; contacter :{{personne}} </td>
@@ -204,20 +251,41 @@
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="200px">Int&eacute;rimaire</td>
                         <td style="text-align:left;">{{interimaire}}</td>
+                      </tr> 
+                  </table><br>
+                  <div>
+                    <h3><b>D&eacutecision appartenant aux Ressources Humaines</b></h3>
+                  </div>
+                  <br>
+                  <table>
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Date r&eacuteelle de d&eacutepart</td>
+                        <td style="text-align:left;">{{datedepart}}</td>
                       </tr>
+
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Date r&eacuteelle de reprise</td>
+                        <td style="text-align:left;">{{datereprise}}</td>
+                      </tr>
+
+                      <tr>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Nombre de jours accord&eacutes</td>
+                        <td style="text-align:left;">{{nbrejour}}</td>
+                      </tr>
+                      
                   </table>
-                </script>
+</script>
 
-              <!--<script src="http://ci08vmmitest/tools1/controller/conge/show.js"></script>-->
+<!--<script src="http://ci08vmmitest/tools1/controller/conge/show.js"></script>-->
 
 
-              <script type="text/javascript">
-                appHelper.loadJSWithNameSpace("showConge", 'showConge', "controller/conge/show.js");
-              </script>
-              <script type="text/javascript">
+<script type="text/javascript">
+  appHelper.loadJSWithNameSpace("showConge", 'showConge', "controller/conge/show.js");
+</script>
+<script type="text/javascript">
 
-                function OpenFileUpload(str_select) {
-                  let transElt = document.getElementById(str_select);
-                  transElt.click();
-                }
-              </script>
+  function OpenFileUpload(str_select) {
+    let transElt = document.getElementById(str_select);
+    transElt.click();
+  }
+</script>

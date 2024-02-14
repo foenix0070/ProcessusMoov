@@ -4,6 +4,7 @@ appSortieCaisse.clientContext;
 
 
 appSortieCaisse.InitializePage = function () {
+  App.LoadFormNote (appHelper.AppCode.SORTIECAISSE ,'DivNoteFormulaire');
   appSortieCaisse.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
 
@@ -171,6 +172,11 @@ appSortieCaisse.TestFields = function () {
     v = false; // Empêche l'envoi du formulaire
   }
 
+  if(appHelper.TestIsOverFileMinSize("FileDoc") == false){
+    str += ("Le fichier joint à cette demande ne pas être vide <br>");
+    v = false; // Empêche l'envoi du formulaire
+  }
+
   let div = document.getElementById('DivErreurMessage');
   div.innerHTML = '';
   if (v == false) {
@@ -217,7 +223,7 @@ appSortieCaisse.ListerCaisse = function (callBack) {
       var listItemEnumerator = listItemMotif.getEnumerator();
       document.getElementById('cmbCaisse').innerHTML= "";
 
-      
+
       let opt = document.createElement("option");
       opt.setAttribute("value", "0");
       opt.innerHTML = "Choisir la caisse de paiement";
@@ -266,12 +272,12 @@ appSortieCaisse.ListerMode = function (callBack) {
         let oListItemTp = listItemEnumerator.get_current();
         let opt = document.createElement("option");
 
-        
+
         opt.setAttribute("data-color", oListItemTp.get_item('Background'));
         opt.setAttribute("value", oListItemTp.get_id());
         opt.innerHTML = oListItemTp.get_item('Title');
         document.getElementById('cmbMode').appendChild(opt);
-        
+
       }
 
 
@@ -336,8 +342,8 @@ appSortieCaisse.Add = function (callBack) {
       appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.SortieCaisse, 0, function () {
 
         const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
-        console.log(ACTIV_WORKFLOW);
-        let WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW2);
+
+        let WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
         WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
         if (callBack) {
           callBack(oListItem);
@@ -349,9 +355,9 @@ appSortieCaisse.Add = function (callBack) {
       appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.SortieCaisse, 0, function () {
 
         const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
-        console.log(ACTIV_WORKFLOW);
-        let WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
-        WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
+
+        let WF = new WFManager(appHelper.AppCode.SORTIECAISSESUP500K, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+        WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSESUP500K, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
         if (callBack) {
           callBack(oListItem);
         }
@@ -414,7 +420,7 @@ appSortieCaisse.Edit = function (demandeid, callBack) {
     }
 
     const appUrl = '/pages/sortieCaisse/show.aspx?ID=' + oListItem.get_id();
-    console.log(appUrl);
+
     let WF = new WFManager(appHelper.AppCode.SORTIECAISSE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
     WF.createWFTask(clientContext, appUrl, appHelper.AppCode.SORTIECAISSE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
     if (callBack) {
@@ -448,11 +454,7 @@ appSortieCaisse.ShowDetails = function (demandeid, callBack) {
       document.getElementById("TxtRef").value = It.get_item('Reference') != null ? It.get_item('Reference') : '';
 
       appSpHelper.SetPeoplePickerField(
-        "plePickerInterimaireDiv",
-        It.get_item("Beneficiaire") != null
-          ? It.get_item("Beneficiaire").get_lookupValue()
-          : ""
-      );
+        "plePickerInterimaireDiv", It.get_item("Beneficiaire") != null ? It.get_item("Beneficiaire").get_lookupValue() : "" );
 
       if (callBack) { callBack(); }
 

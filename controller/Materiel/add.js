@@ -3,6 +3,9 @@ var clientContext;
 appMateriel.clientContext;
 
 appMateriel.InitializePage = function () {
+
+  App.LoadFormNote (appHelper.AppCode.MATERIEL ,'DivNoteFormulaire');
+
   appMateriel.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {

@@ -49,7 +49,6 @@ showGadget.ShowForm = function (tacheId, demandeid) {
   const WF = new WFManager(appHelper.AppCode.GADGET, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
 
   BtnOK.addEventListener("click", function () {
-    BtnOK.disabled = true;
     WF.goToNextTask(showGadget.clientContext, tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
       showGadget.UpDateItemStatus(nextTask, demandeid, function () {
@@ -59,7 +58,6 @@ showGadget.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
-    BtnNOK.disabled = true;
     WF.goToRefusedTask(showGadget.clientContext, tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
       showGadget.UpDateItemStatusRejet(true, demandeid, function () {
@@ -69,7 +67,6 @@ showGadget.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
-    BtnMod.disabled = true;
     WF.goToRefusedTask(showGadget.clientContext, tacheId, appHelper.AppCode.GADGET, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
       showGadget.UpDateItemStatusRejet(false, demandeid, function () {
@@ -168,9 +165,16 @@ showGadget.ShowUploadForm = function (demandeid, view) {
   // FpUploadAttachement.addEventListener('change', (e) => {
   FpUploadAttachement.addEventListener('change', function () {
 
-    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Gadget, 0, function () {
-      showGadget.ShowFichierJoint(demandeid);
-    });
+
+
+
+    if(appHelper.TestIsOverFileMinSize("FpUploadAttachement") ){
+      appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Gadget, 0, function () {
+        showGadget.ShowFichierJoint(demandeid);
+      });
+    }else{
+      appHelper.ShowMinusFileSizeMessage();
+    }
 
     // files = e.target.files;
     // for (const file of files) {

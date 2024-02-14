@@ -48,10 +48,9 @@ showReprise.ShowForm = function (tacheId, demandeid) {
   const BtnMod = document.getElementById("BtnValidationModification");
   const BtnOK = document.getElementById("BtnValidationOK");
   const BtnNOK = document.getElementById("BtnValidationNOK");
-  const WF = new WFManager(appHelper.AppCode.REPRISE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOWREP);
+  const WF = new WFManager(appHelper.AppCode.REPRISE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
 
   BtnOK.addEventListener("click", function () {
-    BtnOK.disabled = true;
     WF.goToNextTask(showReprise.clientContext, tacheId, appHelper.AppCode.REPRISE, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
       showReprise.UpDateItemStatus(nextTask, demandeid, function () {
@@ -61,7 +60,6 @@ showReprise.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
-    BtnNOK.disabled = true;
     WF.goToRefusedTask(showReprise.clientContext, tacheId, appHelper.AppCode.REPRISE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
       showReprise.UpDateItemStatusRejet(true, demandeid, function () {
@@ -71,7 +69,6 @@ showReprise.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
-    BtnMod.disabled = true;
     WF.goToRefusedTask(showReprise.clientContext, tacheId, appHelper.AppCode.REPRISE, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
       showReprise.UpDateItemStatusRejet(false, demandeid, function () {
@@ -171,9 +168,16 @@ showReprise.ShowUploadForm = function (demandeid, view) {
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
   FpUploadAttachement.addEventListener('change', function () {
 
-    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Reprise, 0, function () {
-      showReprise.ShowFichierJoint(demandeid);
-    });
+    if(appHelper.TestIsOverFileMinSize("FpUploadAttachement") ){
+      appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Reprise, 0, function () {
+        showReprise.ShowFichierJoint(demandeid);
+      });
+    }else{
+      appHelper.ShowMinusFileSizeMessage();
+    }
+
+
+
   });
 
   setTimeout(function () {

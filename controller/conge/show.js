@@ -38,52 +38,135 @@ showConge.TestShowForm = function (tacheId, demandeid) {
   }, appSpHelper.writeError);
 }
 
-showConge.ShowForm = function (tacheId, demandeid) {
+showConge.ShowForm = function (tacheId, demandeid, demande = null, tache = null) {
 
   let view = {};
+  let Statut = '';
   view.did = demandeid;
   view.tid = tacheId;
   view.process = appHelper.AppCode.CONGE;
-  appHelper.renderTemplate("tmpl_form_validation", "SectionValidation", view);
 
-  const TxtCommentaire = document.getElementById("TxtCommentaire");
-  const BtnMod = document.getElementById("BtnValidationModification");
-  const BtnOK = document.getElementById("BtnValidationOK");
-  const BtnNOK = document.getElementById("BtnValidationNOK");
-  const WF = new WFManager(appHelper.AppCode.CONGE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+  let oList = showConge.clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Conge);
+  let It = oList.getItemById(demandeid);
+  // appHelper.Log("IN ShowDetails");
 
-  BtnOK.addEventListener("click", function () {
-    BtnOK.disabled = true;
-    WF.goToNextTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function (nextTask) {
-      appHelper.Log(nextTask);
-      console.log("Avant");
-      showConge.UpDateItemStatus(nextTask, demandeid, function () {
-      console.log("Après");
-        location.reload();
-      });
-    });
-  });
+  showConge.clientContext.load(It);
+  showConge.clientContext.executeQueryAsync(function () {
+    if (It) {
+      console.log("Test statut");
+      //Statut = It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : '';
 
-  BtnNOK.addEventListener("click", function () {
-    BtnNOK.disabled = true;
-    WF.goToRefusedTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
-      appHelper.Log(nextTask);
-      showConge.UpDateItemStatusRejet(true, demandeid, function () {
-        location.reload();
-      });
-    });
-  });
+      if (It.get_item('StatutLibelle') == "VALIDATION DE LA SECTION GESTION ADMINISTRATIVE DU PERSONNEL") {
+        appHelper.renderTemplate("tmpl_form_validationDRHO", "SectionValidation", view);
+        const TxtCommentaire = document.getElementById("TxtCommentaireDRHO");
+        // const TxtNbreJourAcquis = document.getElementById("TxtNbreJourAcquis");
+        // const TxtDateDepartJourAcquis = document.getElementById("TxtDateDepartJourAcquis");
+        //const BtnMod = document.getElementById("BtnValidationModification");
 
-  BtnMod.addEventListener("click", function () {
-    BtnMod.disabled = true;
-    WF.goToRefusedTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value,"MODIFIER", function (nextTask) {
-      appHelper.Log(nextTask);
-      showConge.UpDateItemStatusRejet(false, demandeid, function () {
-        location.reload();
-      });
-    });
-  });
+        //console.log(startDate, duree);
+
+        const BtnOK = document.getElementById("BtnValidationOKDRHO");
+        const BtnNOK = document.getElementById("BtnValidationNOKDRHO");
+        //BtnOK.disabled = true;
+        const WF = new WFManager(appHelper.AppCode.CONGE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+
+        // Surveillez les événements de changement des champs d'entrée
+        // TxtNbreJourAcquis.addEventListener("input", showConge.activerDesactiverBouton());
+        // TxtDateDepartJourAcquis.addEventListener("input", showConge.activerDesactiverBouton());
+
+        BtnOK.addEventListener("click", function () {
+          BtnOK.disabled = true;
+          WF.goToNextTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function (nextTask) {
+            appHelper.Log(nextTask);
+            console.log("Avant");
+            showConge.UpDateItemStatus(nextTask, demandeid, function () {
+              console.log("Après");
+              showConge.UpDateItemStatusDRHO(demandeid, function () {
+                location.reload();
+              });
+            });
+          });
+        });
+
+        BtnNOK.addEventListener("click", function () {
+          BtnNOK.disabled = true;
+          WF.goToRefusedTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
+            appHelper.Log(nextTask);
+            showConge.UpDateItemStatusRejet(true, demandeid, function () {
+              location.reload();
+            });
+          });
+        });
+
+        // BtnMod.addEventListener("click", function () {
+        //   BtnMod.disabled = true;
+        //   WF.goToRefusedTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
+        //     appHelper.Log(nextTask);
+        //     showConge.UpDateItemStatusRejet(false, demandeid, function () {
+        //       location.reload();
+        //     });
+        //   });
+        // });
+      }
+
+      else {
+        appHelper.renderTemplate("tmpl_form_validation", "SectionValidation", view);
+
+        const TxtCommentaire = document.getElementById("TxtCommentaire");
+        const BtnMod = document.getElementById("BtnValidationModification");
+        const BtnOK = document.getElementById("BtnValidationOK");
+        const BtnNOK = document.getElementById("BtnValidationNOK");
+        const WF = new WFManager(appHelper.AppCode.CONGE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+
+        BtnOK.addEventListener("click", function () {
+          BtnOK.disabled = true;
+          WF.goToNextTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, function (nextTask) {
+            appHelper.Log(nextTask);
+            console.log("Avant");
+            showConge.UpDateItemStatus(nextTask, demandeid, function () {
+              console.log("Après");
+              location.reload();
+            });
+          });
+        });
+
+        BtnNOK.addEventListener("click", function () {
+          BtnNOK.disabled = true;
+          WF.goToRefusedTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
+            appHelper.Log(nextTask);
+            showConge.UpDateItemStatusRejet(true, demandeid, function () {
+              location.reload();
+            });
+          });
+        });
+
+        BtnMod.addEventListener("click", function () {
+          BtnMod.disabled = true;
+          WF.goToRefusedTask(showConge.clientContext, tacheId, appHelper.AppCode.CONGE, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
+            appHelper.Log(nextTask);
+            showConge.UpDateItemStatusRejet(false, demandeid, function () {
+              location.reload();
+            });
+          });
+        });
+      }
+    }
+  }, appSpHelper.writeError);
+
+
+
 }
+
+// showConge.activerDesactiverBouton = function () {
+//   const BtnOK = document.getElementById("BtnValidationOKDRHO");
+//   const TxtNbreJourAcquis = document.getElementById("TxtNbreJourAcquis");
+//   const TxtDateDepartJourAcquis = document.getElementById("TxtDateDepartJourAcquis");
+//   if (TxtNbreJourAcquis.value !== "" && TxtDateDepartJourAcquis.value !== "") {
+//     BtnOK.disabled = false;
+//   } else {
+//     BtnOK.disabled = true;
+//   }
+// }
 
 showConge.UpDateItemStatusRejet = function (isRejet, demandeid, callBack) {
 
@@ -117,6 +200,37 @@ showConge.UpDateItemStatus = function (nextTask, demandeid, callBack) {
   } else {
     It.set_item("Statut", "VALIDEE");
     It.set_item("StatutLibelle", "Demande approuvée");
+  }
+  It.update();
+  clientContext.load(It);
+  clientContext.executeQueryAsync(function () {
+    console.log("UpDateItemStatus OK")
+    if (callBack) {
+      callBack();
+    }
+  }, appSpHelper.writeError);
+}
+
+showConge.UpDateItemStatusDRHO = function (demandeid, callBack) {
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Conge);
+  let It = oList.getItemById(demandeid);
+
+  let duree = parseInt(document.getElementById("TxtNbreJourAcquis").value);
+  let startDate = new Date(document.getElementById("TxtDateDepartJourAcquis").value);
+
+  let endDate = new Date(startDate);
+  endDate.setDate(startDate.getDate() + duree);
+  let repDate = new Date(endDate);
+  repDate.setDate(endDate.getDate() + 1);
+
+  if (It) {
+
+    It.set_item("DateDepart", startDate);
+    It.set_item("DateReprise", endDate);
+    // It.set_item("DateReprise", endDate);
+    // It.set_item("NombreJours", duree);
+    It.set_item("NombreJourAcquis", duree);
+    It.set_item("NombreJourAccorde", duree);
   }
   It.update();
   clientContext.load(It);
@@ -174,9 +288,15 @@ showConge.ShowUploadForm = function (demandeid, view) {
 
   FpUploadAttachement.addEventListener('change', function () {
 
-    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Conge, 0, function () {
-      showConge.ShowFichierJoint(demandeid);
-    });
+
+
+    if(appHelper.TestIsOverFileMinSize("FpUploadAttachement")){
+      appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Conge, 0, function () {
+        showConge.ShowFichierJoint(demandeid);
+      });
+    }else{
+      appHelper.ShowMinusFileSizeMessage();
+    }
   });
 
   // FpUploadAttachement.addEventListener('change', (e) => {
@@ -195,7 +315,7 @@ showConge.ShowUploadForm = function (demandeid, view) {
   //   }
   // });
 
-  setTimeout(function() {
+  setTimeout(function () {
     const addfile = document.getElementById("addfile");
     addfile.addEventListener("click", function () {
       showConge.OpenFileUpload('FpUploadAttachement');
@@ -295,19 +415,22 @@ showConge.ShowDetails = function (demandeid) {
       let demandeurField = It.get_item('Demandeur');
       let directeurField = It.get_item('ResponsableN2');
       let superieurField = It.get_item('ResponsableN1');
-      let interimaireField = It.get_item('Interimaire') != null ?  It.get_item('Interimaire').get_lookupValue() : '';
+      let interimaireField = It.get_item('Interimaire') != null ? It.get_item('Interimaire').get_lookupValue() : '';
       let demandeurName = demandeurField.get_lookupValue();
       let directeurName = directeurField.get_lookupValue();
       let superieurName = superieurField.get_lookupValue();
       //let interimaireName = interimaireField.get_lookupValue();
       showConge.isSoldeImpact = (It.get_item('TypeCongeID') != null ? It.get_item('TypeCongeID') : 0)
       let view = {
-        id :  (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false ) ,
+        id: (It.get_item('Statut') == 'DEMANDEMODIFICATION' ? demandeid : false),
         typeconge: It.get_item('TypeCongeLibelle') != null ? It.get_item('TypeCongeLibelle') : '',
-        nbrejour: It.get_item('NombreJours') != null ? It.get_item('NombreJours') : '',
+        nbrejour: It.get_item('NombreJourAccorde') != null ? It.get_item('NombreJourAccorde') : '',
+        nbrejourdemande: It.get_item('NombreJours') != null ? It.get_item('NombreJours') : '',
         datedepart: It.get_item('DateDepart') != null ? new Date(It.get_item('DateDepart')).toLocaleDateString() : '',
+        datedepartdemande: It.get_item('DateDepartDemande') != null ? new Date(It.get_item('DateDepartDemande')).toLocaleDateString() : '',
         //dateretour: It.get_item('DateRetour') != null ? new Date(It.get_item('DateRetour')).toLocaleDateString() : '',
         datereprise: It.get_item('DateReprise') != null ? new Date(It.get_item('DateReprise')).toLocaleDateString() : '',
+        daterepriseprevi: It.get_item('DateRetourPrevisionnelle') != null ? new Date(It.get_item('DateRetourPrevisionnelle')).toLocaleDateString() : '',
         interimaire: interimaireField,
         demandeur: demandeurName,
         domicile: It.get_item('DomicileConge') != null ? It.get_item('DomicileConge') : '',
@@ -360,7 +483,7 @@ showConge.ShowFirst = function (demandeid) {
   }, appSpHelper.writeError);
 }
 
-showConge.OpenFileUpload = function(str_select) {
+showConge.OpenFileUpload = function (str_select) {
   let transElt = document.getElementById(str_select);
   transElt.click();
 }

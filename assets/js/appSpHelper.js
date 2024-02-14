@@ -957,7 +957,30 @@ appSpHelper.ReturnMailParam = function (demande, tache, mailContent) {
   // var MailTemplate = mailContent;
   if (mailContent) {
     let url = `<a href="${appHelper.AppConstante.LienSiteJsUrl}">Suivez ce lien pour accéder à la plateforme MOOVINSIDE.</a>`
+    let urltache = `<a href="${appHelper.AppConstante.LienSiteJsUrl}">Cliquez ici pour accéder à la tâche.</a>`
+    let urldemande = `<a href="${appHelper.AppConstante.LienSiteJsUrl}">Cliquez ici pour consulter l'historique des validations.</a>`
     let demandeurName = demande.get_item('Demandeur') != null ? demande.get_item('Demandeur').get_lookupValue() : "";
+
+    let Comment = tache.get_item('_Comment') != null ? tache.get_item('_Comment') : "";
+    const commentaire = Comment.substring(Comment.indexOf("<") + 1, Comment.indexOf(">"));
+    const responsable = Comment.substring(Comment.indexOf("Compte système"), Comment.indexOf("le"));
+    // const responsable = Comment.substring(17, 29);
+    const date = Comment.substring(Comment.indexOf("le") + 3, Comment.indexOf("avec"));
+
+
+    let statutlibelle = demande.get_item('StatutLibelle') != null ? demande.get_item('StatutLibelle') : "";
+    console.log(statutlibelle);
+    function fonctionValideur(texte) {
+      if (texte.includes("VALIDATION DU ")) {
+        return texte.split("VALIDATION DU ")[1];
+      }
+      else if (statutlibelle.includes("VALIDATION DE LA")) {
+        return texte.split("VALIDATION DE LA ")[1];
+      }
+
+    }
+    const valfonct = fonctionValideur(statutlibelle);
+    console.log("Fonction : " + fonctionValideur(statutlibelle));
 
     // let demandeAssigne = tache.get_item('AssignedTo') != null ? tache.get_item('AssignedTo').get_lookupValue() : "";
     // let demandeurName = demandeurField.get_lookupValue();
@@ -970,6 +993,10 @@ appSpHelper.ReturnMailParam = function (demande, tache, mailContent) {
       mailContent = mailContent.replace("##LIEN##", url);
     }
 
+    // if (mailContent.indexOf("##LIEN##") >= 0) {
+    //   mailContent = mailContent.replace("##LIEN##", url);
+    // }
+
     // if (mailContent.includes("##PERSONTOSEND##")) {
     // if (mailContent.indexOf("##ASSIGNEA##") >= 0) {
     //   mailContent = mailContent.replaceAll("##ASSIGNEA##", demandeAssigne);
@@ -980,6 +1007,100 @@ appSpHelper.ReturnMailParam = function (demande, tache, mailContent) {
     if (mailContent.indexOf("##TITREDEMANDE##") >= 0) {
       mailContent = mailContent.replaceAll("##TITREDEMANDE##", (demande.get_item('Title') != null ? demande.get_item('Title') : ""));
     }
+
+
+    //Autres parametres
+
+    if (mailContent.indexOf("##LIBELLENATUREABSENCE##") >= 0) {
+      mailContent = mailContent.replaceAll("##LIBELLENATUREABSENCE##", (demande.get_item('Title') != null ? demande.get_item('Title') : ""));
+    }
+
+    if (mailContent.indexOf("##FONCTION##") >= 0) {
+      mailContent = mailContent.replaceAll("##FONCTION##", valfonct);
+    }
+
+    if (mailContent.indexOf("##NUMERODEMANDE##") >= 0) {
+      mailContent = mailContent.replaceAll("##NUMERODEMANDE##", (demande.get_item('Reference') != null ? demande.get_item('Reference') : ""));
+    }
+
+    if (mailContent.indexOf("##MOTIF##") >= 0) {
+      mailContent = mailContent.replaceAll("##MOTIF##", (demande.get_item('Motif') != null ? demande.get_item('Motif') : ""));
+    }
+
+    if (mailContent.indexOf("##DATEDEBUT##") >= 0) {
+      mailContent = mailContent.replaceAll("##DATEDEBUT##", (demande.get_item('DateDepart') != null ? new Date(demande.get_item('DateDepart')).toLocaleDateString() : ''));
+    }
+
+    if (mailContent.indexOf("##DATEREPRISE##") >= 0) {
+      mailContent = mailContent.replaceAll("##DATEREPRISE##", (demande.get_item('DateReprise') != null ? new Date(demande.get_item('DateReprise')).toLocaleDateString() : ''));
+    }
+
+    if (mailContent.indexOf("##NOMBREJOURSDEMANDE##") >= 0) {
+      mailContent = mailContent.replaceAll("##NOMBREJOURSDEMANDE##", (demande.get_item('NombreJours') != null ? demande.get_item('NombreJours') : ""));
+    }
+
+    if (mailContent.indexOf("##ECHEANCE##") >= 0) {
+      mailContent = mailContent.replaceAll("##ECHEANCE##", (tache.get_item('DueDate') != null ? new Date(tache.get_item('DueDate')) : ""));
+    }
+
+    if (mailContent.indexOf("##LIBELLENATURE##") >= 0) {
+      mailContent = mailContent.replaceAll("##LIBELLENATURE##", (demande.get_item('TypeCongeLibelle') != null ? demande.get_item('TypeCongeLibelle') : ""));
+    }
+
+    if (mailContent.indexOf("##DESTINATION##") >= 0) {
+      mailContent = mailContent.replaceAll("##DESTINATION##", (demande.get_item('Destination') != null ? demande.get_item('Destination') : ""));
+    }
+
+    if (mailContent.indexOf("##MONTANTTOTALFRAIS##") >= 0) {
+      mailContent = mailContent.replaceAll("##MONTANTTOTALFRAIS##", (demande.get_item('CoutTotal') != null ? demande.get_item('CoutTotal') : ""));
+    }
+
+    if (mailContent.indexOf("##MONTANTTOTALFRAISREGUL##") >= 0) {
+      mailContent = mailContent.replaceAll("##MONTANTTOTALFRAISREGUL##", (demande.get_item('CoutMission') != null ? demande.get_item('CoutMission') : ""));
+    }
+
+    if (mailContent.indexOf("##DATEDEBUTMISSION##") >= 0) {
+      mailContent = mailContent.replaceAll("##DATEDEBUTMISSION##", (demande.get_item('DateDebut') != null ? new Date(demande.get_item('DateDebut')) : ""));
+    }
+
+    if (mailContent.indexOf("##DATEFINMISSION##") >= 0) {
+      mailContent = mailContent.replaceAll("##DATEFINMISSION##", (demande.get_item('DateFin') != null ? new Date(demande.get_item('DateFin')) : ""));
+    }
+
+    if (mailContent.indexOf("##MONTANT##") >= 0) {
+      mailContent = mailContent.replaceAll("##MONTANT##", (demande.get_item('Montant') != null ? demande.get_item('Montant') : ""));
+    }
+
+    if (mailContent.indexOf("##MONTANTDEMANDE##") >= 0) {
+      mailContent = mailContent.replaceAll("##MONTANTDEMANDE##", (demande.get_item('MontantSortie') != null ? demande.get_item('MontantSortie') : ""));
+    }
+
+    if (mailContent.indexOf("##MONTANTUTILISE##") >= 0) {
+      mailContent = mailContent.replaceAll("##MONTANTUTILISE##", (demande.get_item('Montant') != null ? demande.get_item('Montant') : ""));
+    }
+
+    if (mailContent.indexOf("##SOLDEAREVERSER##") >= 0) {
+      mailContent = mailContent.replaceAll("##SOLDEAREVERSER##", (demande.get_item('Solde') != null ? demande.get_item('Solde') : ""));
+    }
+
+    if (mailContent.indexOf("##MONTANTFRAISUTILISE##") >= 0) {
+      mailContent = mailContent.replaceAll("##MONTANTFRAISUTILISE##", (demande.get_item('Total') != null ? demande.get_item('Total') : ""));
+    }
+
+    if (mailContent.indexOf("##RESPONSABLE##") >= 0) {
+      mailContent = mailContent.replaceAll("##RESPONSABLE##", responsable);
+    }
+
+    if (mailContent.indexOf("##COMMENTAIRE##") >= 0) {
+      mailContent = mailContent.replaceAll("##COMMENTAIRE##", commentaire);
+    }
+
+    if (mailContent.indexOf("##DATEREJET##") >= 0) {
+      mailContent = mailContent.replaceAll("##DATEREJET##", date);
+    }
+
+
+
   }
   else {
     mailContent = "Aucun Mail template trouvé";

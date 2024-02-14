@@ -48,7 +48,6 @@ showRegularisationFraisMission.ShowForm = function (tacheId, demandeid) {
   const WF = new WFManager(appHelper.AppCode.REGULARISATIONFRAISMISSION, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
 
   BtnOK.addEventListener("click", function () {
-    BtnOK.disabled = true;
     WF.goToNextTask(showRegularisationFraisMission.clientContext, tacheId, appHelper.AppCode.REGULARISATIONFRAISMISSION, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
       showRegularisationFraisMission.UpDateItemStatus(nextTask, demandeid, function () {
@@ -58,7 +57,6 @@ showRegularisationFraisMission.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
-    BtnNOK.disabled = true;
     WF.goToRefusedTask(showRegularisationFraisMission.clientContext, tacheId, appHelper.AppCode.REGULARISATIONFRAISMISSION, demandeid, TxtCommentaire.value,  "REJETER", function (nextTask) {
       console.log(nextTask);
       showRegularisationFraisMission.UpDateItemStatusRejet(true, demandeid, function () {
@@ -68,7 +66,6 @@ showRegularisationFraisMission.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
-    BtnMod.disabled = true;
     WF.goToRefusedTask(showRegularisationFraisMission.clientContext, tacheId, appHelper.AppCode.REGULARISATIONFRAISMISSION, demandeid, TxtCommentaire.value,  "MODIFIER", function (nextTask) {
       console.log(nextTask);
       showRegularisationFraisMission.UpDateItemStatusRejet(false, demandeid, function () {
@@ -168,9 +165,15 @@ showRegularisationFraisMission.ShowUploadForm = function (demandeid, view) {
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
   FpUploadAttachement.addEventListener('change', function () {
 
-    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.RegularisationFraisMission, 0, function () {
-      showRegularisationFraisMission.ShowFichierJoint(demandeid);
-    });
+    if(appHelper.TestIsOverFileMinSize("FpUploadAttachement") ){
+      appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.RegularisationFraisMission, 0, function () {
+        showRegularisationFraisMission.ShowFichierJoint(demandeid);
+      });
+    }else{
+      appHelper.ShowMinusFileSizeMessage();
+    }
+
+
   });
   // FpUploadAttachement.addEventListener('change', (e) => {
   //   files = e.target.files;
@@ -331,7 +334,7 @@ showRegularisationFraisMission.ShowDetails = function (demandeid) {
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
 
 
-      
+
 
     }
   }, appSpHelper.writeError);

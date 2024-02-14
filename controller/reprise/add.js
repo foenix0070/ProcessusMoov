@@ -3,6 +3,7 @@ var clientContext;
 appReprise.clientContext;
 
 appReprise.InitializePage = function () {
+    App.LoadFormNote (appHelper.AppCode.REPRISE ,'DivNoteFormulaire');
     appReprise.clientContext = SP.ClientContext.get_current();
     clientContext = SP.ClientContext.get_current();
 
@@ -77,7 +78,7 @@ appReprise.ListeReprise = function (DemandeList, type, callback) {
 
             while (listItemEnumerator.moveNext()) {
                 var oListItem = listItemEnumerator.get_current();
-                
+
                 document.getElementById("TxtInterimaire").textContent = oListItem.get_item("Interimaire") != null ? oListItem.get_item("Interimaire").get_lookupValue() : "";
                 document.getElementById("TxtReprise").textContent = oListItem.get_item("Title");
                 document.getElementById("TxtNbreJour").textContent = oListItem.get_item("NombreJours");
@@ -153,19 +154,16 @@ appReprise.Add = function (callBack) {
     oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
     oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
 
-    console.log("Fin test");
-    console.log(oListItem);
+
 
     oListItem.update();
     clientContext.load(oListItem);
     clientContext.executeQueryAsync(function () {
         appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Reprise, 0, function () {
             const appUrl = '/pages/reprise/show.aspx?ID=' + oListItem.get_id();
-            console.log(ACTIV_WORKFLOWREP);
-            let WF = new WFManager(appHelper.AppCode.REPRISE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOWREP);
-            WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REPRISE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
 
-            console.log(typeRep);
+            let WF = new WFManager(appHelper.AppCode.REPRISE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
+            WF.createWFTask(clientContext, appUrl, appHelper.AppCode.REPRISE, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function () { })
 
             appReprise.UpDateStatus(typeRep, idRep, function () { });
 

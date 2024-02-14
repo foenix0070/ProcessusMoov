@@ -4,6 +4,7 @@ appRegularisationSortieCaisse.clientContext;
 
 
 appRegularisationSortieCaisse.InitializePage = function () {
+  App.LoadFormNote (appHelper.AppCode.REGULARISATIONSORTIECAISSE ,'DivNoteFormulaire');
   appRegularisationSortieCaisse.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
@@ -137,6 +138,11 @@ appRegularisationSortieCaisse.TestFields = function () {
     str += ("Le montant utilisé n'est pas correct. <br>");
     v = false; // Empêche l'envoi du formulaire
 
+  }
+
+  if(appHelper.TestIsOverFileMinSize("FileDoc") == false){
+    str += ("Le fichier joint à cette demande ne pas être vide <br>");
+    v = false; // Empêche l'envoi du formulaire
   }
 
   let div = document.getElementById('DivErreurMessage');

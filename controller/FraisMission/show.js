@@ -51,7 +51,7 @@ showFraisMission.ShowForm = function (tacheId, demandeid) {
 
   BtnOK.addEventListener("click", function () {
     BtnOK.disabled = true;
-    WF.goToNextTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
+    WF.goToNextTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
       showFraisMission.UpDateItemStatus(nextTask, demandeid, function () {
         location.reload();
@@ -61,7 +61,7 @@ showFraisMission.ShowForm = function (tacheId, demandeid) {
 
   BtnNOK.addEventListener("click", function () {
     BtnNOK.disabled = true;
-    WF.goToRefusedTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
+    WF.goToRefusedTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
       showFraisMission.UpDateItemStatusRejet(true, demandeid, function () {
         location.reload();
@@ -71,7 +71,7 @@ showFraisMission.ShowForm = function (tacheId, demandeid) {
 
   BtnMod.addEventListener("click", function () {
     BtnMod.disabled = true;
-    WF.goToRefusedTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, function (nextTask) {
+    WF.goToRefusedTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
       showFraisMission.UpDateItemStatusRejet(false, demandeid, function () {
         location.reload();
@@ -170,9 +170,17 @@ showFraisMission.ShowUploadForm = function (demandeid, view) {
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
   FpUploadAttachement.addEventListener('change', function () {
 
-    appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Mission, 0, function () {
-      showFraisMission.ShowFichierJoint(demandeid);
-    });
+
+
+    if(appHelper.TestIsOverFileMinSize("FpUploadAttachement")){
+      appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Mission, 0, function () {
+        showFraisMission.ShowFichierJoint(demandeid);
+      });
+    }else{
+      appHelper.ShowMinusFileSizeMessage();
+    }
+
+
   });
   // FpUploadAttachement.addEventListener('change', (e) => {
   //   files = e.target.files;

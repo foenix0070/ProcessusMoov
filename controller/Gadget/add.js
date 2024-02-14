@@ -4,20 +4,23 @@ var clientContext;
 appGadget.clientContext;
 
 appGadget.InitializePage = function () {
+
+  App.LoadFormNote (appHelper.AppCode.GADGET ,'DivNoteFormulaire');
+
   appGadget.clientContext = SP.ClientContext.get_current();
   clientContext =  SP.ClientContext.get_current();
   appSpHelper.GetMyProperties(function () {
-    
+
       document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
       document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
       document.getElementById("TxtEmail").value = App.CurrentUser.Email;
 
       appGadget.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function(){});
-  
+
   });
 
   var monInput = document.getElementById("TxtQuantite");
-    
+
     var autoNumeric = new AutoNumeric(monInput, {
       decimalPlaces: 0,
       digitGroupSeparator: ' ',
@@ -29,10 +32,10 @@ appGadget.InitializePage = function () {
   // const BtnAdd = document.querySelector("#demande");
   const BtnSave = document.querySelector("#BtnSave");
 
-  
+
 
   BtnSave.addEventListener("click", function () {
-    
+
     if(appGadget.TestFields ())
     {
     BtnSave.disabled = true;
@@ -58,13 +61,13 @@ appGadget.InitializePage = function () {
         appHelper.navigation("DivMainPageContainer", url);
         var closeButton = document.querySelector('[aria-label="Close"]');
         closeButton.click();
-        
+
       });
     }
   }
   });
 
-  
+
 
 };
 
@@ -73,7 +76,7 @@ appGadget.TestFields = function(){
 
   let v = true;
   let str = '';
-  
+
    // Récupérer les valeurs des champs
     var nom = document.getElementById("TxtNom").value;
     var matricule = document.getElementById("TxtMatricule").value;
@@ -81,27 +84,27 @@ appGadget.TestFields = function(){
     let gadget = document.getElementById("TxtArticle").value;
     let qte = document.getElementById("TxtQuantite").value;
     let motif = document.getElementById("TxtMotif").value;
-  
-  
+
+
    // Vérifier si les champs obligatoires sont vides
    if (nom === "" || matricule === "" || email === "" || gadget === "" || qte === "0" || motif === "" ) {
      str += ("Veuillez remplir tous les champs obligatoires. <br>");
        v= false; // Empêche l'envoi du formulaire
    }
-  
+
    // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
    if (parseInt(qte) < 1) {
      str +=  ("La quantité doit être supérieur ou égal à 1. <br>");
        v= false; // Empêche l'envoi du formulaire
    }
-  
+
    let div = document.getElementById('DivErreurMessage');
    div.innerHTML = '';
    if(v==false){
     str = `<div style="border:2px solid red; background:#ffe6ff;padding:3px;color:#330033;margin:3px;">${str}</div>`;
     div.innerHTML = str;
    }
-  
+
    return v;
 };
 
@@ -116,7 +119,7 @@ function use_number(node) {
       empty_val = true;
   node.type = 'number';
   if (!empty_val){
-    node.value = Number(value.replace(/./g, '')); 
+    node.value = Number(value.replace(/./g, ''));
     use_text(node);
   }
 }
@@ -138,8 +141,8 @@ function number(nombre){
       empty_val = true;
   node.type = 'number';
   if (!empty_val){
-    node.value = Number(value.replace(/./g, '')); 
-    
+    node.value = Number(value.replace(/./g, ''));
+
   }
 }
 
@@ -239,7 +242,7 @@ appGadget.Add = function ( callBack) {
   oListItem.set_item("NombreJourAccorde", qte);
 
   oListItem.set_item("DemandeurEmail",App.CurrentUser.Email);
- 
+
   oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
 
   oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
@@ -248,7 +251,7 @@ appGadget.Add = function ( callBack) {
   oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
   oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
 
-  
+
   oListItem.update();
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
@@ -258,14 +261,14 @@ appGadget.Add = function ( callBack) {
     const appUrl = '/pages/gadget/show.aspx?ID=' + oListItem.get_id();
     let WF = new WFManager(appHelper.AppCode.GADGET,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
     WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function(){})
-      
+
     if(callBack){
       callBack(oListItem);
     }
 
     }, appSpHelper.writeError);
   })
-  
+
 };
 
 appGadget.Edit = function (demandeid, callBack) {
@@ -295,7 +298,7 @@ appGadget.Edit = function (demandeid, callBack) {
   oListItem.set_item("Quantite", qte);
 
   oListItem.set_item("DemandeurEmail",App.CurrentUser.Email);
- 
+
   oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
 
   oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
@@ -312,7 +315,7 @@ appGadget.Edit = function (demandeid, callBack) {
       console.log(appUrl);
       let WF = new WFManager(appHelper.AppCode.GADGET,  appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation,  ACTIV_WORKFLOW  );
       WF.createWFTask(clientContext,appUrl, appHelper.AppCode.GADGET, oListItem.get_id(), App.CurrentUser.Manager, App.CurrentUser.Manager2, ref, function(){})
-      
+
       if(callBack){
         callBack(oListItem);
       }
@@ -329,14 +332,14 @@ appGadget.ShowDetails = function (demandeid, callBack) {
   appGadget.clientContext.load(It);
   appGadget.clientContext.executeQueryAsync(function () {
     if (It) {
-      
-        document.getElementById("TxtArticle").value = It.get_item('Title') != null ? It.get_item('Title') : ''; 
+
+        document.getElementById("TxtArticle").value = It.get_item('Title') != null ? It.get_item('Title') : '';
         document.getElementById("TxtMotif").value = It.get_item('Motif') != null ? It.get_item('Motif') : '';
         document.getElementById("TxtQuantite").value = It.get_item('Quantite') != null ? It.get_item('Quantite') : '';
         document.getElementById("TxtRef").value = It.get_item('Reference') != null ? It.get_item('Reference') : '';
         document.getElementById("TxtVerif").value = 'Edit';
         document.getElementById("TxtID").value = It.get_item('ID') != null ? It.get_item('ID') : 0;
-        
+
 if(callBack){callBack();}
 
     }else{if(callBack){callBack();}}
@@ -347,6 +350,6 @@ if(callBack){callBack();}
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appGadget.InitializePage);
 // document.addEventListener("DOMContentLoaded", () => {
 //   ExecuteOrDelayUntilScriptLoaded(function(){
-    
+
 //   }, "SP.ClientContext");
 // });

@@ -27,7 +27,7 @@
 
         <div class="mb-3">
           <div>Votre <span id="TxtTypeR"></span> de <span id="TxtReprise"></span> de <span id="TxtNbreJour"></span> jour a debuter le <span id="TxtDateDepart"></span> et a pris fin le  <span id="TxtDateReprise"></span> avec pour interim <span id="TxtInterimaire"></span> .</div>
-          <div>Effectuer votre reprise en cliquant sur le bouton <b>Reprise</b>.</div>          
+          <div>Effectuer votre reprise en cliquant sur le bouton <b>Reprise</b>.</div>
         </div>
 
         <div class="mb-3">
@@ -75,12 +75,19 @@
         </div>
 
     </fieldset>
+
+    <div class="alert alert-dark" role="alert" id="DivNoteFormulaire">   </div>
   </div>
 
   <div id="DivErreurMessage"></div>
 
   <div class="input-optn">
     <button class="Submit" id="BtnSave" type="button"> Reprise </button>
+
+    <a href="/tools/pages/suivie/suivie.aspx" class="linkModalNavigation" data-bs-toggle="modal" data-bs-target="#staticModalForm"  data-url="/sites/proc/tools/pages/suivie/suivie.aspx"
+    data-target="staticModalFormContainer" style="text-decoration: none; ">
+    Option de suivie
+  </a>
   </div>
 </form>
 
