@@ -17,6 +17,7 @@ appMission.InitializePage = function () {
     $("[id^=TxtDetailsDateFin]").each(function () {
       $(this).val(txt);
     });
+    appMission.CalculQteForfait();
   });
 
   TxtDateDebut.addEventListener("change", function () {
@@ -24,7 +25,9 @@ appMission.InitializePage = function () {
     $("[id^=TxtDetailsDateDebut]").each(function () {
       $(this).val(txt);
     });
+    appMission.CalculQteForfait();
   });
+
 
   BtnAddLigneBts.addEventListener("click", function () {
     appUIControle.DestroyChosen("cmbSite");
@@ -117,6 +120,22 @@ appUIControle.UpdateChosen('cmbDestination');
   //   decimalPlaces: 0,
   //   unformatOnSubmit: true,
   // });
+
+  appMission.CalculQteForfait = function(){
+
+    $("[id^=TxtDetailsNombre]").each(function () {
+      let ids =  $(this).attr('id').toString().replace('TxtDetailsNombre', '').toString().trim();
+
+      let dd = "#TxtDetailsDateDebut" + ids;
+      let df =  "#TxtDetailsDateFin" + ids;
+
+    let y =   parseInt( appHelper.DaysBetweenDates(
+       $(dd).val(), $(df).val()  )) -1
+
+      $(this).val(y);
+    });
+
+  }
 
   appMission.GetInterimData = function (login) {
     appSpHelper.GetEmploye(appHelper.ListName.Employe, login, function (it) {

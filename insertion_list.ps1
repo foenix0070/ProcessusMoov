@@ -82,19 +82,21 @@ $CONGE_NATURE="<OPTION selected value=""></OPTION><OPTION value=1>Cong� annuel
 
 
 #Add-OptionsToList -SiteUrl $siteUrl -ListName "listeTest" -OptionsString $CONGE_NATURE
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeGadgetEvenement" -OptionsString $gadget_evenement
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeZoneGeographique" -OptionsString $mission_zone_geographique
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeModePaiement" -OptionsString $mission_mode_paiement
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMissionMotif" -OptionsString $mission_motif
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMissionDestination" -OptionsString $mission_destination
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMissionSiteBTS" -OptionsString $mission_site_bts
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMissionTypeIntervention" -OptionsString $mission_intervention
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeCaissePaiement" -OptionsString $mission_caisse_paiement
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItArchitecture" -OptionsString $MATERIEL_IT_ARCHITECTURE
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItMarques" -OptionsString $MATERIEL_IT_MARQUES
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItModels" -OptionsString $MATERIEL_IT_MODELS
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItCategories" -OptionsString $MATERIEL_IT_CATEGORIE
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItNature" -OptionsString $MATERIEL_IT_NATURE
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItTypes" -OptionsString $MATERIEL_IT_TYPE
-Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItSiteExploitation" -OptionsString $MATERIEL_IT_SITE_EXPLOITATION
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeGadgetEvenement" -OptionsString $gadget_evenement
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeZoneGeographique" -OptionsString $mission_zone_geographique
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeModePaiement" -OptionsString $mission_mode_paiement
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMissionMotif" -OptionsString $mission_motif
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMissionDestination" -OptionsString $mission_destination
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMissionSiteBTS" -OptionsString $mission_site_bts
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMissionTypeIntervention" -OptionsString $mission_intervention
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeCaissePaiement" -OptionsString $mission_caisse_paiement
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItArchitecture" -OptionsString $MATERIEL_IT_ARCHITECTURE
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItMarques" -OptionsString $MATERIEL_IT_MARQUES
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItModels" -OptionsString $MATERIEL_IT_MODELS
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItCategories" -OptionsString $MATERIEL_IT_CATEGORIE
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItNature" -OptionsString $MATERIEL_IT_NATURE
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItTypes" -OptionsString $MATERIEL_IT_TYPE
+#Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeMaterielItSiteExploitation" -OptionsString $MATERIEL_IT_SITE_EXPLOITATION
+
+Add-OptionsToList -SiteUrl $siteUrl -ListName "ListeArticles" -OptionsString $gadget_article
 

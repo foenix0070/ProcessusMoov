@@ -1,24 +1,22 @@
 ﻿var appHelper = appHelper || {};
 
- appHelper.AppConstante = {
-   RootSiteUrl: 'https://vminsideweb01/',
-   SiteUrl: 'https://vminsideweb01/sites/proc/',
-   SiteJsUrl: 'https://vminsideweb01/sites/proc/tools/',
-   LienSiteJsUrl: 'https://vminsideweb01/sites/proc/tools//index.aspx',
-   MIMailSender: "no-reply-MI@moov-africa.ci",
-   IsDevEnvironment: true
- }
-
+appHelper.AppConstante = {
+  RootSiteUrl: 'https://vminsideweb01/',
+  SiteUrl: 'https://vminsideweb01/sites/proc/',
+  SiteJsUrl: 'https://vminsideweb01/sites/proc/tools/',
+  LienSiteJsUrl: 'https://vminsideweb01/sites/proc/tools//index.aspx',
+  MIMailSender: "no-reply-MI@moov-africa.ci",
+  IsDevEnvironment: true
+}
 
 // appHelper.AppConstante = {
-//   RootSiteUrl: 'https://vminsideweb01.etisalat-africa.net/',
-//   SiteUrl: 'https://vminsideweb01.etisalat-africa.net/sites/proc/',
-//   SiteJsUrl: 'https://vminsideweb01.etisalat-africa.net/sites/proc/tools/',
-//   LienSiteJsUrl: 'https://vminsideweb01.etisalat-africa.net/sites/proc/tools//index.aspx',
+//   RootSiteUrl: 'https://moovinside.etisalat-africa.net/',
+//   SiteUrl: 'https://moovinside.etisalat-africa.netsites/proc/',
+//   SiteJsUrl: 'https://moovinside.etisalat-africa.net/sites/proc/tools/',
+//   LienSiteJsUrl: 'https://moovinside.etisalat-africa.net/sites/proc/tools//index.aspx',
 //   MIMailSender: "moovinside@moov-africa.ci",
 //   IsDevEnvironment: true
 // }
-
 
 appHelper.TacheAction = {
   NOUVEAU: 'NOUVEAU',
@@ -178,8 +176,8 @@ appHelper.receiptTask = function (it, callBack) {
       callBack();
     }
   });
-
 }
+
 
 appHelper.getDemandeOrigin = function (_parent, _parentid, callBack) {
   let ctx = new SP.ClientContext.get_current();
@@ -559,10 +557,27 @@ appHelper.ReturnISODate = function (frenchDate, heure) {
   );
 };
 
+appHelper.DaysBetweenDates = function (d0, d1) {
+  var holidays = ['2016-05-03', '2016-05-05'];
+  var startDate = new Date(d0);
+  var endDate = new Date(d1);
+  // Validate input
+  if (endDate < startDate) {
+    return 0;
+  }
+  // Calculate days between dates
+  var millisecondsPerDay = 86400 * 1000; // Day in milliseconds
+  startDate.setHours(0, 0, 0, 1);  // Start just after midnight
+  endDate.setHours(23, 59, 59, 999);  // End just before midnight
+  var diff = endDate - startDate;  // Milliseconds between datetime objects
+  var days = Math.ceil(diff / millisecondsPerDay);
+  return days;
+}
+
 appHelper.workingDaysBetweenDates = function (d0, d1) {
   var holidays = ['2016-05-03', '2016-05-05'];
-  var startDate = parseDate(d0);
-  var endDate = parseDate(d1);
+  var startDate = new Date(d0);
+  var endDate = new Date(d1);
   // Validate input
   if (endDate < startDate) {
     return 0;
@@ -924,7 +939,6 @@ appHelper.upploadAttachmentFiles = function (inputFileId, itemId, listName, j, c
 
   }
 }
-
 
 appHelper.TestIsOverFileMinSize = function(fileInputID){
   const uploadField = document.getElementById(fileInputID);

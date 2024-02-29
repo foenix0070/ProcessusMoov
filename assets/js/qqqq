@@ -1,0 +1,32 @@
+
+
+appUIControle.InitChosenByIdWithAddOption = function (  selector,  isMultiple = false, callBackSelect = null) {
+
+  let element = document.getElementsByClassName(selector);
+
+  if (isMultiple) {
+    if (!element.hasAttribute("multiple")) {
+      element.setAttribute("multiple", "multiple");
+    }
+  }
+
+  let selector = "#" + selector;
+  let chosen_add_buttun = selector + "_chosen > .chosen-drop > .chosen-results";
+
+  $(selector).chosen({
+    width: "95%",
+    no_results_text: "Aucun élément trouvé! Ajouter une nouvelle entrée",
+    disable_search_threshold: 15,
+  }).change(function (e, p) {
+    if (callBackSelect) {
+      callBackSelect(e, p);
+    }
+  });
+
+  $(chosen_add_buttun).on("click", ".no-results", function () {
+    let val = $(this).find("span").text();
+    console.log('Add new: ',val);
+    $(selector).val("").trigger("chosen:updated");
+  });
+
+};
