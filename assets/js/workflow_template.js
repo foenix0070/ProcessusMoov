@@ -618,7 +618,7 @@ const ACTIV_WORKFLOW = {
         },
         {
           id: "VHCL#2",
-          value: "VALIDATION DU GESTIONNAIRE PARC AUTOMOBILE ",
+          value: "VALIDATION DU GESTIONNAIRE PARC AUTOMOBILE - ETAT VEHICULE",
           actors: [
             {
               type: "GROUP",

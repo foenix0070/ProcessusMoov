@@ -126,7 +126,6 @@
 
   <div class="input-optn">
 
-
     <button class="Submit" id="BtnSave" type="button"> Valider </button>
 
     <a href="/tools/pages/suivie/suivie.aspx" class="linkModalNavigation" data-bs-toggle="modal" data-bs-target="#staticModalForm"  data-url="/sites/proc/tools/pages/suivie/suivie.aspx"
@@ -134,6 +133,7 @@
     Option de suivie
   </a>
   </div>
+
 </form>
 
 

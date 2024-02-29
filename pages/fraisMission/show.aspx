@@ -184,7 +184,7 @@
                   {{#id}}
                   <div class="sect-bn"><button class="btn btn-warning btn-sm linkOffCanvasNavigation" data-url="/tools/pages/fraisMission/add.aspx?DID={{id}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" id="BtnModification" >Modifier la demande</button></div>
                   {{/id}}
-                  
+
                 </br>
                   <div>
                     <h3 style="color:#c50000 !important;">
@@ -210,6 +210,13 @@
                       </tr>
 
                       <tr>
+                        <td style="text-align:left;"class="fw-bold" width="300px">Site BTS :</td>
+                        <td style="text-align:left;">{{{bts}}}</td>
+                      </tr>
+
+
+
+                      <tr>
                         <td style="text-align:left;"class="fw-bold" width="300px">Destination :</td>
                         <td style="text-align:left;">{{destination}}</td>
                       </tr>
@@ -233,37 +240,34 @@
               </script>
 
               <script id="tmpl_form_details_frais" type="x-tmpl-mustache">
-              <table>
-                {{#Frais}}
-                  </br>
-                    <tr>
-                      <td style="text-align:left;"class="fw-bold" width="300px">Libelle :</td>
-                      <td style="text-align:left;">{{titre}}</td>
-                    </tr>
-
-                    <tr>
-                      <td style="text-align:left;"class="fw-bold" width="300px">Date de debut :</td>
-                      <td style="text-align:left;">{{debut}}</td>
-                    </tr>
-
-                    <tr>
-                      <td style="text-align:left;"class="fw-bold" width="300px">Date de fin :</td>
-                      <td style="text-align:left;">{{fin}}</td>
-                    </tr>
-
-                    <tr>
-                      <td style="text-align:left;"class="fw-bold" width="300px">Nombre de jour :</td>
-                      <td style="text-align:left;">{{nombre}}</td>
-                    </tr>
-                    <tr>
-                      <td style="text-align:left;"class="fw-bold" width="300px">Forfait :</td>
-                      <td style="text-align:left;">{{forfait}}</td>
-                    </tr>
-                    <tr>
-                      <td style="text-align:left;"class="fw-bold" width="300px">Montant Total :</td>
-                      <td style="text-align:left;">{{total}}</td>
-                    </tr>
-                  {{/Frais}}
+              </br>
+                <div class="head-titre">
+                  <h2>
+                   Frais de mission
+                  </h2>
+                </div>
+              </br>
+              <table class='table table-bordered table-condensed'>
+                <thead>
+                  <th>Libelle</th>
+                  <th>Date de debut</th>
+                  <th>Date de fin</th>
+                  <th>Nombre de jour</th>
+                  <th>Forfait</th>
+                  <th>Montant total</th>
+                </thead>
+                <tbody>
+                  {{#Frais}}
+                  <tr>
+                    <td >{{titre}}</td>
+                    <td >{{debut}}</td>
+                    <td >{{fin}}</td>
+                    <td >{{nombre}}</td>
+                    <td >{{forfait}}</td>
+                    <td >{{total}}</td>
+                  </tr>
+                {{/Frais}}
+                </tbody>
                 </table>
               </script>
 

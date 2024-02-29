@@ -172,10 +172,10 @@ appSortieCaisse.TestFields = function () {
     v = false; // Empêche l'envoi du formulaire
   }
 
-  if(appHelper.TestIsOverFileMinSize("FileDoc") == false){
-    str += ("Le fichier joint à cette demande ne pas être vide <br>");
-    v = false; // Empêche l'envoi du formulaire
-  }
+  // if(appHelper.TestIsOverFileMinSize("FileDoc") == false){
+  //   str += ("Le fichier joint à cette demande ne pas être vide <br>");
+  //   v = false; // Empêche l'envoi du formulaire
+  // }
 
   let div = document.getElementById('DivErreurMessage');
   div.innerHTML = '';
@@ -468,3 +468,6 @@ appSortieCaisse.ShowDetails = function (demandeid, callBack) {
 SP.SOD.executeFunc('sp.js', 'SP.ClientContext', appSortieCaisse.InitializePage);
 //   }, "SP.ClientContext");
 // });
+
+
+

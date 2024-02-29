@@ -8,6 +8,9 @@ appAbsence.InitializePage = function () {
 
   appAbsence.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
+
+  appAbsence.List();
+
   appSpHelper.GetMyProperties(function () {
     appAbsence.initCmbTypeAbsence(function () {
       document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
@@ -39,9 +42,24 @@ appAbsence.InitializePage = function () {
 
   const TxtIntName = document.querySelector("#TxtIntName");
   const BtnSave = document.querySelector("#BtnSave");
-
+  const aLinkShowHistorique = document.querySelector("#aLinkShowHistorique");
 
   TxtIntName.addEventListener("click", function () {
+
+  });
+
+  aLinkShowHistorique.addEventListener('click', function(){
+   const a = document.querySelector('#DivHistoAbsence');
+
+if(a.classList.contains('d-none')){
+  aLinkShowHistorique.innerHTML = 'Masquer mon historique';
+  a.classList.remove('d-none');
+} else{
+
+  aLinkShowHistorique.innerHTML = 'Afficher mon historique';
+  a.classList.add('d-none');
+}
+
 
   });
 
@@ -80,6 +98,13 @@ appAbsence.InitializePage = function () {
 
 };
 
+appAbsence.showHistoriqueAbsence = function() {
+
+
+
+};
+
+
 appAbsence.TestFields = function () {
 
   let v = true;
@@ -103,26 +128,22 @@ appAbsence.TestFields = function () {
     v = false; // Empêche l'envoi du formulaire
   }
 
-  // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
-  if (parseInt(duree) < 1) {
-    str += ("Le nombre de jours doit être supérieur ou égal à 1. <br>");
-    v = false; // Empêche l'envoi du formulaire
-  }
+  // // Valider le champ "Nombre de Jours" pour être supérieur ou égal à 1
+  // if (parseInt(duree) < 1) {
+  //   str += ("Le nombre de jours doit être supérieur ou égal à 1. <br>");
+  //   v = false; // Empêche l'envoi du formulaire
+  // }
+  // var debutDate = new Date(document.getElementById("DateDebut").value);
+  // // Verifier si la date est supérieure ou égales à celle d'aujourd'hui
+  // if (debutDate < todaydate) {
+  //   str += ("La date choisit n'est pas valide. <br>");
+  //   v = false; // Empêche l'envoi du formulaire
+  // }
+  // if(appHelper.TestIsOverFileMinSize("FileDoc") == false){
+  //   str += ("Le fichier joint à cette demande ne pas être vide <br>");
+  //   v = false; // Empêche l'envoi du formulaire
+  // }
 
-  var debutDate = new Date(document.getElementById("DateDebut").value);
-
-
-  // Verifier si la date est supérieure ou égales à celle d'aujourd'hui
-  if (debutDate < todaydate) {
-    str += ("La date choisit n'est pas valide. <br>");
-    v = false; // Empêche l'envoi du formulaire
-  }
-
-
-  if(appHelper.TestIsOverFileMinSize("FileDoc") == false){
-    str += ("Le fichier joint à cette demande ne pas être vide <br>");
-    v = false; // Empêche l'envoi du formulaire
-  }
 
   let div = document.getElementById('DivErreurMessage');
   div.innerHTML = '';
@@ -205,7 +226,7 @@ appAbsence.List = function () {
   camlQuery.set_viewXml(
     "<View><Query><Where>" +
     '<Eq><FieldRef ID="Demandeur" /><Value Type="Integer"><UserID/></Value></Eq>' +
-    "</Where></Query></View>"
+    "</Where><OrderBy><FieldRef Name='ID' Ascending='FALSE' /></OrderBy></Query><RowLimit>10</RowLimit></View>"
   );
   let collListItem = oList.getItems(camlQuery);
   appAbsence.clientContext.load(collListItem);
@@ -227,7 +248,7 @@ appAbsence.List = function () {
         });
       }
 
-      appHelper.renderTemplate("tmpl_table_absence", "DivAbsenceTableShow", view);
+      appHelper.renderTemplate("tmpl_table_absence", "DivHistoAbsence", view);
 
       const linkClick = document.getElementsByClassName('click');
       for (var i = 0; i < linkClick.length; i++) {

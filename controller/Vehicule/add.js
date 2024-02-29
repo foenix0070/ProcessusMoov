@@ -11,32 +11,53 @@ appVehicule.InitializePage = function () {
     document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
     document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
     document.getElementById("TxtEmail").value = App.CurrentUser.Email;
-
     appVehicule.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function () { });
 
   });
+
+  const sChkMotif = document.getElementsByClassName("rdMotifPretVehicule");
+  Array.from(sChkMotif).forEach((element) => {
+    element.addEventListener('click',function(){
+      console.log(element)
+      let value = element.value;
+      const $txt = document.getElementById('TxtObjet');
+      $txt.value = "";
+      if(value != 'AUTRE'){
+        $txt.value = value;
+        $('#TxtObjet').parent().addClass('d-none');
+      }else{
+        $('#TxtObjet').parent().removeClass('d-none');
+      }
+
+
+
+    });
+  });
+
 
   const BtnSave = document.querySelector("#BtnSave");
 
   BtnSave.addEventListener("click", function () {
     let objet = document.getElementById("TxtObjet").value;
-    let motif = document.getElementById("TxtMotif").value;
+    let motif = document.getElementById("TxtCommentaire").value;
     if (appVehicule.TestFields()) {
       BtnSave.disabled = true;
-      let verif = document.getElementById("TxtVerif").value;
-      if (verif == "Edit") {
-        let valID = document.getElementById("TxtID").value;
-        console.log(valID);
-        appVehicule.Edit(valID, function (a) {
-          // location.reload();
-          const appUrl = '/pages/vehicule/show.aspx?ID=' + a.get_id();
-          const url = "/tools" + appUrl;
-          appHelper.navigation("DivMainPageContainer", url);
-          var closeButton = document.querySelector('[aria-label="Close"]');
-          closeButton.click();
-        });
-      }
-      else {
+      // let verif = document.getElementById("TxtVerif").value;
+      // if (verif == "Edit") {
+      //   let valID = document.getElementById("TxtID").value;
+      //   console.log(valID);
+      //   appVehicule.Edit(valID, function (a) {
+      //     // location.reload();
+      //     const appUrl = '/pages/vehicule/show.aspx?ID=' + a.get_id();
+      //     const url = "/tools" + appUrl;
+      //     appHelper.navigation("DivMainPageContainer", url);
+      //     var closeButton = document.querySelector('[aria-label="Close"]');
+      //     closeButton.click();
+      //   });
+      // }
+      // else
+
+      {
         appVehicule.Add(function (a) {
           // location.reload();
           const appUrl = '/pages/vehicule/show.aspx?ID=' + a.get_id();
@@ -61,19 +82,20 @@ appVehicule.TestFields = function () {
   var matricule = document.getElementById("TxtMatricule").value;
   var email = document.getElementById("TxtEmail").value;
   let objet = document.getElementById("TxtObjet").value;
-  let motif = document.getElementById("TxtMotif").value;
+  var startdate = document.getElementById("TxtDateDebut").value;
+  var enddate = document.getElementById("TxtDateFin").value;
 
 
   // Vérifier si les champs obligatoires sont vides
-  if (nom === "" || matricule === "" || email === "" || objet === "" || motif === "") {
+  if (nom === "" || matricule === "" || email === "" || objet === "" || startdate === "" || enddate === "" ) {
     str += ("Veuillez remplir tous les champs obligatoires. <br>");
     v = false; // Empêche l'envoi du formulaire
   }
 
-  if(appHelper.TestIsOverFileMinSize("FileDoc") == false){
-    str += ("Le fichier joint à cette demande ne pas être vide <br>");
-    v = false; // Empêche l'envoi du formulaire
-  }
+  // if(appHelper.TestIsOverFileMinSize("FileDoc") == false){
+  //   str += ("Le fichier joint à cette demande ne pas être vide <br>");
+  //   v = false; // Empêche l'envoi du formulaire
+  // }
 
   let div = document.getElementById('DivErreurMessage');
   div.innerHTML = '';
@@ -144,40 +166,35 @@ appVehicule.Add = function (callBack) {
   let itemCreateInfo = new window.SP.ListItemCreationInformation();
   let oListItem = oList.addItem(itemCreateInfo);
 
-  let startDate = new Date();
-
-  let repDate = new Date();
-
-  let endDate = startDate.addDays(2);
 
   let ref = appHelper.getReference("VHCL");
 
 
+  let startdate = document.getElementById("TxtDateDebut").value;
+  let enddate = document.getElementById("TxtDateFin").value;
   oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
   oListItem.set_item("StatutLibelle", "VALIDATION DU SUPERIEUR HIERARCHIQUE");
   oListItem.set_item("Reference", ref);
 
-  oListItem.set_item("DateDepart", startDate);
-  oListItem.set_item("DateRetour", endDate);
-  oListItem.set_item("DateReprise", repDate);
-
+  oListItem.set_item("DateReprise", null);
   oListItem.set_item("Title", document.getElementById("TxtObjet").value);
-
   oListItem.set_item("Nature", document.getElementById("TxtObjet").value);
 
-  oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
+  oListItem.set_item("DateDepart", startdate);
+  oListItem.set_item("DateRetour", enddate);
+  oListItem.set_item("DateDebutPrevue", startdate);
+  oListItem.set_item("DateFinPrevue", enddate);
+
+  oListItem.set_item("Motif", document.getElementById("TxtCommentaire").value);
 
   oListItem.set_item("NombreJours", 1);
   oListItem.set_item("NombreJourAccorde", 1);
   oListItem.set_item("DemandeurEmail", App.CurrentUser.Email);
 
   // oListItem.set_item("Historique", "#");
-
   oListItem.set_item("Demandeur", SP.FieldUserValue.fromUser(App.CurrentUser.Login));
-
   oListItem.set_item("ResponsableN1", App.CurrentUser.ManagerPersonne);
   oListItem.set_item("ResponsableN2", App.CurrentUser.ManagerPersonne2);
-
   oListItem.set_item("ResponsableN1Email", App.CurrentUser.Manager.Email);
   oListItem.set_item("ResponsableN2Email", App.CurrentUser.Manager2.Email);
 
@@ -210,7 +227,7 @@ appVehicule.Edit = function (demandeid, callBack) {
 
   oListItem.set_item("Nature", document.getElementById("TxtObjet").value);
 
-  oListItem.set_item("Motif", document.getElementById("TxtMotif").value);
+  oListItem.set_item("Motif", document.getElementById("TxtCommentaire").value);
   oListItem.set_item("Reference", document.getElementById("TxtRef").value);
 
 

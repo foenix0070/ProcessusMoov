@@ -1,15 +1,15 @@
 # Copies tous les fichier  Schema.xml de toutes tes listes dans un dossier
 # Renommes les   chaque fois
 
-[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
 
 Add-Type -Path "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.dll"
 Add-Type -Path "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Runtime.dll"
 Add-Type -Path "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Taxonomy.dll"
 
 $url = "https://vminsideweb01/sites/proc/"
-$login = "etisalat-africa.net\svc_spadmin02"
-$pwdstring = "P@ssw0rd0002"
+$login = "etisalat-africa.net\svc_spadmin01"
+$pwdstring = "@spadmin01"
 $listName = "tools"
 $localFolder= Get-Location
 $subFolder = "";

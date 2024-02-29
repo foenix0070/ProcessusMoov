@@ -1,13 +1,24 @@
 ﻿var appHelper = appHelper || {};
 
-appHelper.AppConstante = {
-  RootSiteUrl: 'https://vminsideweb01/',
-  SiteUrl: 'https://vminsideweb01/sites/proc/',
-  SiteJsUrl: 'https://vminsideweb01/sites/proc/tools/',
-  LienSiteJsUrl: 'https://vminsideweb01/sites/proc/tools//index.aspx',
-  MIMailSender: "no-reply-MI@moov-africa.ci",
-  IsDevEnvironment: true
-}
+ appHelper.AppConstante = {
+   RootSiteUrl: 'https://vminsideweb01/',
+   SiteUrl: 'https://vminsideweb01/sites/proc/',
+   SiteJsUrl: 'https://vminsideweb01/sites/proc/tools/',
+   LienSiteJsUrl: 'https://vminsideweb01/sites/proc/tools//index.aspx',
+   MIMailSender: "no-reply-MI@moov-africa.ci",
+   IsDevEnvironment: true
+ }
+
+
+// appHelper.AppConstante = {
+//   RootSiteUrl: 'https://vminsideweb01.etisalat-africa.net/',
+//   SiteUrl: 'https://vminsideweb01.etisalat-africa.net/sites/proc/',
+//   SiteJsUrl: 'https://vminsideweb01.etisalat-africa.net/sites/proc/tools/',
+//   LienSiteJsUrl: 'https://vminsideweb01.etisalat-africa.net/sites/proc/tools//index.aspx',
+//   MIMailSender: "moovinside@moov-africa.ci",
+//   IsDevEnvironment: true
+// }
+
 
 appHelper.TacheAction = {
   NOUVEAU: 'NOUVEAU',
@@ -51,7 +62,11 @@ appHelper.ListName = {
   Caisse: 'ListeCaissePaiement',
   Zone: 'ListeZoneGeographique',
 
-
+  MissionIntervention: 'ListeMissionTypeIntervention',
+  MissionDestination: 'ListeMissionDestination',
+  MissionMotif: 'ListeMissionMotif',
+  MissionSiteBTS: 'ListeMissionSiteBTS',
+  MissionDetailsIntitule : 'ListeMissionDetailsIntitule',
 };
 
 appHelper.Status = {
@@ -983,3 +998,19 @@ appHelper.ShowMinusFileSizeMessage = function(){
 //     callBack.call();
 //   }
 // }
+
+appHelper.addItemToParamList = function(ctx, Listname, titleValue, callBack){
+  let oList = ctx
+    .get_web()
+    .get_lists()
+    .getByTitle(Listname);
+  let itemCreateInfo = new window.SP.ListItemCreationInformation();
+  let oListItem = oList.addItem(itemCreateInfo);
+  let title = titleValue.toString().trim().toUpperCase();
+  oListItem.set_item("Title", title);
+  oListItem.update();
+  ctx.load(oListItem);
+  ctx.executeQueryAsync(function () {
+    callBack(oListItem);
+  }, appSpHelper.writeError);
+}

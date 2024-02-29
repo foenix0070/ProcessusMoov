@@ -2,14 +2,15 @@ var showVehicule = showVehicule || {};
 var clientContext;
 showVehicule.clientContext;
 showVehicule.isSoldeImpact = 0;
-
+var Test = "";
+var ids = "";
 showVehicule.InitializePage = function () {
   showVehicule.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
 
   let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
   let Id = appHelper.GetQueryStringFromAjaxQuery('id');
-
+  ids = Id;
   appSpHelper.CheckAttachmentFolder(showVehicule.clientContext, Id, appHelper.ListName.Vehicule, null);
 
   appSpHelper.GetMyProperties(function () {
@@ -46,9 +47,19 @@ showVehicule.ShowForm = function (tacheId, demandeid) {
   const BtnMod = document.getElementById("BtnValidationModification");
   const BtnOK = document.getElementById("BtnValidationOK");
   const BtnNOK = document.getElementById("BtnValidationNOK");
+
+
+
   const WF = new WFManager(appHelper.AppCode.VEHICULE, appHelper.AppConstante.SiteUrl, appHelper.ListName.Validation, ACTIV_WORKFLOW);
 
   BtnOK.addEventListener("click", function () {
+
+
+    if(Test == "VALIDATION DU GESTIONNAIRE PARC AUTOMOBILE - ETAT VEHICULE"){
+      showVehicule.UpdateEtatVehicule();
+    }
+
+
     WF.goToNextTask(showVehicule.clientContext, tacheId, appHelper.AppCode.VEHICULE, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
       showVehicule.UpDateItemStatus(nextTask, demandeid, function () {
@@ -74,6 +85,45 @@ showVehicule.ShowForm = function (tacheId, demandeid) {
       });
     });
   });
+}
+
+showVehicule.UpdateEtatVehicule = function (){
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Vehicule);
+  let It = oList.getItemById(ids);
+
+  It.set_item("IndexDepart",  document.getElementById("TxtIndexDepart").value);
+  It.set_item("NiveauCarburantDepart", $('#CmbNiveauCarburant').val());
+  It.set_item("RSDepart", ($("#ChkRS").is(':checked') ? 'Oui':'Non' ));
+  It.set_item("CRICDepart", ($("#ChkCRIC").is(':checked') ? 'Oui':'Non' ));
+  It.set_item("MANIVELLEDepart", ($("#ChkMANIVELLE").is(':checked') ? 'Oui':'Non' ));
+  It.set_item("ENJOLIVEURSDepart", ($("#ChkENJOLIVEURS").is(':checked') ? 'Oui':'Non' ));
+  It.set_item("RADIODepart", ($("#ChkRADIO").is(':checked') ? 'Oui':'Non' ));
+  It.set_item("PIECESADMINISTRATIVESDepart", ($("#ChkPIECESADMINISTRATIVES").is(':checked') ? 'Oui':'Non' ));
+
+  It.update();
+  clientContext.load(It);
+  clientContext.executeQueryAsync(function () {
+
+  }, appSpHelper.writeError);
+}
+
+showVehicule.UpdateEtatRetourVehicule = function (){
+  let oList = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Vehicule);
+  let It = oList.getItemById(ids);
+
+  It.set_item("IndexRetour",  document.getElementById("TxtIndexDepart").value);
+  It.set_item("NiveauCarburantRetour", $('#CmbNiveauCarburant').val());
+  It.set_item("RSRetour", ($("#ChkRS").is(':checked') ? 'Oui':'Non' ));
+  It.set_item("CRICRetour", ($("#ChkCRIC").is(':checked') ? 'Oui':'Non' ));
+  It.set_item("MANIVELLERetour", ($("#ChkMANIVELLE").is(':checked') ? 'Oui':'Non' ));
+  It.set_item("ENJOLIVEURSRetour", ($("#ChkENJOLIVEURS").is(':checked') ? 'Oui':'Non' ));
+  It.set_item("RADIORetour", ($("#ChkRADIO").is(':checked') ? 'Oui':'Non' ));
+  It.set_item("PIECESADMINISTRATIVESRetour", ($("#ChkPIECESADMINISTRATIVES").is(':checked') ? 'Oui':'Non' ));
+
+  It.update();
+  clientContext.load(It);
+  clientContext.executeQueryAsync(function () {
+  }, appSpHelper.writeError);
 }
 
 showVehicule.UpDateItemStatusRejet = function (isRejet, demandeid, callBack) {
@@ -165,9 +215,6 @@ showVehicule.ShowUploadForm = function (demandeid, view) {
   appHelper.renderTemplate("tmpl_form_fichiers_attaches", "SectionDocumentsJoint", view);
   let FpUploadAttachement = document.getElementById('FpUploadAttachement');
   FpUploadAttachement.addEventListener('change', function () {
-
-
-
     if(appHelper.TestIsOverFileMinSize("FpUploadAttachement") ){
       appHelper.upploadAttachmentFiles("FpUploadAttachement", demandeid, appHelper.ListName.Vehicule, 0, function () {
         showVehicule.ShowFichierJoint(demandeid);
@@ -175,9 +222,9 @@ showVehicule.ShowUploadForm = function (demandeid, view) {
       }else{
         appHelper.ShowMinusFileSizeMessage();
       }
-
-
   });
+
+
   // FpUploadAttachement.addEventListener('change', (e) => {
   //   files = e.target.files;
   //   for (const file of files) {
@@ -305,11 +352,43 @@ showVehicule.ShowDetails = function (demandeid) {
         demandeuremail: It.get_item('DemandeurEmail') != null ? It.get_item('DemandeurEmail') : '',
         superieur: superieurName,
         motif: It.get_item('Motif') != null ? It.get_item('Motif') : '',
+
+
+        IndexDepart: It.get_item('IndexDepart') != null ? It.get_item('IndexDepart') : '',
+        NiveauCarburantDepart: It.get_item('NiveauCarburantDepart') != null ? It.get_item('NiveauCarburantDepart') : '',
+        RSDepart: It.get_item('RSDepart') != null ? It.get_item('RSDepart') : '',
+        CRICDepart: It.get_item('CRICDepart') != null ? It.get_item('CRICDepart') : '',
+        MANIVELLEDepart: It.get_item('MANIVELLEDepart') != null ? It.get_item('MANIVELLEDepart') : '',
+        ENJOLIVEURSDepart: It.get_item('ENJOLIVEURSDepart') != null ? It.get_item('ENJOLIVEURSDepart') : '',
+        RADIODepart: It.get_item('RADIODepart') != null ? It.get_item('RADIODepart') : '',
+        PIECESADMINISTRATIVESDepart: It.get_item('PIECESADMINISTRATIVESDepart') != null ? It.get_item('PIECESADMINISTRATIVESDepart') : '',
+
+        IndexRetour: It.get_item('IndexRetour') != null ? It.get_item('IndexRetour') : '',
+        NiveauCarburantRetour: It.get_item('NiveauCarburantRetour') != null ? It.get_item('NiveauCarburantRetour') : '',
+        RSRetour: It.get_item('RSRetour') != null ? It.get_item('RSRetour') : '',
+        CRICRetour: It.get_item('CRICRetour') != null ? It.get_item('CRICRetour') : '',
+        MANIVELLERetour: It.get_item('MANIVELLERetour') != null ? It.get_item('MANIVELLERetour') : '',
+        ENJOLIVEURSRetour: It.get_item('ENJOLIVEURSRetour') != null ? It.get_item('ENJOLIVEURSRetour') : '',
+        RADIORetour: It.get_item('RADIORetour') != null ? It.get_item('RADIORetour') : '',
+        PIECESADMINISTRATIVESRetour: It.get_item('PIECESADMINISTRATIVESRetour') != null ? It.get_item('PIECESADMINISTRATIVESRetour') : '',
+
+
         etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
+
       };
+
+
+
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
 
+      let tacheId = appHelper.GetQueryStringFromAjaxQuery('tacheid');
 
+      if(tacheId){
+        Test =  (It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle').toString().trim() : '');
+      if(   (It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle').toString().trim() : '') == "VALIDATION DU GESTIONNAIRE PARC AUTOMOBILE - ETAT VEHICULE"){
+        $('#SectionVehiculeSortie').removeClass('d-none');
+        }
+      }
 
     }
   }, appSpHelper.writeError);

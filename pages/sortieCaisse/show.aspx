@@ -39,7 +39,7 @@
                             <td style="text-align:left; font-weight: 700; font-size: 26px;"><h3><b>DEMANDE DE SORTIE DE CAISSE</h3></b></td>
                           </tr>
                         </div></br>
-                        
+
                         <table class="col-12">
                           <tr>
                             <td style="text-align:left;"><h4><b>NUMERO DE LA DEMANDE : {{id}}</h5></b></td>
@@ -89,7 +89,7 @@
                           Historique de validations
                         </h2>
                       </div>
-    
+
                       <div>
                         <div class="table-container">
                           <table>
@@ -163,7 +163,7 @@
                   {{#id}}
                   <div class="sect-bn"><button class="btn btn-warning btn-sm linkOffCanvasNavigation" data-url="/tools/pages/sortieCaisse/add.aspx?DID={{id}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" id="BtnModification" >Modifier la demande</button></div>
                   {{/id}}
-                  
+
                 </br>
                   <div>
                     <h3 style="color:#c50000 !important;">
@@ -207,11 +207,11 @@
 
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Objet :</td>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Motif du réglementent :</td>
                         <td style="text-align:left;">{{objetReglement}}</td>
                       </tr>
 
-                    
+
                   </table>
                 </script>
 

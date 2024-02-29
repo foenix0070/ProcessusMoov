@@ -129,12 +129,12 @@ appConge.TestFields = function () {
   // }
 
 
-  if (isImpact) {
-    if (parseInt(nbreJour) > App.CurrentUser.NombreJoursAcquis) {
-      str += "Votre solde de congé est inférieur à votre demande. <br>";
-      v = false; // Empêche l'envoi du formulaire
-    }
-  }
+  // if (isImpact) {
+  //   if (parseInt(nbreJour) > App.CurrentUser.NombreJoursAcquis) {
+  //     str += "Votre solde de congé est inférieur à votre demande. <br>";
+  //     v = false; // Empêche l'envoi du formulaire
+  //   }
+  // }
 
 
 
@@ -391,6 +391,9 @@ appConge.Add = function (callBack) {
   oListItem.update();
   clientContext.load(oListItem);
   clientContext.executeQueryAsync(function () {
+
+    appHelper.upploadAttachmentFiles("FileDoc", oListItem.get_id(), appHelper.ListName.Absence, 0, function () {
+
     const appUrl = "/pages/conge/show.aspx?ID=" + oListItem.get_id();
     let WF = new WFManager(
       appHelper.AppCode.CONGE,
@@ -402,6 +405,9 @@ appConge.Add = function (callBack) {
     if (callBack) {
       callBack(oListItem);
     }
+
+  }, appSpHelper.writeError);
+
   }, appSpHelper.writeError);
 
 };

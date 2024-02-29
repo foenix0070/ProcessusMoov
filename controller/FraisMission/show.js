@@ -51,6 +51,8 @@ showFraisMission.ShowForm = function (tacheId, demandeid) {
 
   BtnOK.addEventListener("click", function () {
     BtnOK.disabled = true;
+    BtnNOK.disabled = true;
+    BtnMod.disabled = true;
     WF.goToNextTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, function (nextTask) {
       console.log(nextTask);
       showFraisMission.UpDateItemStatus(nextTask, demandeid, function () {
@@ -60,7 +62,9 @@ showFraisMission.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnNOK.addEventListener("click", function () {
+    BtnOK.disabled = true;
     BtnNOK.disabled = true;
+    BtnMod.disabled = true;
     WF.goToRefusedTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, "REJETER", function (nextTask) {
       console.log(nextTask);
       showFraisMission.UpDateItemStatusRejet(true, demandeid, function () {
@@ -70,6 +74,8 @@ showFraisMission.ShowForm = function (tacheId, demandeid) {
   });
 
   BtnMod.addEventListener("click", function () {
+    BtnOK.disabled = true;
+    BtnNOK.disabled = true;
     BtnMod.disabled = true;
     WF.goToRefusedTask(showFraisMission.clientContext, tacheId, appHelper.AppCode.MISSION, demandeid, TxtCommentaire.value, "MODIFIER", function (nextTask) {
       console.log(nextTask);
@@ -127,10 +133,9 @@ showFraisMission.UpDateItemStatus = function (nextTask, demandeid, callBack) {
 showFraisMission.ShowFichierJoint = function (demandeid) {
 
   let view = {};
-
   let appName = appHelper.ListName.Mission;
   let id = demandeid;
-  let folderPath = `/Lists/${appName}/Attachments/${id}/`;
+  let folderPath = `Lists/${appName}/Attachments/${id}/`;
   console.log(folderPath);
   let attachmentFolder = clientContext.get_web().getFolderByServerRelativeUrl(folderPath);
   let attachmentFiles = attachmentFolder.get_files();
@@ -182,6 +187,7 @@ showFraisMission.ShowUploadForm = function (demandeid, view) {
 
 
   });
+
   // FpUploadAttachement.addEventListener('change', (e) => {
   //   files = e.target.files;
   //   for (const file of files) {
@@ -325,6 +331,7 @@ showFraisMission.ShowDetails = function (demandeid) {
         motif: It.get_item('Motif') != null ? It.get_item('Motif') : '',
         destination: It.get_item('Destination') != null ? It.get_item('Destination') : '',
         cout: mont,
+
         //cout: It.get_item('CoutTotal') != null ? It.get_item('CoutTotal') : '',
         demandeur: demandeurName,
         demandeuremail: It.get_item('DemandeurEmail') != null ? It.get_item('DemandeurEmail') : '',
@@ -332,6 +339,7 @@ showFraisMission.ShowDetails = function (demandeid) {
         caisse: It.get_item('CaissePaiement') != null ? It.get_item('CaissePaiement') : '',
         mode: It.get_item('ModePaiement') != null ? It.get_item('ModePaiement') : '',
         zone: It.get_item('ZoneGeographique') != null ? It.get_item('ZoneGeographique') : '',
+        bts: It.get_item('SiteBTS') != null ? It.get_item('SiteBTS') : '',
         etat: It.get_item('StatutLibelle') != null ? It.get_item('StatutLibelle') : ''
       };
       appHelper.renderTemplate("tmpl_form_details", "SectionDetails", view);
@@ -405,17 +413,12 @@ showFraisMission.ShowDetailsFraisMission = function (demandeid) {
       while (listItemEnumerator.moveNext()) {
 
         var oListItem = listItemEnumerator.get_current();
-        console.log("oListItem");
-        console.log(oListItem);
 
         //let nbre = ajouterEspacesEntreChiffres(oListItem.get_item('Nombre'));
         var forf = ajouterEspacesEntreChiffres(oListItem.get_item('Forfait'));
         var totalM = ajouterEspacesEntreChiffres(oListItem.get_item('Total'));
         var dtetdebut = oListItem.get_item('DateDebut').toLocaleDateString();
         var dtefin = oListItem.get_item('DateFin').toLocaleDateString();
-
-        console.log("forfait, total, debut, fin ");
-        console.log(forf, totalM, dtetdebut, dtefin);
 
         viewFrais.Frais.push({
           titre: oListItem.get_item('Title') != null ? oListItem.get_item('Title') : '',

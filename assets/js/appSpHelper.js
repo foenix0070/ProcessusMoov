@@ -4,7 +4,10 @@ appSpHelper.writeError = function (sender, args) {
   appHelper.Log(
     "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
   );
+
+
 };
+
 
 appSpHelper.GetPeoplePickerVal = function (peoplePickerId) {
   var finalusers = new Array();

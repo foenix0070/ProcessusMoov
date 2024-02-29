@@ -106,10 +106,21 @@
 
   </div>
 
+  <a href="#" class="link" id="aLinkShowHistorique"  style="text-decoration: none; "> Afficher mon historique </a>
+
+  <div id="DivHistoAbsence" class="d-none"> historique des absences </div>
+  <br>
+  <hr>
   <div id="DivErreurMessage"></div>
 
   <div class="input-optn">
     <button class="Submit" id="BtnSave" type="button"> Valider </button>
+
+    <a href="/tools/pages/suivie/suivie.aspx" class="linkModalNavigation" data-bs-toggle="modal" data-bs-target="#staticModalForm"  data-url="/sites/proc/tools/pages/suivie/suivie.aspx"
+    data-target="staticModalFormContainer" style="text-decoration: none; ">
+    Option de suivie
+  </a>
+
   </div>
 </form>
 
@@ -117,4 +128,30 @@
 
 <script type="text/javascript">
   appHelper.loadJSWithNameSpace("appAbsence", 'appAbsence', "controller/absence/add.js");
+</script>
+
+
+<script id="tmpl_table_absence" type="x-tmpl-mustache">
+  <div class="table-container">
+    <table class="table table-bordered table-responsive table-striped">
+      <thead>
+        <tr>
+          <th>Intitule</th>
+          <th>Date de depart</th>
+          <th>Nombre de jours</th>
+          <th>Etat</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#absences}}
+        <tr class="" >
+          <td>{{title}}</td>
+          <td>{{startdate}}</td>
+          <td>{{nbre}}</td>
+          <td><span class="{{classe}}">{{status}}</span></td>
+        </tr>
+        {{/absences}}
+      </tbody>
+    </table>
+  </div>
 </script>

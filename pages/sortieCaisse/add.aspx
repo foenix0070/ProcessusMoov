@@ -61,7 +61,7 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label"> Objet de reglement <span class="asterix">*</span></label>
+        <label class="form-label"> Motif du réglementent  <span class="asterix">*</span></label>
         <!--<input type="file" class="form-control" id="TxtReglement" placeholder="" />-->
         <textarea type="text" class="form-control" id="TxtObjetReglement" placeholder=""></textarea>
       </div>

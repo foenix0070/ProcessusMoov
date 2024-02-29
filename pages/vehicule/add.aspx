@@ -23,32 +23,49 @@
         <fieldset class="form-elts">
             <legend>Demande</legend>
 
-            <div class="mb-3">
-                <label class="form-label"> Objet de la demande <span class="asterix">*</span></label>
+            <div class="form-check">
+                <input class="form-check-input rdMotifPretVehicule" type="radio" name="rdMotifPretVehicule" id="rdMotifPretVehiculeMission" value="MISSION" >
+                <label class="form-check-label" for="rdMotifPretVehiculeMission">
+                    MISSION
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input rdMotifPretVehicule" type="radio" name="rdMotifPretVehicule" id="rdMotifPretVehiculeGarage" value="VEHICULE AU GARAGE">
+                <label class="form-check-label" for="rdMotifPretVehiculeGarage">
+                    VEHICULE AU GARAGE
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input rdMotifPretVehicule" type="radio" name="rdMotifPretVehicule" id="rdMotifPretVehiculeAUTRE" value="AUTRE">
+                <label class="form-check-label" for="rdMotifPretVehiculeAUTRE">
+                    AUTRE
+                </label>
+              </div>
+
+              <div id="DivVehiculeMotif" class="mb-3 d-none">
+                <label class="form-label"> Motif <span class="asterix">*</span></label>
                 <input type="text" class="form-control" name="TxtObjet" id="TxtObjet" placeholder="" />
-            </div>
+              </div>
+
+              <div class="row g-3">
+                <div class="col">
+                  <label class="form-label"> V&eacute;hicule utilis&eacute;  du <span class="asterix">*</span>:</label>
+                  <input type="date" id="TxtDateDebut" class="form-control">
+                </div>
+                <div class="col">
+                  <label class="form-label"> Au <span class="asterix">*</span>:</label>
+                  <input type="date" id="TxtDateFin" class="form-control">
+                </div>
+              </div>
 
             <div class="mb-3">
-                <label class="form-label"> Description <span class="asterix">*</span></label>
-                <textarea type="text" class="form-control" name="TxtMotif" id="TxtMotif" cols="30"
-                    placeholder=""></textarea>
+                <label class="form-label"> Objet de la demande <span class="asterix">*</span></label>
+                <textarea name="" class="form-control" name="TxtCommentaire" id="TxtCommentaire"  cols="30" rows="10"></textarea>
             </div>
 
             <div class="mb-3">
                 <label class="form-label"> Document justificatif</label>
                 <input type="file" multiple class="form-control fileUpload" id="FileDoc" placeholder="" />
-            </div>
-
-            <div class="mb-3">
-                <input id="TxtVerif" type="hidden" >
-            </div>
-
-            <div class="mb-3">
-                <input id="TxtID" type="hidden" >
-            </div>
-
-            <div class="mb-3">
-                <input id="TxtRef" type="hidden">
             </div>
 
         </fieldset>

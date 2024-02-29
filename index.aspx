@@ -1,7 +1,6 @@
 ﻿<%@ Assembly Name="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
   <%@ Import Namespace="Microsoft.SharePoint.WebPartPages" %>
-    <%@ Register Tagprefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls"
-      Assembly="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
+    <%@ Register Tagprefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
       <%@ Register Tagprefix="Utilities" Namespace="Microsoft.SharePoint.Utilities"
         Assembly="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
         <%@ Import Namespace="Microsoft.SharePoint" %>
@@ -44,6 +43,7 @@
                 <link rel="stylesheet" href="/sites/proc/tools/assets/css/reset.css?t=1" />
                 <link rel="stylesheet" href="/sites/proc/tools/assets/css/font-awesome.css?t=1" />
                 <link rel="stylesheet" href="/sites/proc/tools/assets/plugins/DataTables/datatables.min.css?t=1">
+                <link rel="stylesheet" href="/sites/proc/tools/assets/plugins/chosen/chosen.min.css">
                 <link rel="stylesheet" href="/sites/proc/tools/assets/css/style.css?t=1" />
                 <!-- END STYLE -->
 
@@ -54,8 +54,11 @@
                 <script src="/sites/proc/tools/assets/js/bootstrap.bundle.min.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/bootbox.all.min.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/plugins/DataTables/datatables.min.js?t=1"></script>
+                <script src="/sites/proc/tools/assets/plugins/chosen/chosen.jquery.min.js"></script>
+                <script src="/sites/proc/tools/assets/plugins/bootbox/bootbox.all.min.js"></script>
                 <script src="/sites/proc/tools/assets/js/workflow_template.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/SpGroupConstante.js?t=1"></script>
+                <script src="/sites/proc/tools/assets/js/appUIControle.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/extensions.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/appSpHelper.js?t=1"></script>
                 <script src="/sites/proc/tools/assets/js/spFileHelper.js?t=1"></script>
@@ -67,11 +70,13 @@
                 <!--END SCRIPT -->
 
                 <style>
+                  .modal-backdrop.show {
+                    display: none;
+                  }
 
-                .modal-backdrop.show {
-display: none;
-}
+
                 </style>
+
 
               </head>
 
@@ -89,9 +94,16 @@ display: none;
                           <img id="btn" data-bs-toggle="offcanvas" data-bs-target="#ffcSideMenu"
                             aria-controls="ffcSideMenu" src="/sites/proc/tools/assets/img/logo.jpeg"
                             alt="logo-sans-fond" width="80" height="" />
-                          <a href="" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                            Acceuil
-                          </a>
+
+                            <a href="/" class="d-flex align-items-center ml-2 mb-lg-0 text-dark text-decoration-none ps-2">
+                              Retourner sur l'intranet
+                            </a>
+
+
+                            <a href="" class="d-flex align-items-center ml-2 mb-lg-0 text-dark text-decoration-none ps-2">
+                              Acceuil
+                            </a>
+
                         </div>
                         <!-- END TOP MENU -->
 
@@ -101,7 +113,7 @@ display: none;
                           <div class="offcanvas-header">
                             <h5 id="ffcMainFormTitle">Demande</h5>
                             <button type="button" class="btn-close " data-bs-dismiss="offcanvas"
-                              aria-label="Close"></button>
+                              aria-label="Close"><i class="fa fa-times fa-2x"></i></button>
                           </div>
                           <div class="offcanvas-body" id="ffcMainFormContainer"></div>
                         </div>
@@ -114,7 +126,7 @@ display: none;
                           <div class="offcanvas-header">
                             <h5 class="offcanvas-title" id="ffcSideMenuLabel">Menu</h5>
                             <button type="button" class="btn-close " data-bs-dismiss="offcanvas"
-                              aria-label="Close"></button>
+                              aria-label="Close"><i class="fa fa-times fa-2x"></i></button>
                           </div>
                           <div class="offcanvas-body">
                             <div class="accordion accordion-flush" id="accSideMainMenu">
@@ -131,7 +143,7 @@ display: none;
                             <div class="modal-content">
                               <div class="modal-header">
                                 <h5 class="modal-title" id="staticModalFormLabel"></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-times fa-2x"></i></button>
                               </div>
                               <div class="modal-body">
 <div id="staticModalFormContainer" ></div>
