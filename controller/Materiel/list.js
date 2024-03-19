@@ -11,19 +11,19 @@ ListMateriel.InitializePage = function () {
   let x = document.getElementById('h2Titre');
   switch(T){
     case 'E' :  ListMateriel.ListMateriel('ENCOURS');
-                x.innerHTML = " Listes des demandes de materiel en cours";
+                x.innerHTML = " Liste des demandes de materiel en cours";
     break;
     case 'V' :  ListMateriel.ListMateriel('VALIDEE');
-    x.innerHTML = " Listes des demandes de materiel validées";
+    x.innerHTML = " Liste des demandes de materiel validées";
     break;
     case 'R' :  ListMateriel.ListMateriel('REJETEE');
-    x.innerHTML = " Listes des demandes de materiel rejétées";
+    x.innerHTML = " Liste des demandes de materiel rejétées";
     break;
     case 'M' :  ListMateriel.ListMateriel('DEMANDEMODIFICATION');
-    x.innerHTML = " Listes des demandes de materiel à modifier";
+    x.innerHTML = " Liste des demandes de materiel à modifier";
     break;
     default : ListMateriel.ListMateriel('ENCOURS');
-    x.innerHTML = " Listes des demandes de materiel en cours";
+    x.innerHTML = " Liste des demandes de materiel en cours";
     break;
   }
 

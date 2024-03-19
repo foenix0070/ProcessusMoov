@@ -15,7 +15,6 @@ appReprise.InitializePage = function () {
                 document.getElementById("TxtEmail").value = App.CurrentUser.Email;
             })
         })
-
     });
 
     const BtnSave = document.querySelector("#BtnSave");
@@ -186,12 +185,8 @@ appReprise.UpDateStatus = function (listdemande, demandeid, callBack) {
             break;
     }
 
-    console.log("List : " +list);
-
     let oList1 = clientContext.get_web().get_lists().getByTitle(list);
     let It1 = oList1.getItemById(demandeid);
-
-    console.log("ID UPDATE : " + demandeid);
 
     if (It1) {
         console.log("test");

@@ -16,7 +16,7 @@ MoovTools.InitializePage = function () {
   MoovTools.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
 
-  appHelper.renderTemplate('tmpl_side_main_menu item', 'accSideMainMenuItem', main.view1);
+  appHelper.renderTemplate('tmpl_side_main_menu_item', 'accSideMainMenuItem', main.view1);
 
   App.LoadUser(function (CurrentUser) {
 

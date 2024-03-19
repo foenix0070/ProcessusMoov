@@ -680,3 +680,17 @@ tbody tr {
   color: red;
   font-size: 20px;
 }
+
+.aNavigationLinkDdwn {
+  color: #212529!important;
+  text-decoration: none!important;
+  display: block!important;
+
+}
+
+.aNavigationLinkDdwn:hover{
+  background-color: #007bff!important;
+  color: white!important;
+  text-decoration: none!important;
+  display: block!important;
+}

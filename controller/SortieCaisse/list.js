@@ -11,19 +11,19 @@ ListSortieCaisse.InitializePage = function () {
   let x = document.getElementById('h2Titre');
   switch(T){
     case 'E' :  ListSortieCaisse.ListSortieCaisse('ENCOURS');
-                x.innerHTML = " Listes des demandes de sortie de caisse en cours";
+                x.innerHTML = " Liste des demandes de sortie de caisse en cours";
     break;
     case 'V' :  ListSortieCaisse.ListSortieCaisse('VALIDEE');
-    x.innerHTML = " Listes des demandes de sortie de caisse validées";
+    x.innerHTML = " Liste des demandes de sortie de caisse validées";
     break;
     case 'R' :  ListSortieCaisse.ListSortieCaisse('REJETEE');
-    x.innerHTML = " Listes des demandes de sortie de caisse rejétées";
+    x.innerHTML = " Liste des demandes de sortie de caisse rejétées";
     break;
     case 'M' :  ListSortieCaisse.ListSortieCaisse('DEMANDEMODIFICATION');
-    x.innerHTML = " Listes des demandes de sortie de caisse à modifier";
+    x.innerHTML = " Liste des demandes de sortie de caisse à modifier";
     break;
     default : ListSortieCaisse.ListSortieCaisse('ENCOURS');
-    x.innerHTML = " Listes des demandes de sortie de caisse en cours";
+    x.innerHTML = " Liste des demandes de sortie de caisse en cours";
     break;
   }
 

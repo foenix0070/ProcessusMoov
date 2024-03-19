@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div class="row">
 
   <div class="col-12">
@@ -201,7 +203,7 @@
 <script id="tmpl_form_details" type="x-tmpl-mustache">
                 <div class="head-titre">
                   <h2>
-                    Details du demandeur
+                    D&eacute;tails du demandeur
                   </h2>
                 </div></br>
                 <table>
@@ -222,7 +224,7 @@
 
                   <div class="head-titre">
                     <h2>
-                      Details de la demande
+                      D&eacute;tails de la demande
                     </h2>
                   </div>
                   {{#id}}
@@ -244,7 +246,7 @@
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Date de depart :</td>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Date de d&eacute;part :</td>
                         <td style="text-align:left;">{{datedepart}}</td>
                       </tr>
                       <tr>
@@ -261,7 +263,7 @@
 <br><br>
                   <div class="head-titre">
                     <h2>
-                      Etat du vehicule au depart
+                      Etat du v&eacute;hicule au d&eacute;part
                     </h2>
                   </div>
                   <table class="table">

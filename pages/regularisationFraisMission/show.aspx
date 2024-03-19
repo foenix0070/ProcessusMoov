@@ -11,7 +11,8 @@
             <%@ Register Tagprefix="WebPartPages" Namespace="Microsoft.SharePoint.WebPartPages"
               Assembly="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 
-
+              <meta charset="utf-8">
+              <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
               <div class="row">
 
@@ -61,7 +62,7 @@
                             <td style="text-align:left;"><h4><b>NUMERO DE LA DEMANDE : {{id}}</h5></b></td>
                           </tr>
                             <tr class="mb-2">
-                              <td style="text-align:left;">Creer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
+                              <td style="text-align:left;">Créer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
                             </tr>
                         </table><br/>
                       </div>
@@ -147,7 +148,7 @@
               <script id="tmpl_form_details" type="x-tmpl-mustache">
                   <div class="head-titre">
                     <h2>
-                      Details du demandeur
+                      Détails du demandeur
                     </h2>
                   </div></br>
                   <table>
@@ -161,14 +162,14 @@
                       <td style="text-align:left;">{{demandeuremail}}</td>
                     </tr>
                     <tr>
-                      <td style="text-align:left;" class="fw-bold" width="200px">Superieur hierarchique </td>
+                      <td style="text-align:left;" class="fw-bold" width="200px">Supérieur hiérarchique </td>
                       <td style="text-align:left;"> {{superieur}}  </td>
                     </tr>
                   </table></br>
 
                   <div class="head-titre">
                     <h2>
-                      Details de la demande
+                      Détails de la demande
                     </h2>
                   </div>
                   {{#id}}
@@ -189,7 +190,7 @@
                       <td style="text-align:left;"><a href="tools/pages/fraisMission/show.aspx?id={{missionid}}"  class="linkMainNavigation" data-url="tools/pages/fraisMission/show.aspx?id={{missionid}}" data-target="DivMainPageContainer">{{mission}}</a></td>
                     </tr>
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="300px" >Intitule :</td>
+                        <td style="text-align:left;" class="fw-bold" width="300px" >Intitulé :</td>
                         <td style="text-align:left;">{{title}}</td>
                       </tr>
 
@@ -199,7 +200,7 @@
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="300px">Date de debut :</td>
+                        <td style="text-align:left;"class="fw-bold" width="300px">Date de début :</td>
                         <td style="text-align:left;">{{datedepart}}</td>
                       </tr>
 

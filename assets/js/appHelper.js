@@ -268,27 +268,39 @@ appHelper.startSkeleton = function (container) {
 
 appHelper.LisetenOffCanvas = function (offCavasId, openCallBack, closeCallBack) {
 
-  document.addEventListener('shown.bs.offcanvas', function (event) {
-    var offcanvas = event.target;
-    var offcanvasId = offcanvas.getAttribute('id');
+  let offcanvasElement = document.getElementById(offCavasId);
+  let isTheOffcanvasActuallyOffCanvasRightNow =  offcanvasElement.classList.contains('show');
 
-    if (offcanvasId == offCavasId) {
-      if (openCallBack) {
-        openCallBack();
-      }
-    }
+if(isTheOffcanvasActuallyOffCanvasRightNow){
 
-  });
+  if (openCallBack) {
+    openCallBack();
+  }
+}
+else{
+  if (closeCallBack) {
+          closeCallBack();
+        }
+}
+  // document.addEventListener('shown.bs.offcanvas', function (event) {
+  //   var offcanvas = event.target;
+  //   var offcanvasId = offcanvas.getAttribute('id');
+  //   if (offcanvasId == offCavasId) {
+  //     if (openCallBack) {
+  //       openCallBack();
+  //     }
+  //   }
+  // });
 
-  document.addEventListener('hidden.bs.offcanvas', function (event) {
-    var offcanvas = event.target;
-    var offcanvasId = offcanvas.getAttribute('id');
-    if (offcanvasId == offCavasId) {
-      if (closeCallBack) {
-        closeCallBack();
-      }
-    }
-  });
+  // document.addEventListener('hidden.bs.offcanvas', function (event) {
+  //   var offcanvas = event.target;
+  //   var offcanvasId = offcanvas.getAttribute('id');
+  //   if (offcanvasId == offCavasId) {
+  //     if (closeCallBack) {
+  //       closeCallBack();
+  //     }
+  //   }
+  // });
 
 };
 
@@ -298,13 +310,28 @@ appHelper.navigation = function (container, url) {
   sessionStorage.setItem("ajax_url", url);
   container = container ? container : "DivMainPageContainer";
 
+  let  reqHeaders = new Headers();
+  reqHeaders.append('Content-Type','text/plain; charset=UTF-8');
+  reqHeaders.append('Accept','text/plain; charset=UTF-8');
+
+
+  let content = document.getElementById(container);
+  content.innerText = "";
   appHelper.startSkeleton(container);
-  fetch(url)
-    .then((response) => response.text())
+
+  fetch(url, reqHeaders)
+
+    .then((response) =>{ console.log(response); return response.arrayBuffer()})
     .then((data) => {
+
+      const decoder = new TextDecoder('UTF-8');
+       data = decoder.decode(data);
+
+       console.log(data);
+
+
       let elm = document.getElementById(container);
       document.getElementById(container).innerHTML = data;
-
       Array.from(elm.querySelectorAll("script"))
         .forEach(oldScriptEl => {
           const newScriptEl = document.createElement("script");
@@ -331,6 +358,10 @@ appHelper.navigation2 = function (container, url) {
   sessionStorage.setItem("ajax_url", url);
   container = container ? container : "DivMainPageContainer";
 
+
+  let content = document.getElementById(container);
+  content.innerText = "";
+
   appHelper.startSkeleton(container);
   fetch(url)
     .then((response) => response.text())
@@ -348,46 +379,69 @@ appHelper.navigation2 = function (container, url) {
           newScriptEl.appendChild(scriptText);
           oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
         });
-
     })
     .catch((error) => {
       appHelper.Log(error, appHelper.LogType.ERROR, "Une erreur s'est produite lors de la navigation: ");
-
     });
 };
 
 appHelper.listenNavigationOffCanvas = function (lienNavigation, offCanvasid) {
+  lienNavigation = ".aNavigationLinkDdwn";
 
-  document.addEventListener("click", function (event) {
-    App.Counter++;
-    var target = event.target;
-    if (target) {
+  $("body")
+    .off("click", lienNavigation)
+    .on("click", lienNavigation, function () {
+      let $that = $(this);
+      let container = $that.attr("data-target");
+      let url = $that.attr("data-url");
 
-      let container = false;
-      let url = false;
-      appHelper.Log(target.classList, lienNavigation, '_8_');
-      if (target.classList.contains(lienNavigation)) {
+      console.log('1', container, url);
 
-        event.preventDefault(); // Empêcher le comportement par défaut du lien
-        appHelper.LisetenOffCanvas(offCanvasid, function () {
-
+      appHelper.LisetenOffCanvas(
+        offCanvasid,
+        function () {
           try {
-            container = target.getAttribute("data-target");
-          } catch (e) { appHelper.Log(e, appHelper.LogType.ERROR, "appHelper.listenNavigationOffCanvas"); }
+            console.log('3', container, url);
+            appHelper.navigation(container, url);
+          } catch (e) {
+            appHelper.Log(
+              e,
+              appHelper.LogType.ERROR,
+              "appHelper.listenNavigationOffCanvas"
+            );
+          }
+          return false;
+        },
+        null
+      );
+    });
 
-          try {
-            url = target.getAttribute("data-url");
-            url = url;
-          } catch (e) { appHelper.Log(e, appHelper.LogType.ERROR, "appHelper.listenNavigationOffCanvas"); }
+  //   document.addEventListener("click", function (event) {
+  // let ids = event.target.getAttribute("id");
+  //     let target = event.target;
+  //     console.log(target);
+  //     if (target) {
+  //       let container = false;
+  //       let url = false;
+  //       if (target.classList.contains(lienNavigation)) {
+  //         appHelper.LisetenOffCanvas(offCanvasid, function () {
+  //           try {
+  //             container = target.getAttribute("data-target");
+  //           } catch (e) { appHelper.Log(e, appHelper.LogType.ERROR, "appHelper.listenNavigationOffCanvas"); }
+  //           try {
+  //             url = target.getAttribute("data-url"); url = url;
+  //           } catch (e) { appHelper.Log(e, appHelper.LogType.ERROR, "appHelper.listenNavigationOffCanvas"); }
+  //           console.log(container, target);
+  //           console.log(container, url);
+  //           console.log(target.getAttribute("id") , ids );
+  //           appHelper.navigation(container, url);
+  //           event.preventDefault(); // Empêcher le comportement par défaut du lien
+  //         }, null)
+  //       }
+  //     }
+  //   });
 
-          appHelper.Log(container, url);
-          appHelper.navigation(container, url);
-
-        }, null)
-
-      }
-    }
-  });
+  $;
 };
 
 

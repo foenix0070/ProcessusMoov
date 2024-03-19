@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div class="row mt-4">
 
   <div class="col-12">
@@ -11,7 +13,7 @@
       <div class="progress-container">
         <div class="steps">
           <!-- <div class="step active">Toutes mes demandes</div> -->
-          <div class="step active" data-action="A" data-target="DivDemandeENTTableShow">En attente</div>
+          <div class="step active" data-action="A" data-target="DivDemandeENTTableShow">Nouveau</div>
           <div class="step" data-action="E" data-target="DivDemandeETableShow">En cours</div>
           <div class="step" data-action="M" data-target="DivDemandeMTableShow">A modifier</div>
           <div class="step" data-action="V" data-target="DivDemandeVTableShow">Approuv&eacute;es</div>
@@ -89,8 +91,8 @@
       <table class="table table-bordered table-responsive table-striped">
         <thead>
           <tr>
-            <th>Reference</th>
-            <th>Createur</th>
+            <th>R&eacute;f&eacute;rence</th>
+            <th>Cr&eacute;ateur</th>
             <th>Date</th>
             <th>Type</th>
             <th>Demande</th>
@@ -139,7 +141,7 @@
           step.classList.add('active');
       }
 
-      
+
     });
   });
 
@@ -151,7 +153,7 @@
       step.addEventListener('click', function() {
 
           const target = step.getAttribute('data-target');
-          
+
           contenu.id = `contenu-${target}`;
 
           steps.forEach(s => s.classList.remove('active'));
@@ -166,19 +168,19 @@
     const steps = document.querySelectorAll('.step');
     //const content = document.querySelector('.content');
     let contenu = document.getElementById("contenu");
-  
+
     steps.forEach((step, index) => {
       step.addEventListener('click', () => {
         steps.forEach(s => s.classList.remove('active'));
         step.classList.add('active');
-  
+
         loadStepContent(index);
       });
     });
-  
+
     function loadStepContent(stepIndex) {
       let stepContent = '';
-  
+
       switch (stepIndex) {
         case 0:
           stepContent += `<div id="DivDemandeETableShow">
@@ -215,8 +217,8 @@
             </div>
           </div>`;
       }
-  
-  
+
+
       contenu.innerHTML = stepContent;
     }
   </script>

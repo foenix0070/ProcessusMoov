@@ -11,19 +11,19 @@ ListRegularisationSortieCaisse.InitializePage = function () {
   let x = document.getElementById('h2Titre');
   switch(T){
     case 'E' :  ListRegularisationSortieCaisse.ListRegularisationSortieCaisse('ENCOURS');
-                x.innerHTML = " Listes des demandes de regularisation de sortie de caisse en cours";
+                x.innerHTML = " Liste des demandes de regularisation de sortie de caisse en cours";
     break;
     case 'V' :  ListRegularisationSortieCaisse.ListRegularisationSortieCaisse('VALIDEE');
-    x.innerHTML = " Listes des demandes de regularisation de sortie de caisse validées";
+    x.innerHTML = " Liste des demandes de regularisation de sortie de caisse validées";
     break;
     case 'R' :  ListRegularisationSortieCaisse.ListRegularisationSortieCaisse('REJETEE');
-    x.innerHTML = " Listes des demandes de regularisation de sortie de caisse rejétées";
+    x.innerHTML = " Liste des demandes de regularisation de sortie de caisse rejétées";
     break;
     case 'M' :  ListRegularisationSortieCaisse.ListRegularisationSortieCaisse('DEMANDEMODIFICATION');
-    x.innerHTML = " Listes des demandes de regularisation de sortie de caisse à mofifier";
+    x.innerHTML = " Liste des demandes de regularisation de sortie de caisse à mofifier";
     break;
     default : ListRegularisationSortieCaisse.ListRegularisationSortieCaisse('ENCOURS');
-    x.innerHTML = " Listes des demandes de regularisation de sortie de caisse en cours";
+    x.innerHTML = " Liste des demandes de regularisation de sortie de caisse en cours";
     break;
   }
 

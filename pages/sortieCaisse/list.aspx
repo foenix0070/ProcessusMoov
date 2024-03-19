@@ -27,7 +27,7 @@
           <tr>
             <th>N*</th>
             <th>Montant</th>
-            <th>Payer A</th>
+            <th>Payer à</th>
             <th>Objet de la sortie</th>
             <th>Etat</th>
           </tr>

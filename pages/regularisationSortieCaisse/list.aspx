@@ -2,7 +2,7 @@
 <div class="col-12">
     <div class="head-titre">
       <h2 id="h2Titre">
-       Listes des demandes
+       Liste des demandes
       </h2>
     </div>
 

@@ -1,10 +1,12 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <form action="" method="" class="form" id="form">
   <div class="elts">
 
     <fieldset class="form-elts">
       <legend>Demandeur</legend>
       <div class="mb-3">
-        <label class="form-label">Nom & Prenoms <span class="asterix">*</span></label>
+        <label class="form-label">Nom & Prenom(s) <span class="asterix">*</span></label>
         <input type="text" id="TxtNom" disabled class="  form-control" value="" placeholder="" />
       </div>
 
@@ -47,7 +49,7 @@
   </div>
 
   <div class="mb-3">
-    <label class="form-label"> Solde a reverser <span class="asterix">*</span></label>
+    <label class="form-label"> Solde à reverser <span class="asterix">*</span></label>
     <input type="text" class="form-control" id="TxtSolde" placeholder="" />
   </div>
 

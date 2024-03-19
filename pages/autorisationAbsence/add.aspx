@@ -1,10 +1,12 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <form action="" method="" class="form" id="form">
   <div class="elts">
 
     <fieldset class="form-elts">
       <legend>Demandeur</legend>
       <div class="mb-3">
-        <label class="form-label">Nom & Prenoms <span class="asterix">*</span></label>
+        <label class="form-label">Nom & Prénom(s) <span class="asterix">*</span></label>
         <input type="text" id="TxtNom" disabled class="  form-control" value="" placeholder="" />
       </div>
 
@@ -21,9 +23,9 @@
     </fieldset>
 
     <fieldset class="form-elts">
-      <legend>Interimaire</legend>
+      <legend>Intérimaire</legend>
       <div class="mb-3">
-        <label class="form-label"> Interimaire</label>
+        <label class="form-label"> Intérimaire</label>
         <div id="plePickerInterimaireDiv"></div>
       </div>
 
@@ -43,7 +45,7 @@
       </div>
 
       <span class="note">
-        L'interim ne concerne que les validations dans Moovinside.
+        L'intérim ne concerne que les validations dans Moovinside.
         Toutes vos taches &aacute; venir seront automatiquement r&eacute;-affecct&eacute; &aacute;
         l'interimaire durant la periode de la mission
       </span>

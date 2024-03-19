@@ -11,19 +11,19 @@ ListVehicule.InitializePage = function () {
   let x = document.getElementById('h2Titre');
   switch(T){
     case 'E' :  ListVehicule.ListVehicule('ENCOURS');
-                x.innerHTML = " Listes des demandes de vehicule en cours";
+                x.innerHTML = " Liste des demandes de véhicule en cours";
     break;
     case 'V' :  ListVehicule.ListVehicule('VALIDEE');
-    x.innerHTML = " Listes des demandes de vehicule validées";
+    x.innerHTML = " Liste des demandes de véhicule validées";
     break;
     case 'R' :  ListVehicule.ListVehicule('REJETEE');
-    x.innerHTML = " Listes des demandes de vehicule rejétées";
+    x.innerHTML = " Liste des demandes de véhicule rejétées";
     break;
     case 'M' :  ListVehicule.ListVehicule('DEMANDEMODIFICATION');
-    x.innerHTML = " Listes des demandes de vehicule à modifier";
+    x.innerHTML = " Liste des demandes de véhicule à modifier";
     break;
     default : ListVehicule.ListVehicule('ENCOURS');
-    x.innerHTML = " Listes des demandes de vehicule en cours";
+    x.innerHTML = " Liste des demandes de véhicule en cours";
     break;
   }
 

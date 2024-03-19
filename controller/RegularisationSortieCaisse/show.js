@@ -129,14 +129,14 @@ showRegularisationSortieCaisse.ShowFichierJoint = function (demandeid) {
   let appName = appHelper.ListName.RegularisationSortieCaisse;
   let id = demandeid;
   let folderPath = `Lists/${appName}/Attachments/${id}/`;
-  console.log(folderPath);
+
   let attachmentFolder = clientContext.get_web().getFolderByServerRelativeUrl(folderPath);
   let attachmentFiles = attachmentFolder.get_files();
   clientContext.load(attachmentFiles);
   clientContext.executeQueryAsync(function () {
     if (attachmentFiles) {
       if (attachmentFiles.get_count() > 0) {
-        console.log('111');
+
         view.fichiers = [];
 
         for (var i = 0; i < attachmentFiles.get_count(); i++) {
@@ -345,7 +345,6 @@ showRegularisationSortieCaisse.ShowFirst = function (demandeid) {
 
 
     if (It) {
-      console.log("test showFirst");
 
       let createdValue = It.get_item('Created');
       let formattedTime = '';

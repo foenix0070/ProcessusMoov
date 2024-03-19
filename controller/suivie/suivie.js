@@ -31,7 +31,7 @@ appSuivieDemande.Save = function () {
     }
 
     oListItem.set_item("Title", document.getElementById("TxtTelephone").value);
-    oListItem.set_item("Demandeur", SP.FieldUservalue.fromUser(App.CurrentUser.Login));
+    oListItem.set_item("Demandeur",  SP.FieldUserValue.fromUser(App.CurrentUser.Login));
     if (document.getElementById("ChkAllStepProcessus").checked == true) {
       oListItem.set_item("isAllStepProcessusAffected", true);
     } else {
@@ -71,7 +71,7 @@ appSuivieDemande.TestFields = function () {
 
   // Vérifier si les champs obligatoires sont vides
   if (tel === "") {
-    str += "Veuillez remplir tous le champs téléphone. <br>";
+    str += "Veuillez remplir le champ téléphone. <br>";
     v = false; // Empêche l'envoi du formulaire
   }
 

@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <form action="" method="" class="form" id="form">
   <div class="elts">
 
@@ -43,16 +45,16 @@
       </div>
 
       <input type="radio" name="Etat" value="Mission effectuee" id="RadSucces" checked="checked">
-      <label for="RadSucces">Mission effectu&eacute;e</label> &nbsp;&nbsp;&nbsp;
+      <label for="RadSucces">Mission éffectu&eacute;e</label> &nbsp;&nbsp;&nbsp;
       <input type="radio" name="Etat" value="Mission non effectuee" id="RadEchec">
-      <label for="RadEchec">Mission non effectuee</label><br><br>
+      <label for="RadEchec">Mission non éffectuée</label><br><br>
 
       <h4>REMBOURSEMENT DES FRAIS COMPLEMENTAIRES</h4></br>
 
       <table id="TableFraisMission">
         <tr>
           <th>Libelle</th>
-          <th>Date de debut</th>
+          <th>Date de début</th>
           <th>Date de fin</th>
           <th>Nombre</th>
           <th>Forfait</th>

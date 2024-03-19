@@ -225,7 +225,6 @@ appRegularisationFraisMission.Add = function (callBack) {
                 if (boutonsRadio[i].checked) {
                     var valeurSelectionnee = boutonsRadio[i].value;
                     oListItem.set_item("Etat", valeurSelectionnee);
-                    console.log("Bouton radio sélectionné : ", valeurSelectionnee);
                     break; // Sortir de la boucle une fois le bouton trouvé
                 }
             }
@@ -454,7 +453,7 @@ appRegularisationFraisMission.UpDateStatusFraisMission = function (demandeid, ca
     let oList1 = clientContext.get_web().get_lists().getByTitle(appHelper.ListName.Mission);
     let It1 = oList1.getItemById(demandeid);
 
-    console.log("ID UPDATE : " + demandeid);
+
 
     if (It1) {
         console.log("test");

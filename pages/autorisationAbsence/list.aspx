@@ -1,8 +1,9 @@
-
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div class="col-12">
   <div class="head-titre">
     <h2 id="h2Titre">
-     Listes des demandes
+     Liste des demandes
     </h2>
   </div>
 
@@ -26,9 +27,9 @@
       <thead>
         <tr>
           <th>N*</th>
-          <th>Date de depart</th>
+          <th>Date de départ</th>
           <th>Nombre de jours</th>
-          <th>Intitule</th>
+          <th>Intitulé</th>
           <th>Etat</th>
         </tr>
       </thead>

@@ -11,7 +11,8 @@
             <%@ Register Tagprefix="WebPartPages" Namespace="Microsoft.SharePoint.WebPartPages"
               Assembly="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 
-
+              <meta charset="utf-8">
+              <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
               <div class="row">
 
@@ -66,7 +67,7 @@
                       <td style="text-align:left;"><h4><b>NUMERO DE LA DEMANDE : {{id}}</h5></b></td>
                     </tr>
                       <tr class="mb-2">
-                        <td style="text-align:left;">Creer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
+                        <td style="text-align:left;">Créer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
                       </tr>
                   </table><br/>
                 </div>
@@ -153,7 +154,7 @@
               <script id="tmpl_form_details" type="x-tmpl-mustache">
                   <div class="head-titre">
                     <h2>
-                      Details du demandeur
+                      Détails du demandeur
                     </h2>
                   </div></br>
                   <table>
@@ -167,7 +168,7 @@
                       <td style="text-align:left;">{{demandeuremail}}</td>
                     </tr>
                     <tr>
-                      <td style="text-align:left;" class="fw-bold" width="200px">Superieur hierarchique </td>
+                      <td style="text-align:left;" class="fw-bold" width="200px">Supérieur hiérarchique </td>
                       <td style="text-align:left;"> {{superieur}}  </td>
                     </tr>
                   </table></br>
@@ -178,7 +179,7 @@
 
                   <div class="head-titre">
                     <h2>
-                      Details de la demande
+                      Détails de la demande
                     </h2>
                   </div>
                   {{#id}}
@@ -200,7 +201,7 @@
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="300px">Date de debut :</td>
+                        <td style="text-align:left;"class="fw-bold" width="300px">Date de début :</td>
                         <td style="text-align:left;">{{datedepart}}</td>
                       </tr>
 
@@ -225,7 +226,7 @@
                         <td style="text-align:left;">{{cout}}</td>
                       </tr>
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="300px">Zone geographique :</td>
+                        <td style="text-align:left;"class="fw-bold" width="300px">Zone géographique :</td>
                         <td style="text-align:left;">{{zone}}</td>
                       </tr>
                       <tr>
@@ -249,10 +250,10 @@
               </br>
               <table class='table table-bordered table-condensed'>
                 <thead>
-                  <th>Libelle</th>
-                  <th>Date de debut</th>
+                  <th>Libellé</th>
+                  <th>Date de début</th>
                   <th>Date de fin</th>
-                  <th>Nombre de jour</th>
+                  <th>Nombre de jours</th>
                   <th>Forfait</th>
                   <th>Montant total</th>
                 </thead>

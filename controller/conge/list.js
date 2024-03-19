@@ -11,19 +11,19 @@ ListConge.InitializePage = function () {
   let x = document.getElementById('h2Titre');
   switch(T){
     case 'E' :  ListConge.ListConge('ENCOURS');
-                x.innerHTML = " Listes des demandes de congés en cours";
+                x.innerHTML = " Liste des demandes de congés en cours";
     break;
     case 'V' :  ListConge.ListConge('VALIDEE');
-    x.innerHTML = " Listes des demandes de congés validées";
+    x.innerHTML = " Liste des demandes de congés validées";
     break;
     case 'R' :  ListConge.ListConge('REJETEE');
-    x.innerHTML = " Listes des demandes de congés rejétées";
+    x.innerHTML = " Liste des demandes de congés rejétées";
     break;
     case 'M' :  ListConge.ListConge('DEMANDEMODIFICATION');
-    x.innerHTML = " Listes des demandes de congés à modifier";
+    x.innerHTML = " Liste des demandes de congés à modifier";
     break;
     default : ListConge.ListConge('ENCOURS');
-    x.innerHTML = " Listes des demandes de congés en cours";
+    x.innerHTML = " Liste des demandes de congés en cours";
     break;
   }
 

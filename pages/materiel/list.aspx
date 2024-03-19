@@ -1,7 +1,7 @@
 <div class="col-12">
   <div class="head-titre">
     <h2 id="h2Titre">
-      Listes des demandes
+      Liste des demandes
     </h2>
   </div>
 
@@ -24,7 +24,7 @@
         <thead>
           <tr>
             <th>N*</th>
-            <th>Intitule</th>
+            <th>Intitulé</th>
             <th>Date de d&eacutepart</th>
             <th>Motif</th>
             <th></th>

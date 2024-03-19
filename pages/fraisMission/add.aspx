@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <form action="" method="" class="form" id="form">
   <div class="elts">
 

@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div class="row">
 
   <div class="col-12">
@@ -39,7 +41,7 @@
                             <td style="text-align:left; font-weight: 700; font-size: 26px;"><h3><b>DEMANDE DE REPRISE DE SERVICE</h3></b></td>
                           </tr>
                         </div></br>
-                        
+
                         <table class="col-12">
                           <tr>
                             <td style="text-align:left;"><h4><b>NUMERO DE LA DEMANDE : {{id}}</h5></b></td>
@@ -89,7 +91,7 @@
                           Historique de validations
                         </h2>
                       </div>
-    
+
                       <div>
                         <div class="table-container">
                           <table>
@@ -131,7 +133,7 @@
 <script id="tmpl_form_details" type="x-tmpl-mustache">
                   <div class="head-titre">
                     <h2>
-                      Details du demandeur
+                      Détails du demandeur
                     </h2>
                   </div></br>
                   <table>
@@ -145,17 +147,17 @@
                       <td style="text-align:left;">{{demandeuremail}}</td>
                     </tr>
                     <tr>
-                      <td style="text-align:left;" class="fw-bold" width="200px">Superieur hierarchique </td>
+                      <td style="text-align:left;" class="fw-bold" width="200px">Superieur hiérarchique </td>
                       <td style="text-align:left;"> {{superieur}}  </td>
                     </tr>
                   </table></br>
 
                   <div class="head-titre">
                     <h2>
-                      Details de la demande
+                      Détails de la demande
                     </h2>
                   </div>
-                  
+
                 </br>
                   <div>
                     <h3 style="color:#c50000 !important;">
@@ -177,11 +179,11 @@
                     </tr>
 
                     <tr>
-                      <td style="text-align:left;" class="fw-bold" width="200px" >Date Depart :</td>
+                      <td style="text-align:left;" class="fw-bold" width="200px" >Date départ :</td>
                       <td style="text-align:left;">{{startdate}}</td>
                     </tr>
                     <tr>
-                      <td style="text-align:left;" class="fw-bold" width="200px" >Date Reprise :</td>
+                      <td style="text-align:left;" class="fw-bold" width="200px" >Date reprise :</td>
                       <td style="text-align:left;">{{reprisedate}}</td>
                     </tr>
 
@@ -194,7 +196,7 @@
                         <td style="text-align:left;" class="fw-bold" width="200px" >Interimaire :</td>
                         <td style="text-align:left;">{{interim}}</td>
                       </tr>
-                    
+
                   </table>
                 </script>
 

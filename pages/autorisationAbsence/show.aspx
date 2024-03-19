@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div class="row">
 
   <div class="col-12">
@@ -45,7 +47,7 @@
         <td style="text-align:left;"><h4><b>NUMERO DE LA DEMANDE : {{id}}</h5></b></td>
       </tr>
         <tr class="mb-2">
-          <td style="text-align:left;">Creer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
+          <td style="text-align:left;">Créer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
         </tr>
     </table><br/>
   </div>
@@ -130,7 +132,7 @@
 <script id="tmpl_form_details" type="x-tmpl-mustache">
                   <div class="head-titre">
                     <h2>
-                      Details du demandeur
+                      Détails du demandeur
                     </h2>
                   </div></br>
                   <table>
@@ -177,7 +179,7 @@
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px">Date de depart</td>
+                        <td style="text-align:left;" class="fw-bold" width="200px">Date de départ</td>
                         <td style="text-align:left;">{{datedepart}}</td>
                       </tr>
 
@@ -197,7 +199,7 @@
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px">Interimaire </td>
+                        <td style="text-align:left;" class="fw-bold" width="200px">Intérimaire </td>
                         <td style="text-align:left;"> {{interimaire}}  </td>
                       </tr>
 

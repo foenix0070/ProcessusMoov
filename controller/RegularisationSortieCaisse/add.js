@@ -168,9 +168,6 @@ appRegularisationSortieCaisse.calculerSolde = function () {
   var montant = autoNumericObject.getNumber();
   var mont = autoNumericObjectMont.getNumber();
 
-  console.log("Montant : " + mont);
-  console.log("Montant à verser : " + montant);
-
   if (montant < mont) {
     var solde = mont - montant;
   }
@@ -275,7 +272,7 @@ appRegularisationSortieCaisse.Add = function (callBack) {
   let ref = appHelper.getReference("RSDC");
 
   if (verifid) {
-    console.log("l'id sortie : " + verifid);
+
     oListItem.set_item("SortieID", document.getElementById("TxtSortieID").value);
     oListItem.set_item("Sortie", document.getElementById("TxtSortie").value);
     oListItem.set_item("Statut", appHelper.Status.ENATTENTE);
@@ -284,7 +281,6 @@ appRegularisationSortieCaisse.Add = function (callBack) {
     oListItem.set_item("MontantSortie", montantSortie);
     oListItem.set_item("Solde", Solde);
     oListItem.set_item("Reference", ref);
-
 
     oListItem.set_item("Observation", document.getElementById("TxtObservation").value);
     oListItem.set_item("Title", document.getElementById("TxtTitle").value);
@@ -494,7 +490,7 @@ appRegularisationSortieCaisse.UpDateStatusSortieCaisse = function (demandeid, ca
   if (It1) {
     console.log("test");
     It1.set_item("Statut", "ENATTENTEREGULARISATION");
-    It1.set_item("StatutLibelle", "En attente de regularisation ");
+    It1.set_item("StatutLibelle", "En attente de régularisation ");
   }
   It1.update();
   clientContext.load(It1);

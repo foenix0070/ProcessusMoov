@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <form action="" method="" class="form" id="form">
   <div class="elts">
     <fieldset class="form-elts">
@@ -11,7 +13,7 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Nume&eacute;ro t&eacute;l: <span class="asterix">*</span></label>
+        <label class="form-label">Num&eacute;ro t&eacute;l: <span class="asterix">*</span></label>
         <input type="text" id="TxtTelephone" class="  form-control" name="" placeholder="" />
       </div>
 

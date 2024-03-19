@@ -196,7 +196,7 @@ function ListerMotif(callBack) {
 
       let opt = document.createElement("option");
       opt.setAttribute("value", "0");
-      opt.innerHTML = "Choisir le type d'Absence";
+      opt.innerHTML = "Choisir le type d'absence";
       document.getElementById("cmbTypeAbsence").appendChild(opt);
 
       while (listItemEnumerator.moveNext()) {

@@ -11,19 +11,19 @@ ListGadget.InitializePage = function () {
   let x = document.getElementById('h2Titre');
   switch(T){
     case 'E' :  ListGadget.ListGadget('ENCOURS');
-                x.innerHTML = " Listes des demandes de gadget en cours";
+                x.innerHTML = " Liste des demandes de gadget en cours";
     break;
     case 'V' :  ListGadget.ListGadget('VALIDEE');
-    x.innerHTML = " Listes des demandes de gadget validées";
+    x.innerHTML = " Liste des demandes de gadget validées";
     break;
     case 'R' :  ListGadget.ListGadget('REJETEE');
-    x.innerHTML = " Listes des demandes de gadget rejétées";
+    x.innerHTML = " Liste des demandes de gadget rejétées";
     break;
     case 'M' :  ListGadget.ListGadget('DEMANDEMODIFICATION');
-    x.innerHTML = " Listes des demandes de gadget à modifier";
+    x.innerHTML = " Liste des demandes de gadget à modifier";
     break;
     default : ListGadget.ListGadget('ENCOURS');
-    x.innerHTML = " Listes des demandes de gadget en cours";
+    x.innerHTML = " Liste des demandes de gadget en cours";
     break;
   }
 

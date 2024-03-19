@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div class="row">
 
   <div class="col-12">
@@ -21,7 +23,7 @@
                         <input type="number" id="TxtNbreJour" min="1" class="numeric form-control" style="width:200px;"
                         data-toggle="tooltip" data-placement="bottom" title="Renseigner le nombre de jours du congés"  name="TxtNbreJour" />
                       </div>
-              
+
                       <div class="mb-3">
                         <label class="form-label"> Date de d&eacute;part<span class="asterix">*</span></label>
                         <input type="date" name="TxtDateDepart" class="date form-control" style="width:200px;" id="TxtDateDepart"
@@ -65,7 +67,7 @@
                       <td style="text-align:left;"><h4><b>NUMERO DE LA DEMANDE : {{id}}</h5></b></td>
                     </tr>
                       <tr class="mb-2">
-                        <td style="text-align:left;">Creer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
+                        <td style="text-align:left;">Créer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
                       </tr>
                   </table><br/>
                 </div>
@@ -136,7 +138,7 @@
                      Validation
                     </h2>
                   </div>
-                  <form action="" method="" class="formComment" id="formComment">              
+                  <form action="" method="" class="formComment" id="formComment">
                     <textarea id="TxtCommentaire" name="TxtCommentaire" rows="10" cols="33"
                       placeholder="Commentaire de validation"></textarea>
                     <div class="formComment-submit">
@@ -158,7 +160,7 @@
                       <input type="number" id="TxtNbreJourAcquis" min="1" class="numeric form-control" style="width:200px;"
                       data-toggle="tooltip" data-placement="bottom" title="Renseigner le nombre de jours du congés"  name="TxtNbreJour" />
                     </div>
-            
+
                     <div class="mb-3">
                       <label class="form-label"> Date de d&eacute;part<span class="asterix">*</span></label>
                       <input type="date" name="TxtDateDepartJourAcquis" class="date form-control" style="width:200px;" id="TxtDateDepartJourAcquis"
@@ -168,7 +170,7 @@
                     <textarea id="TxtCommentaireDRHO" name="TxtCommentaireDRHO" rows="10" cols="33"placeholder="Commentaire de validation">
 
                     </textarea>
-                    
+
                     <div class="formComment-submit">
                       <input type="button" id="BtnValidationOKDRHO" value="Valider" data-act="APPROUVER" data-did="{{did}}" data-tid="{{tid}}" data-process="{{process}}" class="btn btn1"></input>
                       <input type="button" id="BtnValidationNOKDRHO" value="Rejeter" data-act="REJETER" data-did="{{did}}" data-tid="{{tid}}" data-process="{{process}}" class="btn btn1"></input>
@@ -181,7 +183,7 @@
 
                 <div class="head-titre">
                   <h2>
-                    Details du demandeur
+                    Détails du demandeur
                   </h2>
                 </div></br>
                 <table>
@@ -207,7 +209,7 @@
 
                   <div class="head-titre">
                     <h2>
-                      Details de la demande
+                      Détails de la demande
                     </h2>
                   </div>
                   {{#id}}
@@ -237,12 +239,12 @@
                         <td style="text-align:left;"class="fw-bold" width="200px">Date de reprise pr&eacutevisionnelle</td>
                         <td style="text-align:left;">{{daterepriseprevi}}</td>
                       </tr>
-                      
+
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="200px">Nombre de jours demand&eacutes</td>
                         <td style="text-align:left;">{{nbrejourdemande}}</td>
                       </tr>
-                      
+
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="200px">Adresse pendant les cong&eacute;s </td>
                         <td style="text-align:left;"> Domicile : {{domicile}} <br>  T&eacute;l&eacute;phone : {{telephone}} <br> Personne &agrave; contacter :{{personne}} </td>
@@ -251,7 +253,7 @@
                       <tr>
                         <td style="text-align:left;"class="fw-bold" width="200px">Int&eacute;rimaire</td>
                         <td style="text-align:left;">{{interimaire}}</td>
-                      </tr> 
+                      </tr>
                   </table><br>
                   <div>
                     <h3><b>D&eacutecision appartenant aux Ressources Humaines</b></h3>
@@ -272,7 +274,7 @@
                         <td style="text-align:left;"class="fw-bold" width="200px">Nombre de jours accord&eacutes</td>
                         <td style="text-align:left;">{{nbrejour}}</td>
                       </tr>
-                      
+
                   </table>
 </script>
 

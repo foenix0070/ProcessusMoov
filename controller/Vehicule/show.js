@@ -404,7 +404,6 @@ showVehicule.ShowFirst = function (demandeid) {
 
 
     if (It) {
-      console.log("test showFirst");
 
       let createdValue = It.get_item('Created');
       let formattedTime = '';

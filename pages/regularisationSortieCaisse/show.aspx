@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div class="row">
 
   <div class="col-12">
@@ -39,13 +41,13 @@
         <td style="text-align:left; font-weight: 700; font-size: 26px;"><h3><b>DEMANDE DE REGULARISATION DE SORTIE DE CAISSE</h3></b></td>
       </tr>
     </div></br>
-    
+
     <table class="col-12">
       <tr>
         <td style="text-align:left;"><h4><b>NUMERO DE LA DEMANDE : {{id}}</h5></b></td>
       </tr>
         <tr class="mb-2">
-          <td style="text-align:left;">Creer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
+          <td style="text-align:left;">Créer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
         </tr>
     </table><br/>
   </div>
@@ -89,7 +91,7 @@
                           Historique de validations
                         </h2>
                       </div>
-    
+
                       <div>
                         <div class="table-container">
                           <table>
@@ -131,7 +133,7 @@
 <script id="tmpl_form_details" type="x-tmpl-mustache">
   <div class="head-titre">
     <h2>
-      Details du demandeur
+      Détails du demandeur
     </h2>
   </div></br>
   <table>
@@ -145,14 +147,14 @@
       <td style="text-align:left;">{{demandeuremail}}</td>
     </tr>
     <tr>
-      <td style="text-align:left;" class="fw-bold" width="200px">Superieur hierarchique </td>
+      <td style="text-align:left;" class="fw-bold" width="200px">Supérieur hiérarchique </td>
       <td style="text-align:left;"> {{superieur}}  </td>
     </tr>
   </table></br>
 
                   <div class="head-titre">
                     <h2>
-                      Details de la demande
+                      Détails de la demande
                     </h2>
                   </div>
                   {{#id}}
@@ -180,12 +182,12 @@
                       <td style="text-align:left;">{{date}}</td>
                     </tr>
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px" >Montant utilise :</td>
+                        <td style="text-align:left;" class="fw-bold" width="200px" >Montant utilisé :</td>
                         <td style="text-align:left;">{{montant}}</td>
                       </tr>
 
                       <tr>
-                        <td style="text-align:left; "class="fw-bold" width="200px">Solde reverser :</td>
+                        <td style="text-align:left; "class="fw-bold" width="200px">Solde reversé :</td>
                         <td style="text-align:left;">{{solde}}</td>
                       </tr>
 

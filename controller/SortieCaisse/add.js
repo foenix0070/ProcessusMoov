@@ -223,7 +223,6 @@ appSortieCaisse.ListerCaisse = function (callBack) {
       var listItemEnumerator = listItemMotif.getEnumerator();
       document.getElementById('cmbCaisse').innerHTML= "";
 
-
       let opt = document.createElement("option");
       opt.setAttribute("value", "0");
       opt.innerHTML = "Choisir la caisse de paiement";
@@ -239,7 +238,6 @@ appSortieCaisse.ListerCaisse = function (callBack) {
         opt.innerHTML = oListItemTp.get_item('Title');
         document.getElementById('cmbCaisse').appendChild(opt);
       }
-
 
       if (callBack) {
         callBack();

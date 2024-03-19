@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div class="row">
 
 
@@ -46,7 +48,7 @@
         <td style="text-align:left;"><h4><b>NUMERO DE LA DEMANDE : {{id}}</h5></b></td>
       </tr>
         <tr class="mb-2">
-          <td style="text-align:left;">Creer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
+          <td style="text-align:left;">Créer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
         </tr>
     </table><br/>
   </div>
@@ -132,7 +134,7 @@
 <script id="tmpl_form_details" type="x-tmpl-mustache">
   <div class="head-titre">
     <h2>
-      Details du demandeur
+      Détails du demandeur
     </h2>
   </div></br>
   <table>
@@ -146,13 +148,13 @@
       <td style="text-align:left;">{{demandeuremail}}</td>
     </tr>
     <tr>
-      <td style="text-align:left;" class="fw-bold" width="200px">Superieur hierarchique </td>
+      <td style="text-align:left;" class="fw-bold" width="200px">Supérieur hiérarchique </td>
       <td style="text-align:left;"> {{superieur}}  </td>
     </tr>
   </table></br>
   <div class="head-titre">
     <h2>
-      Details de la demande
+      Détails de la demande
     </h2>
   </div>
   {{#id}}
@@ -168,7 +170,7 @@
   </div></br>
                   <table>
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px" >Materiel :</td>
+                        <td style="text-align:left;" class="fw-bold" width="200px" >Matériel :</td>
                         <td style="text-align:left;">{{title}}</td>
                       </tr>
 
@@ -179,7 +181,7 @@
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px">Quantite :</td>
+                        <td style="text-align:left;" class="fw-bold" width="200px">Quantité :</td>
                         <td style="text-align:left;">{{quantite}}</td>
                       </tr>
 

@@ -1,10 +1,12 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <form action="" method="" class="form" id="form">
   <div class="elts">
 
     <fieldset class="form-elts">
       <legend>Demandeur</legend>
       <div class="mb-3">
-        <label class="form-label">Nom & Prenoms <span class="asterix">*</span></label>
+        <label class="form-label">Nom & Prenom(s) <span class="asterix">*</span></label>
         <input type="text" id="TxtNom" disabled class="  form-control" value="" placeholder="" />
       </div>
 
@@ -26,7 +28,7 @@
       <div class="mb-3">
 
         <div class="mb-3">
-          <div>Votre <span id="TxtTypeR"></span> de <span id="TxtReprise"></span> de <span id="TxtNbreJour"></span> jour a debuter le <span id="TxtDateDepart"></span> et a pris fin le  <span id="TxtDateReprise"></span> avec pour interim <span id="TxtInterimaire"></span> .</div>
+          <div>Votre <span id="TxtTypeR"></span> de <span id="TxtReprise"></span> de <span id="TxtNbreJour"></span> jour a débuter le <span id="TxtDateDepart"></span> et a pris fin le  <span id="TxtDateReprise"></span> avec pour interim <span id="TxtInterimaire"></span> .</div>
           <div>Effectuer votre reprise en cliquant sur le bouton <b>Reprise</b>.</div>
         </div>
 

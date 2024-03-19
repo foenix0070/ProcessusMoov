@@ -1,8 +1,9 @@
-
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div class="col-12">
   <div class="head-titre">
     <h2 id="h2Titre">
-     Listes des demandes
+     Liste des demandes
     </h2>
   </div>
 

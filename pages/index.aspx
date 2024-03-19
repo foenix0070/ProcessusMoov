@@ -1,3 +1,6 @@
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div class="popup" id="popup"
   style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #f9f9f9; border: 1px solid #ccc; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 9999;">
   <h2>Information</h2>
@@ -10,7 +13,7 @@
   <div class="col-12" style="display: none;" id="divListTaches">
     <div class="head-titre">
       <h2>
-        Mes taches a faire
+        Mes tâches à faire
       </h2>
     </div>
     <!-- <Table /> -->
@@ -94,11 +97,11 @@
       <thead style="border-bottom:1px solid rgba(255,255,255,0.7);">
         <tr>
           <th>N*</th>
-          <th>Reference</th>
+          <th>R&eacute;f&eacute;rence</th>
           <th>Demandeur</th>
           <th>Intitul&eacute</th>
-          <th>Date de reception </th>
-          <th>Date de creation </th>
+          <th>Date de r&eacute;ception </th>
+          <th>Date de cr&eacute;ation </th>
         </tr>
       </thead>
       <tbody style="border-bottom:1px solid #b4a7a7;">
@@ -123,7 +126,7 @@
     <table class="table table-bordered table-responsive table-striped">
       <thead>
         <tr>
-          <th>Createur</th>
+          <th>Cr&eacute;ateur</th>
           <th>Date</th>
           <th>Type</th>
           <th>Demande</th>
@@ -152,7 +155,7 @@
     <table class="table table-bordered table-responsive table-striped">
       <thead>
         <tr>
-          <th>Createur</th>
+          <th>Cr&eacute;ateur</th>
           <th>Date</th>
           <th>Type</th>
           <th>Demande</th>
@@ -181,8 +184,8 @@
     <table class="table table-responsive table-striped" style="border:0px;">
       <thead style="border-bottom:1px solid rgba(255,255,255,0.7);">
         <tr>
-          <th>Reference</th>
-          <th>Createur</th>
+          <th>R&eacute;f&eacute;rence</th>
+          <th>Cr&eacute;ateur</th>
           <th>Date</th>
           <th>Type</th>
           <th>Demande</th>
@@ -207,7 +210,7 @@
   </div>
 </script>
 
-<script id="tmpl_side_main_menu item" type="x-tmpl-mustache">
+<script id="tmpl_side_main_menu_item" type="x-tmpl-mustache">
   {{#menus}}
           <div class="dropdown" id="menudrop">
               <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -218,14 +221,32 @@
                   {{#arrsmenu}}
 
                   <li style="margin: 0px; border-bottom: 1px solid black; padding:5px; background-color:#f8f9fa; color:#212529; ">
+
                       {{#offcanvas}}
-                      <a href="{{url}}" id="{{id}}" class="linkOffCanvasNavigation" data-url="{{url}}" data-target="{{target}}" data-info="{{dataInfo}}" data-menu-id="{{title}}"  data-bs-toggle="offcanvas"
-                      data-bs-target="#ffcMainForm" aria-controls="ffcMainForm" style="color:#212529 ; text-decoration: none; display: block;" onmouseover="this.style.backgroundColor='#007bff'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='initial';">{{title}}</a>
+
+                    <a href="{{url}}" id="{{id}}" class=" aNavigationLinkDdwn" data-url="{{url}}"
+                       data-target="{{target}}" data-info="{{dataInfo}}"
+                       data-menu-id="{{title}}"  data-bs-toggle="offcanvas"
+                       data-bs-target="#ffcMainForm" aria-controls="ffcMainForm" >
+                      {{title}}
+                    </a>
+
                       {{/offcanvas}}
+
                       {{#link}}
-                      <a href="{{url}}" data-url="{{url}}" class="linkMainNavigation" data-target="{{target}}" data-info="{{dataInfo}}" data-menu-id="{{title}}" id="{{id}}" style="color:#212529; text-decoration: none; display: block;" onmouseover="this.style.backgroundColor='#007bff'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='initial';">{{title}}</a>
+
+                      <a href="{{url}}"
+                      data-url="{{url}}"
+                      class="linkMainNavigation aNavigationLinkDdwn"
+                      data-target="{{target}}" data-info="{{dataInfo}}"
+                      data-menu-id="{{title}}" id="{{id}}">
+                      {{title}}
+                    </a>
+
                       {{/link}}
+
                 </li>
+
                 {{/arrsmenu}}
 
               </ul>
@@ -240,7 +261,7 @@
         <thead>
           <tr>
             <!--<th>N*</th>-->
-            <th>Createur</th>
+            <th>Cr&eacute;ateur</th>
             <th>Date</th>
             <th>Type</th>
             <th>Demande</th>
@@ -284,8 +305,8 @@
 <script id="tmpl_table_reprise" type="x-tmpl-mustache">
   <div class="table-container">
         {{#reprise}}
-          <p>Votre {{typerep}} de {{title}} de {{nombre}} jour a debuter le {{startdate}} et pris fin le {{reprisedate}} avec pour interim {{interim}}. <p/>
-          <p>Effectuer votre reprise en cliquant sur Reprise. <p/>
+          <p>Votre {{typerep}} de {{title}} de {{nombre}} jour(s) a débuté le {{startdate}} et pris fin le {{reprisedate}} avec pour intérim {{interim}}. <p/>
+          <p>Effectuer votre reprise en cliquant sur le bouton <b>Reprise</b>. <p/>
           <div><button class="btn btn-primary">Reprise</button></div>
         {{/reprise}}
   </div>

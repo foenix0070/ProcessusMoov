@@ -1,10 +1,13 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
 <form action="" method="" class="form" id="form">
   <div class="elts">
 
     <fieldset class="form-elts">
       <legend>Demandeur</legend>
       <div class="mb-3">
-        <label class="form-label">Nom & Prenoms <span class="asterix">*</span></label>
+        <label class="form-label">Nom & Prenom(s) <span class="asterix">*</span></label>
         <input type="text" id="TxtNom" disabled class="  form-control" value="" placeholder="" />
       </div>
 
@@ -37,13 +40,13 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label">Nombre de Jours <span class="asterix" >*</span></label>
+          <label class="form-label">Nombre de jours <span class="asterix" >*</span></label>
           <input type="number" id="TxtNbreJour" min="1" class="numeric form-control" style="width:200px;"
           data-toggle="tooltip" data-placement="bottom" title="Renseigner le nombre de jours du congés"  name="TxtNbreJour" />
         </div>
 
         <div class="mb-3">
-          <label class="form-label"> Date de depart souhait&eacute; <span class="asterix">*</span></label>
+          <label class="form-label"> Date de départ souhait&eacute; <span class="asterix">*</span></label>
           <input type="date" name="TxtDateDepart" class="date form-control" style="width:200px;" id="TxtDateDepart"
           data-toggle="tooltip" data-placement="bottom" title="Renseigner la date de départ"  placeholder="" />
         </div>
@@ -51,9 +54,9 @@
     </fieldset>
 
     <fieldset class="form-elts">
-      <legend>Interimaire</legend>
+      <legend>Intérimaire</legend>
       <div class="mb-3">
-        <label class="form-label"> Interimaire</label>
+        <label class="form-label"> Intérimaire</label>
         <div id="plePickerInterimaireDiv" data-toggle="tooltip" data-placement="bottom" title="Choisir l'interimaire en renseignant son nom"></div>
       </div>
 
@@ -85,9 +88,9 @@
       </div>
 
       <span class="note">
-        L'interim ne concerne que les validations dans Moovinside.
-        Toutes vos taches &aacute; venir seront automatiquement r&eacute;-affecct&eacute; &aacute;
-        l'interimaire durant la periode de la mission
+        L'intérim ne concerne que les validations dans Moovinside.
+        Toutes vos taches &aacute; venir seront automatiquement r&eacute;-affect&eacute; &aacute;
+        l'intérimaire durant la periode de la mission
       </span>
     </fieldset>
 

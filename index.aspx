@@ -9,15 +9,17 @@
             <%@ Register Tagprefix="WebPartPages" Namespace="Microsoft.SharePoint.WebPartPages"
               Assembly="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 
-
               <html lang="fr">
 
               <head>
                 <SharePoint:FormDigest runat="server" />
                 <meta charset="utf-8">
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                <!-- <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> -->
+
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
                 <title>ESPACE UTILISATEUR</title>
 
                 <!-- SCRIPT SHAREPOINT -->
@@ -166,7 +168,7 @@
                             <li>
                               <a class="dropdown-item" href="#" id="lnkLoadUserData">Mon profil</a>
                             </li>
-                            <li><a class="dropdown-item" href="#">Parametre</a></li>
+                            <li><a class="dropdown-item" href="#">Paramètre</a></li>
                             <li><a class="dropdown-item" href="#">Historique</a></li>
                             <li>
                               <hr class="dropdown-divider" />
@@ -222,7 +224,7 @@
 
                             <div class="d-flex flex-row align-items-center">
                               <div style="width: 25px; height: 35px;"></div>
-                              <p class="ms-2 card-body_2"><b>Vous avez <span id="demenattente"></span> demandes en
+                              <p class="ms-2 card-body_2"><b>Vous avez <span id="demenattente"></span> demande(s) en
                                   attente</b></p>
                             </div>
 
@@ -245,7 +247,7 @@
 
                             <div class="d-flex flex-row align-items-center">
                               <div style="width: 25px; height: 35px;"></div>
-                              <p class="ms-2 card-body_2"><b>Vous avez <span id="demcours"></span> demandes en
+                              <p class="ms-2 card-body_2"><b>Vous avez <span id="demcours"></span> demande(s) en
                                   cours</b>
                               </p>
                             </div>
@@ -270,7 +272,7 @@
 
                             <div class="d-flex flex-row align-items-center">
                               <div style="width: 35px; height: 35px;"></div>
-                              <p class="ms-2 card-body_2"><b>Vous avez <span id="demval"></span> demandes validées</b>
+                              <p class="ms-2 card-body_2"><b>Vous avez <span id="demval"></span> demande(s) validée(s)</b>
                               </p>
                             </div>
                           </div>
@@ -297,7 +299,7 @@
                             </div>
                             <div class="d-flex flex-row align-items-center">
                               <div style="width: 25px; height: 35px;"></div>
-                              <p class="ms-2 card-body_2"><b>Vous avez <span id="tachetotal"></span> tâches à
+                              <p class="ms-2 card-body_2"><b>Vous avez <span id="tachetotal"></span> tâche(s) à
                                   réaliser</b></p>
                             </div>
                           </div>
@@ -315,7 +317,7 @@
                         <div class="col-8">
                           <div class="head-titre">
                             <h2>
-                              Listes des demandes
+                              Liste des demandes
                             </h2>
                           </div>
 
@@ -326,7 +328,7 @@
                                 <tr>
                                   <th>Nom</th>
                                   <th>Date</th>
-                                  <th>Decision</th>
+                                  <th>Décision</th>
                                   <th>Commentaire</th>
                                 </tr>
                                 <tr class="rang">
@@ -362,7 +364,7 @@
 
                           <div class="head-titre">
                             <h2>
-                              Listes des taches
+                              Liste des taches
                             </h2>
                           </div>
 
@@ -420,11 +422,11 @@
                           <div class="accordion-body d-flex flex-column">
                             {{#arrsmenu}}
                             {{#offcanvas}}
-                            <a href="{{url}}" id="{{id}}" class="linkOffCanvasNavigation" data-url="{{url}}" data-target="{{target}}"   data-bs-toggle="offcanvas"
+                            <a href="{{url}}" id="{{id}}" class="linkOffCanvasNavigation aNavigationLinkDdwn" data-url="{{url}}" data-target="{{target}}"  data-bs-toggle="offcanvas"
                             data-bs-target="#ffcMainForm" aria-controls="ffcMainForm">{{title}}</a>
                             {{/offcanvas}}
                             {{#link}}
-                            <a href="{{url}}" data-url="{{url}}" class="linkMainNavigation" data-target="{{target}}" id="{{id}}">{{title}}</a>
+                            <a href="{{url}}" data-url="{{url}}" class="linkMainNavigation aNavigationLinkDdwn" data-target="{{target}}" id="{{id}}">{{title}}</a>
                             {{/link}}
                             {{/arrsmenu}}
                           </div>

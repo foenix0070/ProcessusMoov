@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div class="row">
 
 
@@ -109,13 +111,13 @@
 
                   <div class="head-titre">
                     <h2>
-                      Details de la demande
+                      D&eacute;tails de la demande
                     </h2>
                   </div>
                   {{#id}}
                   <div class="sect-bn"><button class="btn btn-warning btn-sm linkOffCanvasNavigation" data-url="/tools1/pages/vehicule/add.aspx?DID={{id}}" data-target="ffcMainFormContainer" data-bs-toggle="offcanvas" data-bs-target="#ffcMainForm" id="BtnModification" >Modifier la demande</button></div>
-                  {{/id}}  
-                
+                  {{/id}}
+
                 </br>
                   <div>
                     <h3 style="color:#c50000 !important;">
@@ -162,7 +164,7 @@
                 </script>
 
               <!--<script src="http://ci08vmmitest/tools1/controller/Vehicule/show.js"></script>-->
-                
+
               <script type="text/javascript">
                 appHelper.loadJSWithNameSpace("showVehicule", 'showVehicule', "controller/Vehicule/show.js");
               </script>
@@ -195,7 +197,7 @@
                 <script type="text/javascript"  src="/_layouts/15/MicrosoftAjax.js"></script>
                 <SharePoint:ScriptLink name="SP.js" runat="server" OnDemand="true" LoadAfterUI="true" Localizable="false" />
                 <SharePoint:ScriptLink  name="SP.UserProfiles.js" runat="server" ondemand="false" localizable="false" loadafterui="true" />
-                
+
 
                 <script type="text/javascript"  src="/_layouts/15/MicrosoftAjax.js"></script>
                 <script type="text/javascript"  src="/_layouts/15/sp.js"></script>
@@ -335,7 +337,7 @@
 
                 <script id="tmpl_form_details" type="x-tmpl-mustache">
                   <h3 class="type-document">
-                    <span>Details de demande </span>
+                    <span>D&eacute;tails de demande </span>
                     <div class="sect-btn"><a class="btn btn1" href="index.aspx">Retour &agrave; la liste</a></div>
                   </h3>
                   <table>

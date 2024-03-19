@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div class="row">
 
   <div class="col-12">
@@ -45,7 +47,7 @@
                             <td style="text-align:left;"><h4><b>NUMERO DE LA DEMANDE : {{id}}</h5></b></td>
                           </tr>
                             <tr class="mb-2">
-                              <td style="text-align:left;">Creer par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
+                              <td style="text-align:left;">Cr&eacute;er par : <b>{{create}}</b> le , <b>{{requestdate}}</b> &agrave; <b>{{heure}}</b></td>
                             </tr>
                         </table><br/>
                       </div>
@@ -131,7 +133,7 @@
 <script id="tmpl_form_details" type="x-tmpl-mustache">
                   <div class="head-titre">
                     <h2>
-                      Details du demandeur
+                      D&eacute;tails du demandeur
                     </h2>
                   </div></br>
                   <table>
@@ -145,7 +147,7 @@
                       <td style="text-align:left;">{{demandeuremail}}</td>
                     </tr>
                     <tr>
-                      <td style="text-align:left;" class="fw-bold" width="200px">Superieur hierarchique </td>
+                      <td style="text-align:left;" class="fw-bold" width="200px">Superieur hi&eacute;rarchique </td>
                       <td style="text-align:left;"> {{superieur}}  </td>
                     </tr>
                   </table></br>
@@ -157,7 +159,7 @@
 
                   <div class="head-titre">
                     <h2>
-                      Details de la demande
+                      D&eacute;tails de la demande
                     </h2>
                   </div>
                   {{#id}}
@@ -190,7 +192,7 @@
                       </tr>
 
                       <tr>
-                        <td style="text-align:left;" class="fw-bold" width="200px" >Payer A :</td>
+                        <td style="text-align:left;" class="fw-bold" width="200px" >Payer à :</td>
                         <td style="text-align:left;">{{payerA}}</td>
                       </tr>
 
@@ -207,7 +209,7 @@
 
 
                       <tr>
-                        <td style="text-align:left;"class="fw-bold" width="200px">Motif du réglementent :</td>
+                        <td style="text-align:left;"class="fw-bold" width="200px">Motif du règlementent :</td>
                         <td style="text-align:left;">{{objetReglement}}</td>
                       </tr>
 

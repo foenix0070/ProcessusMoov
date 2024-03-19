@@ -10,19 +10,19 @@ ListMission.InitializePage = function () {
   let x = document.getElementById('h2Titre');
   switch(T){
     case 'E' :  ListMission.ListMission('ENCOURS');
-                x.innerHTML = " Listes des demandes de mission en cours";
+                x.innerHTML = " Liste des demandes de mission en cours";
     break;
     case 'V' :  ListMission.ListMission('VALIDEE');
-    x.innerHTML = " Listes des demandes de mission validées";
+    x.innerHTML = " Liste des demandes de mission validées";
     break;
     case 'R' :  ListMission.ListMission('REJETEE');
-    x.innerHTML = " Listes des demandes de mission rejétées";
+    x.innerHTML = " Liste des demandes de mission rejétées";
     break;
     case 'M' :  ListMission.ListMission('DEMANDEMODIFICATION');
-    x.innerHTML = " Listes des demandes de mission à modifier";
+    x.innerHTML = " Liste des demandes de mission à modifier";
     break;
     default : ListMission.ListMission('ENCOURS');
-    x.innerHTML = " Listes des demandes de mission en cours";
+    x.innerHTML = " Liste des demandes de mission en cours";
     break;
   }
 
