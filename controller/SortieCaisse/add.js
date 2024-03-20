@@ -8,6 +8,20 @@ appSortieCaisse.InitializePage = function () {
   appSortieCaisse.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
 
+  appHelper.VerificationQuotaDemandeRegularisation ( clientContext, appHelper.ListName.SortieCaisse,
+    "Montant", "VALIDEE", function(msg){
+      if(msg.code != 0){
+        bootbox.alert({
+          message : msg.msg,
+          className : 'animate__animated animate__pulse bg-warning',
+          backdrop: true,centerVertical: true,
+          callback: function () {
+            $('.offcanvas-header > .btn-close').click();
+            }
+        });
+      }
+    });
+
   appSpHelper.GetMyProperties(function () {
 
     appSortieCaisse.initCmbMode(function () { });

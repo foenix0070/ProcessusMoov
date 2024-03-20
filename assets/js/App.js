@@ -45,6 +45,7 @@ App.LoadUser = function (callBack) {
                     App.CurrentUser.Phone = oListItem.get_item('EmpPhone') != null ? oListItem.get_item('EmpPhone') : "";
                     App.CurrentUser.Departement = oListItem.get_item('EmpDepartement') != null ? oListItem.get_item('EmpDepartement') : "";
                     App.CurrentUser.Grade = oListItem.get_item('EmpGrade') != null ? oListItem.get_item('EmpGrade') : "";
+                    App.CurrentUser.GradeID = oListItem.get_item('EmpGradeID') != null ? oListItem.get_item('EmpGradeID') : "";
                     App.CurrentUser.Fonction = oListItem.get_item('EmpFonction') != null ? oListItem.get_item('EmpFonction') : "";
                     App.CurrentUser.ManagerPersonne = oListItem.get_item('EmpManager') != null ? oListItem.get_item('EmpManager') : "";
                     App.CurrentUser.NombreJoursAcquis = oListItem.get_item('NombreJoursAcquis') != null ? oListItem.get_item('NombreJoursAcquis') : "";

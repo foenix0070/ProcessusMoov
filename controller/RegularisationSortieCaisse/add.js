@@ -18,7 +18,7 @@ appRegularisationSortieCaisse.InitializePage = function () {
     // Loop through the selected elements
     elementsWithDataInfo.forEach(function (element) {
       var info = element.getAttribute('data-info');
-      console.log(info);
+
 
       if (info != "sortieCaisse") {
         // document.getElementById("cmbSortie").disabled=true;
@@ -69,7 +69,7 @@ appRegularisationSortieCaisse.InitializePage = function () {
       let verif = document.getElementById("TxtVerif").value;
       if (verif == "Edit") {
         let valID = document.getElementById("TxtID").value;
-        console.log(valID);
+
         appRegularisationSortieCaisse.Edit(valID, function (a) {
           // location.reload();
           const appUrl = '/pages/regularisationSortieCaisse/show.aspx?ID=' + a.get_id();
@@ -229,7 +229,7 @@ function ListerSortie(callBack) {
       document.getElementById('cmbSortie').innerHTML = "";
 
       while (listItemEnumerator.moveNext()) {
-        console.log("IN");
+
         let oListItemTp = listItemEnumerator.get_current();
         let opt = document.createElement("option");
         opt.setAttribute("value", oListItemTp.get_id());

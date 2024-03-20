@@ -1,12 +1,33 @@
 var appMission = appMission || {};
 var clientContext;
 appMission.clientContext;
+appMission.USERTATUT = "";
+appMission.arrUserForfait = [];
 let rowCount = 1;
 
 appMission.InitializePage = function () {
   App.LoadFormNote(appHelper.AppCode.MISSION, "DivNoteFormulaire");
   appMission.clientContext = SP.ClientContext.get_current();
   clientContext = SP.ClientContext.get_current();
+
+  appMission.USERTATUT = appHelper.GetProfileQualification ( App.CurrentUser.GradeID );
+
+
+
+  appHelper.VerificationQuotaDemandeRegularisation ( clientContext, appHelper.ListName.Mission,
+    "CoutTotal", "VALIDEE", function(msg){
+      if(msg.code != 0){
+        bootbox.alert({
+          message : msg.msg,
+          className : 'animate__animated animate__pulse bg-warning',
+          backdrop: true,centerVertical: true,
+          callback: function () {
+            $('.offcanvas-header > .btn-close').click();
+            }
+        });
+      }
+    });
+
 
   const TxtDateDebut = document.getElementById("TxtDateDebut");
   const TxtDateFin = document.getElementById("TxtDateFin");
@@ -47,6 +68,10 @@ appMission.InitializePage = function () {
     } catch (e) {}
   });
 
+  appMission.GetUserForfait  (clientContext, appMission.USERTATUT, function(arrMyForfait){
+
+    appMission.arrUserForfait = arrMyForfait;
+
   appSpHelper.GetMyProperties(function () {
     appMission.ListerMissionDetails();
 
@@ -61,16 +86,25 @@ appMission.InitializePage = function () {
     appMission.ListerDestination(function () {
       appUIControle.InitChosenByIdWithAddOption("cmbDestination", true, null, function(newDestiantion){
 
-        appHelper.addItemToParamList (clientContext, appHelper.ListName.MissionDestination,newDestiantion, function(item){
-let opt = '<option selected value="'+ item.get_item('Title')+'">'+ item.get_item('Title')+'</option>';
-$('#cmbDestination').append(opt);
-appUIControle.UpdateChosen('cmbDestination');
-        })
+        appHelper.addItemToParamList(
+          clientContext,
+          appHelper.ListName.MissionDestination,
+          newDestiantion,
+          function (item) {
+            let opt =
+              '<option selected value="' +
+              item.get_item("Title") +
+              '">' +
+              item.get_item("Title") +
+              "</option>";
+            $("#cmbDestination").append(opt);
+            appUIControle.UpdateChosen("cmbDestination");
+          }
+        );
 
 
       });
     });
-
 
     appMission.ListerMotif(function () {
       appUIControle.InitChosen("cmbMotif");
@@ -85,7 +119,9 @@ appUIControle.UpdateChosen('cmbDestination');
     });
 
     appMission.initCmbZone(function () {
-      appUIControle.InitChosen("cmbZoneGeo");
+
+      appUIControle.InitChosen("cmbZoneGeo" , false, function(){
+        appMission.CalculQteForfait();});
       document.getElementById("TxtNom").value = App.CurrentUser.DisplayName;
       document.getElementById("TxtMatricule").value = App.CurrentUser.Matricule;
       document.getElementById("TxtEmail").value = App.CurrentUser.Email;
@@ -110,8 +146,15 @@ appUIControle.UpdateChosen('cmbDestination');
         );
         //FraisMission.ShowDetails(appHelper.GetQueryStringFromAjaxQuery('DID'), function(){});
       }, 2000);
+
     });
+
+
+
   });
+
+});
+
 
   var monInput = document.getElementById("TxtCoutTotal");
 
@@ -123,11 +166,15 @@ appUIControle.UpdateChosen('cmbDestination');
 
   appMission.CalculQteForfait = function(){
 
+   let ZoneGeoID = $('#cmbZoneGeo').val();
     $("[id^=TxtDetailsNombre]").each(function () {
       let ids =  $(this).attr('id').toString().replace('TxtDetailsNombre', '').toString().trim();
-
+      let ff = appMission.GetForfait (ids, ZoneGeoID);
+      let txforfait = "#TxtDetailsForfait" + ids;
       let dd = "#TxtDetailsDateDebut" + ids;
       let df =  "#TxtDetailsDateFin" + ids;
+
+      $(txforfait).val(ff);
 
     let y =   parseInt( appHelper.DaysBetweenDates(
        $(dd).val(), $(df).val()  )) -1
@@ -135,6 +182,18 @@ appUIControle.UpdateChosen('cmbDestination');
       $(this).val(y);
     });
 
+    calculTotal();
+  }
+
+  appMission.GetForfait = function(typeid, geoid  ){
+
+    let fft = 0;
+         appMission.arrUserForfait.forEach((ele) => {
+          if(ele.MissionDetailsID == typeid && ele.ZoneGeoID == geoid ){
+            fft = ele.Montant;
+          }
+         })
+return fft;
   }
 
   appMission.GetInterimData = function (login) {
@@ -191,7 +250,55 @@ appUIControle.UpdateChosen('cmbDestination');
   });
 };
 
+//
+appMission.GetUserForfait = function (ctx, userStatut, callBack) {
+  if (ctx) {
+    let retour = [];
+    let oList = ctx
+      .get_web()
+      .get_lists()
+      .getByTitle(appHelper.ListName.MissionForfait);
+    let T = userStatut;
+    let camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where>" +
+        '<Eq><FieldRef ID="ProfileID" /><Value Type="Text">' +
+        T +
+        "</Value></Eq>" +
+        "</Where></Query></View>"
+    );
 
+    let collListItem = oList.getItems(camlQuery);
+    ctx.load(collListItem);
+    ctx.executeQueryAsync(function (sender, args) {
+      if (collListItem.get_count() > 0) {
+        let listItemEnumerator = collListItem.getEnumerator();
+        while (listItemEnumerator.moveNext()) {
+          let oListItem = listItemEnumerator.get_current();
+
+          retour.push({
+            MissionDetailsID:
+              oListItem.get_item("MissionDetailsID") != null
+                ? oListItem.get_item("MissionDetailsID")
+                : "0",
+            ZoneGeoID:
+              oListItem.get_item("ZoneGeographiqueID") != null
+                ? oListItem.get_item("ZoneGeographiqueID")
+                : "0",
+            Montant:
+              oListItem.get_item("Forfait") != null
+                ? oListItem.get_item("Forfait")
+                : "0",
+          });
+        }
+      }
+
+      if (callBack) {
+        callBack(retour);
+      }
+    }, appSpHelper.writeError);
+  }
+};
 
 appMission.TestFields = function () {
   let v = true;
@@ -358,6 +465,8 @@ appMission.initCmbZone = function (callBack) {
       let color = selectedOption.getAttribute("data-color");
       txtColor.value = color;
       txtText.value = selectedOption.text;
+
+      appMission.CalculQteForfait();
     });
 
     if (callBack) {
@@ -756,6 +865,9 @@ function ListerMode(callBack) {
     }
   );
 }
+
+
+
 
 appMission.List = function () {
   let oList = Mission.clientContext

@@ -65,6 +65,7 @@ appHelper.ListName = {
   MissionMotif: 'ListeMissionMotif',
   MissionSiteBTS: 'ListeMissionSiteBTS',
   MissionDetailsIntitule : 'ListeMissionDetailsIntitule',
+  MissionForfait : 'ListeMissionForfait'
 };
 
 appHelper.Status = {
@@ -321,14 +322,11 @@ appHelper.navigation = function (container, url) {
 
   fetch(url, reqHeaders)
 
-    .then((response) =>{ console.log(response); return response.arrayBuffer()})
+    .then((response) =>{ return response.arrayBuffer()})
     .then((data) => {
 
       const decoder = new TextDecoder('UTF-8');
        data = decoder.decode(data);
-
-       console.log(data);
-
 
       let elm = document.getElementById(container);
       document.getElementById(container).innerHTML = data;
@@ -395,13 +393,13 @@ appHelper.listenNavigationOffCanvas = function (lienNavigation, offCanvasid) {
       let container = $that.attr("data-target");
       let url = $that.attr("data-url");
 
-      console.log('1', container, url);
+
 
       appHelper.LisetenOffCanvas(
         offCanvasid,
         function () {
           try {
-            console.log('3', container, url);
+
             appHelper.navigation(container, url);
           } catch (e) {
             appHelper.Log(
@@ -419,7 +417,7 @@ appHelper.listenNavigationOffCanvas = function (lienNavigation, offCanvasid) {
   //   document.addEventListener("click", function (event) {
   // let ids = event.target.getAttribute("id");
   //     let target = event.target;
-  //     console.log(target);
+
   //     if (target) {
   //       let container = false;
   //       let url = false;
@@ -431,9 +429,7 @@ appHelper.listenNavigationOffCanvas = function (lienNavigation, offCanvasid) {
   //           try {
   //             url = target.getAttribute("data-url"); url = url;
   //           } catch (e) { appHelper.Log(e, appHelper.LogType.ERROR, "appHelper.listenNavigationOffCanvas"); }
-  //           console.log(container, target);
-  //           console.log(container, url);
-  //           console.log(target.getAttribute("id") , ids );
+
   //           appHelper.navigation(container, url);
   //           event.preventDefault(); // Empêcher le comportement par défaut du lien
   //         }, null)
@@ -761,23 +757,21 @@ appHelper.AttachFile = function (clientContext, demandeid, arrayBuffer, fileName
       var oList = oWeb.get_lists().getByTitle(listName);
       var urlToAttach = 'Lists/' + listName + '/Attachments/' + demandeid + '/'
       var attachmentFolder = oWeb.getFolderByServerRelativeUrl(urlToAttach);
-      console.log(urlToAttach);
-      console.log(attachmentFolder);
+
       //Convert the file contents into base64 data
       var bytes = new Uint8Array(arrayBuffer);
       var i, length, out = '';
       for (i = 0, length = bytes.length; i < length; i += 1) {
         out += String.fromCharCode(bytes[i]);
       }
-      console.log("Test");
+
       var base64 = btoa(out);
       base64 =
         //Create FileCreationInformation object using the read file data
         createInfo = new SP.FileCreationInformation();
       createInfo.set_content(base64);
       createInfo.set_url(fileName);
-      console.log(fileName);
-      console.log(attachmentFolder.get_files().length);
+
       //Add the file to the list item
       attachmentFiles = attachmentFolder.get_files().add(createInfo);
       //Load client context and execute the batch
@@ -1082,3 +1076,75 @@ appHelper.addItemToParamList = function(ctx, Listname, titleValue, callBack){
     callBack(oListItem);
   }, appSpHelper.writeError);
 }
+
+appHelper.VerificationQuotaDemandeRegularisation = function ( ctx, Listname, title, statutNonRegulariser, callBack) {
+  if (ctx) {
+    let retour = {code : 0, msg : ""};
+    let oList = ctx.get_web().get_lists().getByTitle(Listname);
+
+    let T = statutNonRegulariser;
+    let camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where>" +
+        '<And>'+
+        '<Eq><FieldRef ID="Demandeur" /><Value Type="Integer"><UserID/></Value></Eq>' +
+        '<Eq><FieldRef ID="Statut" /><Value Type="Text">'+ T +'</Value></Eq>' +
+        '</And>'+
+        "</Where></Query></View>"
+    );
+
+  let collListItem = oList.getItems(camlQuery);
+  ctx.load(collListItem);
+  ctx.executeQueryAsync(function (sender, args) {
+
+    let totalDemande = 0;
+    if (collListItem.get_count() > 0) {
+
+      let listItemEnumerator = collListItem.getEnumerator();
+      while (listItemEnumerator.moveNext()) {
+        let oListItem = listItemEnumerator.get_current();
+        let montant =
+          oListItem.get_item(title) != null ? oListItem.get_item(title) : 0;
+          totalDemande += 1;
+        if (montant > 499999) {
+          retour.code = 1;
+          retour.msg = "Vous devez faire régulariser la demande " +
+            (oListItem.get_item("Reference") != null ? oListItem.get_item("Reference") : "")
+              + " - " +
+            (oListItem.get_item("Title") != null ? oListItem.get_item("Title") : "")
+            + "  avant de soumettre de nouvelles demandes.";
+        }
+      }
+    }
+
+    if(totalDemande > 2) {
+      retour.code = 2;
+      retour.msg = "Vous avez trop de demandes non régularisées. Veuillez procéder à leur régularisation avant de soumettre de nouvelles demandes.";
+    }
+
+    if (callBack) {
+      callBack(retour);
+    }
+
+  }, appSpHelper.writeError);
+  }
+};
+
+appHelper.GetProfileQualification = function (value) {
+  const cadre = [9,7,8,3,10];
+  const direction = [2,6];
+  const agentMaitrise = [4,5];
+  const ceo = [1];
+
+  if (cadre.includes(value)) {
+    return "CADRE";
+  } else if (direction.includes(value)) {
+    return "DIRECTEUR";
+  } else if (agentMaitrise.includes(value)) {
+    return "AGENTMAITRISE";
+  } else if (ceo.includes(value)) {
+    return "CEO";
+  } else {
+    return "AGENTMAITRISE";
+  }
+};

@@ -47,6 +47,8 @@
                 <link rel="stylesheet" href="/sites/proc/tools/assets/plugins/DataTables/datatables.min.css?t=1">
                 <link rel="stylesheet" href="/sites/proc/tools/assets/plugins/chosen/chosen.min.css">
                 <link rel="stylesheet" href="/sites/proc/tools/assets/css/style.css?t=1" />
+                <link
+                rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
                 <!-- END STYLE -->
 
                 <!-- SCRIPT -->
